@@ -16,7 +16,8 @@
   },
   "require": {
     "php": ">=5.4.16",
-    "phpmd/phpmd": "^2.3"
+    "phpmd/phpmd": "^2.3",
+    "pdepend/pdepend": "^2.2"
   },
   "autoload": {
     "psr-4": {

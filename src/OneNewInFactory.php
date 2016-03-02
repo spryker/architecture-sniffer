@@ -1,5 +1,7 @@
 <?php
 
+namespace ArchitectureSniffer;
+
 use PHPMD\Node\MethodNode;
 
 /**

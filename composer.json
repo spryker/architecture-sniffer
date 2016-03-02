@@ -18,6 +18,16 @@
     "php": ">=5.4.16",
     "phpmd/phpmd": "^2.3"
   },
+  "autoload": {
+    "psr-4": {
+      "ArchitectureSniffer\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "ArchitectureSniffer\\Test\\": "tests"
+    }
+  },
   "require-dev": {
     "phpunit/phpunit": "~5.2"
   }

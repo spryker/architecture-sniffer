@@ -1,5 +1,7 @@
 <?php
 
+namespace ArchitectureSniffer;
+
 /**
  * Facade methods should not contain properties or internal logic.
  */

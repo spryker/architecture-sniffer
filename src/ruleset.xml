@@ -13,31 +13,31 @@
     <rule
             name="OneNewInFactory"
             message="Avoid to use more than one new statement in a factory method '{0}'."
-            class="OneNewInFactory"
+            class="ArchitectureSniffer\OneNewInFactory"
     />
 
     <rule
             name="MethodMustStartWithCreateInFactory"
             message="Method must start with create*.See method '{0}'."
-            class="MethodMustStartWithCreateInFactory"
+            class="ArchitectureSniffer\MethodMustStartWithCreateInFactory"
     />
 
     <rule
             name="FacadeNotReturnInternals"
             message="A facade method must not return return anything else than simple types or transfer objects '{0}'."
-            class="FacadeNotReturnInternals"
+            class="ArchitectureSniffer\FacadeNotReturnInternals"
     />
 
     <rule
             name="FacadeMustNotHaveProperties"
             message="A facade must not have any properties '{0}'."
-            class="FacadeMustNotHaveProperties"
+            class="ArchitectureSniffer\FacadeMustNotHaveProperties"
     />
 
     <rule
             name="EnforceAbstractionInConstructor"
             message="Only interfaces in constructor '{0}'."
-            class="EnforceAbstractionInConstructor"
+            class="ArchitectureSniffer\EnforceAbstractionInConstructor"
     />
 
 
@@ -51,6 +51,6 @@
     <rule
             name="QueryMisuse"
             message="Illegal usage of a query object: '{0}'."
-            class="QueryMisuse"
+            class="ArchitectureSniffer\QueryMisuse"
     />
 </ruleset>

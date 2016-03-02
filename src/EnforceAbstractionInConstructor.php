@@ -21,9 +21,11 @@ class EnforceAbstractionInConstructor extends \PHPMD\AbstractRule
         /** @var $node \PHPMD\Node\ClassNode */
         $methods = $node->getMethods();
         foreach ($methods as $method) {
-            if (strtolower($method->getName()) == '__construct') {
-                $this->check($method, $node);
+            if (strtolower($method->getName()) !== '__construct') {
+                continue;
             }
+
+            $this->check($method, $node);
         }
     }
 
@@ -47,11 +49,11 @@ class EnforceAbstractionInConstructor extends \PHPMD\AbstractRule
      */
     protected function checkParam(\PDepend\Source\AST\ASTParameter $param, AbstractNode $node) {
         $class = $param->getClass();
-        if (!empty($class)) {
-            if (!$class->isAbstract()) {
-                $this->addViolation($node, [$class->getName()]);
-            }
+        if (empty($class) || $class->isAbstract()) {
+            return;
         }
+
+        $this->addViolation($node, [$class->getName()]);
     }
 
 }

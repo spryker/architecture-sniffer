@@ -14,7 +14,7 @@ class FacadeMustNotHaveProperties extends \PHPMD\AbstractRule
      */
     public function apply(\PHPMD\AbstractNode $node)
     {
-        /* @var $node \PHPMD\Node\ClassNode */
+        /** @var $node \PHPMD\Node\ClassNode */
         $type = $node;
         do {
             $type = $type->getParentClass();

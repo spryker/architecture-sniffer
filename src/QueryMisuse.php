@@ -15,7 +15,7 @@ class QueryMisuse extends \PHPMD\AbstractRule implements \PHPMD\Rule\MethodAware
      */
     public function apply(\PHPMD\AbstractNode $node)
     {
-        /* @var $node \PHPMD\Node\MethodNode */
+        /** @var $node \PHPMD\Node\MethodNode */
         $types = $node->findChildrenOfType('MemberPrimaryPrefix');
 
         foreach ($types as $type) {

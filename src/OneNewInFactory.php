@@ -15,14 +15,16 @@ class OneNewInFactory extends \PHPMD\AbstractRule implements \PHPMD\Rule\MethodA
      */
     public function apply(\PHPMD\AbstractNode $node)
     {
-        /* @var $node \PHPMD\Node\MethodNode */
+        /** @var $node \PHPMD\Node\MethodNode */
         $type = $node->getParentType();
 
         while ($type) {
             $type = $type->getParentClass();
-            if (isset($type) && $type->getName() === 'AbstractBusinessFactory') {
-                $this->check($node);
+            if (!isset($type) && $type->getName() !== 'AbstractBusinessFactory') {
+                continue;
             }
+
+            $this->check($node);
         }
     }
 

@@ -17,7 +17,7 @@ class FacadeNotReturnInternals extends \PHPMD\AbstractRule
      */
     public function apply(\PHPMD\AbstractNode $node)
     {
-        /* @var $node \PHPMD\Node\MethodNode */
+        /** @var $node \PHPMD\Node\MethodNode */
         $type = $node->getParentType();
 
         while ($type) {
@@ -28,12 +28,15 @@ class FacadeNotReturnInternals extends \PHPMD\AbstractRule
         }
     }
 
-
+    /**
+     * @param \PHPMD\Node\MethodNode $node
+     * @return void
+     */
     protected function check(MethodNode $node)
     {
         $type = $node->getReturnClass();
         if (!empty($type)) {
-            /* @var $type PDepend\Source\AST\ASTClass */
+            /** @var $type PDepend\Source\AST\ASTClass */
             $parentType = $type->getParentClass();
             while ($parentType) {
                 $parentType = $type->getParentClass();

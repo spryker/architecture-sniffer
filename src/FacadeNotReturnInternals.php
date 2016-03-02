@@ -8,8 +8,7 @@ use PHPMD\Node\MethodNode;
  * Facade methods should not leak high level objects.
  * Only Transfer objects (DTOs) or primitive types are allowed.
  */
-class FacadeNotReturnInternals extends \PHPMD\AbstractRule
-    implements \PHPMD\Rule\MethodAware
+class FacadeNotReturnInternals extends \PHPMD\AbstractRule implements \PHPMD\Rule\MethodAware
 {
 
     /**
@@ -17,7 +16,7 @@ class FacadeNotReturnInternals extends \PHPMD\AbstractRule
      */
     public function apply(\PHPMD\AbstractNode $node)
     {
-        /** @var $node \PHPMD\Node\MethodNode */
+        /** @var \PHPMD\Node\MethodNode $node */
         $type = $node->getParentType();
 
         while ($type) {
@@ -35,20 +34,21 @@ class FacadeNotReturnInternals extends \PHPMD\AbstractRule
     protected function check(MethodNode $node)
     {
         $type = $node->getReturnClass();
-        if (!empty($type)) {
-            /** @var $type PDepend\Source\AST\ASTClass */
-            $parentType = $type->getParentClass();
-            while ($parentType) {
-                $parentType = $type->getParentClass();
-
-                if (isset($parentType) && $parentType->getName() === 'AbstractTransfer') {
-                    return;
-                }
-
-            }
-             $this->addViolation($node, [$type->getName()]);
+        if (empty($type)) {
             return;
         }
 
+        /** @var \PDepend\Source\AST\ASTClass $type */
+        $parentType = $type->getParentClass();
+        while ($parentType) {
+            $parentType = $type->getParentClass();
+
+            if (isset($parentType) && $parentType->getName() === 'AbstractTransfer') {
+                return;
+            }
+
+        }
+        $this->addViolation($node, [$type->getName()]);
     }
+
 }

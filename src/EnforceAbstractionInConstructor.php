@@ -9,8 +9,7 @@ use PHPMD\Node\MethodNode;
  * Class constructor arguments should always use abstractions, programming against an interface instead
  * of a concrete class etc.
  */
-class EnforceAbstractionInConstructor extends \PHPMD\AbstractRule
-    implements \PHPMD\Rule\ClassAware
+class EnforceAbstractionInConstructor extends \PHPMD\AbstractRule implements \PHPMD\Rule\ClassAware
 {
 
     /**
@@ -18,7 +17,7 @@ class EnforceAbstractionInConstructor extends \PHPMD\AbstractRule
      */
     public function apply(\PHPMD\AbstractNode $node)
     {
-        /** @var $node \PHPMD\Node\ClassNode */
+        /** @var \PHPMD\Node\ClassNode $node */
         $methods = $node->getMethods();
         foreach ($methods as $method) {
             if (strtolower($method->getName()) !== '__construct') {
@@ -47,7 +46,8 @@ class EnforceAbstractionInConstructor extends \PHPMD\AbstractRule
      * @param \PHPMD\AbstractNode $node
      * @return void
      */
-    protected function checkParam(\PDepend\Source\AST\ASTParameter $param, AbstractNode $node) {
+    protected function checkParam(\PDepend\Source\AST\ASTParameter $param, AbstractNode $node)
+    {
         $class = $param->getClass();
         if (empty($class) || $class->isAbstract()) {
             return;

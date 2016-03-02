@@ -3,6 +3,7 @@
 namespace ArchitectureSniffer;
 
 use PHPMD\Node\MethodNode;
+use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
  * Factory methods that create object instances are prefixed with `create`.
@@ -16,13 +17,13 @@ class MethodMustStartWithCreateInFactory extends \PHPMD\AbstractRule implements 
      */
     public function apply(\PHPMD\AbstractNode $node)
     {
-        /** @var $node \PHPMD\Node\MethodNode */
+        /** @var \PHPMD\Node\MethodNode $node */
         $type = $node->getParentType();
 
         while ($type) {
             $type = $type->getParentClass();
             if (isset($type)
-                && $type->getNamespaceName() === \Spryker\Zed\Kernel\Business\AbstractBusinessFactory::CLASS) {
+                && $type->getNamespaceName() === AbstractBusinessFactory::CLASS) {
                 $this->check($node);
             }
         }

@@ -15,7 +15,7 @@ class OneNewInFactory extends \PHPMD\AbstractRule implements \PHPMD\Rule\MethodA
      */
     public function apply(\PHPMD\AbstractNode $node)
     {
-        /** @var $node \PHPMD\Node\MethodNode */
+        /** @var \PHPMD\Node\MethodNode $node */
         $type = $node->getParentType();
 
         while ($type) {

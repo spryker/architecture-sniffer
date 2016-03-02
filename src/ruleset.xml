@@ -10,6 +10,25 @@
         Asserting clean code architecture with Spryker framework.
     </description>
 
+    <exclude-pattern>tests/_data</exclude-pattern>
+    <exclude-pattern>tests/_output</exclude-pattern>
+    <exclude-pattern>tests/_support</exclude-pattern>
+
+    <!--
+    <rule ref="rulesets/cleancode.xml" />
+
+    <rule ref="rulesets/codesize.xml" />
+    <rule ref="rulesets/controversial.xml" />
+    <rule ref="rulesets/design.xml" />
+
+    <rule ref="rulesets/naming.xml">
+        <exclude name="LongVariable" />
+    </rule>
+
+    <rule ref="rulesets/unusedcode.xml" />
+    -->
+
+
     <rule
             name="OneNewInFactory"
             message="Avoid to use more than one new statement in a factory method '{0}'."
@@ -34,23 +53,4 @@
             class="ArchitectureSniffer\FacadeMustNotHaveProperties"
     />
 
-    <rule
-            name="EnforceAbstractionInConstructor"
-            message="Only interfaces in constructor '{0}'."
-            class="ArchitectureSniffer\EnforceAbstractionInConstructor"
-    />
-
-
-<!--
-    <rule
-            name="IllegalDependencies"
-            message="Illegal dependency: '{0}'."
-            class="IllegalDependencies"
-    />
--->
-    <rule
-            name="QueryMisuse"
-            message="Illegal usage of a query object: '{0}'."
-            class="ArchitectureSniffer\QueryMisuse"
-    />
 </ruleset>

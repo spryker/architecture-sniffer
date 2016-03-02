@@ -5,8 +5,7 @@ namespace ArchitectureSniffer;
 /**
  * Facade methods should not contain properties or internal logic.
  */
-class FacadeMustNotHaveProperties extends \PHPMD\AbstractRule
-    implements \PHPMD\Rule\ClassAware
+class FacadeMustNotHaveProperties extends \PHPMD\AbstractRule implements \PHPMD\Rule\ClassAware
 {
 
     /**
@@ -14,7 +13,7 @@ class FacadeMustNotHaveProperties extends \PHPMD\AbstractRule
      */
     public function apply(\PHPMD\AbstractNode $node)
     {
-        /** @var $node \PHPMD\Node\ClassNode */
+        /** @var \PHPMD\Node\ClassNode $node */
         $type = $node;
         do {
             $type = $type->getParentClass();
@@ -24,13 +23,19 @@ class FacadeMustNotHaveProperties extends \PHPMD\AbstractRule
         } while ($type);
     }
 
+    /**
+     * @param \PHPMD\Node\ClassNode $node
+     * @return void
+     */
     protected function check(\PHPMD\Node\ClassNode $node)
     {
         $probs = $node->getProperties();
 
-        if (count($probs)) {
-            $this->addViolation($node);
+        if (!count($probs)) {
+            return;
         }
+
+        $this->addViolation($node);
     }
 
 }

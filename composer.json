@@ -1,0 +1,24 @@
+{
+  "name": "spryker/architecture-sniffer",
+  "description": "Spryker Code Architecture Sniffer",
+  "type": "library",
+  "license": "MIT",
+  "keywords": ["framework", "sniffer", "architecture", "standards"],
+  "homepage": "http://spryker.com",
+  "authors": [
+    {
+      "name": "Spryker",
+      "homepage": "http://spryker.com"
+    }
+  ],
+  "support": {
+    "source": "https://github.com/spryker/architecture-sniffer"
+  },
+  "require": {
+    "php": ">=5.4.16",
+    "phpmd/phpmd": "^2.3"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "~5.2"
+  }
+}

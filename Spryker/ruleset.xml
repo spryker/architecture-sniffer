@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<ruleset name="Spryker ruleset"
+         xmlns="http://pmd.sf.net/ruleset/1.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://pmd.sf.net/ruleset/1.0.0
+                     http://pmd.sf.net/ruleset_xml_schema.xsd"
+         xsi:noNamespaceSchemaLocation="
+                     http://pmd.sf.net/ruleset_xml_schema.xsd">
+    <description>
+        Asserting clean code architecture with Spryker framework.
+    </description>
+
+    <rule
+            name="OneNewInFactory"
+            message="Avoid to use more than one new statement in a factory method '{0}'."
+            class="OneNewInFactory"
+    />
+
+    <rule
+            name="MethodMustStartWithCreateInFactory"
+            message="Method must start with create*.See method '{0}'."
+            class="MethodMustStartWithCreateInFactory"
+    />
+
+    <rule
+            name="FacadeNotReturnInternals"
+            message="A facade method must not return return anything else than simple types or transfer objects '{0}'."
+            class="FacadeNotReturnInternals"
+    />
+
+    <rule
+            name="FacadeMustNotHaveProperties"
+            message="A facade must not have any properties '{0}'."
+            class="FacadeMustNotHaveProperties"
+    />
+
+    <rule
+            name="EnforceAbstractionInConstructor"
+            message="Only interfaces in constructor '{0}'."
+            class="EnforceAbstractionInConstructor"
+    />
+
+
+<!--
+    <rule
+            name="IllegalDependencies"
+            message="Illegal dependency: '{0}'."
+            class="IllegalDependencies"
+    />
+-->
+    <rule
+            name="QueryMisuse"
+            message="Illegal usage of a query object: '{0}'."
+            class="QueryMisuse"
+    />
+</ruleset>

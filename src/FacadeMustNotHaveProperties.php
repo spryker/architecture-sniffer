@@ -25,6 +25,7 @@ class FacadeMustNotHaveProperties extends \PHPMD\AbstractRule implements \PHPMD\
 
     /**
      * @param \PHPMD\Node\ClassNode $node
+     *
      * @return void
      */
     protected function check(\PHPMD\Node\ClassNode $node)

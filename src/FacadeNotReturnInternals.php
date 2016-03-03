@@ -29,6 +29,7 @@ class FacadeNotReturnInternals extends \PHPMD\AbstractRule implements \PHPMD\Rul
 
     /**
      * @param \PHPMD\Node\MethodNode $node
+     *
      * @return void
      */
     protected function check(MethodNode $node)

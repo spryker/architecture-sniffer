@@ -31,6 +31,7 @@ class EnforceAbstractionInConstructor extends \PHPMD\AbstractRule implements \PH
     /**
      * @param \PHPMD\Node\MethodNode $method
      * @param \PHPMD\AbstractNode $node
+     *
      * @return void
      */
     protected function check(MethodNode $method, AbstractNode $node)
@@ -44,6 +45,7 @@ class EnforceAbstractionInConstructor extends \PHPMD\AbstractRule implements \PH
     /**
      * @param \PDepend\Source\AST\ASTParameter $param
      * @param \PHPMD\AbstractNode $node
+     *
      * @return void
      */
     protected function checkParam(\PDepend\Source\AST\ASTParameter $param, AbstractNode $node)

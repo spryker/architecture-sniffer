@@ -30,6 +30,7 @@ class OneNewInFactory extends \PHPMD\AbstractRule implements \PHPMD\Rule\MethodA
 
     /**
      * @param \PHPMD\Node\MethodNode $node
+     *
      * @return void
      */
     protected function check(MethodNode $node)

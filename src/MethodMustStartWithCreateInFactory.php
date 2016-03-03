@@ -31,6 +31,7 @@ class MethodMustStartWithCreateInFactory extends \PHPMD\AbstractRule implements 
 
     /**
      * @param \PHPMD\Node\MethodNode $node
+     *
      * @return void
      */
     protected function check(MethodNode $node)

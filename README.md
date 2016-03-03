@@ -5,6 +5,11 @@ Architecture Sniffer for Spryker core and applications
 
 ## Usage
 
+Make sure you include the sniffer as `require-dev` dependency:
+
+    composer require --dev spryker/architecture-sniffer
+
+
 ### Running it from this repo
 
 ```

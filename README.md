@@ -1,14 +1,14 @@
 # Architecture Sniffer
 [![Minimum PHP Version](http://img.shields.io/badge/php-%3E%3D%205.4-8892BF.svg)](https://php.net/)
 
-Architecture Sniffer for Spryker core and applications
+Architecture Sniffer for Spryker core and applications.
 
 ## Usage
 
 Make sure you include the sniffer as `require-dev` dependency:
-
-    composer require --dev spryker/architecture-sniffer
-
+```
+composer require --dev spryker/architecture-sniffer
+```
 
 ### Running it from this repo
 

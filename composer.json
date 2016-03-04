@@ -2,7 +2,7 @@
   "name": "spryker/architecture-sniffer",
   "description": "Spryker Code Architecture Sniffer",
   "type": "library",
-  "license": "MIT",
+  "license": "proprietary",
   "keywords": ["framework", "sniffer", "architecture", "standards"],
   "homepage": "http://spryker.com",
   "authors": [

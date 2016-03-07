@@ -27,7 +27,31 @@
 
     <rule ref="rulesets/unusedcode.xml" />
     -->
+    <rule
+            name="AccessRule"
+            message="Access: {0}"
+            class="ArchitectureSniffer\AccessRule" />
 
+    <rule
+            name="FactoryRule"
+            message="Factories: {0}"
+            class="ArchitectureSniffer\FactoryRule" />
+
+    <rule
+            name="ZedBusinessFacadeRule"
+            message="Zed Business Layer - Facade: {0}"
+            class="ArchitectureSniffer\ZedBusinessFacadeRule" />
+
+    <rule
+            name="ClientRule"
+            message="Client: {0}"
+            class="ArchitectureSniffer\ClientRule" />
+
+    <rule
+            name="BundleConstants"
+            message="Bundle Constants: {0}"
+            class="ArchitectureSniffer\BundleConstantsRule" />
+<!--
 
     <rule
             name="OneNewInFactory"
@@ -52,5 +76,5 @@
             message="A facade must not have any properties '{0}'."
             class="ArchitectureSniffer\FacadeMustNotHaveProperties"
     />
-
+-->
 </ruleset>

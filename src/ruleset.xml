@@ -48,9 +48,14 @@
             class="ArchitectureSniffer\ClientRule" />
 
     <rule
-            name="BundleConstants"
+            name="BundleConstantsRule"
             message="Bundle Constants: {0}"
             class="ArchitectureSniffer\BundleConstantsRule" />
+
+    <rule
+            name="ControllerRule"
+            message="Controller: {0}"
+            class="ArchitectureSniffer\ControllerRule" />
 <!--
 
     <rule

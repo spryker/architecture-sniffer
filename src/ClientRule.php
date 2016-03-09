@@ -43,7 +43,7 @@ class ClientRule extends AbstractRule implements ClassAware
             $class,
             [
                 sprintf(
-                    'The class %s does not implement an interface %s which violates rule: "Implements an interface with same name and suffix "Interface\'"',
+                    'The class %s does not implement an interface %s which violates rule: "Implements an interface with same name and suffix \'Interface\'"',
                     $qName,
                     $interfaceName
                 )

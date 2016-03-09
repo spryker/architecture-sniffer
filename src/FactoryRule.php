@@ -4,6 +4,7 @@ namespace ArchitectureSniffer;
 
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
+use PHPMD\Node\ClassNode;
 use PHPMD\Node\MethodNode;
 use PHPMD\Rule\ClassAware;
 
@@ -27,17 +28,16 @@ class FactoryRule extends AbstractRule implements ClassAware
             return;
         }
 
-        $qName = sprintf('%s\\%s', $node->getNamespaceName(), $node->getName());
         foreach ($node->getMethods() as $method) {
             if (0 !== strpos($method->getName(), 'create')) {
                 continue;
             }
 
-            $this->applyNoLoopsInFactories($qName, $method);
+            $this->applyNoLoopsInFactories($method);
         }
     }
 
-    private function applyNoLoopsInFactories($qName, MethodNode $method)
+    private function applyNoLoopsInFactories(MethodNode $method)
     {
 
         foreach ($method->findChildrenOfType('Statement') as $statement) {
@@ -49,9 +49,8 @@ class FactoryRule extends AbstractRule implements ClassAware
                 $method,
                 [
                     sprintf(
-                        'The method %s::%s() contains a "%s" statement which violates rule "No loops in factories"',
-                        $qName,
-                        $method->getImage(),
+                        'The method %s contains a "%s" statement which violates rule "No loops in factories"',
+                        $method->getFullQualifiedName(),
                         $statement->getImage()
                     )
                 ]

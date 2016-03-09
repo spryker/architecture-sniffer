@@ -21,14 +21,13 @@ class BundleConstantsRule extends AbstractRule implements InterfaceAware
             return;
         }
 
-        $qName = sprintf('%s\\%s', $node->getNamespaceName(), $node->getName());
         foreach ($node->getMethods() as $method) {
             $this->addViolation(
                 $node,
                 [
                     sprintf(
                         'Interface %s defines a method %s() which violates rule "Just constants in these interfaces"',
-                        $qName,
+                        $node->getFullQualifiedName(),
                         $method->getName()
                     )
                 ]
@@ -51,7 +50,7 @@ class BundleConstantsRule extends AbstractRule implements InterfaceAware
                     sprintf(
                         'The value "%s" and the name of constant %s::%s are not equal which violates rule "Only keys no values"',
                         $value,
-                        $qName,
+                        $node->getFullQualifiedName(),
                         $constant->getImage()
                     )
                 ]

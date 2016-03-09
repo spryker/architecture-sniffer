@@ -16,19 +16,18 @@ class ClientRule extends AbstractRule implements ClassAware
             return;
         }
 
-        $qName = sprintf('%s\\%s', $node->getNamespaceName(), $node->getName());
-        if (0 === preg_match('(\\\\Client\\\\.+Client$)', $qName)) {
+        if (0 === preg_match('(\\\\Client\\\\.+Client$)', $node->getFullQualifiedName())) {
             return;
         }
 
-        $this->applyImplementsInterfaceWithSameNameAndSuffix($qName, $node);
+        $this->applyImplementsInterfaceWithSameNameAndSuffix($node);
 
         foreach ($node->getMethods() as $method) {
-            $this->applyEveryPublicMethodMustHaveApiTagAndContractText($qName, $method);
+            $this->applyEveryPublicMethodMustHaveApiTagAndContractText($method);
         }
     }
 
-    private function applyImplementsInterfaceWithSameNameAndSuffix($qName, ClassNode $class)
+    private function applyImplementsInterfaceWithSameNameAndSuffix(ClassNode $class)
     {
         $interfaceName = sprintf('%sInterface', $class->getImage());
 
@@ -44,14 +43,14 @@ class ClientRule extends AbstractRule implements ClassAware
             [
                 sprintf(
                     'The class %s does not implement an interface %s which violates rule: "Implements an interface with same name and suffix \'Interface\'"',
-                    $qName,
+                    $class->getFullQualifiedName(),
                     $interfaceName
                 )
             ]
         );
     }
 
-    private function applyEveryPublicMethodMustHaveApiTagAndContractText($qName, MethodNode $method)
+    private function applyEveryPublicMethodMustHaveApiTagAndContractText(MethodNode $method)
     {
         if ($method->isAbstract() || false === $method->isPublic()) {
             return;
@@ -73,10 +72,9 @@ class ClientRule extends AbstractRule implements ClassAware
             $method,
             [
                 sprintf(
-                    'The client method %s::%s() does not contain an @api tag or contract text ' .
+                    'The client method %s does not contain an @api tag or contract text ' .
                     'which violates rule: "Every method must have the @api tag in docblock and a contract text above"',
-                    $qName,
-                    $method->getName()
+                    $method->getFullQualifiedName()
                 )
             ]
         );

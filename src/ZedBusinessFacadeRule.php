@@ -11,19 +11,18 @@ class ZedBusinessFacadeRule extends AbstractRule implements ClassAware
 {
     public function apply(AbstractNode $node)
     {
-        $qName = sprintf('%s\\%s', $node->getNamespaceName(), $node->getName());
-        if (0 === preg_match('(\\\\Zed\\\\.*\\\\Business\\\\.*Facade$)', $qName)) {
+        if (0 === preg_match('(\\\\Zed\\\\.*\\\\Business\\\\.*Facade$)', $node->getFullQualifiedName())) {
             return;
         }
 
-        $this->applyStatelessThereAreNoProperties($qName, $node);
+        $this->applyStatelessThereAreNoProperties($node);
 
         foreach ($node->getMethods() as $method) {
-            $this->applyNoInstantiationsWithNew($qName, $method);
+            $this->applyNoInstantiationsWithNew($method);
         }
     }
 
-    private function applyStatelessThereAreNoProperties($qName, ClassNode $class)
+    private function applyStatelessThereAreNoProperties(ClassNode $class)
     {
         if (0 === count($class->getProperties())) {
             return;
@@ -34,13 +33,13 @@ class ZedBusinessFacadeRule extends AbstractRule implements ClassAware
             [
                 sprintf(
                     'The are properties in class %s which violates rule "Stateless, there are no properties"',
-                    $qName
+                    $class->getFullQualifiedName()
                 )
             ]
         );
     }
 
-    private function applyNoInstantiationsWithNew($qName, MethodNode $method)
+    private function applyNoInstantiationsWithNew(MethodNode $method)
     {
         if (0 === count($method->findChildrenOfType('AllocationExpression'))) {
             return;
@@ -50,9 +49,8 @@ class ZedBusinessFacadeRule extends AbstractRule implements ClassAware
             $method,
             [
                 sprintf(
-                    'The method %s::%s() uses "new" to instantiate an object which violates rule "No instantiations with \'new\'"',
-                    $qName,
-                    $method->getImage()
+                    'The method %s uses "new" to instantiate an object which violates rule "No instantiations with \'new\'"',
+                    $method->getFullQualifiedName()
                 )
             ]
         );

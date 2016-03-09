@@ -67,26 +67,23 @@ class AccessRule extends AbstractRule implements ClassAware
     {
         $patterns = $this->collectPatterns($node);
 
-        $srcQName = sprintf('%s\\%s', $node->getNamespaceName(), $node->getName());
-
-        $this->applyPatterns($node, $srcQName, $patterns);
+        $this->applyPatterns($node, $patterns);
 
         foreach ($node->getMethods() as $method) {
             $this->applyPatterns(
                 $method,
-                sprintf('%s::%s()', $srcQName, $method->getName()),
                 $patterns
             );
         }
     }
 
-    private function applyPatterns(AbstractNode $node, $srcQName, array $patterns)
+    private function applyPatterns(AbstractNode $node, array $patterns)
     {
         foreach ($node->getDependencies() as $dependency) {
             $targetQName = sprintf('%s\\%s', $dependency->getNamespaceName(), $dependency->getName());
 
             foreach ($patterns as list($srcPattern, $targetPattern, $message)) {
-                if (0 === preg_match($srcPattern, $srcQName)) {
+                if (0 === preg_match($srcPattern, $node->getFullQualifiedName())) {
                     continue;
                 }
                 if (0 === preg_match($targetPattern, $targetQName, $match)) {
@@ -98,7 +95,7 @@ class AccessRule extends AbstractRule implements ClassAware
                     [
                         str_replace(
                             ['{type}', '{source}', '{target}'],
-                            [ucfirst($node->getType()), $srcQName, $targetQName],
+                            [ucfirst($node->getType()), $node->getFullQualifiedName(), $targetQName],
                             $message
                         )
                     ]

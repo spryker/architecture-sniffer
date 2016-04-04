@@ -1,17 +1,23 @@
 <?php
-namespace ArchitectureSniffer;
+
+namespace ArchitectureSniffer\Business\Facade;
 
 use PHPMD\AbstractNode;
-use PHPMD\AbstractRule;
 use PHPMD\Node\ClassNode;
 use PHPMD\Node\MethodNode;
 use PHPMD\Rule\ClassAware;
 
-class ZedBusinessFacadeRule extends AbstractRule implements ClassAware
+class ZedBusinessFacadeRule extends AbstractFacadeRule implements ClassAware
 {
+
+    /**
+     * @param \PHPMD\AbstractNode $node
+     *
+     * @return void
+     */
     public function apply(AbstractNode $node)
     {
-        if (0 === preg_match('(\\\\Zed\\\\.*\\\\Business\\\\.*Facade$)', $node->getFullQualifiedName())) {
+        if (!$this->isFacade($node->getFullQualifiedName())) {
             return;
         }
 
@@ -22,6 +28,11 @@ class ZedBusinessFacadeRule extends AbstractRule implements ClassAware
         }
     }
 
+    /**
+     * @param \PHPMD\Node\ClassNode $class
+     *
+     * @return void
+     */
     private function applyStatelessThereAreNoProperties(ClassNode $class)
     {
         if (0 === count($class->getProperties())) {
@@ -39,6 +50,11 @@ class ZedBusinessFacadeRule extends AbstractRule implements ClassAware
         );
     }
 
+    /**
+     * @param \PHPMD\Node\MethodNode $method
+     *
+     * @return void
+     */
     private function applyNoInstantiationsWithNew(MethodNode $method)
     {
         if (0 === count($method->findChildrenOfType('AllocationExpression'))) {
@@ -55,4 +71,5 @@ class ZedBusinessFacadeRule extends AbstractRule implements ClassAware
             ]
         );
     }
+
 }

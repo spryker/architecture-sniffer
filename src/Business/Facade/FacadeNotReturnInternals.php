@@ -1,7 +1,9 @@
 <?php
 
-namespace ArchitectureSniffer;
+namespace ArchitectureSniffer\Business\Facade;
 
+use PDepend\Source\AST\ASTClass;
+use PHPMD\AbstractNode;
 use PHPMD\Node\MethodNode;
 
 /**
@@ -12,9 +14,11 @@ class FacadeNotReturnInternals extends \PHPMD\AbstractRule implements \PHPMD\Rul
 {
 
     /**
-     * @inheritdoc
+     * @param AbstractNode $node
+     *
+     * @return void
      */
-    public function apply(\PHPMD\AbstractNode $node)
+    public function apply(AbstractNode $node)
     {
         /** @var \PHPMD\Node\MethodNode $node */
         $type = $node->getParentType();
@@ -28,7 +32,7 @@ class FacadeNotReturnInternals extends \PHPMD\AbstractRule implements \PHPMD\Rul
     }
 
     /**
-     * @param \PHPMD\Node\MethodNode $node
+     * @param MethodNode $node
      *
      * @return void
      */
@@ -39,7 +43,7 @@ class FacadeNotReturnInternals extends \PHPMD\AbstractRule implements \PHPMD\Rul
             return;
         }
 
-        /** @var \PDepend\Source\AST\ASTClass $type */
+        /** @var ASTClass $type */
         $parentType = $type->getParentClass();
         while ($parentType) {
             $parentType = $type->getParentClass();

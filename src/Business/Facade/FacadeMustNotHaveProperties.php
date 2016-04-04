@@ -1,6 +1,9 @@
 <?php
 
-namespace ArchitectureSniffer;
+namespace ArchitectureSniffer\Business\Facade;
+
+use PHPMD\AbstractNode;
+use PHPMD\Node\ClassNode;
 
 /**
  * Facade methods should not contain properties or internal logic.
@@ -9,11 +12,13 @@ class FacadeMustNotHaveProperties extends \PHPMD\AbstractRule implements \PHPMD\
 {
 
     /**
-     * @inheritdoc
+     * @param \PHPMD\AbstractNode $node
+     *
+     * @return void
      */
-    public function apply(\PHPMD\AbstractNode $node)
+    public function apply(AbstractNode $node)
     {
-        /** @var \PHPMD\Node\ClassNode $node */
+        /** @var ClassNode $node */
         $type = $node;
         do {
             $type = $type->getParentClass();
@@ -24,15 +29,15 @@ class FacadeMustNotHaveProperties extends \PHPMD\AbstractRule implements \PHPMD\
     }
 
     /**
-     * @param \PHPMD\Node\ClassNode $node
+     * @param ClassNode $node
      *
      * @return void
      */
-    protected function check(\PHPMD\Node\ClassNode $node)
+    protected function check(ClassNode $node)
     {
-        $probs = $node->getProperties();
+        $properties = $node->getProperties();
 
-        if (!count($probs)) {
+        if (!count($properties)) {
             return;
         }
 

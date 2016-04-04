@@ -1,6 +1,6 @@
 <?php
 
-namespace ArchitectureSniffer;
+namespace ArchitectureSniffer\Common;
 
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
@@ -9,6 +9,7 @@ use PHPMD\Rule\ClassAware;
 
 class AccessRule extends AbstractRule implements ClassAware
 {
+
     /**
      * @var array
      */
@@ -19,43 +20,43 @@ class AccessRule extends AbstractRule implements ClassAware
             '{type} {source} accesses {target} which violates rule "No call from Core to Project"'
         ],
         [
-            '(Spryker.*\\\\Yves\\\\.+)',
-            '(Spryker.*\\\\Zed\\\\.+)',
+            '(Spryker\\\\Yves\\\\.+)',
+            '(Spryker\\\\Zed\\\\.+)',
             '{type} {source} accesses {target} which violates rule "No call from Yves to Zed"'
         ],
         [
-            '(Spryker.*\\\\Zed\\\\.+)',
-            '(Spryker.*\\\\Yves\\\\.+)',
+            '(Spryker\\\\Zed\\\\.+)',
+            '(Spryker\\\\Yves\\\\.+)',
             '{type} {source} accesses {target} which violates rule "No call from Zed to Yves"'
         ],
         [
-            '(Spryker.*\\\\Shared\\\\.+)',
-            '(Spryker.*\\\\Zed\\\\.+)',
+            '(Spryker\\\\Shared\\\\.+)',
+            '(Spryker\\\\Zed\\\\.+)',
             '{type} {source} accesses {target} which violates rule "No call from Shared to Zed"'
         ],
         [
-            '(Spryker.*\\\\Shared\\\\.+)',
-            '(Spryker.*\\\\Client\\\\.+)',
+            '(Spryker\\\\Shared\\\\.+)',
+            '(Spryker\\\\Client\\\\.+)',
             '{type} {source} accesses {target} which violates rule "No call from Shared to Client"'
         ],
         [
-            '(Spryker.*\\\\Shared\\\\.+)',
-            '(Spryker.*\\\\Yves\\\\.+)',
+            '(Spryker\\\\Shared\\\\.+)',
+            '(Spryker\\\\Yves\\\\.+)',
             '{type} {source} accesses {target} which violates rule "No call from Shared to Yves"'
         ],
-        //[
-        //    '(Spryker.*\\\\(Shared|Yves|Zed)\\\\Library\\\\.+)',
-        //    '(Spryker.*\\\\Yves\\\\.+)',
-        //    '{type} {source} accesses {target} which violates rule "No call libary-bundle to any other bundle"'
-        //],
         [
-            '(Spryker.*\\\\Client\\\\.+)',
-            '(Spryker.*\\\\Zed\\\\.+)',
+            '(Spryker\\\\(Shared|Yves|Zed)\\\\Library\\\\.+)',
+            '(.*\\\\(Shared|Yves|Zed)\\\\.+)',
+            '{type} {source} accesses {target} which violates rule "No call libary-bundle to any other bundle"'
+        ],
+        [
+            '(Spryker\\\\Client\\\\.+)',
+            '(Spryker\\\\Zed\\\\.+)',
             '{type} {source} accesses {target} which violates rule "No call from Client to Zed"'
         ],
         [
-            '(Spryker.*\\\\Client\\\\.+)',
-            '(Spryker.*\\\\Yves\\\\.+)',
+            '(Spryker\\\\Client\\\\.+)',
+            '(Spryker\\\\Yves\\\\.+)',
             '{type} {source} accesses {target} which violates rule "No call from Client to Yves"'
         ],
     ];
@@ -77,6 +78,12 @@ class AccessRule extends AbstractRule implements ClassAware
         }
     }
 
+    /**
+     * @param \PHPMD\AbstractNode $node
+     * @param array $patterns
+     *
+     * @return void
+     */
     private function applyPatterns(AbstractNode $node, array $patterns)
     {
         foreach ($node->getDependencies() as $dependency) {
@@ -86,7 +93,7 @@ class AccessRule extends AbstractRule implements ClassAware
                 if (0 === preg_match($srcPattern, $node->getFullQualifiedName())) {
                     continue;
                 }
-                if (0 === preg_match($targetPattern, $targetQName, $match)) {
+                if (0 === preg_match($targetPattern, $targetQName)) {
                     continue;
                 }
 
@@ -104,6 +111,11 @@ class AccessRule extends AbstractRule implements ClassAware
         }
     }
 
+    /**
+     * @param \PHPMD\Node\ClassNode $class
+     *
+     * @return array
+     */
     private function collectPatterns(ClassNode $class)
     {
         $patterns = [];
@@ -112,10 +124,8 @@ class AccessRule extends AbstractRule implements ClassAware
                 $patterns[] = [$srcPattern, $targetPattern, $message];
             }
         }
+
         return $patterns;
     }
 
-    private function applyNoCallFromLibraryBundleToOtherBundle(ClassNode $class)
-    {
-    }
 }

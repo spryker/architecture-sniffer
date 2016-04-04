@@ -1,19 +1,23 @@
 <?php
 
-namespace ArchitectureSniffer;
+namespace ArchitectureSniffer\Common;
 
-use PHPMD\Node\MethodNode;
+use PHPMD\AbstractNode;
+use PHPMD\AbstractRule;
+use PHPMD\Rule\MethodAware;
 
 /**
  * Detects illegal use of Query object.
  */
-class QueryMisuse extends \PHPMD\AbstractRule implements \PHPMD\Rule\MethodAware
+class QueryMisuse extends AbstractRule implements MethodAware
 {
 
     /**
-     * @inheritdoc
+     * @param \PHPMD\AbstractNode $node
+     *
+     * @return void
      */
-    public function apply(\PHPMD\AbstractNode $node)
+    public function apply(AbstractNode $node)
     {
         /** @var \PHPMD\Node\MethodNode $node */
         $types = $node->findChildrenOfType('MemberPrimaryPrefix');

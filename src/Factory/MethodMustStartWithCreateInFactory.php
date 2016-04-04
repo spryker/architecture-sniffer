@@ -1,21 +1,26 @@
 <?php
 
-namespace ArchitectureSniffer;
+namespace ArchitectureSniffer\Factory;
 
+use PHPMD\AbstractNode;
+use PHPMD\AbstractRule;
 use PHPMD\Node\MethodNode;
+use PHPMD\Rule\MethodAware;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
  * Factory methods that create object instances are prefixed with `create`.
  * If they only return a DependencyProvider value, they must be prefixed with `get`.
  */
-class MethodMustStartWithCreateInFactory extends \PHPMD\AbstractRule implements \PHPMD\Rule\MethodAware
+class MethodMustStartWithCreateInFactory extends AbstractRule implements MethodAware
 {
 
     /**
-     * @inheritdoc
+     * @param \PHPMD\AbstractNode $node
+     *
+     * @return void
      */
-    public function apply(\PHPMD\AbstractNode $node)
+    public function apply(AbstractNode $node)
     {
         /** @var \PHPMD\Node\MethodNode $node */
         $type = $node->getParentType();

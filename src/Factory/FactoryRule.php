@@ -1,6 +1,6 @@
 <?php
 
-namespace ArchitectureSniffer;
+namespace ArchitectureSniffer\Factory;
 
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
@@ -10,6 +10,7 @@ use PHPMD\Rule\ClassAware;
 
 class FactoryRule extends AbstractRule implements ClassAware
 {
+
     /**
      * Statements we don't want in factory methods.
      *
@@ -22,14 +23,22 @@ class FactoryRule extends AbstractRule implements ClassAware
         'do',
     ];
 
+    /**
+     * @param \PHPMD\AbstractNode $node
+     *
+     * @return void
+     */
     public function apply(AbstractNode $node)
     {
+        if (!($node instanceof ClassNode)) {
+            return;
+        }
+
         if (0 === preg_match('(Factory$)', $node->getName())) {
             return;
         }
 
         $this->applyFactoriesAreStateless($node);
-        return;
 
         foreach ($node->getMethods() as $method) {
             $this->applyNoLoopsInFactories($method);
@@ -39,6 +48,11 @@ class FactoryRule extends AbstractRule implements ClassAware
         }
     }
 
+    /**
+     * @param \PHPMD\Node\MethodNode $method
+     *
+     * @return void
+     */
     private function applyNoLoopsInFactories(MethodNode $method)
     {
         foreach ($method->findChildrenOfType('Statement') as $statement) {
@@ -59,6 +73,12 @@ class FactoryRule extends AbstractRule implements ClassAware
         }
     }
 
+    /**
+     * @param \PHPMD\Node\ClassNode $class
+     * @param \PHPMD\Node\MethodNode $method
+     *
+     * @return void
+     */
     private function applyOnlyGetOrCreateMethodInFactories(ClassNode $class, MethodNode $method)
     {
         if (0 != preg_match('(^(create|get).+)', $method->getName())) {
@@ -77,6 +97,11 @@ class FactoryRule extends AbstractRule implements ClassAware
         );
     }
 
+    /**
+     * @param \PHPMD\Node\MethodNode $method
+     *
+     * @return void
+     */
     private function applyCreateMethodContainsOneNew(MethodNode $method)
     {
         if ('create' != substr($method->getName(), 0, 6)) {
@@ -99,6 +124,11 @@ class FactoryRule extends AbstractRule implements ClassAware
         );
     }
 
+    /**
+     * @param \PHPMD\Node\MethodNode $method
+     *
+     * @return void
+     */
     private function applyGetMethodContainsNoNew(MethodNode $method)
     {
         if ('get' != substr($method->getName(), 0, 3)) {
@@ -122,6 +152,11 @@ class FactoryRule extends AbstractRule implements ClassAware
         );
     }
 
+    /**
+     * @param \PHPMD\Node\ClassNode $class
+     *
+     * @return void
+     */
     private function applyFactoriesAreStateless(ClassNode $class)
     {
         if (0 === ($count = count($class->getProperties()))) {
@@ -140,4 +175,5 @@ class FactoryRule extends AbstractRule implements ClassAware
             ]
         );
     }
+
 }

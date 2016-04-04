@@ -1,15 +1,21 @@
 <?php
-namespace ArchitectureSniffer;
+
+namespace ArchitectureSniffer\Client;
 
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
 use PHPMD\Node\ClassNode;
-use PHPMD\Node\InterfaceNode;
 use PHPMD\Node\MethodNode;
 use PHPMD\Rule\ClassAware;
 
 class ClientRule extends AbstractRule implements ClassAware
 {
+
+    /**
+     * @param \PHPMD\AbstractNode $node
+     *
+     * @return void
+     */
     public function apply(AbstractNode $node)
     {
         if ($node->isAbstract()) {
@@ -27,11 +33,16 @@ class ClientRule extends AbstractRule implements ClassAware
         }
     }
 
+    /**
+     * @param \PHPMD\Node\ClassNode $class
+     *
+     * @return void
+     */
     private function applyImplementsInterfaceWithSameNameAndSuffix(ClassNode $class)
     {
         $interfaceName = sprintf('%sInterface', $class->getImage());
 
-        /** @var InterfaceNode $interface */
+        /** @var \PHPMD\Node\InterfaceNode $interface */
         foreach ($class->getInterfaces() as $interface) {
             if ($interfaceName === $interface->getName()) {
                 return;
@@ -50,6 +61,11 @@ class ClientRule extends AbstractRule implements ClassAware
         );
     }
 
+    /**
+     * @param \PHPMD\Node\MethodNode $method
+     *
+     * @return void
+     */
     private function applyEveryPublicMethodMustHaveApiTagAndContractText(MethodNode $method)
     {
         if ($method->isAbstract() || false === $method->isPublic()) {
@@ -78,7 +94,6 @@ class ClientRule extends AbstractRule implements ClassAware
                 )
             ]
         );
-
-
     }
+
 }

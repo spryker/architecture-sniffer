@@ -1,13 +1,15 @@
 <?php
 
-namespace ArchitectureSniffer;
+namespace ArchitectureSniffer\Factory;
 
+use PHPMD\AbstractRule;
 use PHPMD\Node\MethodNode;
+use PHPMD\Rule\MethodAware;
 
 /**
  * Factory methods should create only single instances, not multiple in one.
  */
-class OneNewInFactory extends \PHPMD\AbstractRule implements \PHPMD\Rule\MethodAware
+class OneNewInFactory extends AbstractRule implements MethodAware
 {
 
     /**

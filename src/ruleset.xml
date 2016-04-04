@@ -14,72 +14,93 @@
     <exclude-pattern>tests/_output</exclude-pattern>
     <exclude-pattern>tests/_support</exclude-pattern>
 
-    <!--
-    <rule ref="rulesets/cleancode.xml" />
+    <!-- CLIENT RULES -->
+    <rule
+            name="ClientRule"
+            message="Client: {0}"
+            class="ArchitectureSniffer\Client\ClientRule" />
 
-    <rule ref="rulesets/codesize.xml" />
-    <rule ref="rulesets/controversial.xml" />
-    <rule ref="rulesets/design.xml" />
-
-    <rule ref="rulesets/naming.xml">
-        <exclude name="LongVariable" />
-    </rule>
-
-    <rule ref="rulesets/unusedcode.xml" />
-    -->
+    <!-- COMMON RULES -->
     <rule
             name="AccessRule"
             message="Access: {0}"
-            class="ArchitectureSniffer\AccessRule" />
+            class="ArchitectureSniffer\Common\AccessRule" />
+
+<!--
+    <rule
+            name="BundleConstantsRule"
+            message="Bundle Constants: {0}"
+            class="ArchitectureSniffer\Common\BundleConstantsRule" />
+-->
+
+    <!-- CONTROLLER RULES -->
+    <rule
+            name="ControllerRule"
+            message="Controller: {0}"
+            class="ArchitectureSniffer\Controller\ControllerRule" />
+
+    <!-- FACADE RULES -->
+    <rule
+            name="AllMethodsPublicInFacadeRule"
+            message="Zed Business Layer - Facade: {0}"
+            class="ArchitectureSniffer\Business\Facade\AllMethodsPublicInFacadeRule" />
 
     <rule
-            name="FactoryRule"
-            message="Factories: {0}"
-            class="ArchitectureSniffer\FactoryRule" />
+            name="ArgumentsFacadeRule"
+            message="Zed Business Layer - Facade: {0}"
+            class="ArchitectureSniffer\Business\Facade\ArgumentsFacadeRule" />
+
+    <rule
+            name="InterfaceFacadeRule"
+            message="Zed Business Layer - Facade: {0}"
+            class="ArchitectureSniffer\Business\Facade\InterfaceFacadeRule" />
+
+    <rule
+            name="NoLogicInFacadeRule"
+            message="Zed Business Layer - Facade: {0}"
+            class="ArchitectureSniffer\Business\Facade\NoLogicInFacadeRule" />
+
+    <rule
+            name="ReturnFacadeRule"
+            message="Zed Business Layer - Facade: {0}"
+            class="ArchitectureSniffer\Business\Facade\ReturnFacadeRule" />
 
     <rule
             name="ZedBusinessFacadeRule"
             message="Zed Business Layer - Facade: {0}"
-            class="ArchitectureSniffer\ZedBusinessFacadeRule" />
+            class="ArchitectureSniffer\Business\Facade\ZedBusinessFacadeRule" />
 
+    <!-- FACTORY RULES -->
     <rule
-            name="ClientRule"
-            message="Client: {0}"
-            class="ArchitectureSniffer\ClientRule" />
+            name="FactoryRule"
+            message="Factories: {0}"
+            class="ArchitectureSniffer\Factory\FactoryRule" />
 
-    <rule
-            name="BundleConstantsRule"
-            message="Bundle Constants: {0}"
-            class="ArchitectureSniffer\BundleConstantsRule" />
 
-    <rule
-            name="ControllerRule"
-            message="Controller: {0}"
-            class="ArchitectureSniffer\ControllerRule" />
 <!--
 
     <rule
             name="OneNewInFactory"
             message="Avoid to use more than one new statement in a factory method '{0}'."
-            class="ArchitectureSniffer\OneNewInFactory"
+            class="ArchitectureSniffer\Factory\OneNewInFactory"
     />
 
     <rule
             name="MethodMustStartWithCreateInFactory"
             message="Method must start with create*.See method '{0}'."
-            class="ArchitectureSniffer\MethodMustStartWithCreateInFactory"
+            class="ArchitectureSniffer\Factory\MethodMustStartWithCreateInFactory"
     />
 
     <rule
             name="FacadeNotReturnInternals"
             message="A facade method must not return return anything else than simple types or transfer objects '{0}'."
-            class="ArchitectureSniffer\FacadeNotReturnInternals"
+            class="ArchitectureSniffer\Facade\FacadeNotReturnInternals"
     />
 
     <rule
             name="FacadeMustNotHaveProperties"
             message="A facade must not have any properties '{0}'."
-            class="ArchitectureSniffer\FacadeMustNotHaveProperties"
+            class="ArchitectureSniffer\Facade\FacadeMustNotHaveProperties"
     />
 -->
 </ruleset>

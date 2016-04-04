@@ -1,13 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: manu
- * Date: 04.03.16
- * Time: 12:06
- */
 
-namespace ArchitectureSniffer;
-
+namespace ArchitectureSniffer\Common;
 
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
@@ -15,6 +8,12 @@ use PHPMD\Rule\InterfaceAware;
 
 class BundleConstantsRule extends AbstractRule implements InterfaceAware
 {
+
+    /**
+     * @param \PHPMD\AbstractNode $node
+     *
+     * @return void
+     */
     public function apply(AbstractNode $node)
     {
         if (0 === preg_match('([A-Za-z0-9]+Constants$)', $node->getName())) {
@@ -57,4 +56,5 @@ class BundleConstantsRule extends AbstractRule implements InterfaceAware
             );
         }
     }
+
 }

@@ -1,7 +1,8 @@
 <?php
 
-namespace ArchitectureSniffer;
+namespace ArchitectureSniffer\Common;
 
+use PDepend\Source\AST\ASTParameter;
 use PHPMD\AbstractNode;
 use PHPMD\Node\MethodNode;
 
@@ -13,9 +14,11 @@ class EnforceAbstractionInConstructor extends \PHPMD\AbstractRule implements \PH
 {
 
     /**
-     * @inheritdoc
+     * @param \PHPMD\AbstractNode $node
+     *
+     * @return void
      */
-    public function apply(\PHPMD\AbstractNode $node)
+    public function apply(AbstractNode $node)
     {
         /** @var \PHPMD\Node\ClassNode $node */
         $methods = $node->getMethods();
@@ -29,8 +32,8 @@ class EnforceAbstractionInConstructor extends \PHPMD\AbstractRule implements \PH
     }
 
     /**
-     * @param \PHPMD\Node\MethodNode $method
-     * @param \PHPMD\AbstractNode $node
+     * @param MethodNode $method
+     * @param AbstractNode $node
      *
      * @return void
      */
@@ -43,12 +46,12 @@ class EnforceAbstractionInConstructor extends \PHPMD\AbstractRule implements \PH
     }
 
     /**
-     * @param \PDepend\Source\AST\ASTParameter $param
-     * @param \PHPMD\AbstractNode $node
+     * @param ASTParameter $param
+     * @param AbstractNode $node
      *
      * @return void
      */
-    protected function checkParam(\PDepend\Source\AST\ASTParameter $param, AbstractNode $node)
+    protected function checkParam(ASTParameter $param, AbstractNode $node)
     {
         $class = $param->getClass();
         if (empty($class) || $class->isAbstract()) {

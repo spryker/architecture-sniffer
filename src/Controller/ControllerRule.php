@@ -1,5 +1,6 @@
 <?php
-namespace ArchitectureSniffer;
+
+namespace ArchitectureSniffer\Controller;
 
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
@@ -8,6 +9,12 @@ use PHPMD\Rule\ClassAware;
 
 class ControllerRule extends AbstractRule implements ClassAware
 {
+
+    /**
+     * @param \PHPMD\AbstractNode $node
+     *
+     * @return void
+     */
     public function apply(AbstractNode $node)
     {
         if (0 === preg_match('(\\\\[^\\\\]+Controller$)', $node->getFullQualifiedName())) {
@@ -19,6 +26,11 @@ class ControllerRule extends AbstractRule implements ClassAware
         }
     }
 
+    /**
+     * @param \PHPMD\Node\MethodNode $method
+     *
+     * @return void
+     */
     private function applyPublicMethodsHaveActionSuffix(MethodNode $method)
     {
         if ('Action' === substr($method->getName(), -6, 6)) {
@@ -38,4 +50,5 @@ class ControllerRule extends AbstractRule implements ClassAware
             ]
         );
     }
+
 }

@@ -26,12 +26,10 @@
             message="Access: {0}"
             class="ArchitectureSniffer\Common\AccessRule" />
 
-<!--
     <rule
             name="BundleConstantsRule"
             message="Bundle Constants: {0}"
             class="ArchitectureSniffer\Common\BundleConstantsRule" />
--->
 
     <!-- CONTROLLER RULES -->
     <rule

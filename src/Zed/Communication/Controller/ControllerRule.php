@@ -1,6 +1,6 @@
 <?php
 
-namespace ArchitectureSniffer\Controller;
+namespace ArchitectureSniffer\Zed\Communication\Controller;
 
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;

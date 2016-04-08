@@ -1,6 +1,6 @@
 <?php
 
-namespace ArchitectureSniffer\Business\Facade;
+namespace ArchitectureSniffer\Zed\Business\Facade;
 
 use PDepend\Source\AST\ASTArtifactList;
 use PHPMD\AbstractNode;
@@ -20,7 +20,7 @@ class InterfaceFacadeRule extends AbstractFacadeRule implements ClassAware
      */
     public function apply(AbstractNode $node)
     {
-        if (!$this->isFacade($node->getFullQualifiedName())) {
+        if (!$this->isFacade($node)) {
             return;
         }
 

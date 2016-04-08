@@ -1,6 +1,6 @@
 <?php
 
-namespace ArchitectureSniffer\Common;
+namespace ArchitectureSniffer\Shared;
 
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;

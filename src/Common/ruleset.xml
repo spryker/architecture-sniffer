@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<ruleset name="Spryker ruleset"
+<ruleset name="Spryker Common ruleset"
          xmlns="http://pmd.sf.net/ruleset/1.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://pmd.sf.net/ruleset/1.0.0
@@ -10,15 +10,12 @@
         Asserting clean code architecture with Spryker framework.
     </description>
 
-    <exclude-pattern>Persistence/Propel</exclude-pattern>
-    <exclude-pattern>Presentation</exclude-pattern>
-    <exclude-pattern>tests/_data</exclude-pattern>
-    <exclude-pattern>tests/_output</exclude-pattern>
-    <exclude-pattern>tests/_support</exclude-pattern>
+    <rule
+        name="AccessRule"
+        message="Access: {0}"
+        class="ArchitectureSniffer\Common\AccessRule">
 
-    <rule ref="Client/ruleset.xml" />
-    <rule ref="Common/ruleset.xml" />
-    <rule ref="Shared/ruleset.xml" />
-    <rule ref="Zed/ruleset.xml" />
+        <priority>1</priority>
+    </rule>
 
 </ruleset>

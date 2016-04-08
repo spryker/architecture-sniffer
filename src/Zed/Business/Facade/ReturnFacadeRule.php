@@ -1,6 +1,6 @@
 <?php
 
-namespace ArchitectureSniffer\Business\Facade;
+namespace ArchitectureSniffer\Zed\Business\Facade;
 
 use PHPMD\AbstractNode;
 use PHPMD\Node\MethodNode;
@@ -12,7 +12,7 @@ use PHPMD\Rule\MethodAware;
 class ReturnFacadeRule extends AbstractFacadeRule implements MethodAware
 {
 
-    const PATTERN = '/@return\s(?!void|int|integer|string|array|\[\]|bool|boolean|((.*)Transfer))(.*)/';
+    const PATTERN = '/@return\s(?!void|int|integer|string|array|\[\]|.*\[\]|bool|boolean|((.*)Transfer))(.*)/';
 
     /**
      * @param \PHPMD\AbstractNode $node
@@ -21,10 +21,7 @@ class ReturnFacadeRule extends AbstractFacadeRule implements MethodAware
      */
     public function apply(AbstractNode $node)
     {
-        $parent = $node->getNode()->getParent();
-        $className = $parent->getNamespaceName() . '\\' . $parent->getName();
-
-        if (!$this->isFacade($className)) {
+        if (!$this->isFacade($node)) {
             return;
         }
 

@@ -46,8 +46,8 @@ class AccessRule extends AbstractRule implements ClassAware
         ],
         [
             '(Spryker\\\\(Shared|Yves|Zed)\\\\Library\\\\.+)',
-            '(.*\\\\(Shared|Yves|Zed)\\\\.+)',
-            '{type} {source} accesses {target} which violates rule "No call libary-bundle to any other bundle"'
+            '(Spryker\\\\(Shared|Yves|Zed)\\\\(?!Library).+)',
+            '{type} {source} accesses {target} which violates rule "No call Library bundle to any other bundle"'
         ],
         [
             '(Spryker\\\\Client\\\\.+)',

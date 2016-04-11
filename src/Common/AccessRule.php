@@ -63,6 +63,8 @@ class AccessRule extends AbstractRule implements ClassAware
 
     /**
      * @param \PHPMD\AbstractNode $node
+     *
+     * @return void
      */
     public function apply(AbstractNode $node)
     {

@@ -41,8 +41,8 @@ class ArgumentsFacadeRule extends AbstractFacadeRule implements MethodAware
     }
 
     /**
-     * @param ASTParameter $param
-     * @param AbstractNode $node
+     * @param \PDepend\Source\AST\ASTParameter $param
+     * @param \PHPMD\AbstractNode $node
      *
      * @return void
      */

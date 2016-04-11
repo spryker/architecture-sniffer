@@ -22,7 +22,7 @@ class NoLogicInFacadeRule extends AbstractFacadeRule implements ClassAware
     ];
 
     /**
-     * @param AbstractNode $node
+     * @param \PHPMD\AbstractNode $node
      *
      * @return void
      */
@@ -36,7 +36,7 @@ class NoLogicInFacadeRule extends AbstractFacadeRule implements ClassAware
     }
 
     /**
-     * @param AbstractNode|ClassNode $node
+     * @param \PHPMD\AbstractNode|\PHPMD\Node\ClassNode $node
      *
      * @return void
      */
@@ -48,7 +48,7 @@ class NoLogicInFacadeRule extends AbstractFacadeRule implements ClassAware
     }
 
     /**
-     * @param MethodNode $method
+     * @param \PHPMD\Node\MethodNode $method
      *
      * @return void
      */

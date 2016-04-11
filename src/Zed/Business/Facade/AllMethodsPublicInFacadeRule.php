@@ -11,7 +11,7 @@ class AllMethodsPublicInFacadeRule extends AbstractFacadeRule implements ClassAw
 {
 
     /**
-     * @param AbstractNode $node
+     * @param \PHPMD\AbstractNode $node
      *
      * @return void
      */
@@ -25,7 +25,7 @@ class AllMethodsPublicInFacadeRule extends AbstractFacadeRule implements ClassAw
     }
 
     /**
-     * @param AbstractNode|ClassNode $node
+     * @param \PHPMD\AbstractNode|\PHPMD\Node\ClassNode $node
      *
      * @return void
      */
@@ -37,7 +37,7 @@ class AllMethodsPublicInFacadeRule extends AbstractFacadeRule implements ClassAw
     }
 
     /**
-     * @param MethodNode $method
+     * @param \PHPMD\Node\MethodNode $method
      *
      * @return void
      */

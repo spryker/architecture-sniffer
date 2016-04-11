@@ -16,6 +16,8 @@
     <exclude-pattern>tests/_output</exclude-pattern>
     <exclude-pattern>tests/_support</exclude-pattern>
 
+    <rule ref="Zed/ruleset.xml" />
+
     <!-- CLIENT RULES -->
     <rule
         name="ClientRule"
@@ -42,106 +44,4 @@
         <priority>5</priority>
     </rule>
 
-    <!-- CONTROLLER RULES -->
-    <rule
-        name="ControllerRule"
-        message="Controller: {0}"
-        class="ArchitectureSniffer\Controller\ControllerRule">
-
-        <priority>1</priority>
-    </rule>
-
-    <!-- FACADE RULES -->
-    <rule
-        name="AllMethodsPublicInFacadeRule"
-        message="Zed Business Layer - Facade: {0}"
-        class="ArchitectureSniffer\Business\Facade\AllMethodsPublicInFacadeRule">
-
-        <priority>1</priority>
-    </rule>
-
-    <rule
-        name="ArgumentsFacadeRule"
-        message="Zed Business Layer - Facade: {0}"
-        class="ArchitectureSniffer\Business\Facade\ArgumentsFacadeRule">
-
-        <priority>1</priority>
-    </rule>
-
-    <rule
-        name="InterfaceFacadeRule"
-        message="Zed Business Layer - Facade: {0}"
-        class="ArchitectureSniffer\Business\Facade\InterfaceFacadeRule">
-
-        <priority>1</priority>
-    </rule>
-
-    <rule
-        name="NoLogicInFacadeRule"
-        message="Zed Business Layer - Facade: {0}"
-        class="ArchitectureSniffer\Business\Facade\NoLogicInFacadeRule">
-
-        <priority>1</priority>
-    </rule>
-
-    <rule
-        name="ReturnFacadeRule"
-        message="Zed Business Layer - Facade: {0}"
-        class="ArchitectureSniffer\Business\Facade\ReturnFacadeRule">
-
-        <priority>1</priority>
-    </rule>
-
-    <rule
-        name="ZedBusinessFacadeRule"
-        message="Zed Business Layer - Facade: {0}"
-        class="ArchitectureSniffer\Business\Facade\ZedBusinessFacadeRule">
-
-        <priority>1</priority>
-    </rule>
-
-    <!-- FACTORY RULES -->
-    <rule
-        name="FactoryRule"
-        message="Factories: {0}"
-        class="ArchitectureSniffer\Factory\FactoryRule">
-
-        <priority>1</priority>
-    </rule>
-
-
-<!--
-
-    <rule
-        name="OneNewInFactory"
-        message="Avoid to use more than one new statement in a factory method '{0}'."
-        class="ArchitectureSniffer\Factory\OneNewInFactory">
-
-        <priority>1</priority>
-    </rule>
-
-    <rule
-        name="MethodMustStartWithCreateInFactory"
-        message="Method must start with create*.See method '{0}'."
-        class="ArchitectureSniffer\Factory\MethodMustStartWithCreateInFactory">
-
-        <priority>1</priority>
-    </rule>
-
-    <rule
-        name="FacadeNotReturnInternals"
-        message="A facade method must not return return anything else than simple types or transfer objects '{0}'."
-        class="ArchitectureSniffer\Facade\FacadeNotReturnInternals">
-
-        <priority>1</priority>
-    </rule>
-
-    <rule
-        name="FacadeMustNotHaveProperties"
-        message="A facade must not have any properties '{0}'."
-        class="ArchitectureSniffer\Facade\FacadeMustNotHaveProperties">
-
-        <priority>1</priority>
-    </rule>
--->
 </ruleset>

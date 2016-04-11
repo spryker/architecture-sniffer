@@ -4,13 +4,15 @@ namespace ArchitectureSniffer\Common;
 
 use PDepend\Source\AST\ASTParameter;
 use PHPMD\AbstractNode;
+use PHPMD\AbstractRule;
 use PHPMD\Node\MethodNode;
+use PHPMD\Rule\ClassAware;
 
 /**
  * Class constructor arguments should always use abstractions, programming against an interface instead
  * of a concrete class etc.
  */
-class EnforceAbstractionInConstructor extends \PHPMD\AbstractRule implements \PHPMD\Rule\ClassAware
+class EnforceAbstractionInConstructor extends AbstractRule implements ClassAware
 {
 
     /**
@@ -32,26 +34,26 @@ class EnforceAbstractionInConstructor extends \PHPMD\AbstractRule implements \PH
     }
 
     /**
-     * @param MethodNode $method
-     * @param AbstractNode $node
+     * @param \PHPMD\Node\MethodNode $method
+     * @param \PHPMD\AbstractNode $node
      *
      * @return void
      */
-    protected function check(MethodNode $method, AbstractNode $node)
+    private function check(MethodNode $method, AbstractNode $node)
     {
         $params = $method->getParameters();
         foreach ($params as $param) {
-            $this->checkParam($param, $node);
+            $this->checkParameter($param, $node);
         }
     }
 
     /**
-     * @param ASTParameter $param
-     * @param AbstractNode $node
+     * @param \PDepend\Source\AST\ASTParameter $param
+     * @param \PHPMD\AbstractNode $node
      *
      * @return void
      */
-    protected function checkParam(ASTParameter $param, AbstractNode $node)
+    private function checkParameter(ASTParameter $param, AbstractNode $node)
     {
         $class = $param->getClass();
         if (empty($class) || $class->isAbstract()) {

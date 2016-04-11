@@ -1,6 +1,6 @@
 <?php
 
-namespace ArchitectureSniffer\Business\Facade;
+namespace ArchitectureSniffer\Zed\Business\Facade;
 
 use PDepend\Source\AST\ASTClass;
 use PHPMD\AbstractNode;

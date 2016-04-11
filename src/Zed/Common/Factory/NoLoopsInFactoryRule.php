@@ -1,13 +1,16 @@
 <?php
 
-namespace ArchitectureSniffer\Business\Facade;
+namespace ArchitectureSniffer\Zed\Common\Factory;
 
 use PHPMD\AbstractNode;
-use PHPMD\Node\ClassNode;
+use PHPMD\AbstractRule;
 use PHPMD\Node\MethodNode;
 use PHPMD\Rule\ClassAware;
 
-class NoLogicInFacadeRule extends AbstractFacadeRule implements ClassAware
+/**
+ * Factory methods should not contain loops
+ */
+class NoLoopsInFactoryRule extends AbstractRule implements ClassAware
 {
 
     /**
@@ -18,49 +21,38 @@ class NoLogicInFacadeRule extends AbstractFacadeRule implements ClassAware
         'while',
         'for',
         'do',
-        'if'
     ];
 
     /**
-     * @param AbstractNode $node
+     * @param \PHPMD\AbstractNode $node
      *
      * @return void
      */
     public function apply(AbstractNode $node)
     {
-        if (!$this->isFacade($node->getFullQualifiedName())) {
+        if (!preg_match('/Zed\\.*\\\(Business|Communication|Persistence)\\Factory$/', $node->getName())) {
             return;
         }
 
-        $this->applyRule($node);
-    }
-
-    /**
-     * @param AbstractNode|ClassNode $node
-     *
-     * @return void
-     */
-    private function applyRule(ClassNode $node)
-    {
         foreach ($node->getMethods() as $method) {
-            $this->checkStatements($method);
+            $this->applyNoLoopsInMethod($method);
         }
     }
 
     /**
-     * @param MethodNode $method
+     * @param \PHPMD\Node\MethodNode $method
      *
      * @return void
      */
-    private function checkStatements(MethodNode $method)
+    private function applyNoLoopsInMethod(MethodNode $method)
     {
         foreach ($method->findChildrenOfType('Statement') as $statement) {
-            if (!in_array(strtolower($statement->getImage()), $this->forbiddenStatements)) {
+            if (false === in_array(strtolower($statement->getImage()), $this->forbiddenStatements)) {
                 continue;
             }
 
             $message = sprintf(
-                'The method %s contains a "%s" statement which violates the rule "No logic in Facade"',
+                'The method %s contains a "%s" statement which violates rule "No loops in factories"',
                 $method->getFullQualifiedName(),
                 $statement->getImage()
             );

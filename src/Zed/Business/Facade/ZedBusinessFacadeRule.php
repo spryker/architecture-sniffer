@@ -1,6 +1,6 @@
 <?php
 
-namespace ArchitectureSniffer\Business\Facade;
+namespace ArchitectureSniffer\Zed\Business\Facade;
 
 use PHPMD\AbstractNode;
 use PHPMD\Node\ClassNode;
@@ -17,7 +17,7 @@ class ZedBusinessFacadeRule extends AbstractFacadeRule implements ClassAware
      */
     public function apply(AbstractNode $node)
     {
-        if (!$this->isFacade($node->getFullQualifiedName())) {
+        if (!$this->isFacade($node)) {
             return;
         }
 

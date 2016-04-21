@@ -8,7 +8,7 @@ use PHPMD\Node\ClassNode;
 /**
  * Facade methods should not contain properties or internal logic.
  */
-class FacadeMustNotHaveProperties extends \PHPMD\AbstractRule implements \PHPMD\Rule\ClassAware
+class NoPropertiesFacadeRule extends \PHPMD\AbstractRule implements \PHPMD\Rule\ClassAware
 {
 
     /**

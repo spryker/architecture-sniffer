@@ -44,6 +44,14 @@
     </rule>
 
     <rule
+        name="NoPropertiesFacadeRule"
+        message="Zed Business Layer - Facade: {0}"
+        class="ArchitectureSniffer\Zed\Business\Facade\NoPropertiesFacadeRule">
+
+        <priority>1</priority>
+    </rule>
+
+    <rule
         name="ReturnFacadeRule"
         message="Zed Business Layer - Facade: {0}"
         class="ArchitectureSniffer\Zed\Business\Facade\ReturnFacadeRule">

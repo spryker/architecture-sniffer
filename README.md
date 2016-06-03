@@ -5,28 +5,42 @@ Architecture Sniffer for Spryker core and applications.
 
 ## Usage
 
-Make sure you include the sniffer as `require-dev` dependency:
+This tool is currently designed to run as a standalone tool - included in your IDE.
+So clone this repository somewhere outside of your project.
 ```
-composer require --dev spryker/architecture-sniffer
+git clone https://github.com/spryker/architecture-sniffer.git
 ```
+Then make sure all dependencies are available:
+```
+composer update
+```
+If composer is not installed globally, you can also download and use a phar file here.
+
 
 ### Running it from this repo
 
+Create a new watcher under `Tools -> FileWatchers`.
+Name it `Architecture Sniffer` for example.
+
+Set `immediate file synchronization` to true and `Show Console` to `never`.
+Select `PHP` as file type and `Project files` as scope.
+
+Let's assume you cloned the repo into `/home/yourname/architecture-sniffer/`.
+
+Then set your own path to phpmd as `Program` path:
 ```
-vendor/bin/phpmd /folder/to/check text src/ruleset.xml
+/home/yourname/architecture-sniffer/vendor/bin/phpmd
 ```
 
-### Running it from any project
+As arguments use type [text/xml/html] and your rule set path.
+```
+$FilePath$ text /home/yourname/architecture-sniffer/src/ruleset.xml
+```
 
-```
-vendor/bin/phpmd /folder/to/check text vendor/spryker/architecture-sniffer/Spryker/ruleset.xml
-```
+It is recommended to also append `--minimumpriority=4` or some higher value to reduce some
+of the noise. For major bundle releases it is wise to lover this number again so less
+important issues can be found and fixed here, too.
 
-### Convenience wrapper for Spryker projects
-This checks the project code itself and excludes vendor automatically:
-```
-vendor/bin/console code:phpmd
-```
 
 ## Writing new sniffs
 Add them to inside src folder and add tests in `tests` with the same folder structure.

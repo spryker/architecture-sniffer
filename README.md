@@ -27,12 +27,12 @@ Select `PHP` as file type and `Project files` as scope.
 
 Let's assume you cloned the repo into `/home/yourname/architecture-sniffer/`.
 
-Then set your own path to phpmd as `Program` path:
+Then set your own path to `phpmd` as `Program` path:
 ```
 /home/yourname/architecture-sniffer/vendor/bin/phpmd
 ```
 
-As arguments use type [text/xml/html] and your rule set path.
+As arguments use type [text/xml/html] and your rule-set path.
 ```
 $FilePath$ text /home/yourname/architecture-sniffer/src/ruleset.xml
 ```
@@ -41,6 +41,8 @@ It is recommended to also append `--minimumpriority=4` or some higher value to r
 of the noise. For major bundle releases it is wise to lover this number again so less
 important issues can be found and fixed here, too.
 
+Now, if you chance any piece of code it will immediately run and report any issues found.
+Those will be also be visible on the right side as yellow marker.
 
 ## Writing new sniffs
 Add them to inside src folder and add tests in `tests` with the same folder structure.

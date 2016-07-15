@@ -3,7 +3,7 @@
 
 Architecture Sniffer for Spryker core and applications.
 
-## Usage
+## Installation
 
 This tool is currently designed to run as a standalone tool - included in your IDE.
 So clone this repository somewhere outside of your project.
@@ -17,8 +17,10 @@ composer update
 If composer is not installed globally, you can also download and use a phar file here.
 
 
-### Running it from this repo
+## Running it
+Use an IDE with a file watcher capability to run it on your code while you are programming.
 
+### Including the sniffer in PHPStorm
 Create a new watcher under `Tools -> FileWatchers`.
 Name it `Architecture Sniffer` for example.
 

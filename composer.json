@@ -19,7 +19,7 @@
     "phpmd/phpmd": "^2.4"
   },
   "require-dev": {
-    "spryker/code-sniffer": "dev-master",
+    "spryker/code-sniffer": "*",
     "phpunit/phpunit": "~5.2"
   },
   "autoload": {

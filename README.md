@@ -8,10 +8,13 @@ You can run the Architecture Sniffer from console by using:
 `vendor/bin/phpmd vendor/spryker/spryker/Bundles/%bundle name% (xml|text|html) vendor/spryker/architecture-sniffer/src/ruleset.xml`
 
 ### Including the sniffer in PHPStorm
-Add a new custom ruleset under `Editor -> Inspections -> PHP -> Code Style -> PHP Mess Detector validation`.
+Add a new custom ruleset under `Editor -> Inspections -> PHP -> PHP Mess Detector validation`.
 Name it `Architecture Sniffer` for example.
 
 The customer ruleset is defined in `vendor/spryker/architecture-sniffer/src/ruleset.xml`
+
+### Check Mess Detector Settings
+Under `Framework & Languages -> PHP -> Mess Detector` you need to define the configuration and set the path to your phpmd (vendor/bin/phpmd). Use local and run `Validate` to see if it works.
 
 ## Writing new sniffs
 Add them to inside src folder and add tests in `tests` with the same folder structure.

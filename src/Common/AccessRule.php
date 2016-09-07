@@ -17,47 +17,47 @@ class AccessRule extends AbstractRule implements ClassAware
         [
             '(^Spryker.+)',
             '(^Pyz.+)',
-            '{type} {source} accesses {target} which violates rule "No call from Core to Project"'
+            '{type} {source} accesses {target} which violates rule "No call from Core to Project"',
         ],
         [
             '(Spryker\\\\Yves\\\\.+)',
             '(Spryker\\\\Zed\\\\.+)',
-            '{type} {source} accesses {target} which violates rule "No call from Yves to Zed"'
+            '{type} {source} accesses {target} which violates rule "No call from Yves to Zed"',
         ],
         [
             '(Spryker\\\\Zed\\\\.+)',
             '(Spryker\\\\Yves\\\\.+)',
-            '{type} {source} accesses {target} which violates rule "No call from Zed to Yves"'
+            '{type} {source} accesses {target} which violates rule "No call from Zed to Yves"',
         ],
         [
             '(Spryker\\\\Shared\\\\.+)',
             '(Spryker\\\\Zed\\\\.+)',
-            '{type} {source} accesses {target} which violates rule "No call from Shared to Zed"'
+            '{type} {source} accesses {target} which violates rule "No call from Shared to Zed"',
         ],
         [
             '(Spryker\\\\Shared\\\\.+)',
             '(Spryker\\\\Client\\\\.+)',
-            '{type} {source} accesses {target} which violates rule "No call from Shared to Client"'
+            '{type} {source} accesses {target} which violates rule "No call from Shared to Client"',
         ],
         [
             '(Spryker\\\\Shared\\\\.+)',
             '(Spryker\\\\Yves\\\\.+)',
-            '{type} {source} accesses {target} which violates rule "No call from Shared to Yves"'
+            '{type} {source} accesses {target} which violates rule "No call from Shared to Yves"',
         ],
         [
             '(Spryker\\\\(Shared|Yves|Zed)\\\\Library\\\\.+)',
             '(Spryker\\\\(Shared|Yves|Zed)\\\\(?!Library).+)',
-            '{type} {source} accesses {target} which violates rule "No call Library bundle to any other bundle"'
+            '{type} {source} accesses {target} which violates rule "No call Library bundle to any other bundle"',
         ],
         [
             '(Spryker\\\\Client\\\\.+)',
             '(Spryker\\\\Zed\\\\.+)',
-            '{type} {source} accesses {target} which violates rule "No call from Client to Zed"'
+            '{type} {source} accesses {target} which violates rule "No call from Client to Zed"',
         ],
         [
             '(Spryker\\\\Client\\\\.+)',
             '(Spryker\\\\Yves\\\\.+)',
-            '{type} {source} accesses {target} which violates rule "No call from Client to Yves"'
+            '{type} {source} accesses {target} which violates rule "No call from Client to Yves"',
         ],
     ];
 
@@ -72,6 +72,7 @@ class AccessRule extends AbstractRule implements ClassAware
 
         $this->applyPatterns($node, $patterns);
 
+        /** @var \PHPMD\Node\AbstractTypeNode $node */
         foreach ($node->getMethods() as $method) {
             $this->applyPatterns(
                 $method,
@@ -106,7 +107,7 @@ class AccessRule extends AbstractRule implements ClassAware
                             ['{type}', '{source}', '{target}'],
                             [ucfirst($node->getType()), $node->getFullQualifiedName(), $targetQName],
                             $message
-                        )
+                        ),
                     ]
                 );
             }

@@ -3,48 +3,15 @@
 
 Architecture Sniffer for Spryker core and applications.
 
-## Installation
-
-This tool is currently designed to run as a standalone tool - included in your IDE.
-So clone this repository somewhere outside of your project.
-```
-git clone https://github.com/spryker/architecture-sniffer.git
-```
-Then make sure all dependencies are available:
-```
-composer update
-```
-If composer is not installed globally, you can also download and use a phar file here.
-
-
-## Running it
-Use an IDE with a file watcher capability to run it on your code while you are programming.
+### Running it
+You can run the Architecture Sniffer from console by using:
+`vendor/bin/phpmd vendor/spryker/spryker/Bundles/%bundle name% (xml|text|html) vendor/spryker/architecture-sniffer/src/ruleset.xml`
 
 ### Including the sniffer in PHPStorm
-Create a new watcher under `Tools -> FileWatchers`.
+Add a new custom ruleset under `Editor -> Inspections -> PHP -> Code Style -> PHP Mess Detector validation`.
 Name it `Architecture Sniffer` for example.
 
-Set `immediate file synchronization` to true and `Show Console` to `never`.
-Select `PHP` as file type and `Project files` as scope.
-
-Let's assume you cloned the repo into `/home/yourname/architecture-sniffer/`.
-
-Then set your own path to `phpmd` as `Program` path:
-```
-/home/yourname/architecture-sniffer/vendor/bin/phpmd
-```
-
-As arguments use type [text/xml/html] and your rule-set path.
-```
-$FilePath$ text /home/yourname/architecture-sniffer/src/ruleset.xml
-```
-
-It is recommended to also append `--minimumpriority=4` or some higher value to reduce some
-of the noise. For major bundle releases it is wise to lover this number again so less
-important issues can be found and fixed here, too.
-
-Now, if you chance any piece of code it will immediately run and report any issues found.
-Those will be also be visible on the right side as yellow marker.
+The customer ruleset is defined in `vendor/spryker/architecture-sniffer/src/ruleset.xml`
 
 ## Writing new sniffs
 Add them to inside src folder and add tests in `tests` with the same folder structure.

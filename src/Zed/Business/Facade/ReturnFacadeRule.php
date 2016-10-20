@@ -13,6 +13,7 @@ class ReturnFacadeRule extends AbstractFacadeRule implements MethodAware
 {
 
     const ALLOWED_RETURN_TYPES_PATTERN = '/@return\s(?!void|int|float|integer|string|array|\[\]|.*\[\]|bool|boolean|((.*)Transfer))(.*)/';
+    const INVALID_RETURN_TYPE_MATCH = 3;
 
     /**
      * @param \PHPMD\AbstractNode $node
@@ -69,7 +70,7 @@ class ReturnFacadeRule extends AbstractFacadeRule implements MethodAware
     private function getInvalidReturnType($comment)
     {
         if (preg_match(self::ALLOWED_RETURN_TYPES_PATTERN, $comment, $returnType)) {
-            return $returnType[3];
+            return $returnType[self::INVALID_RETURN_TYPE_MATCH];
         }
 
         return false;

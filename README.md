@@ -1,5 +1,6 @@
 # Architecture Sniffer
 [![Minimum PHP Version](http://img.shields.io/badge/php-%3E%3D%205.4-8892BF.svg)](https://php.net/)
+[![License](https://poser.pugx.org/spryker/architecture-sniffer/license.svg)](https://packagist.org/packages/spryker/architecture-sniffer)
 
 Architecture Sniffer for Spryker core and applications.
 
@@ -20,17 +21,29 @@ Under `Framework & Languages -> PHP -> Mess Detector` you need to define the con
 Add them to inside src folder and add tests in `tests` with the same folder structure.
 Don't forget to update `ruleset.xml`.
 
-Don't forget to test your changes:
+### Setup
+Run
+```
+./setup.sh
+```
+and
+```
+php composer.phar install
+```
 
-    php phpunit.phar
+### Testing
+Don't forget to test your changes:
+```
+php phpunit.phar
+```
 
 ### Running code-sniffer on this project
 Make sure this repository is Spryker coding standard conform:
 ```
-vendor/bin/phpcs . -v --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml --ignore=architecture-sniffer/vendor/
+php composer.phar cs-check
 ```
 If you want to fix the fixable errors, use
 ```
-vendor/bin/phpcbf . --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml --ignore=architecture-sniffer/vendor/
+php composer.phar cs-fix
 ```
 Once everything is green you can make a PR with your changes.

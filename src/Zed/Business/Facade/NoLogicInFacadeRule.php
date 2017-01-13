@@ -18,7 +18,7 @@ class NoLogicInFacadeRule extends AbstractFacadeRule implements ClassAware
         'while',
         'for',
         'do',
-        'if'
+        'if',
     ];
 
     /**

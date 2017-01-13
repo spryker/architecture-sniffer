@@ -32,5 +32,9 @@
       "ArchitectureSniffer\\Test\\": "tests"
     }
   },
-  "include-path":  ["src/"]
+  "include-path":  ["src/"],
+  "scripts": {
+    "cs-check": "vendor/bin/phpcs --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml -v --ignore=/vendor/ ./",
+    "cs-fix": "vendor/bin/phpcbf --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml -v --ignore=/vendor/ ./"
+  }
 }

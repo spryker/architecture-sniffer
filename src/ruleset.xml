@@ -16,6 +16,11 @@
     <exclude-pattern>tests/_output</exclude-pattern>
     <exclude-pattern>tests/_support</exclude-pattern>
 
+    <exclude-pattern>*/Persistence/Base/*</exclude-pattern>
+    <exclude-pattern>*/Persistence/Map/*</exclude-pattern>
+    <exclude-pattern>*/Orm/Propel/*</exclude-pattern>
+    <exclude-pattern>*/Generated/*</exclude-pattern>
+
     <rule ref="Client/ruleset.xml" />
     <rule ref="Common/ruleset.xml" />
     <rule ref="Shared/ruleset.xml" />

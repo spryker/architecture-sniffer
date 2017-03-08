@@ -75,7 +75,7 @@ class ClientRule extends AbstractRule implements ClassAware
         $comment = $method->getComment();
         if (preg_match(
             '(
-                \*\s+[A-Z0-9\-]+.*\s+
+                \*\s+[{}A-Z0-9\-]+.*\s+
                 \*?\s*
                 \*\s+@api
             )xi',

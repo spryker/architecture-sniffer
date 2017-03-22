@@ -57,7 +57,7 @@ class ModuleConstantsRule extends AbstractRule implements InterfaceAware
                 $node,
                 [
                     sprintf(
-                        'The value "%s" and the name of constant %s::%s are not equal which violates rule "Only keys no values"',
+                        'The value "%s" and the name of constant %s::%s are not equal which violates rule "Only keys no values" (a prefix separated with ":" is allowed for the value)',
                         $value,
                         $node->getFullQualifiedName(),
                         $constant->getImage()
@@ -78,7 +78,7 @@ class ModuleConstantsRule extends AbstractRule implements InterfaceAware
             return $constantValue;
         }
 
-        return preg_replace('/[A-Z0-9_]+:/', '', $constantValue);
+        return preg_replace('/^[A-Z0-9_]+:/', '', $constantValue);
     }
 
 }

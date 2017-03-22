@@ -43,6 +43,8 @@ class ModuleConstantsRule extends AbstractRule implements InterfaceAware
 
         foreach ($node->findChildrenOfType('ConstantDeclarator') as $constant) {
             $value = $constant->getValue()->getValue();
+            $value = $this->trimBundleNamePrefix($value);
+
             if ($constant->getImage() === $value) {
                 continue;
             }
@@ -63,6 +65,20 @@ class ModuleConstantsRule extends AbstractRule implements InterfaceAware
                 ]
             );
         }
+    }
+
+    /**
+     * @param mixed $constantValue
+     *
+     * @return mixed
+     */
+    private function trimBundleNamePrefix($constantValue)
+    {
+        if (!is_string($constantValue)) {
+            return $constantValue;
+        }
+
+        return preg_replace('/[A-Z0-9_]+:/', '', $constantValue);
     }
 
 }

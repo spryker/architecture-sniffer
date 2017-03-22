@@ -22,7 +22,7 @@ class ServiceRule extends AbstractRule implements ClassAware
             return;
         }
 
-        if (0 === preg_match('#^(.*)\\\\Service\\\\([^\\\\]+)\\\\(.+)Service$#', $node->getFullQualifiedName())) {
+        if (0 === preg_match('(\\\\Service\\\\.+Service$)', $node->getFullQualifiedName())) {
             return;
         }
 
@@ -88,7 +88,7 @@ class ServiceRule extends AbstractRule implements ClassAware
             $method,
             [
                 sprintf(
-                    'The service method %s does not contain an @api tag or contract text ' .
+                    'The Service method %s does not contain an @api tag or contract text ' .
                     'which violates rule: "Every method must have the @api tag in docblock and a contract text above"',
                     $method->getFullQualifiedName()
                 )

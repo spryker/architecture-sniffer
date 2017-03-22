@@ -76,6 +76,14 @@
         <priority>1</priority>
     </rule>
 
+    <rule
+        name="MethodReturnInterfaceRule"
+        message="Zed Business Layer - Factory: {0}"
+        class="ArchitectureSniffer\Zed\Business\Factory\MethodReturnInterfaceRule">
+
+        <priority>1</priority>
+    </rule>
+
     <!-- COMMON FACTORY RULES -->
     <rule
         name="NoLoopsInFactoryRule"

@@ -22,7 +22,7 @@ class ServiceRule extends AbstractRule implements ClassAware
             return;
         }
 
-        if (0 === preg_match('#^(.*)\\\\Service\\\\([^\\\\]+)\\\\(.+)Service$#', $node->getFullQualifiedName())) {
+        if (0 === preg_match('(\\\\Service\\\\.+Service$)', $node->getFullQualifiedName())) {
             return;
         }
 

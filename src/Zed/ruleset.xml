@@ -67,6 +67,49 @@
         <priority>1</priority>
     </rule>
 
+<<<<<<< 05c55bc8452abb392f15af1cc8cd22ac0349a255
+=======
+    <rule
+        name="CreateContainOneNewFactoryRule"
+        message="Zed Business Layer - Factory: {0}"
+        class="ArchitectureSniffer\Zed\Business\Factory\GetContainNoNewFactoryRule">
+
+        <priority>1</priority>
+    </rule>
+
+    <rule
+        name="MethodReturnInterfaceRule"
+        message="Zed Business Layer - Factory: {0}"
+        class="ArchitectureSniffer\Zed\Business\Factory\MethodReturnInterfaceRule">
+
+        <priority>1</priority>
+    </rule>
+
+    <!-- COMMON FACTORY RULES -->
+    <rule
+        name="NoLoopsInFactoryRule"
+        message="Factories: {0}"
+        class="ArchitectureSniffer\Zed\Common\Factory\NoLoopsInFactoryRule">
+
+        <priority>1</priority>
+    </rule>
+
+    <rule
+        name="OnlyGetAndCreateFactoryRule"
+        message="Factories: {0}"
+        class="ArchitectureSniffer\Zed\Common\Factory\OnlyGetAndCreateFactoryRule">
+
+        <priority>1</priority>
+    </rule>
+
+    <rule
+        name="StatelessFactoryRule"
+        message="Factories: {0}"
+        class="ArchitectureSniffer\Zed\Common\Factory\StatelessFactoryRule">
+
+        <priority>1</priority>
+    </rule>
+>>>>>>> Added access rule for Service, Added basic rules for Service and added MethodReturnInterface rule for Factories
 
     <!-- COMMUNICATION CONTROLLER RULES -->
     <rule

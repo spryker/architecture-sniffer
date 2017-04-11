@@ -1,6 +1,6 @@
 <?php
 
-namespace ArchitectureSniffer\Zed\Business\Factory;
+namespace ArchitectureSniffer\Common\Factory;
 
 use PHPMD\AbstractNode;
 use PHPMD\Node\MethodNode;
@@ -9,7 +9,7 @@ use PHPMD\Rule\MethodAware;
 /**
  * Every method in a Factory must only return an interface or an array of interfaces
  */
-class MethodReturnInterfaceRule extends AbstractFactoryRule implements MethodAware
+class FactoryMethodReturnInterfaceRule extends AbstractFactoryRule implements MethodAware
 {
 
     const ALLOWED_RETURN_TYPES_PATTERN = '/@return\s(?!((.*)Interface))(.*)/';
@@ -39,11 +39,13 @@ class MethodReturnInterfaceRule extends AbstractFactoryRule implements MethodAwa
     {
         $comment = $node->getComment();
         if ($this->hasInvalidReturnType($comment)) {
-            $message = sprintf(
-                'TODO The %s is using a invalid return type "%s" which violates the rule "Should only return interfaces"',
-                $node->getFullQualifiedName(),
-                $this->getInvalidReturnType($comment)
-            );
+
+            $class = $node->getParentName();
+            $method = $node->getName();
+            $fullClassName = $node->getFullQualifiedName();
+
+            $message = "{$class}::{$method}() returns a concrete class which violates the rule 'Factory methods only return interfaces'. 
+            {$fullClassName}";
 
             $this->addViolation($node, [$message]);
         }

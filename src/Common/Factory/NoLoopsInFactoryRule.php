@@ -1,16 +1,15 @@
 <?php
 
-namespace ArchitectureSniffer\Zed\Common\Factory;
+namespace ArchitectureSniffer\Common\Factory;
 
 use PHPMD\AbstractNode;
-use PHPMD\AbstractRule;
 use PHPMD\Node\MethodNode;
 use PHPMD\Rule\ClassAware;
 
 /**
  * Factory methods should not contain loops
  */
-class NoLoopsInFactoryRule extends AbstractRule implements ClassAware
+class NoLoopsInFactoryRule extends AbstractFactoryRule implements ClassAware
 {
 
     /**
@@ -30,7 +29,7 @@ class NoLoopsInFactoryRule extends AbstractRule implements ClassAware
      */
     public function apply(AbstractNode $node)
     {
-        if (!preg_match('/Zed\\.*\\\(Business|Communication|Persistence)\\Factory$/', $node->getName())) {
+        if (!$this->isFactory($node)) {
             return;
         }
 

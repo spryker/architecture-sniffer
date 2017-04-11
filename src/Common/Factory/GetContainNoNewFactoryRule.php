@@ -1,6 +1,6 @@
 <?php
 
-namespace ArchitectureSniffer\Zed\Business\Factory;
+namespace ArchitectureSniffer\Common\Factory;
 
 use PHPMD\AbstractNode;
 use PHPMD\Node\MethodNode;

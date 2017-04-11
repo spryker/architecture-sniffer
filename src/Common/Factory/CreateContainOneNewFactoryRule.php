@@ -1,6 +1,6 @@
 <?php
 
-namespace ArchitectureSniffer\Zed\Communication\Factory;
+namespace ArchitectureSniffer\Common\Factory;
 
 use PHPMD\AbstractNode;
 use PHPMD\Node\MethodNode;
@@ -42,13 +42,14 @@ class CreateContainOneNewFactoryRule extends AbstractFactoryRule implements Meth
             return;
         }
 
-        $message = sprintf(
-            'The factory method %s contains %d new statements which violates rule "A create*() method must contain exactly 1 `new` statement."',
-            $method->getFullQualifiedName(),
-            $count
-        );
+        $methodName = $method->getParentName().'::'.$method->getName().'()';
+        $className = $method->getFullQualifiedName();
+
+        $message = "{$methodName} contains {$count} new statements which violates rule 'A create*() method must contain exactly 1 `new` statement.'
+        $className";
 
         $this->addViolation($method, [$message]);
+
     }
 
 }

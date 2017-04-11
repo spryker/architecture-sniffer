@@ -1,16 +1,15 @@
 <?php
 
-namespace ArchitectureSniffer\Zed\Common\Factory;
+namespace ArchitectureSniffer\Common\Factory;
 
 use PHPMD\AbstractNode;
-use PHPMD\AbstractRule;
 use PHPMD\Node\ClassNode;
 use PHPMD\Rule\ClassAware;
 
 /**
  * Factories shouldn't contain any property. Properties would make the factory stateful.
  */
-class StatelessFactoryRule extends AbstractRule implements ClassAware
+class StatelessFactoryRule extends AbstractFactoryRule implements ClassAware
 {
 
     /**
@@ -20,7 +19,7 @@ class StatelessFactoryRule extends AbstractRule implements ClassAware
      */
     public function apply(AbstractNode $node)
     {
-        if (!preg_match('/Zed\\.*\\\(Business|Communication|Persistence)\\Factory$/', $node->getName())) {
+        if (!$this->isFactory($node)) {
             return;
         }
 

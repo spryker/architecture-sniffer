@@ -12,125 +12,58 @@
 
     <!-- BUSINESS FACADE RULES -->
     <rule
-        name="AllMethodsPublicInFacadeRule"
-        message="Zed Business Layer - Facade: {0}"
-        class="ArchitectureSniffer\Zed\Business\Facade\AllMethodsPublicInFacadeRule">
+            name="AllMethodsPublicInFacadeRule"
+            message="Zed Business Layer - Facade: {0}"
+            class="ArchitectureSniffer\Zed\Business\Facade\AllMethodsPublicInFacadeRule">
 
         <priority>1</priority>
     </rule>
 
     <rule
-        name="ArgumentsFacadeRule"
-        message="Zed Business Layer - Facade: {0}"
-        class="ArchitectureSniffer\Zed\Business\Facade\ArgumentsFacadeRule">
+            name="ArgumentsFacadeRule"
+            message="Zed Business Layer - Facade: {0}"
+            class="ArchitectureSniffer\Zed\Business\Facade\ArgumentsFacadeRule">
 
         <priority>2</priority>
     </rule>
 
     <rule
-        name="InterfaceFacadeRule"
-        message="Zed Business Layer - Facade: {0}"
-        class="ArchitectureSniffer\Zed\Business\Facade\InterfaceFacadeRule">
+            name="InterfaceFacadeRule"
+            message="Zed Business Layer - Facade: {0}"
+            class="ArchitectureSniffer\Zed\Business\Facade\InterfaceFacadeRule">
 
         <priority>1</priority>
     </rule>
 
     <rule
-        name="NoLogicInFacadeRule"
-        message="Zed Business Layer - Facade: {0}"
-        class="ArchitectureSniffer\Zed\Business\Facade\NoLogicInFacadeRule">
+            name="NoLogicInFacadeRule"
+            message="Zed Business Layer - Facade: {0}"
+            class="ArchitectureSniffer\Zed\Business\Facade\NoLogicInFacadeRule">
 
         <priority>1</priority>
     </rule>
 
     <rule
-        name="ReturnFacadeRule"
-        message="Zed Business Layer - Facade: {0}"
-        class="ArchitectureSniffer\Zed\Business\Facade\ReturnFacadeRule">
+            name="ReturnFacadeRule"
+            message="Zed Business Layer - Facade: {0}"
+            class="ArchitectureSniffer\Zed\Business\Facade\ReturnFacadeRule">
 
         <priority>1</priority>
     </rule>
 
     <rule
-        name="ZedBusinessFacadeRule"
-        message="Zed Business Layer - Facade: {0}"
-        class="ArchitectureSniffer\Zed\Business\Facade\ZedBusinessFacadeRule">
-
-        <priority>1</priority>
-    </rule>
-
-    <!-- BUSINESS FACTORY RULES -->
-    <rule
-        name="GetContainNoNewFactoryRule"
-        message="Zed Business Layer - Factory: {0}"
-        class="ArchitectureSniffer\Zed\Business\Factory\GetContainNoNewFactoryRule">
-
-        <priority>1</priority>
-    </rule>
-
-    <rule
-        name="CreateContainOneNewFactoryRule"
-        message="Zed Business Layer - Factory: {0}"
-        class="ArchitectureSniffer\Zed\Business\Factory\GetContainNoNewFactoryRule">
-
-        <priority>1</priority>
-    </rule>
-
-    <rule
-        name="MethodReturnInterfaceRule"
-        message="Zed Business Layer - Factory: {0}"
-        class="ArchitectureSniffer\Zed\Business\Factory\MethodReturnInterfaceRule">
-
-        <priority>1</priority>
-    </rule>
-
-    <!-- COMMON FACTORY RULES -->
-    <rule
-        name="NoLoopsInFactoryRule"
-        message="Factories: {0}"
-        class="ArchitectureSniffer\Zed\Common\Factory\NoLoopsInFactoryRule">
-
-        <priority>1</priority>
-    </rule>
-
-    <rule
-        name="OnlyGetAndCreateFactoryRule"
-        message="Factories: {0}"
-        class="ArchitectureSniffer\Zed\Common\Factory\OnlyGetAndCreateFactoryRule">
-
-        <priority>1</priority>
-    </rule>
-
-    <rule
-        name="StatelessFactoryRule"
-        message="Factories: {0}"
-        class="ArchitectureSniffer\Zed\Common\Factory\StatelessFactoryRule">
+            name="ZedBusinessFacadeRule"
+            message="Zed Business Layer - Facade: {0}"
+            class="ArchitectureSniffer\Zed\Business\Facade\ZedBusinessFacadeRule">
 
         <priority>1</priority>
     </rule>
 
     <!-- COMMUNICATION CONTROLLER RULES -->
     <rule
-        name="ControllerRule"
-        message="Controller: {0}"
-        class="ArchitectureSniffer\Zed\Communication\Controller\ControllerRule">
-
-        <priority>1</priority>
-    </rule>
-
-    <!-- COMMUNICATION FACTORY RULES -->
-    <rule
-        name="CreateContainOneNewFactoryRule"
-        message="Controller: {0}"
-        class="ArchitectureSniffer\Zed\Communication\Factory\CreateContainOneNewFactoryRule">
-
-        <priority>1</priority>
-    </rule>
-
-    <rule
-        name="GetContainNoNewFactoryRule"
-        message="Controller: {0}"
-        class="ArchitectureSniffer\Zed\Communication\Factory\GetContainNoNewFactoryRule">
+            name="ControllerRule"
+            message="Controller: {0}"
+            class="ArchitectureSniffer\Zed\Communication\Controller\ControllerRule">
 
         <priority>1</priority>
     </rule>

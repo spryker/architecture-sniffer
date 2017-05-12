@@ -25,5 +25,6 @@
     <rule ref="Common/ruleset.xml" />
     <rule ref="Shared/ruleset.xml" />
     <rule ref="Zed/ruleset.xml" />
+    <rule ref="Service/ruleset.xml" />
 
 </ruleset>

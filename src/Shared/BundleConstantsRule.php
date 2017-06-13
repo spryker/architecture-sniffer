@@ -35,7 +35,9 @@ class BundleConstantsRule extends AbstractRule implements InterfaceAware
 
         foreach ($node->findChildrenOfType('ConstantDeclarator') as $constant) {
             $value = $constant->getValue()->getValue();
-            if ($constant->getImage() === $value) {
+            $value = $this->getRawValue($value);
+
+            if ($this->validateValue($node, $constant)) {
                 continue;
             }
 
@@ -55,6 +57,65 @@ class BundleConstantsRule extends AbstractRule implements InterfaceAware
                 ]
             );
         }
+    }
+
+    /**
+     * @param string $value
+     *
+     * @return string
+     */
+    protected function getRawValue($value)
+    {
+        if (strpos($value, ':') !== false) {
+            $value = substr($value, strpos($value, ':') + 1);
+        }
+
+        return $value;
+    }
+
+    /**
+     * @param string $value
+     *
+     * @return string
+     */
+    protected function getBundleConstant($value)
+    {
+        if (strpos($value, ':') === false) {
+            return false;
+        }
+
+        return $value = substr($value, 0, strpos($value, ':'));
+    }
+
+    /**
+     * @param \PHPMD\AbstractNode $node
+     *
+     * @return string
+     */
+    protected function getBundleName(AbstractNode $node)
+    {
+        $pattern = '@^([^\\\]*)\\\([^\\\]*)\\\([^\\\]*)(.*)$@';
+        $replacement = '\\3';
+
+        return preg_replace($pattern, $replacement, $node->getNamespaceName());
+    }
+
+    /**
+     * @param AbstractNode $node
+     * @param mixed $constant
+     *
+     * @return bool
+     */
+    protected function validateValue(AbstractNode $node, $constant)
+    {
+        $value = $constant->getValue()->getValue();
+        $valueWithoutBundleName = $this->getRawValue($value);
+
+        if ($constant->getImage() === $value || $constant->getImage() === $valueWithoutBundleName) {
+            return true;
+        }
+
+        return false;
     }
 
 }

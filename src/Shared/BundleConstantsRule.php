@@ -66,8 +66,9 @@ class BundleConstantsRule extends AbstractRule implements InterfaceAware
      */
     protected function getRawValue($value)
     {
-        if (strpos($value, ':') !== false) {
-            $value = substr($value, strpos($value, ':') + 1);
+        $pos = strpos($value, ':');
+        if ($pos !== false) {
+            $value = substr($value, $pos + 1);
         }
 
         return $value;
@@ -80,11 +81,12 @@ class BundleConstantsRule extends AbstractRule implements InterfaceAware
      */
     protected function getBundleConstant($value)
     {
-        if (strpos($value, ':') === false) {
+        $pos = strpos($value, ':');
+        if ($pos === false) {
             return false;
         }
 
-        return $value = substr($value, 0, strpos($value, ':'));
+        return $value = substr($value, 0, $pos);
     }
 
     /**

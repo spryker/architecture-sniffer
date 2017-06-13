@@ -37,7 +37,7 @@ class BundleConstantsRule extends AbstractRule implements InterfaceAware
             $value = $constant->getValue()->getValue();
             $value = $this->getRawValue($value);
 
-            if ($this->validateValue($node, $constant)) {
+            if ($this->validateValue($constant)) {
                 continue;
             }
 
@@ -103,12 +103,11 @@ class BundleConstantsRule extends AbstractRule implements InterfaceAware
     }
 
     /**
-     * @param AbstractNode $node
      * @param mixed $constant
      *
      * @return bool
      */
-    protected function validateValue(AbstractNode $node, $constant)
+    protected function validateValue($constant)
     {
         $value = $constant->getValue()->getValue();
         $valueWithoutBundleName = $this->getRawValue($value);

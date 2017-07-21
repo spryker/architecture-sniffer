@@ -42,6 +42,10 @@ class CreateContainOneNewFactoryRule extends AbstractFactoryRule implements Meth
             return;
         }
 
+        if ($this->isParentCall($method)) {
+            return;
+        }
+
         $methodName = $method->getParentName() . '::' . $method->getName() . '()';
         $className = $method->getFullQualifiedName();
 
@@ -49,6 +53,22 @@ class CreateContainOneNewFactoryRule extends AbstractFactoryRule implements Meth
         $className";
 
         $this->addViolation($method, [$message]);
+    }
+
+    /**
+     * @param \PHPMD\Node\MethodNode $method
+     *
+     * @return bool
+     */
+    protected function isParentCall(MethodNode $method)
+    {
+        $primaryPrefixes = $method->findChildrenOfType('MemberPrimaryPrefix');
+        if (count($primaryPrefixes) < 1) {
+            return false;
+        }
+
+        $firstPrimaryPrefix = $primaryPrefixes[0];
+        return $firstPrimaryPrefix->getChild(0)->getName() === 'parent';
     }
 
 }

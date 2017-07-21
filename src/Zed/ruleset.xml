@@ -80,7 +80,7 @@
         message="Zed Business Layer - Factory: {0}"
         class="ArchitectureSniffer\Zed\Business\Factory\MethodReturnInterfaceRule">
 
-        <priority>1</priority>
+        <priority>2</priority>
     </rule>
 
     <!-- COMMON FACTORY RULES -->

@@ -100,14 +100,6 @@
         <priority>1</priority>
     </rule>
 
-    <rule
-        name="StatelessFactoryRule"
-        message="Factories: {0}"
-        class="ArchitectureSniffer\Common\Factory\StatelessFactoryRule">
-
-        <priority>1</priority>
-    </rule>
-
     <!-- COMMUNICATION CONTROLLER RULES -->
     <rule
             name="ControllerRule"

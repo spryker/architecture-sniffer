@@ -1,5 +1,4 @@
 <?php
-
 namespace ArchitectureSniffer\Common\Factory;
 
 use PHPMD\AbstractNode;

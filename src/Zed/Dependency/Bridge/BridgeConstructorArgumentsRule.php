@@ -10,7 +10,7 @@ use PHPMD\Rule\MethodAware;
 /**
  * Every bridge should not have type in constructor
  */
-class ArgumentsBridgeRule extends AbstractBridgeRule implements MethodAware
+class BridgeConstructorArgumentsRule extends AbstractBridgeRule implements MethodAware
 {
 
     /**
@@ -34,12 +34,12 @@ class ArgumentsBridgeRule extends AbstractBridgeRule implements MethodAware
      */
     private function applyRule(MethodNode $method)
     {
-        if($method->getName() !== '__construct'){
+        if ($method->getName() !== '__construct') {
             return;
         }
 
         $params = $method->getParameters();
-        if(count($params) !== 1){
+        if (count($params) !== 1) {
             $message = sprintf(
                 'The %s is having too many parameters which violates the rule "Constructor in bridge must have exactly one parameter"',
                 $method->getFullQualifiedName()
@@ -64,7 +64,7 @@ class ArgumentsBridgeRule extends AbstractBridgeRule implements MethodAware
     {
         $class = $param->getClass();
 
-        if (is_null($class)) {
+        if ($class === null) {
             return;
         }
 

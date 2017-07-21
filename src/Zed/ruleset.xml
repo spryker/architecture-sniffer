@@ -60,19 +60,17 @@
     </rule>
 
     <rule
-            name="ArgumentsBridgeRule"
+            name="BridgeConstructorArgumentsRule"
             message="Zed Dependency Bridge - Bridge: {0}"
-            class="ArchitectureSniffer\Zed\Dependency\Bridge\ArgumentsBridgeRule">
+            class="ArchitectureSniffer\Zed\Dependency\Bridge\BridgeConstructorArgumentsRule">
 
         <priority>1</priority>
     </rule>
 
-<<<<<<< 05c55bc8452abb392f15af1cc8cd22ac0349a255
-=======
     <rule
         name="CreateContainOneNewFactoryRule"
         message="Zed Business Layer - Factory: {0}"
-        class="ArchitectureSniffer\Zed\Business\Factory\GetContainNoNewFactoryRule">
+        class="ArchitectureSniffer\Zed\Persistence\Factory\GetContainNoNewFactoryRule">
 
         <priority>1</priority>
     </rule>
@@ -89,7 +87,7 @@
     <rule
         name="NoLoopsInFactoryRule"
         message="Factories: {0}"
-        class="ArchitectureSniffer\Zed\Common\Factory\NoLoopsInFactoryRule">
+        class="ArchitectureSniffer\Common\Factory\NoLoopsInFactoryRule">
 
         <priority>1</priority>
     </rule>
@@ -97,7 +95,7 @@
     <rule
         name="OnlyGetAndCreateFactoryRule"
         message="Factories: {0}"
-        class="ArchitectureSniffer\Zed\Common\Factory\OnlyGetAndCreateFactoryRule">
+        class="ArchitectureSniffer\Common\Factory\OnlyGetAndCreateFactoryRule">
 
         <priority>1</priority>
     </rule>
@@ -105,11 +103,10 @@
     <rule
         name="StatelessFactoryRule"
         message="Factories: {0}"
-        class="ArchitectureSniffer\Zed\Common\Factory\StatelessFactoryRule">
+        class="ArchitectureSniffer\Common\Factory\StatelessFactoryRule">
 
         <priority>1</priority>
     </rule>
->>>>>>> Added access rule for Service, Added basic rules for Service and added MethodReturnInterface rule for Factories
 
     <!-- COMMUNICATION CONTROLLER RULES -->
     <rule

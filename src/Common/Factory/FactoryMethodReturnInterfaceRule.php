@@ -29,7 +29,6 @@ class FactoryMethodReturnInterfaceRule extends AbstractFactoryRule implements Me
         $this->applyRule($node);
     }
 
-
     /**
      * @param \PHPMD\Node\MethodNode $node
      *

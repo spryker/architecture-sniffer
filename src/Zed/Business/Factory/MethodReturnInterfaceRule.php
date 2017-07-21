@@ -2,6 +2,7 @@
 
 namespace ArchitectureSniffer\Zed\Business\Factory;
 
+use ArchitectureSniffer\Common\Factory\AbstractFactoryRule;
 use PHPMD\AbstractNode;
 use PHPMD\Node\MethodNode;
 use PHPMD\Rule\MethodAware;
@@ -28,7 +29,6 @@ class MethodReturnInterfaceRule extends AbstractFactoryRule implements MethodAwa
 
         $this->applyRule($node);
     }
-
 
     /**
      * @param \PHPMD\Node\MethodNode $node

@@ -42,14 +42,13 @@ class CreateContainOneNewFactoryRule extends AbstractFactoryRule implements Meth
             return;
         }
 
-        $methodName = $method->getParentName().'::'.$method->getName().'()';
+        $methodName = $method->getParentName() . '::' . $method->getName() . '()';
         $className = $method->getFullQualifiedName();
 
         $message = "{$methodName} contains {$count} new statements which violates rule 'A create*() method must contain exactly 1 `new` statement.'
         $className";
 
         $this->addViolation($method, [$message]);
-
     }
 
 }

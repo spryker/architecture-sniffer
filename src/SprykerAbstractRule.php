@@ -50,8 +50,9 @@ use PHPMD\Node\MethodNode;
 abstract class SprykerAbstractRule extends AbstractRule
 {
 
-
     /**
+     * @param \PHPMD\Node\MethodNode $node
+     *
      * @return \PDepend\Source\AST\ASTMethod
      */
     protected function getNodeFromMethodNode(MethodNode $node)

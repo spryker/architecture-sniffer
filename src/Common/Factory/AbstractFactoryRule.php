@@ -8,6 +8,7 @@ use PHPMD\Node\MethodNode;
 
 abstract class AbstractFactoryRule extends SprykerAbstractRule
 {
+
     const ZED_FACTORY = '/\\\\*\\\\.*\\\\.*\\\\.*Factory$/';
 
     /**
@@ -18,7 +19,6 @@ abstract class AbstractFactoryRule extends SprykerAbstractRule
     protected function isFactory(AbstractNode $node)
     {
         if ($node instanceof MethodNode) {
-
             $node = $this->getNodeFromMethodNode($node);
 
             $parent = $node->getParent();
@@ -28,7 +28,7 @@ abstract class AbstractFactoryRule extends SprykerAbstractRule
         }
 
         // Factories in persistence layer have other rules
-        if(strpos($className, '\\Persistence\\') !== false){
+        if (strpos($className, '\\Persistence\\') !== false) {
             return false;
         }
 

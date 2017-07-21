@@ -17,7 +17,7 @@ class ControllerRule extends AbstractRule implements ClassAware
      */
     public function apply(AbstractNode $node)
     {
-        if (0 === preg_match('(\\\\[^\\\\]+Controller$)', $node->getFullQualifiedName())) {
+        if (preg_match('(\\\\[^\\\\]+Controller$)', $node->getFullQualifiedName()) === 0) {
             return;
         }
         if ($node->getName() === 'AbstractController') {
@@ -37,7 +37,7 @@ class ControllerRule extends AbstractRule implements ClassAware
      */
     private function applyPublicMethodsHaveActionSuffix(MethodNode $method)
     {
-        if ('Action' === substr($method->getName(), -6, 6)) {
+        if (substr($method->getName(), -6, 6) === 'Action') {
             return;
         }
 

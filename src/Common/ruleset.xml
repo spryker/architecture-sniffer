@@ -33,7 +33,7 @@
             message="{0}"
             class="ArchitectureSniffer\Common\Factory\FactoryMethodReturnInterfaceRule">
 
-        <priority>2</priority>
+        <priority>3</priority>
     </rule>
 
     <rule

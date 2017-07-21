@@ -24,7 +24,7 @@
             message="Zed Business Layer - Facade: {0}"
             class="ArchitectureSniffer\Zed\Business\Facade\ArgumentsFacadeRule">
 
-        <priority>2</priority>
+        <priority>3</priority>
     </rule>
 
     <rule
@@ -80,7 +80,7 @@
         message="Zed Business Layer - Factory: {0}"
         class="ArchitectureSniffer\Zed\Business\Factory\MethodReturnInterfaceRule">
 
-        <priority>2</priority>
+        <priority>3</priority>
     </rule>
 
     <!-- COMMON FACTORY RULES -->

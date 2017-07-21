@@ -59,6 +59,15 @@
         <priority>1</priority>
     </rule>
 
+    <rule
+            name="ArgumentsBridgeRule"
+            message="Zed Dependency Bridge - Bridge: {0}"
+            class="ArchitectureSniffer\Zed\Dependency\Bridge\ArgumentsBridgeRule">
+
+        <priority>1</priority>
+    </rule>
+
+
     <!-- COMMUNICATION CONTROLLER RULES -->
     <rule
             name="ControllerRule"

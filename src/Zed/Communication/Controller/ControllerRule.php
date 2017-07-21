@@ -20,7 +20,11 @@ class ControllerRule extends AbstractRule implements ClassAware
         if (0 === preg_match('(\\\\[^\\\\]+Controller$)', $node->getFullQualifiedName())) {
             return;
         }
+        if ($node->getName() === 'AbstractController') {
+            return;
+        }
 
+        /** @var \PHPMD\Node\ClassNode $node */
         foreach ($node->getMethods() as $method) {
             $this->applyPublicMethodsHaveActionSuffix($method);
         }
@@ -36,6 +40,8 @@ class ControllerRule extends AbstractRule implements ClassAware
         if ('Action' === substr($method->getName(), -6, 6)) {
             return;
         }
+
+        /** @var \PDepend\Source\AST\ASTMethod $method */
         if ($method->isProtected() || $method->isPrivate()) {
             return;
         }
@@ -46,7 +52,7 @@ class ControllerRule extends AbstractRule implements ClassAware
                 sprintf(
                     'The controller method %s is not suffixed with "Action" which violates rule "All public methods have the suffix *Action"',
                     $method->getFullQualifiedName()
-                )
+                ),
             ]
         );
     }

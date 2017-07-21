@@ -45,6 +45,9 @@ class CreateContainOneNewFactoryRule extends AbstractFactoryRule implements Meth
         if ($this->isParentCall($method)) {
             return;
         }
+        if ($this->isIndirectFactoryMethod($method)) {
+            return;
+        }
 
         $methodName = $method->getParentName() . '::' . $method->getName() . '()';
         $className = $method->getFullQualifiedName();
@@ -69,6 +72,30 @@ class CreateContainOneNewFactoryRule extends AbstractFactoryRule implements Meth
 
         $firstPrimaryPrefix = $primaryPrefixes[0];
         return $firstPrimaryPrefix->getChild(0)->getName() === 'parent';
+    }
+
+    /**
+     * @param \PHPMD\Node\MethodNode $method
+     *
+     * @return bool
+     */
+    protected function isIndirectFactoryMethod(MethodNode $method)
+    {
+        $primaryPrefixes = $method->findChildrenOfType('MemberPrimaryPrefix');
+        if (count($primaryPrefixes) < 1) {
+            return false;
+        }
+
+        if ($primaryPrefixes[0]->getChild(0)->getName() === '$this' && substr($primaryPrefixes[0]->getChild(1)->getName(), 0, 6) === 'create') {
+            return true;
+        }
+        if ($primaryPrefixes[0]->getChild(0)->getName() === '$this' && substr($primaryPrefixes[0]->getChild(1)->getName(), 0, 6) === '->') {
+            if (substr($primaryPrefixes[1]->getChild(0)->getName(), 0, 6) === 'create') {
+                return true;
+            }
+        }
+
+        return false;
     }
 
 }

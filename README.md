@@ -12,9 +12,18 @@ Architecture Sniffer for Spryker core, eco-system and applications.
 
 We use and recommend level `2` by default for local and CI checks.
 
-## Usage
-You can run the Architecture Sniffer from console by using:
-`vendor/bin/phpmd vendor/spryker/spryker/Bundles/%bundle name% (xml|text|html) vendor/spryker/architecture-sniffer/src/ruleset.xml`
+## Spryker Usage
+When using Spryker you can use the Spryker CLI console command for it:
+```
+console code:architecture [-m ModuleName] [optional-path] -v
+```
+Verbose output is recommended here.
+
+## Manual Usage
+You can also manually run the Architecture Sniffer from console by using:
+```
+vendor/bin/phpmd vendor/spryker/spryker/Bundles/%bundle name% (xml|text|html) vendor/spryker/architecture-sniffer/src/ruleset.xml --minimumpriority=2
+```
 
 ### Including the sniffer in PHPStorm
 Add a new custom ruleset under `Editor -> Inspections -> PHP -> PHP Mess Detector validation`.

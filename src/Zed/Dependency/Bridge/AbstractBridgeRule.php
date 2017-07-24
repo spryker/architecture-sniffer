@@ -1,12 +1,12 @@
 <?php
 
-namespace ArchitectureSniffer\Zed\Communication\Factory;
+namespace ArchitectureSniffer\Zed\Dependency\Bridge;
 
 use PHPMD\AbstractRule;
 use PHPMD\Node\AbstractNode;
 use PHPMD\Node\MethodNode;
 
-abstract class AbstractFactoryRule extends AbstractRule
+abstract class AbstractBridgeRule extends AbstractRule
 {
 
     /**
@@ -14,7 +14,7 @@ abstract class AbstractFactoryRule extends AbstractRule
      *
      * @return bool
      */
-    protected function isFactory(AbstractNode $node)
+    protected function isBridge(AbstractNode $node)
     {
         if ($node instanceof MethodNode) {
             $parent = $node->getNode()->getParent();
@@ -23,7 +23,7 @@ abstract class AbstractFactoryRule extends AbstractRule
             $className = $node->getFullQualifiedName();
         }
 
-        if (preg_match('/\\\\Zed\\\\.*\\\\Business\\\\.*Factory$/', $className)) {
+        if (preg_match('/\\\\Dependency\\\\.*\\\\.*Bridge$/', $className)) {
             return true;
         }
 

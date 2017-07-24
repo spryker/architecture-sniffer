@@ -25,6 +25,11 @@ class AccessRule extends AbstractRule implements ClassAware
             '{type} {source} accesses {target} which violates rule "No call from Yves to Zed"',
         ],
         [
+            '(Spryker\\\\Yves\\\\.+)',
+            '(Orm\\\\Zed\\\\.+)',
+            '{type} {source} accesses {target} which violates rule "No call from Yves to Zed"',
+        ],
+        [
             '(Spryker\\\\Zed\\\\.+)',
             '(Spryker\\\\Yves\\\\.+)',
             '{type} {source} accesses {target} which violates rule "No call from Zed to Yves"',
@@ -58,6 +63,26 @@ class AccessRule extends AbstractRule implements ClassAware
             '(Spryker\\\\Client\\\\.+)',
             '(Spryker\\\\Yves\\\\.+)',
             '{type} {source} accesses {target} which violates rule "No call from Client to Yves"',
+        ],
+        [
+            '(Spryker\\\\Client\\\\.+)',
+            '(Orm\\\\Zed\\\\.+)',
+            '{type} {source} accesses {target} which violates rule "No call from Client to Zed"',
+        ],
+        [
+            '(Spryker\\\\Service\\\\.+)',
+            '(Spryker\\\\Yves\\\\.+)',
+            '{type} {source} accesses {target} which violates rule "No call from Service to Yves"',
+        ],
+        [
+            '(Spryker\\\\Service\\\\.+)',
+            '(Spryker\\\\Zed\\\\.+)',
+            '{type} {source} accesses {target} which violates rule "No call from Service to Zed"',
+        ],
+        [
+            '(Spryker\\\\Service\\\\.+)',
+            '(Orm\\\\Zed\\\\.+)',
+            '{type} {source} accesses {target} which violates rule "No call from Service to Zed"',
         ],
     ];
 

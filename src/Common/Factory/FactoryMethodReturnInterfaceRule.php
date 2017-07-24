@@ -1,18 +1,18 @@
 <?php
 
-namespace ArchitectureSniffer\Zed\Business\Facade;
+namespace ArchitectureSniffer\Common\Factory;
 
 use PHPMD\AbstractNode;
 use PHPMD\Node\MethodNode;
 use PHPMD\Rule\MethodAware;
 
 /**
- * Every Facade should only return native types and transfer objects
+ * Every method in a Factory must only return an interface or an array of interfaces
  */
-class ReturnFacadeRule extends AbstractFacadeRule implements MethodAware
+class FactoryMethodReturnInterfaceRule extends AbstractFactoryRule implements MethodAware
 {
 
-    const ALLOWED_RETURN_TYPES_PATTERN = '/@return\s(?!void|int|float|integer|string|array|\[\]|.*\[\]|bool|boolean|((.*)Transfer))(.*)/';
+    const ALLOWED_RETURN_TYPES_PATTERN = '/@return\s(?!((.*)Interface))(.*)/';
     const INVALID_RETURN_TYPE_MATCH = 3;
 
     /**
@@ -22,7 +22,7 @@ class ReturnFacadeRule extends AbstractFacadeRule implements MethodAware
      */
     public function apply(AbstractNode $node)
     {
-        if (!$this->isFacade($node)) {
+        if (!$this->isFactory($node)) {
             return;
         }
 
@@ -38,11 +38,13 @@ class ReturnFacadeRule extends AbstractFacadeRule implements MethodAware
     {
         $comment = $node->getComment();
         if ($this->hasInvalidReturnType($comment)) {
-            $message = sprintf(
-                'The %s is using an invalid return type "%s" which violates the rule "Should only return native types or transfer objects"',
-                $node->getFullQualifiedName(),
-                $this->getInvalidReturnType($comment)
-            );
+
+            $class = $node->getParentName();
+            $method = $node->getName();
+            $fullClassName = $node->getFullQualifiedName();
+
+            $message = "{$class}::{$method}() returns a concrete class which violates the rule 'Factory methods only return interfaces'. 
+            {$fullClassName}";
 
             $this->addViolation($node, [$message]);
         }

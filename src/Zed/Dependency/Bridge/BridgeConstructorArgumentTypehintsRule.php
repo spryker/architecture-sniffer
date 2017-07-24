@@ -1,6 +1,6 @@
 <?php
 
-namespace ArchitectureSniffer\Zed\Business\Facade;
+namespace ArchitectureSniffer\Zed\Dependency\Bridge;
 
 use PDepend\Source\AST\ASTParameter;
 use PHPMD\AbstractNode;
@@ -8,9 +8,9 @@ use PHPMD\Node\MethodNode;
 use PHPMD\Rule\MethodAware;
 
 /**
- * Every Facade should only retrieve native types and transfer objects
+ * A bridge should not have a typehint in constructor.
  */
-class ArgumentsFacadeRule extends AbstractFacadeRule implements MethodAware
+class BridgeConstructorArgumentTypehintsRule extends AbstractBridgeRule implements MethodAware
 {
 
     /**
@@ -20,7 +20,7 @@ class ArgumentsFacadeRule extends AbstractFacadeRule implements MethodAware
      */
     public function apply(AbstractNode $node)
     {
-        if (!$this->isFacade($node)) {
+        if (!$this->isBridge($node)) {
             return;
         }
 
@@ -32,9 +32,18 @@ class ArgumentsFacadeRule extends AbstractFacadeRule implements MethodAware
      *
      * @return void
      */
-    private function applyRule(MethodNode $method)
+    protected function applyRule(MethodNode $method)
     {
+        if ($method->getName() !== '__construct') {
+            return;
+        }
+
         $params = $method->getParameters();
+        if (count($params) !== 1) {
+            // Let another rule take care of this.
+            return;
+        }
+
         foreach ($params as $param) {
             $this->checkParameter($param, $method);
         }
@@ -49,12 +58,13 @@ class ArgumentsFacadeRule extends AbstractFacadeRule implements MethodAware
     private function checkParameter(ASTParameter $param, AbstractNode $node)
     {
         $class = $param->getClass();
-        if (empty($class) || $class->getNamespaceName() === 'Generated\Shared\Transfer') {
+
+        if ($class === null) {
             return;
         }
 
         $message = sprintf(
-            'The %s is using an invalid argument type which violates the rule "Should only retrieve native types and transfer objects"',
+            'The %s is violating the rule "Bridges must not have a type-hint in constructor"',
             $node->getFullQualifiedName()
         );
 

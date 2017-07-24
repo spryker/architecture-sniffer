@@ -33,9 +33,9 @@ class ZedBusinessFacadeRule extends AbstractFacadeRule implements ClassAware
      *
      * @return void
      */
-    private function applyStatelessThereAreNoProperties(ClassNode $class)
+    protected function applyStatelessThereAreNoProperties(ClassNode $class)
     {
-        if (0 === count($class->getProperties())) {
+        if (count($class->getProperties()) === 0) {
             return;
         }
 
@@ -55,9 +55,9 @@ class ZedBusinessFacadeRule extends AbstractFacadeRule implements ClassAware
      *
      * @return void
      */
-    private function applyNoInstantiationsWithNew(MethodNode $method)
+    protected function applyNoInstantiationsWithNew(MethodNode $method)
     {
-        if (0 === count($method->findChildrenOfType('AllocationExpression'))) {
+        if (count($method->findChildrenOfType('AllocationExpression')) === 0) {
             return;
         }
 

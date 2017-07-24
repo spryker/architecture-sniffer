@@ -22,7 +22,7 @@ Verbose output is recommended here.
 ## Manual Usage
 You can also manually run the Architecture Sniffer from console by using:
 ```
-vendor/bin/phpmd vendor/spryker/spryker/Bundles/%bundle name% (xml|text|html) vendor/spryker/architecture-sniffer/src/ruleset.xml --minimumpriority=2
+vendor/bin/phpmd src/Pyz/ (xml|text|html) vendor/spryker/architecture-sniffer/src/ruleset.xml --minimumpriority=2
 ```
 
 ### Including the sniffer in PHPStorm

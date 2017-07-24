@@ -35,12 +35,12 @@ class MethodReturnInterfaceRule extends AbstractFactoryRule implements MethodAwa
      *
      * @return void
      */
-    private function applyRule(MethodNode $node)
+    protected function applyRule(MethodNode $node)
     {
         $comment = $node->getComment();
         if ($this->hasInvalidReturnType($comment)) {
             $message = sprintf(
-                'TODO The %s is using a invalid return type "%s" which violates the rule "Should only return interfaces"',
+                'The %s is using an invalid return type "%s" which violates the rule "Should only return interfaces"',
                 $node->getFullQualifiedName(),
                 $this->getInvalidReturnType($comment)
             );
@@ -54,7 +54,7 @@ class MethodReturnInterfaceRule extends AbstractFactoryRule implements MethodAwa
      *
      * @return bool
      */
-    private function hasInvalidReturnType($comment)
+    protected function hasInvalidReturnType($comment)
     {
         if (preg_match(self::ALLOWED_RETURN_TYPES_PATTERN, $comment)) {
             return true;
@@ -68,7 +68,7 @@ class MethodReturnInterfaceRule extends AbstractFactoryRule implements MethodAwa
      *
      * @return bool
      */
-    private function getInvalidReturnType($comment)
+    protected function getInvalidReturnType($comment)
     {
         if (preg_match(self::ALLOWED_RETURN_TYPES_PATTERN, $comment, $returnType)) {
             return $returnType[self::INVALID_RETURN_TYPE_MATCH];

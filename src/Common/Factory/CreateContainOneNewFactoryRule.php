@@ -7,7 +7,7 @@ use PHPMD\Node\MethodNode;
 use PHPMD\Rule\MethodAware;
 
 /**
- * Every Facade should only retrieve native types and transfer objects
+ * Every Factory method named create* should only have a single "new ..." instantiation.
  */
 class CreateContainOneNewFactoryRule extends AbstractFactoryRule implements MethodAware
 {

@@ -54,7 +54,7 @@ class ArgumentsFacadeRule extends AbstractFacadeRule implements MethodAware
         }
 
         $message = sprintf(
-            'The %s is using a invalid argument type which violates the rule "Should only retrieve native types and transfer objects"',
+            'The %s is using an invalid argument type which violates the rule "Should only retrieve native types and transfer objects"',
             $node->getFullQualifiedName()
         );
 

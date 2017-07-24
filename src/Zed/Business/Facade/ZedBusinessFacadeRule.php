@@ -3,6 +3,7 @@
 namespace ArchitectureSniffer\Zed\Business\Facade;
 
 use PHPMD\AbstractNode;
+use PHPMD\Node\ClassNode;
 use PHPMD\Node\MethodNode;
 use PHPMD\Rule\ClassAware;
 
@@ -20,9 +21,33 @@ class ZedBusinessFacadeRule extends AbstractFacadeRule implements ClassAware
             return;
         }
 
+        $this->applyStatelessThereAreNoProperties($node);
+
         foreach ($node->getMethods() as $method) {
             $this->applyNoInstantiationsWithNew($method);
         }
+    }
+
+    /**
+     * @param \PHPMD\Node\ClassNode $class
+     *
+     * @return void
+     */
+    protected function applyStatelessThereAreNoProperties(ClassNode $class)
+    {
+        if (count($class->getProperties()) === 0) {
+            return;
+        }
+
+        $this->addViolation(
+            $class,
+            [
+                sprintf(
+                    'The are properties in class %s which violates rule "Stateless, there are no properties"',
+                    $class->getFullQualifiedName()
+                )
+            ]
+        );
     }
 
     /**
@@ -30,9 +55,9 @@ class ZedBusinessFacadeRule extends AbstractFacadeRule implements ClassAware
      *
      * @return void
      */
-    private function applyNoInstantiationsWithNew(MethodNode $method)
+    protected function applyNoInstantiationsWithNew(MethodNode $method)
     {
-        if (0 === count($method->findChildrenOfType('AllocationExpression'))) {
+        if (count($method->findChildrenOfType('AllocationExpression')) === 0) {
             return;
         }
 

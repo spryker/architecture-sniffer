@@ -9,7 +9,7 @@ use PHPMD\Node\MethodNode;
 abstract class AbstractFactoryRule extends SprykerAbstractRule
 {
 
-    const ZED_FACTORY = '/\\\\*\\\\.*\\\\.*\\\\.*Factory$/';
+    const PATTERN_ZED_FACTORY = '/\\\\*\\\\.*\\\\.*\\\\.*Factory$/';
 
     /**
      * @param \PHPMD\Node\AbstractNode $node
@@ -32,7 +32,7 @@ abstract class AbstractFactoryRule extends SprykerAbstractRule
             return false;
         }
 
-        if (preg_match(self::ZED_FACTORY, $className)) {
+        if (preg_match(self::PATTERN_ZED_FACTORY, $className)) {
             return true;
         }
 

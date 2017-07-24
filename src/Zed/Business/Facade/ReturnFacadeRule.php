@@ -39,7 +39,7 @@ class ReturnFacadeRule extends AbstractFacadeRule implements MethodAware
         $comment = $node->getComment();
         if ($this->hasInvalidReturnType($comment)) {
             $message = sprintf(
-                'The %s is using a invalid return type "%s" which violates the rule "Should only return native types or transfer objects"',
+                'The %s is using an invalid return type "%s" which violates the rule "Should only return native types or transfer objects"',
                 $node->getFullQualifiedName(),
                 $this->getInvalidReturnType($comment)
             );

@@ -2,13 +2,12 @@
 
 namespace ArchitectureSniffer\Zed\Dependency\Bridge;
 
-use PDepend\Source\AST\ASTParameter;
 use PHPMD\AbstractNode;
 use PHPMD\Node\MethodNode;
 use PHPMD\Rule\MethodAware;
 
 /**
- * Every bridge should not have type in constructor
+ * A bridge should only have a single argument in constructor.
  */
 class BridgeConstructorArgumentsRule extends AbstractBridgeRule implements MethodAware
 {
@@ -32,48 +31,24 @@ class BridgeConstructorArgumentsRule extends AbstractBridgeRule implements Metho
      *
      * @return void
      */
-    private function applyRule(MethodNode $method)
+    protected function applyRule(MethodNode $method)
     {
         if ($method->getName() !== '__construct') {
             return;
         }
 
         $params = $method->getParameters();
-        if (count($params) !== 1) {
-            $message = sprintf(
-                'The %s is having too many parameters which violates the rule "Constructor in bridge must have exactly one parameter"',
-                $method->getFullQualifiedName()
-            );
-
-            $this->addViolation($method, [$message]);
-            return;
-        }
-
-        foreach ($params as $param) {
-            $this->checkParameter($param, $method);
-        }
-    }
-
-    /**
-     * @param \PDepend\Source\AST\ASTParameter $param
-     * @param \PHPMD\AbstractNode $node
-     *
-     * @return void
-     */
-    private function checkParameter(ASTParameter $param, AbstractNode $node)
-    {
-        $class = $param->getClass();
-
-        if ($class === null) {
+        if (count($params) === 1) {
             return;
         }
 
         $message = sprintf(
-            'The %s is violating the rule "Bridges must not have a type-hint in constructor"',
-            $node->getFullQualifiedName()
+            'The %s is having %s parameters which violates the rule "Constructor in bridge must have exactly one parameter"',
+            count($params),
+            $method->getFullQualifiedName()
         );
 
-        $this->addViolation($node, [$message]);
+        $this->addViolation($method, [$message]);
     }
 
 }

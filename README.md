@@ -12,6 +12,8 @@ Architecture Sniffer for Spryker core, eco-system and applications.
 
 We use and recommend level `2` by default for local and CI checks.
 
+Note: Lower priorities always include the higher priorities in the validation process.
+
 ## Usage
 You can run the Architecture Sniffer from console by using:
 `vendor/bin/phpmd vendor/spryker/spryker/Bundles/%bundle name% (xml|text|html) vendor/spryker/architecture-sniffer/src/ruleset.xml`

@@ -31,6 +31,24 @@ Under `Framework & Languages -> PHP -> Mess Detector` you need to define the con
 Add them to inside src folder and add tests in `tests` with the same folder structure.
 Don't forget to update `ruleset.xml`.
 
+Every sniff needs a description as full sentence:
+```php
+    const RULE = 'Every Foo needs Bar.';
+
+    /**
+     * @return string
+     */
+    public function getDescription()
+    {
+        return static::RULE;
+    }
+```
+
+Also note:
+- The rule names must be unique across the rulesets.
+- Each rule should contain only one "check".
+- Each rule always outputs also the reason (violation), not just the occurrence.
+
 ### Setup
 Run
 ```

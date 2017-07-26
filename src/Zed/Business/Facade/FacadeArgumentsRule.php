@@ -8,10 +8,20 @@ use PHPMD\Node\MethodNode;
 use PHPMD\Rule\MethodAware;
 
 /**
- * Every Facade should only retrieve native types and transfer objects
+ *
  */
-class ArgumentsFacadeRule extends AbstractFacadeRule implements MethodAware
+class FacadeArgumentsRule extends AbstractFacadeRule implements MethodAware
 {
+
+    const RULE = 'Every Facade should only retrieve native types or transfer objects.';
+
+    /**
+     * @return string
+     */
+    public function getDescription()
+    {
+        return static::RULE;
+    }
 
     /**
      * @param \PHPMD\AbstractNode $node
@@ -32,7 +42,7 @@ class ArgumentsFacadeRule extends AbstractFacadeRule implements MethodAware
      *
      * @return void
      */
-    private function applyRule(MethodNode $method)
+    protected function applyRule(MethodNode $method)
     {
         $params = $method->getParameters();
         foreach ($params as $param) {
@@ -46,7 +56,7 @@ class ArgumentsFacadeRule extends AbstractFacadeRule implements MethodAware
      *
      * @return void
      */
-    private function checkParameter(ASTParameter $param, AbstractNode $node)
+    protected function checkParameter(ASTParameter $param, AbstractNode $node)
     {
         $class = $param->getClass();
         if (empty($class) || $class->getNamespaceName() === 'Generated\Shared\Transfer') {

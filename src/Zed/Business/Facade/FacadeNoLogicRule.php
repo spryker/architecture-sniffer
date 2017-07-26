@@ -7,8 +7,18 @@ use PHPMD\Node\ClassNode;
 use PHPMD\Node\MethodNode;
 use PHPMD\Rule\ClassAware;
 
-class NoLogicInFacadeRule extends AbstractFacadeRule implements ClassAware
+class FacadeNoLogicRule extends AbstractFacadeRule implements ClassAware
 {
+
+    const RULE = 'A Facade must not contain logic and only delegate.';
+
+    /**
+     * @return string
+     */
+    public function getDescription()
+    {
+        return static::RULE;
+    }
 
     /**
      * @var array
@@ -40,7 +50,7 @@ class NoLogicInFacadeRule extends AbstractFacadeRule implements ClassAware
      *
      * @return void
      */
-    private function applyRule(ClassNode $node)
+    protected function applyRule(ClassNode $node)
     {
         foreach ($node->getMethods() as $method) {
             $this->checkStatements($method);
@@ -52,7 +62,7 @@ class NoLogicInFacadeRule extends AbstractFacadeRule implements ClassAware
      *
      * @return void
      */
-    private function checkStatements(MethodNode $method)
+    protected function checkStatements(MethodNode $method)
     {
         foreach ($method->findChildrenOfType('Statement') as $statement) {
             if (!in_array(strtolower($statement->getImage()), $this->forbiddenStatements)) {
@@ -60,7 +70,7 @@ class NoLogicInFacadeRule extends AbstractFacadeRule implements ClassAware
             }
 
             $message = sprintf(
-                'The method %s contains a "%s" statement which violates the rule "No logic in Facade"',
+                'The method %s contains a "%s" statement which violates the rule "' . static::RULE . '"',
                 $method->getFullQualifiedName(),
                 $statement->getImage()
             );

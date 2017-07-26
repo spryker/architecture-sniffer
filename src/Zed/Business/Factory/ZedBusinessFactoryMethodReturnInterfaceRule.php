@@ -1,19 +1,27 @@
 <?php
 
-namespace ArchitectureSniffer\Zed\Business\Facade;
+namespace ArchitectureSniffer\Zed\Business\Factory;
 
+use ArchitectureSniffer\Common\Factory\AbstractFactoryRule;
 use PHPMD\AbstractNode;
 use PHPMD\Node\MethodNode;
 use PHPMD\Rule\MethodAware;
 
-/**
- * Every Facade should only return native types and transfer objects
- */
-class ReturnFacadeRule extends AbstractFacadeRule implements MethodAware
+class ZedBusinessFactoryMethodReturnInterfaceRule extends AbstractFactoryRule implements MethodAware
 {
 
-    const ALLOWED_RETURN_TYPES_PATTERN = '/@return\s(?!void|int|float|integer|string|array|\[\]|.*\[\]|bool|boolean|((.*)Transfer))(.*)/';
+    const RULE = 'Every method in a Factory must only return an interface or an array of interfaces.';
+
+    const ALLOWED_RETURN_TYPES_PATTERN = '/@return\s(?!((.*)Interface))(.*)/';
     const INVALID_RETURN_TYPE_MATCH = 3;
+
+    /**
+     * @return string
+     */
+    public function getDescription()
+    {
+        return static::RULE;
+    }
 
     /**
      * @param \PHPMD\AbstractNode $node
@@ -22,7 +30,7 @@ class ReturnFacadeRule extends AbstractFacadeRule implements MethodAware
      */
     public function apply(AbstractNode $node)
     {
-        if (!$this->isFacade($node)) {
+        if (!$this->isFactory($node)) {
             return;
         }
 
@@ -34,14 +42,15 @@ class ReturnFacadeRule extends AbstractFacadeRule implements MethodAware
      *
      * @return void
      */
-    private function applyRule(MethodNode $node)
+    protected function applyRule(MethodNode $node)
     {
         $comment = $node->getComment();
         if ($this->hasInvalidReturnType($comment)) {
             $message = sprintf(
-                'The %s is using an invalid return type "%s" which violates the rule "Should only return native types or transfer objects"',
+                'The %s is using an invalid return type "%s" which violates the rule "%s"',
                 $node->getFullQualifiedName(),
-                $this->getInvalidReturnType($comment)
+                $this->getInvalidReturnType($comment),
+                static::RULE
             );
 
             $this->addViolation($node, [$message]);
@@ -53,7 +62,7 @@ class ReturnFacadeRule extends AbstractFacadeRule implements MethodAware
      *
      * @return bool
      */
-    private function hasInvalidReturnType($comment)
+    protected function hasInvalidReturnType($comment)
     {
         if (preg_match(self::ALLOWED_RETURN_TYPES_PATTERN, $comment)) {
             return true;
@@ -67,7 +76,7 @@ class ReturnFacadeRule extends AbstractFacadeRule implements MethodAware
      *
      * @return bool
      */
-    private function getInvalidReturnType($comment)
+    protected function getInvalidReturnType($comment)
     {
         if (preg_match(self::ALLOWED_RETURN_TYPES_PATTERN, $comment, $returnType)) {
             return $returnType[self::INVALID_RETURN_TYPE_MATCH];

@@ -9,8 +9,18 @@ use PHPMD\Rule\ClassAware;
 /**
  * Factory methods should not contain loops
  */
-class NoLoopsInFactoryRule extends AbstractFactoryRule implements ClassAware
+class FactoryNoLoopsRule extends AbstractFactoryRule implements ClassAware
 {
+
+    const RULE = 'Factory methods should not contain loops.';
+
+    /**
+     * @return string
+     */
+    public function getDescription()
+    {
+        return static::RULE;
+    }
 
     /**
      * @var array
@@ -43,7 +53,7 @@ class NoLoopsInFactoryRule extends AbstractFactoryRule implements ClassAware
      *
      * @return void
      */
-    private function applyNoLoopsInMethod(MethodNode $method)
+    protected function applyNoLoopsInMethod(MethodNode $method)
     {
         foreach ($method->findChildrenOfType('Statement') as $statement) {
             if (false === in_array(strtolower($statement->getImage()), $this->forbiddenStatements)) {
@@ -51,7 +61,7 @@ class NoLoopsInFactoryRule extends AbstractFactoryRule implements ClassAware
             }
 
             $message = sprintf(
-                'The method %s contains a "%s" statement which violates rule "No loops in factories"',
+                'The method %s contains a "%s" statement which violates rule "' . static::RULE . '"',
                 $method->getFullQualifiedName(),
                 $statement->getImage()
             );

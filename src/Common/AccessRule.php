@@ -11,6 +11,14 @@ class AccessRule extends AbstractRule implements ClassAware
 {
 
     /**
+     * @return string
+     */
+    public function getDescription()
+    {
+        return 'Some layers must not call other layers.';
+    }
+
+    /**
      * @var array
      */
     private $patterns = [
@@ -112,7 +120,7 @@ class AccessRule extends AbstractRule implements ClassAware
      *
      * @return void
      */
-    private function applyPatterns(AbstractNode $node, array $patterns)
+    protected function applyPatterns(AbstractNode $node, array $patterns)
     {
         foreach ($node->getDependencies() as $dependency) {
             $targetQName = sprintf('%s\\%s', $dependency->getNamespaceName(), $dependency->getName());
@@ -144,7 +152,7 @@ class AccessRule extends AbstractRule implements ClassAware
      *
      * @return array
      */
-    private function collectPatterns(ClassNode $class)
+    protected function collectPatterns(ClassNode $class)
     {
         $patterns = [];
         foreach ($this->patterns as list($srcPattern, $targetPattern, $message)) {

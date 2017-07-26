@@ -10,6 +10,16 @@ use PHPMD\Rule\ClassAware;
 class ZedBusinessFacadeRule extends AbstractFacadeRule implements ClassAware
 {
 
+    const RULE = 'A facade must not have properties.';
+
+    /**
+     * @return string
+     */
+    public function getDescription()
+    {
+        return static::RULE;
+    }
+
     /**
      * @param \PHPMD\AbstractNode $node
      *
@@ -43,7 +53,7 @@ class ZedBusinessFacadeRule extends AbstractFacadeRule implements ClassAware
             $class,
             [
                 sprintf(
-                    'The are properties in class %s which violates rule "Stateless, there are no properties"',
+                    'The are properties in class %s which violates rule "' . static::RULE . '"',
                     $class->getFullQualifiedName()
                 )
             ]

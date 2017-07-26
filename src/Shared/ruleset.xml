@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<ruleset name="Spryker Shared ruleset"
+<ruleset name="Spryker Shared"
          xmlns="http://pmd.sf.net/ruleset/1.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://pmd.sf.net/ruleset/1.0.0
@@ -11,9 +11,9 @@
     </description>
 
     <rule
-        name="BundleConstantsRule"
-        message="Bundle Constants: {0}"
-        class="ArchitectureSniffer\Shared\BundleConstantsRule">
+        name="ModuleConstantsRule"
+        message="Shared Module Constants: {0}"
+        class="ArchitectureSniffer\Shared\ModuleConstantsRule">
 
         <priority>5</priority>
     </rule>

@@ -6,8 +6,16 @@ use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
 use PHPMD\Rule\InterfaceAware;
 
-class BundleConstantsRule extends AbstractRule implements InterfaceAware
+class ModuleConstantsRule extends AbstractRule implements InterfaceAware
 {
+
+    /**
+     * @return string
+     */
+    public function getDescription()
+    {
+        return 'The modules\' *ConstantsInterface interfaces must only contain constants to be used with env config. They also must be prefix with the module name.';
+    }
 
     /**
      * @param \PHPMD\AbstractNode $node

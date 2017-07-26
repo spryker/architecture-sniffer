@@ -9,8 +9,18 @@ use PHPMD\Rule\MethodAware;
 /**
  * Every Factory method named create* should only have a single "new ..." instantiation.
  */
-class CreateContainOneNewFactoryRule extends AbstractFactoryRule implements MethodAware
+class FactoryCreateContainOneNewRule extends AbstractFactoryRule implements MethodAware
 {
+
+    const RULE = 'A create*() method in factories must contain exactly 1 `new` statement for instantiation.';
+
+    /**
+     * @return string
+     */
+    public function getDescription()
+    {
+        return static::RULE;
+    }
 
     /**
      * @param \PHPMD\AbstractNode $node
@@ -31,7 +41,7 @@ class CreateContainOneNewFactoryRule extends AbstractFactoryRule implements Meth
      *
      * @return void
      */
-    private function applyRule(MethodNode $method)
+    protected function applyRule(MethodNode $method)
     {
         if (substr($method->getName(), 0, 6) !== 'create') {
             return;
@@ -52,8 +62,13 @@ class CreateContainOneNewFactoryRule extends AbstractFactoryRule implements Meth
         $methodName = $method->getParentName() . '::' . $method->getName() . '()';
         $className = $method->getFullQualifiedName();
 
-        $message = "{$methodName} contains {$count} new statements which violates rule 'A create*() method must contain exactly 1 `new` statement.'
-        $className";
+        $message = sprintf(
+            '%s in %s contains %s new statements which violates rule "%s"',
+            $methodName,
+            $className,
+            $count,
+            static::RULE
+        );
 
         $this->addViolation($method, [$message]);
     }

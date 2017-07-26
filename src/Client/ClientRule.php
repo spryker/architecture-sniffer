@@ -2,14 +2,24 @@
 
 namespace ArchitectureSniffer\Client;
 
+use ArchitectureSniffer\SprykerAbstractRule;
 use PHPMD\AbstractNode;
-use PHPMD\AbstractRule;
 use PHPMD\Node\ClassNode;
 use PHPMD\Node\MethodNode;
 use PHPMD\Rule\ClassAware;
 
-class ClientRule extends AbstractRule implements ClassAware
+class ClientRule extends SprykerAbstractRule implements ClassAware
 {
+
+    const RULE = 'Must implement an interface with same name and suffix \'Interface\'. Every method must also contain the @api tag in docblock and a contract text above.';
+
+    /**
+     * @return string
+     */
+    public function getDescription()
+    {
+        return static::RULE;
+    }
 
     /**
      * @param \PHPMD\AbstractNode $node
@@ -18,6 +28,7 @@ class ClientRule extends AbstractRule implements ClassAware
      */
     public function apply(AbstractNode $node)
     {
+        /** @var \PHPMD\Node\MethodNode $node */
         if ($node->isAbstract()) {
             return;
         }
@@ -26,6 +37,7 @@ class ClientRule extends AbstractRule implements ClassAware
             return;
         }
 
+        /** @var \PHPMD\Node\ClassNode $node */
         $this->applyImplementsInterfaceWithSameNameAndSuffix($node);
 
         foreach ($node->getMethods() as $method) {
@@ -34,11 +46,11 @@ class ClientRule extends AbstractRule implements ClassAware
     }
 
     /**
-     * @param \PHPMD\Node\ClassNode $class
+     * @param \PHPMD\Node\ClassNode|\PDepend\Source\AST\ASTNamespace $class
      *
      * @return void
      */
-    private function applyImplementsInterfaceWithSameNameAndSuffix(ClassNode $class)
+    protected function applyImplementsInterfaceWithSameNameAndSuffix(ClassNode $class)
     {
         $interfaceName = sprintf('%sInterface', $class->getImage());
 
@@ -53,7 +65,7 @@ class ClientRule extends AbstractRule implements ClassAware
             $class,
             [
                 sprintf(
-                    'The class %s does not implement an interface %s which violates rule: "Implements an interface with same name and suffix \'Interface\'"',
+                    'The class %s does not implement an interface %s which violates rule: "' . static::RULE . '"',
                     $class->getFullQualifiedName(),
                     $interfaceName
                 )
@@ -62,11 +74,11 @@ class ClientRule extends AbstractRule implements ClassAware
     }
 
     /**
-     * @param \PHPMD\Node\MethodNode $method
+     * @param \PHPMD\Node\MethodNode|\PDepend\Source\AST\ASTMethod $method
      *
      * @return void
      */
-    private function applyEveryPublicMethodMustHaveApiTagAndContractText(MethodNode $method)
+    protected function applyEveryPublicMethodMustHaveApiTagAndContractText(MethodNode $method)
     {
         if ($method->isAbstract() || false === $method->isPublic()) {
             return;

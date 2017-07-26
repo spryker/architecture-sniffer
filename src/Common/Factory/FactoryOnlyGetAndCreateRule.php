@@ -6,11 +6,18 @@ use PHPMD\AbstractNode;
 use PHPMD\Node\MethodNode;
 use PHPMD\Rule\ClassAware;
 
-/**
- * Factories should only contain get* and create* methods
- */
-class OnlyGetAndCreateFactoryRule extends AbstractFactoryRule implements ClassAware
+class FactoryOnlyGetAndCreateRule extends AbstractFactoryRule implements ClassAware
 {
+
+    const RULE = 'Factories should only contain get*() and create*() methods.';
+
+    /**
+     * @return string
+     */
+    public function getDescription()
+    {
+        return static::RULE;
+    }
 
     /**
      * @param \PHPMD\AbstractNode $node
@@ -33,15 +40,16 @@ class OnlyGetAndCreateFactoryRule extends AbstractFactoryRule implements ClassAw
      *
      * @return void
      */
-    private function applyRule(MethodNode $method)
+    protected function applyRule(MethodNode $method)
     {
         if (0 != preg_match('/^(create|get).+/', $method->getName())) {
             return;
         }
 
         $message = sprintf(
-            'The factory method %s() violates rule "Only methods named create*() or get*() in factories"',
-            $method->getName()
+            'The factory method %s() violates rule "%s"',
+            $method->getName(),
+            static::RULE
         );
 
         $this->addViolation($method, [$message]);

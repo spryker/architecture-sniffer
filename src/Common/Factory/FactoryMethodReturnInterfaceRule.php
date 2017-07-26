@@ -6,14 +6,21 @@ use PHPMD\AbstractNode;
 use PHPMD\Node\MethodNode;
 use PHPMD\Rule\MethodAware;
 
-/**
- * Every method in a Factory must only return an interface or an array of interfaces
- */
 class FactoryMethodReturnInterfaceRule extends AbstractFactoryRule implements MethodAware
 {
 
+    const RULE = 'Every method in a Factory must only return an interface or an array of interfaces.';
+
     const ALLOWED_RETURN_TYPES_PATTERN = '/@return\s(?!((.*)Interface))(.*)/';
     const INVALID_RETURN_TYPE_MATCH = 3;
+
+    /**
+     * @return string
+     */
+    public function getDescription()
+    {
+        return static::RULE;
+    }
 
     /**
      * @param \PHPMD\AbstractNode $node
@@ -34,7 +41,7 @@ class FactoryMethodReturnInterfaceRule extends AbstractFactoryRule implements Me
      *
      * @return void
      */
-    private function applyRule(MethodNode $node)
+    protected function applyRule(MethodNode $node)
     {
         $comment = $node->getComment();
         if ($this->hasInvalidReturnType($comment)) {
@@ -43,8 +50,12 @@ class FactoryMethodReturnInterfaceRule extends AbstractFactoryRule implements Me
             $method = $node->getName();
             $fullClassName = $node->getFullQualifiedName();
 
-            $message = "{$class}::{$method}() returns a concrete class which violates the rule 'Factory methods only return interfaces'. 
-            {$fullClassName}";
+            $message = sprintf(
+                '%s ($s) returns a concrete class which violates the rule "%s"',
+                "{$class}::{$method}()",
+                $fullClassName,
+                static::RULE
+            );
 
             $this->addViolation($node, [$message]);
         }
@@ -55,7 +66,7 @@ class FactoryMethodReturnInterfaceRule extends AbstractFactoryRule implements Me
      *
      * @return bool
      */
-    private function hasInvalidReturnType($comment)
+    protected function hasInvalidReturnType($comment)
     {
         if (preg_match(self::ALLOWED_RETURN_TYPES_PATTERN, $comment)) {
             return true;
@@ -69,7 +80,7 @@ class FactoryMethodReturnInterfaceRule extends AbstractFactoryRule implements Me
      *
      * @return bool
      */
-    private function getInvalidReturnType($comment)
+    protected function getInvalidReturnType($comment)
     {
         if (preg_match(self::ALLOWED_RETURN_TYPES_PATTERN, $comment, $returnType)) {
             return $returnType[self::INVALID_RETURN_TYPE_MATCH];

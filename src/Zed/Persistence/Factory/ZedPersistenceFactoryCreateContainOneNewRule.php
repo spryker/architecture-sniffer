@@ -6,11 +6,18 @@ use PHPMD\AbstractNode;
 use PHPMD\Node\MethodNode;
 use PHPMD\Rule\MethodAware;
 
-/**
- * Every Facade should only retrieve native types and transfer objects
- */
-class GetContainNoNewFactoryRule extends AbstractFactoryRule implements MethodAware
+class ZedPersistenceFactoryCreateContainOneNewRule extends AbstractFactoryRule implements MethodAware
 {
+
+    const RULE = 'A create*() method in factories must contain exactly 1 `new` statement for instantiation.';
+
+    /**
+     * @return string
+     */
+    public function getDescription()
+    {
+        return static::RULE;
+    }
 
     /**
      * @param \PHPMD\AbstractNode $node
@@ -31,14 +38,14 @@ class GetContainNoNewFactoryRule extends AbstractFactoryRule implements MethodAw
      *
      * @return void
      */
-    private function applyRule(MethodNode $method)
+    protected function applyRule(MethodNode $method)
     {
-        if ('get' != substr($method->getName(), 0, 3)) {
+        if (substr($method->getName(), 0, 6) !== 'create') {
             return;
         }
 
         $count = count($method->findChildrenOfType('AllocationExpression'));
-        if ($count === 0) {
+        if ($count === 1) {
             return;
         }
 
@@ -46,9 +53,10 @@ class GetContainNoNewFactoryRule extends AbstractFactoryRule implements MethodAw
             $method,
             [
                 sprintf(
-                    'The factory method %s contains %d new statements which violates rule "A get*() method must not contain a `new` keyword."',
+                    'The factory method %s contains %d new statements which violates rule "%s"',
                     $method->getFullQualifiedName(),
-                    $count
+                    $count,
+                    static::RULE
                 )
             ]
         );

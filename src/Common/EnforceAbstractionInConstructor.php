@@ -39,7 +39,7 @@ class EnforceAbstractionInConstructor extends AbstractRule implements ClassAware
      *
      * @return void
      */
-    private function check(MethodNode $method, AbstractNode $node)
+    protected function check(MethodNode $method, AbstractNode $node)
     {
         $params = $method->getParameters();
         foreach ($params as $param) {
@@ -53,7 +53,7 @@ class EnforceAbstractionInConstructor extends AbstractRule implements ClassAware
      *
      * @return void
      */
-    private function checkParameter(ASTParameter $param, AbstractNode $node)
+    protected function checkParameter(ASTParameter $param, AbstractNode $node)
     {
         $class = $param->getClass();
         if (empty($class) || $class->isAbstract()) {

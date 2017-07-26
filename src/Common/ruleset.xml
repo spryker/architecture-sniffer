@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<ruleset name="Spryker Common ruleset"
+<ruleset name="Spryker Common"
          xmlns="http://pmd.sf.net/ruleset/1.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://pmd.sf.net/ruleset/1.0.0
@@ -21,9 +21,9 @@
 
     <!-- COMMON FACTORY RULES -->
     <rule
-            name="GetContainNoNewFactoryRule"
+            name="FactoryGetContainNoNewRule"
             message="Factories: {0}"
-            class="ArchitectureSniffer\Common\Factory\GetContainNoNewFactoryRule">
+            class="ArchitectureSniffer\Common\Factory\FactoryGetContainNoNewRule">
 
         <priority>1</priority>
     </rule>
@@ -37,25 +37,25 @@
     </rule>
 
     <rule
-            name="CreateContainOneNewFactoryRule"
+            name="FactoryCreateContainOneNewRule"
             message="{0}"
-            class="ArchitectureSniffer\Common\Factory\CreateContainOneNewFactoryRule">
+            class="ArchitectureSniffer\Common\Factory\FactoryCreateContainOneNewRule">
 
         <priority>1</priority>
     </rule>
 
     <rule
-            name="NoLoopsInFactoryRule"
+            name="FactoryNoLoopsRule"
             message="Factories: {0}"
-            class="ArchitectureSniffer\Common\Factory\NoLoopsInFactoryRule">
+            class="ArchitectureSniffer\Common\Factory\FactoryNoLoopsRule">
 
         <priority>1</priority>
     </rule>
 
     <rule
-            name="OnlyGetAndCreateFactoryRule"
+            name="FactoryOnlyGetAndCreateRule"
             message="Factories: {0}"
-            class="ArchitectureSniffer\Common\Factory\OnlyGetAndCreateFactoryRule">
+            class="ArchitectureSniffer\Common\Factory\FactoryOnlyGetAndCreateRule">
 
         <priority>1</priority>
     </rule>

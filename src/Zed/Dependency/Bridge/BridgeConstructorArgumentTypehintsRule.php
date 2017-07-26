@@ -13,6 +13,16 @@ use PHPMD\Rule\MethodAware;
 class BridgeConstructorArgumentTypehintsRule extends AbstractBridgeRule implements MethodAware
 {
 
+    const RULE = 'A bridge must not have a type-hint in constructor.';
+
+    /**
+     * @return string
+     */
+    public function getDescription()
+    {
+        return static::RULE;
+    }
+
     /**
      * @param \PHPMD\AbstractNode $node
      *
@@ -55,7 +65,7 @@ class BridgeConstructorArgumentTypehintsRule extends AbstractBridgeRule implemen
      *
      * @return void
      */
-    private function checkParameter(ASTParameter $param, AbstractNode $node)
+    protected function checkParameter(ASTParameter $param, AbstractNode $node)
     {
         $class = $param->getClass();
 
@@ -64,7 +74,7 @@ class BridgeConstructorArgumentTypehintsRule extends AbstractBridgeRule implemen
         }
 
         $message = sprintf(
-            'The %s is violating the rule "Bridges must not have a type-hint in constructor"',
+            'The %s is violating the rule "' . static::RULE . '"',
             $node->getFullQualifiedName()
         );
 

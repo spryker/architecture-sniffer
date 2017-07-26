@@ -7,8 +7,18 @@ use PHPMD\AbstractRule;
 use PHPMD\Node\MethodNode;
 use PHPMD\Rule\ClassAware;
 
-class ControllerRule extends AbstractRule implements ClassAware
+class ZedCommunicationControllerRule extends AbstractRule implements ClassAware
 {
+
+    const RULE = 'All public controller methods have the suffix `*Action`.';
+
+    /**
+     * @return string
+     */
+    public function getDescription()
+    {
+        return static::RULE;
+    }
 
     /**
      * @param \PHPMD\AbstractNode $node
@@ -35,7 +45,7 @@ class ControllerRule extends AbstractRule implements ClassAware
      *
      * @return void
      */
-    private function applyPublicMethodsHaveActionSuffix(MethodNode $method)
+    protected function applyPublicMethodsHaveActionSuffix(MethodNode $method)
     {
         if (substr($method->getName(), -6, 6) === 'Action') {
             return;
@@ -50,7 +60,7 @@ class ControllerRule extends AbstractRule implements ClassAware
             $method,
             [
                 sprintf(
-                    'The controller method %s is not suffixed with "Action" which violates rule "All public methods have the suffix *Action"',
+                    'The controller method %s is not suffixed with "Action" which violates rule "' . static::RULE . '"',
                     $method->getFullQualifiedName()
                 ),
             ]

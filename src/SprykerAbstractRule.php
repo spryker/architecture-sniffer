@@ -44,7 +44,7 @@ namespace ArchitectureSniffer;
 use PHPMD\AbstractRule;
 use PHPMD\Node\MethodNode;
 
-abstract class SprykerAbstractRule extends AbstractRule
+abstract class SprykerAbstractRule extends AbstractRule implements SprykerRuleInterface
 {
 
     /**

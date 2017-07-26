@@ -10,6 +10,16 @@ use PHPMD\Rule\ClassAware;
 class AllMethodsPublicInFacadeRule extends AbstractFacadeRule implements ClassAware
 {
 
+    const RULE = 'A facade must only contain public methods.';
+
+    /**
+     * @return string
+     */
+    public function getDescription()
+    {
+        return static::RULE;
+    }
+
     /**
      * @param \PHPMD\AbstractNode $node
      *
@@ -29,7 +39,7 @@ class AllMethodsPublicInFacadeRule extends AbstractFacadeRule implements ClassAw
      *
      * @return void
      */
-    private function applyRule(ClassNode $node)
+    protected function applyRule(ClassNode $node)
     {
         foreach ($node->getMethods() as $method) {
             $this->checkVisibility($method);
@@ -41,12 +51,13 @@ class AllMethodsPublicInFacadeRule extends AbstractFacadeRule implements ClassAw
      *
      * @return void
      */
-    private function checkVisibility(MethodNode $method)
+    protected function checkVisibility(MethodNode $method)
     {
         if (!$method->getNode()->isPublic()) {
             $message = sprintf(
-                'The method %s is not public which violates rule "Only public methods in Facade"',
-                $method->getFullQualifiedName()
+                'The method "%s" is not public which violates rule "%s"',
+                $method->getFullQualifiedName(),
+                static::RULE
             );
 
             $this->addViolation($method, [$message]);

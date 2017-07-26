@@ -13,6 +13,14 @@ class BridgeConstructorArgumentsRule extends AbstractBridgeRule implements Metho
 {
 
     /**
+     * @return string
+     */
+    public function getDescription()
+    {
+        return 'A bridge should only have a single argument in constructor. It is also used only on core, not in projects.';
+    }
+
+    /**
      * @param \PHPMD\AbstractNode $node
      *
      * @return void

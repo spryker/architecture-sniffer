@@ -1,19 +1,25 @@
 <?php
 
-namespace ArchitectureSniffer\Zed\Business\Factory;
+namespace ArchitectureSniffer\Zed\Business\Facade;
 
-use ArchitectureSniffer\Common\Factory\AbstractFactoryRule;
 use PHPMD\AbstractNode;
 use PHPMD\Node\MethodNode;
 use PHPMD\Rule\MethodAware;
 
-/**
- * Every method in a Factory must only return an interface or an array of interfaces
- */
-class MethodReturnInterfaceRule extends AbstractFactoryRule implements MethodAware
+class FacadeReturnValueRule extends AbstractFacadeRule implements MethodAware
 {
 
-    const ALLOWED_RETURN_TYPES_PATTERN = '/@return\s(?!((.*)Interface))(.*)/';
+    const RULE = 'Every Facade should only return native types or transfer objects.';
+
+    /**
+     * @return string
+     */
+    public function getDescription()
+    {
+        return static::RULE;
+    }
+
+    const ALLOWED_RETURN_TYPES_PATTERN = '/@return\s(?!void|int|float|integer|string|array|\[\]|.*\[\]|bool|boolean|((.*)Transfer))(.*)/';
     const INVALID_RETURN_TYPE_MATCH = 3;
 
     /**
@@ -23,7 +29,7 @@ class MethodReturnInterfaceRule extends AbstractFactoryRule implements MethodAwa
      */
     public function apply(AbstractNode $node)
     {
-        if (!$this->isFactory($node)) {
+        if (!$this->isFacade($node)) {
             return;
         }
 
@@ -31,7 +37,7 @@ class MethodReturnInterfaceRule extends AbstractFactoryRule implements MethodAwa
     }
 
     /**
-     * @param \PHPMD\Node\MethodNode $node
+     * @param \PHPMD\Node\MethodNode|\PDepend\Source\AST\ASTNode $node
      *
      * @return void
      */
@@ -40,9 +46,10 @@ class MethodReturnInterfaceRule extends AbstractFactoryRule implements MethodAwa
         $comment = $node->getComment();
         if ($this->hasInvalidReturnType($comment)) {
             $message = sprintf(
-                'The %s is using an invalid return type "%s" which violates the rule "Should only return interfaces"',
+                'The %s is using an invalid return type "%s" which violates the rule "%s"',
                 $node->getFullQualifiedName(),
-                $this->getInvalidReturnType($comment)
+                $this->getInvalidReturnType($comment),
+                static::RULE
             );
 
             $this->addViolation($node, [$message]);

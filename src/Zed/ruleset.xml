@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<ruleset name="Spryker Zed ruleset"
+<ruleset name="Spryker Zed"
          xmlns="http://pmd.sf.net/ruleset/1.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://pmd.sf.net/ruleset/1.0.0
@@ -20,33 +20,33 @@
     </rule>
 
     <rule
-            name="ArgumentsFacadeRule"
+            name="FacadeArgumentsRule"
             message="Zed Business Layer - Facade: {0}"
-            class="ArchitectureSniffer\Zed\Business\Facade\ArgumentsFacadeRule">
+            class="ArchitectureSniffer\Zed\Business\Facade\FacadeArgumentsRule">
 
         <priority>3</priority>
     </rule>
 
     <rule
-            name="InterfaceFacadeRule"
+            name="FacadeInterfaceRule"
             message="Zed Business Layer - Facade: {0}"
-            class="ArchitectureSniffer\Zed\Business\Facade\InterfaceFacadeRule">
+            class="ArchitectureSniffer\Zed\Business\Facade\FacadeInterfaceRule">
 
         <priority>1</priority>
     </rule>
 
     <rule
-            name="NoLogicInFacadeRule"
+            name="FacadeNoLogicRule"
             message="Zed Business Layer - Facade: {0}"
-            class="ArchitectureSniffer\Zed\Business\Facade\NoLogicInFacadeRule">
+            class="ArchitectureSniffer\Zed\Business\Facade\FacadeNoLogicRule">
 
         <priority>1</priority>
     </rule>
 
     <rule
-            name="ReturnFacadeRule"
+            name="FacadeReturnValueRule"
             message="Zed Business Layer - Facade: {0}"
-            class="ArchitectureSniffer\Zed\Business\Facade\ReturnFacadeRule">
+            class="ArchitectureSniffer\Zed\Business\Facade\FacadeReturnValueRule">
 
         <priority>1</priority>
     </rule>
@@ -68,43 +68,51 @@
     </rule>
 
     <rule
-        name="CreateContainOneNewFactoryRule"
-        message="Zed Business Layer - Factory: {0}"
-        class="ArchitectureSniffer\Zed\Persistence\Factory\GetContainNoNewFactoryRule">
+        name="BridgeConstructorArgumentTypehintsRule"
+        message="Zed Dependency Bridge - Bridge: {0}"
+        class="ArchitectureSniffer\Zed\Dependency\Bridge\BridgeConstructorArgumentTypehintsRule">
 
         <priority>1</priority>
     </rule>
 
     <rule
-        name="MethodReturnInterfaceRule"
+        name="GetContainNoNewFactoryRule"
+        message="Zed Persistence Layer - Factory: {0}"
+        class="ArchitectureSniffer\Zed\Persistence\Factory\ZedPersistenceFactoryGetContainNoNewRule">
+
+        <priority>1</priority>
+    </rule>
+
+    <rule
+        name="ZedBusinessFactoryMethodReturnInterfaceRule"
         message="Zed Business Layer - Factory: {0}"
-        class="ArchitectureSniffer\Zed\Business\Factory\MethodReturnInterfaceRule">
+        class="ArchitectureSniffer\Zed\Business\Factory\ZedBusinessFactoryMethodReturnInterfaceRule">
 
         <priority>3</priority>
     </rule>
 
     <!-- COMMON FACTORY RULES -->
     <rule
-        name="NoLoopsInFactoryRule"
+        name="FactoryNoLoopsRule"
         message="Factories: {0}"
-        class="ArchitectureSniffer\Common\Factory\NoLoopsInFactoryRule">
+        class="ArchitectureSniffer\Common\Factory\FactoryNoLoopsRule">
 
         <priority>1</priority>
     </rule>
 
     <rule
-        name="OnlyGetAndCreateFactoryRule"
+        name="ZedBusinessFactoryOnlyGetAndCreateRule"
         message="Factories: {0}"
-        class="ArchitectureSniffer\Common\Factory\OnlyGetAndCreateFactoryRule">
+        class="ArchitectureSniffer\Common\Factory\FactoryOnlyGetAndCreateRule">
 
         <priority>1</priority>
     </rule>
 
     <!-- COMMUNICATION CONTROLLER RULES -->
     <rule
-            name="ControllerRule"
+            name="ZedCommunicationControllerRule"
             message="Controller: {0}"
-            class="ArchitectureSniffer\Zed\Communication\Controller\ControllerRule">
+            class="ArchitectureSniffer\Zed\Communication\Controller\ZedCommunicationControllerRule">
 
         <priority>1</priority>
     </rule>

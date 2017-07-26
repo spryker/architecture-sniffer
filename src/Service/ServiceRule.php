@@ -11,6 +11,16 @@ use PHPMD\Rule\ClassAware;
 class ServiceRule extends AbstractRule implements ClassAware
 {
 
+    const RULE = 'Must implement an interface with same name and suffix \'Interface\'. Every method must also contain the @api tag in docblock and a contract text above.';
+
+    /**
+     * @return string
+     */
+    public function getDescription()
+    {
+        return static::RULE;
+    }
+
     /**
      * @param \PHPMD\AbstractNode $node
      *
@@ -38,7 +48,7 @@ class ServiceRule extends AbstractRule implements ClassAware
      *
      * @return void
      */
-    private function applyImplementsInterfaceWithSameNameAndSuffix(ClassNode $class)
+    protected function applyImplementsInterfaceWithSameNameAndSuffix(ClassNode $class)
     {
         $interfaceName = sprintf('%sInterface', $class->getImage());
 
@@ -53,7 +63,7 @@ class ServiceRule extends AbstractRule implements ClassAware
             $class,
             [
                 sprintf(
-                    'The class %s does not implement an interface %s which violates rule: "Implements an interface with same name and suffix \'Interface\'"',
+                    'The class %s does not implement an interface %s which violates rule: "' . static::RULE . '"',
                     $class->getFullQualifiedName(),
                     $interfaceName
                 )
@@ -66,7 +76,7 @@ class ServiceRule extends AbstractRule implements ClassAware
      *
      * @return void
      */
-    private function applyEveryPublicMethodMustHaveApiTagAndContractText(MethodNode $method)
+    protected function applyEveryPublicMethodMustHaveApiTagAndContractText(MethodNode $method)
     {
         if ($method->isAbstract() || false === $method->isPublic()) {
             return;

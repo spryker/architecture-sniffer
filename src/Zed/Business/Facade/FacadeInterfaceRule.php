@@ -10,8 +10,18 @@ use PHPMD\Rule\ClassAware;
 /**
  * Every Facade must have a Interface named like the Facade + Interface suffix
  */
-class InterfaceFacadeRule extends AbstractFacadeRule implements ClassAware
+class FacadeInterfaceRule extends AbstractFacadeRule implements ClassAware
 {
+
+    const RULE = 'Must implement an interface with same name and suffix \'Interface\'. Every method must also contain the @api tag in docblock and a contract text above.';
+
+    /**
+     * @return string
+     */
+    public function getDescription()
+    {
+        return static::RULE;
+    }
 
     /**
      * @param \PHPMD\AbstractNode $node
@@ -32,14 +42,15 @@ class InterfaceFacadeRule extends AbstractFacadeRule implements ClassAware
      *
      * @return void
      */
-    private function applyRule(ClassNode $node)
+    protected function applyRule(ClassNode $node)
     {
         $implementedInterfaces = $this->getImplementedInterfaces($node);
 
         if ($implementedInterfaces->count() === 0 || !$this->hasFacadeInterface($node, $implementedInterfaces)) {
             $message = sprintf(
-                'The %1$s is missing a "%1$sInterface" which violates the rule "Implements interface with suffix Interface"',
-                $node->getImage()
+                'The %1$s is missing a "%1$sInterface" which violates the rule "%s"',
+                $node->getImage(),
+                static::RULE
             );
 
             $this->addViolation($node, [$message]);
@@ -51,7 +62,7 @@ class InterfaceFacadeRule extends AbstractFacadeRule implements ClassAware
      *
      * @return \PDepend\Source\AST\ASTArtifactList
      */
-    private function getImplementedInterfaces(ClassNode $node)
+    protected function getImplementedInterfaces(ClassNode $node)
     {
         return $node->getInterfaces();
     }
@@ -62,7 +73,7 @@ class InterfaceFacadeRule extends AbstractFacadeRule implements ClassAware
      *
      * @return bool
      */
-    private function hasFacadeInterface(ClassNode $node, ASTArtifactList $implementedInterfaces)
+    protected function hasFacadeInterface(ClassNode $node, ASTArtifactList $implementedInterfaces)
     {
         $expectedInterfaceName = $node->getImage() . 'Interface';
         foreach ($implementedInterfaces as $implementedInterface) {

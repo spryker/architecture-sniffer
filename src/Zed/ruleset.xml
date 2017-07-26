@@ -52,9 +52,9 @@
     </rule>
 
     <rule
-            name="ZedBusinessFacadeRule"
+            name="FacadeRule"
             message="Zed Business Layer - Facade: {0}"
-            class="ArchitectureSniffer\Zed\Business\Facade\ZedBusinessFacadeRule">
+            class="ArchitectureSniffer\Zed\Business\Facade\FacadeRule">
 
         <priority>1</priority>
     </rule>
@@ -76,7 +76,7 @@
     </rule>
 
     <rule
-        name="GetContainNoNewFactoryRule"
+        name="ZedPersistenceFactoryGetContainNoNewRule"
         message="Zed Persistence Layer - Factory: {0}"
         class="ArchitectureSniffer\Zed\Persistence\Factory\ZedPersistenceFactoryGetContainNoNewRule">
 
@@ -93,7 +93,7 @@
 
     <!-- COMMON FACTORY RULES -->
     <rule
-        name="FactoryNoLoopsRule"
+        name="ZedBusinessFactoryNoLoopsRule"
         message="Factories: {0}"
         class="ArchitectureSniffer\Common\Factory\FactoryNoLoopsRule">
 

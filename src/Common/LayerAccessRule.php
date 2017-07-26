@@ -7,7 +7,7 @@ use PHPMD\AbstractRule;
 use PHPMD\Node\ClassNode;
 use PHPMD\Rule\ClassAware;
 
-class AccessRule extends AbstractRule implements ClassAware
+class LayerAccessRule extends AbstractRule implements ClassAware
 {
 
     /**

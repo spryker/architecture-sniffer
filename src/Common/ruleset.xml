@@ -11,9 +11,9 @@
     </description>
 
     <rule
-            name="AccessRule"
+            name="LayerAccessRule"
             message="Access: {0}"
-            class="ArchitectureSniffer\Common\AccessRule">
+            class="ArchitectureSniffer\Common\LayerAccessRule">
 
         <priority>1</priority>
     </rule>

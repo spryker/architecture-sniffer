@@ -7,7 +7,7 @@ use PHPMD\Node\ClassNode;
 use PHPMD\Node\MethodNode;
 use PHPMD\Rule\ClassAware;
 
-class ZedBusinessFacadeRule extends AbstractFacadeRule implements ClassAware
+class FacadeRule extends AbstractFacadeRule implements ClassAware
 {
 
     const RULE = 'A facade must not have properties.';

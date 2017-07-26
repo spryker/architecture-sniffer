@@ -108,13 +108,4 @@
         <priority>1</priority>
     </rule>
 
-    <!-- COMMUNICATION CONTROLLER RULES -->
-    <rule
-            name="ZedCommunicationControllerRule"
-            message="Controller: {0}"
-            class="ArchitectureSniffer\Zed\Communication\Controller\ZedCommunicationControllerRule">
-
-        <priority>1</priority>
-    </rule>
-
 </ruleset>

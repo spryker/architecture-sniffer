@@ -21,6 +21,7 @@
     <exclude-pattern>*/Orm/Propel/*</exclude-pattern>
     <exclude-pattern>*/Generated/*</exclude-pattern>
 
+    <rule ref="Yves/ruleset.xml" />
     <rule ref="Client/ruleset.xml" />
     <rule ref="Common/ruleset.xml" />
     <rule ref="Shared/ruleset.xml" />

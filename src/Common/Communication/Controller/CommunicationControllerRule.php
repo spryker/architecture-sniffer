@@ -1,13 +1,13 @@
 <?php
 
-namespace ArchitectureSniffer\Zed\Communication\Controller;
+namespace ArchitectureSniffer\Common\Communication\Controller;
 
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
 use PHPMD\Node\MethodNode;
 use PHPMD\Rule\ClassAware;
 
-class ZedCommunicationControllerRule extends AbstractRule implements ClassAware
+class CommunicationControllerRule extends AbstractRule implements ClassAware
 {
 
     const RULE = 'All public controller methods have the suffix `*Action`.';

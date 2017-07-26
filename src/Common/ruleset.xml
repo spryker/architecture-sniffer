@@ -60,4 +60,13 @@
         <priority>1</priority>
     </rule>
 
+    <!-- COMMON COMMUNICATION RULES -->
+    <rule
+        name="CommunicationControllerRule"
+        message="Controller: {0}"
+        class="ArchitectureSniffer\Common\Communication\Controller\CommunicationControllerRule">
+
+        <priority>1</priority>
+    </rule>
+
 </ruleset>

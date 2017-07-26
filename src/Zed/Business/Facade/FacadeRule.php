@@ -10,7 +10,7 @@ use PHPMD\Rule\ClassAware;
 class FacadeRule extends AbstractFacadeRule implements ClassAware
 {
 
-    const RULE = 'A facade must not have properties.';
+    const RULE = 'A facade must not have properties. It must also not contain any instantiations, only delegation.';
 
     /**
      * @return string

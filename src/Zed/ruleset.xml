@@ -91,21 +91,4 @@
         <priority>3</priority>
     </rule>
 
-    <!-- COMMON FACTORY RULES -->
-    <rule
-        name="ZedBusinessFactoryNoLoopsRule"
-        message="Factories: {0}"
-        class="ArchitectureSniffer\Common\Factory\FactoryNoLoopsRule">
-
-        <priority>1</priority>
-    </rule>
-
-    <rule
-        name="ZedBusinessFactoryOnlyGetAndCreateRule"
-        message="Factories: {0}"
-        class="ArchitectureSniffer\Common\Factory\FactoryOnlyGetAndCreateRule">
-
-        <priority>1</priority>
-    </rule>
-
 </ruleset>

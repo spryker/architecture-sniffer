@@ -18,4 +18,12 @@
         <priority>5</priority>
     </rule>
 
+    <rule
+        name="ModuleConstantsNoMethodAllowedRule"
+        message="Shared Module Constants: {0}"
+        class="ArchitectureSniffer\Shared\ModuleConstantsNoMethodAllowedRule">
+
+        <priority>3</priority>
+    </rule>
+
 </ruleset>

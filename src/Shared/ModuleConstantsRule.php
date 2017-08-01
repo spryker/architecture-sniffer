@@ -14,7 +14,7 @@ class ModuleConstantsRule extends AbstractRule implements InterfaceAware
      */
     public function getDescription()
     {
-        return 'The modules\' *ConstantsInterface interfaces must only contain constants to be used with env config. They also must be prefix with the module name.';
+        return 'The modules\' *Constants interfaces must only contain constants to be used with env config. They also must be prefixed with the module name.';
     }
 
     /**
@@ -28,40 +28,20 @@ class ModuleConstantsRule extends AbstractRule implements InterfaceAware
             return;
         }
 
-        foreach ($node->getMethods() as $method) {
-            $this->addViolation(
-                $node,
-                [
-                    sprintf(
-                        'Interface %s defines a method %s() which violates rule "Just constants in these interfaces"',
-                        $node->getFullQualifiedName(),
-                        $method->getName()
-                    )
-                ]
-            );
-        }
+        $moduleName = str_replace('Constants', '', $node->getName());
 
         foreach ($node->findChildrenOfType('ConstantDeclarator') as $constant) {
             $value = $constant->getValue()->getValue();
-            if ($constant->getImage() === $value) {
-                continue;
-            }
 
-            if (is_array($value)) {
-                $value = preg_replace(['([\n\r\s]+)', '( ([\(\)]))'], [' ', '\\1'], var_export($value, true));
+            $expectedConstantValue = strtoupper($moduleName) . ':' . $constant->getImage();
+            if ($expectedConstantValue !== $value) {
+                $message = sprintf(
+                    'The constant value is expected to be "%s" but is "%s". This violates the rule "Constant values must be exactly the same as the const key prefixed with module name"',
+                    $expectedConstantValue,
+                    $value
+                );
+                $this->addViolation($node, [$message]);
             }
-
-            $this->addViolation(
-                $node,
-                [
-                    sprintf(
-                        'The value "%s" and the name of constant %s::%s are not equal which violates rule "Only keys no values"',
-                        $value,
-                        $node->getFullQualifiedName(),
-                        $constant->getImage()
-                    )
-                ]
-            );
         }
     }
 

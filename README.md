@@ -19,7 +19,7 @@ We use and recommend level `2` by default for local and CI checks.
 ### Spryker Usage
 When using Spryker you can use the Spryker CLI console command for it:
 ```
-console code:architecture [-m ModuleName] [optional-path] -v
+console code:sniff:architecture [-m ModuleName] [optional-sub-path] -v
 ```
 Verbose output is recommended here.
 

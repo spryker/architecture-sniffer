@@ -25,7 +25,7 @@ class FactoryNoLoopsRule extends AbstractFactoryRule implements ClassAware
     /**
      * @var array
      */
-    private $forbiddenStatements = [
+    protected $forbiddenStatements = [
         'foreach',
         'while',
         'for',
@@ -56,7 +56,7 @@ class FactoryNoLoopsRule extends AbstractFactoryRule implements ClassAware
     protected function applyNoLoopsInMethod(MethodNode $method)
     {
         foreach ($method->findChildrenOfType('Statement') as $statement) {
-            if (false === in_array(strtolower($statement->getImage()), $this->forbiddenStatements)) {
+            if (!in_array(strtolower($statement->getImage()), $this->forbiddenStatements)) {
                 continue;
             }
 

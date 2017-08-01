@@ -9,12 +9,14 @@ use PHPMD\Rule\InterfaceAware;
 class ModuleConstantsNoMethodAllowedRule extends AbstractRule implements InterfaceAware
 {
 
+    const RULE = 'The modules\' *Constants interfaces must only contain constants to be used with env config, no methods etc.';
+
     /**
      * @return string
      */
     public function getDescription()
     {
-        return 'The modules\' *ConstantsInterface interfaces must only contain constants to be used with env config.';
+        return static::RULE;
     }
 
     /**
@@ -24,7 +26,7 @@ class ModuleConstantsNoMethodAllowedRule extends AbstractRule implements Interfa
      */
     public function apply(AbstractNode $node)
     {
-        if (0 === preg_match('([A-Za-z0-9]+Constants$)', $node->getName())) {
+        if (preg_match('([A-Za-z0-9]+Constants$)', $node->getName()) === 0) {
             return;
         }
 
@@ -33,9 +35,10 @@ class ModuleConstantsNoMethodAllowedRule extends AbstractRule implements Interfa
                 $node,
                 [
                     sprintf(
-                        'Interface %s defines a method %s() which violates rule "Just constants in these interfaces"',
+                        'Interface %s defines a method %s() which violates rule "%s"',
                         $node->getFullQualifiedName(),
-                        $method->getName()
+                        $method->getName(),
+                        static::RULE
                     )
                 ]
             );

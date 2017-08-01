@@ -6,18 +6,17 @@ use PHPMD\AbstractNode;
 use PHPMD\Node\MethodNode;
 use PHPMD\Rule\MethodAware;
 
-/**
- * A bridge should only have a single argument in constructor.
- */
 class BridgeConstructorArgumentsRule extends AbstractBridgeRule implements MethodAware
 {
+
+    const RULE = 'A bridge should only have a single argument in constructor. It is also used only on core, not in projects.';
 
     /**
      * @return string
      */
     public function getDescription()
     {
-        return 'A bridge should only have a single argument in constructor. It is also used only on core, not in projects.';
+        return static::RULE;
     }
 
     /**
@@ -51,9 +50,10 @@ class BridgeConstructorArgumentsRule extends AbstractBridgeRule implements Metho
         }
 
         $message = sprintf(
-            'The %s is having %s parameters which violates the rule "Constructor in bridge must have exactly one parameter"',
+            'The %s is having %s parameters which violates the rule "%s"',
             count($params),
-            $method->getFullQualifiedName()
+            $method->getFullQualifiedName(),
+            static::RULE
         );
 
         $this->addViolation($method, [$message]);

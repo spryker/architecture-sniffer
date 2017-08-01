@@ -7,9 +7,6 @@ use PHPMD\AbstractNode;
 use PHPMD\Node\MethodNode;
 use PHPMD\Rule\MethodAware;
 
-/**
- * A bridge should not have a typehint in constructor.
- */
 class BridgeConstructorArgumentTypehintsRule extends AbstractBridgeRule implements MethodAware
 {
 
@@ -74,8 +71,9 @@ class BridgeConstructorArgumentTypehintsRule extends AbstractBridgeRule implemen
         }
 
         $message = sprintf(
-            'The %s is violating the rule "' . static::RULE . '"',
-            $node->getFullQualifiedName()
+            'The %s is violating the rule "%s"',
+            $node->getFullQualifiedName(),
+            static::RULE
         );
 
         $this->addViolation($node, [$message]);

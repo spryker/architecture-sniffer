@@ -23,7 +23,7 @@ class FacadeNoLogicRule extends AbstractFacadeRule implements ClassAware
     /**
      * @var array
      */
-    private $forbiddenStatements = [
+    protected $forbiddenStatements = [
         'foreach',
         'while',
         'for',
@@ -70,9 +70,10 @@ class FacadeNoLogicRule extends AbstractFacadeRule implements ClassAware
             }
 
             $message = sprintf(
-                'The method %s contains a "%s" statement which violates the rule "' . static::RULE . '"',
+                'The method %s contains a "%s" statement which violates the rule "%s"',
                 $method->getFullQualifiedName(),
-                $statement->getImage()
+                $statement->getImage(),
+                static::RULE
             );
 
             $this->addViolation($method, [$message]);

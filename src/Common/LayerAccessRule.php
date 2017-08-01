@@ -21,7 +21,7 @@ class LayerAccessRule extends AbstractRule implements ClassAware
     /**
      * @var array
      */
-    private $patterns = [
+    protected $patterns = [
         [
             '(^Spryker.+)',
             '(^Pyz.+)',
@@ -126,10 +126,10 @@ class LayerAccessRule extends AbstractRule implements ClassAware
             $targetQName = sprintf('%s\\%s', $dependency->getNamespaceName(), $dependency->getName());
 
             foreach ($patterns as list($srcPattern, $targetPattern, $message)) {
-                if (0 === preg_match($srcPattern, $node->getFullQualifiedName())) {
+                if (preg_match($srcPattern, $node->getFullQualifiedName()) === 0) {
                     continue;
                 }
-                if (0 === preg_match($targetPattern, $targetQName)) {
+                if (preg_match($targetPattern, $targetQName) === 0) {
                     continue;
                 }
 

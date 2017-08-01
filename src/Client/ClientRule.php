@@ -33,7 +33,7 @@ class ClientRule extends SprykerAbstractRule implements ClassAware
             return;
         }
 
-        if (0 === preg_match('(\\\\Client\\\\.+Client$)', $node->getFullQualifiedName())) {
+        if (preg_match('(\\\\Client\\\\.+Client$)', $node->getFullQualifiedName()) === 0) {
             return;
         }
 
@@ -52,11 +52,11 @@ class ClientRule extends SprykerAbstractRule implements ClassAware
      */
     protected function applyImplementsInterfaceWithSameNameAndSuffix(ClassNode $class)
     {
-        $interfaceName = sprintf('%sInterface', $class->getImage());
+        $expectedInterfaceName = sprintf('%sInterface', $class->getImage());
 
         /** @var \PHPMD\Node\InterfaceNode $interface */
         foreach ($class->getInterfaces() as $interface) {
-            if ($interfaceName === $interface->getName()) {
+            if ($interface->getName() === $expectedInterfaceName) {
                 return;
             }
         }
@@ -67,7 +67,7 @@ class ClientRule extends SprykerAbstractRule implements ClassAware
                 sprintf(
                     'The class %s does not implement an interface %s which violates rule: "' . static::RULE . '"',
                     $class->getFullQualifiedName(),
-                    $interfaceName
+                    $expectedInterfaceName
                 )
             ]
         );
@@ -80,7 +80,7 @@ class ClientRule extends SprykerAbstractRule implements ClassAware
      */
     protected function applyEveryPublicMethodMustHaveApiTagAndContractText(MethodNode $method)
     {
-        if ($method->isAbstract() || false === $method->isPublic()) {
+        if ($method->isAbstract() || !$method->isPublic()) {
             return;
         }
 

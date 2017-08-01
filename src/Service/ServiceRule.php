@@ -32,7 +32,7 @@ class ServiceRule extends AbstractRule implements ClassAware
             return;
         }
 
-        if (0 === preg_match('(\\\\Service\\\\.+Service$)', $node->getFullQualifiedName())) {
+        if (preg_match('(\\\\Service\\\\.+Service$)', $node->getFullQualifiedName()) === 0) {
             return;
         }
 
@@ -78,7 +78,7 @@ class ServiceRule extends AbstractRule implements ClassAware
      */
     protected function applyEveryPublicMethodMustHaveApiTagAndContractText(MethodNode $method)
     {
-        if ($method->isAbstract() || false === $method->isPublic()) {
+        if ($method->isAbstract() || !$method->isPublic()) {
             return;
         }
 

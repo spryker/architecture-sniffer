@@ -5,14 +5,15 @@
 Architecture Sniffer for Spryker core, eco-system and applications.
 
 
-## Levels
+## Priority Levels
 
 - `1`: API and critical
 - `2`: Non critical (nice to have)
 - `3`: Experimental (too many false positives, needs further fixing until final)
 
-We use and recommend level `2` by default for local and CI checks.
+We use and recommend minimum priority `2` by default for local and CI checks.
 
+Note: Lower priorities (higher numbers) always include the higher priorities (lower numbers).
 
 ## Usage
 

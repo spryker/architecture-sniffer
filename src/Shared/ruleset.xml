@@ -15,7 +15,7 @@
         message="Shared Module Constants: {0}"
         class="ArchitectureSniffer\Shared\ModuleConstantsRule">
 
-        <priority>5</priority>
+        <priority>3</priority>
     </rule>
 
     <rule

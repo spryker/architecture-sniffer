@@ -7,7 +7,7 @@ Architecture Sniffer for Spryker core, eco-system and applications.
 
 ## Levels
 
-- `1`: API und critical
+- `1`: API and critical
 - `2`: Non critical (nice to have)
 - `3`: Experimental (too many false positives, needs further fixing until final)
 

@@ -51,7 +51,7 @@ class FactoryMethodReturnInterfaceRule extends AbstractFactoryRule implements Me
             $fullClassName = $node->getFullQualifiedName();
 
             $message = sprintf(
-                '%s ($s) returns a concrete class which violates the rule "%s"',
+                '%s (%s) returns a concrete class which violates the rule "%s"',
                 "{$class}::{$method}()",
                 $fullClassName,
                 static::RULE

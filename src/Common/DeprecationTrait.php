@@ -15,7 +15,7 @@ trait DeprecationTrait
     /**
      * @var string
      */
-    protected $regexp = '(@([a-z_][a-z0-9_]+))i';
+    protected $regexp = '/@deprecated/i';
 
     /**
      * @param \PHPMD\Node\MethodNode $method
@@ -24,13 +24,7 @@ trait DeprecationTrait
      */
     protected function isMethodDeprecated(MethodNode $method)
     {
-        preg_match_all($this->regexp, $method->getNode()->getDocComment(), $matches);
-        foreach (array_keys($matches[0]) as $i) {
-            if ($matches[1][$i] === 'deprecated') {
-                return true;
-            }
-        }
-
-        return false;
+        return preg_match($this->regexp, $method->getNode()->getDocComment());
     }
+
 }

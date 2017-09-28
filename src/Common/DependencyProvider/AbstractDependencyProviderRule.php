@@ -2,12 +2,15 @@
 
 namespace ArchitectureSniffer\Common\DependencyProvider;
 
+use ArchitectureSniffer\Common\DeprecationTrait;
 use PHPMD\AbstractRule;
 use PHPMD\Node\AbstractNode;
 use PHPMD\Node\MethodNode;
 
 abstract class AbstractDependencyProviderRule extends AbstractRule
 {
+
+    use DeprecationTrait;
 
     const RULE = 'DependencyProvider should only contain additional add*() or get*() methods.';
 
@@ -40,6 +43,10 @@ abstract class AbstractDependencyProviderRule extends AbstractRule
      */
     protected function applyRule(MethodNode $method, array $allowedProvideMethodNames)
     {
+        if ($this->isMethodDeprecated($method)) {
+            return;
+        }
+
         if (in_array($method->getName(), $allowedProvideMethodNames)) {
             return;
         }

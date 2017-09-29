@@ -24,7 +24,7 @@ trait DeprecationTrait
      */
     protected function isMethodDeprecated(MethodNode $method)
     {
-        return preg_match($this->regexp, $method->getNode()->getDocComment());
+        return (bool)preg_match($this->regexp, $method->getNode()->getDocComment());
     }
 
 }

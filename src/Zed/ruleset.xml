@@ -91,4 +91,12 @@
         <priority>3</priority>
     </rule>
 
+    <rule
+        name="ZedDependencyProviderMethodNameRule"
+        message="Zed DependencyProvider - DependencyProvider: {0}"
+        class="ArchitectureSniffer\Zed\DependencyProvider\DependencyProviderMethodNameRule">
+
+        <priority>3</priority>
+    </rule>
+
 </ruleset>

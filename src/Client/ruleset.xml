@@ -19,6 +19,14 @@
     </rule>
 
     <rule
+        name="ClientInterfaceRule"
+        message="ClientInterface: {0}"
+        class="ArchitectureSniffer\Client\ClientInterfaceRule">
+
+        <priority>1</priority>
+    </rule>
+
+    <rule
         name="ClientDependencyProviderMethodNameRule"
         message="DependencyProvider: {0}"
         class="ArchitectureSniffer\Client\DependencyProvider\DependencyProviderMethodNameRule">

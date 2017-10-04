@@ -11,7 +11,7 @@ use PHPMD\Rule\ClassAware;
 class ClientRule extends SprykerAbstractRule implements ClassAware
 {
 
-    const RULE = 'Must implement an interface with same name and suffix \'Interface\'. Every method must also contain the @api tag in docblock and a contract text above.';
+    const RULE = 'Must implement an interface with same name and suffix \'Interface\'.';
 
     /**
      * @return string
@@ -39,10 +39,6 @@ class ClientRule extends SprykerAbstractRule implements ClassAware
 
         /** @var \PHPMD\Node\ClassNode $node */
         $this->applyImplementsInterfaceWithSameNameAndSuffix($node);
-
-        foreach ($node->getMethods() as $method) {
-            $this->applyEveryPublicMethodMustHaveApiTagAndContractText($method);
-        }
     }
 
     /**
@@ -78,7 +74,7 @@ class ClientRule extends SprykerAbstractRule implements ClassAware
      *
      * @return void
      */
-    protected function applyEveryPublicMethodMustHaveApiTagAndContractText(MethodNode $method)
+    protected function applyEveryInterfaceMethodMustHaveApiTagAndContractText(MethodNode $method)
     {
         if ($method->isAbstract() || !$method->isPublic()) {
             return;

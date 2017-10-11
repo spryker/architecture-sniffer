@@ -2,10 +2,10 @@
 
 namespace ArchitectureSniffer\Service;
 
-use ArchitectureSniffer\Common\ImplementsAPIInterfaceRule;
+use ArchitectureSniffer\Common\ImplementsApiInterfaceRule;
 use PHPMD\Rule\ClassAware;
 
-class ServiceRule extends ImplementsAPIInterfaceRule implements ClassAware
+class ServiceRule extends ImplementsApiInterfaceRule implements ClassAware
 {
 
     /** @var string */

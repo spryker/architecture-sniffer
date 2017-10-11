@@ -8,7 +8,9 @@ use PHPMD\Rule\ClassAware;
 class ServiceRule extends ImplementsApiInterfaceRule implements ClassAware
 {
 
-    /** @var string */
+    /**
+     * @var string
+     */
     protected $classRegex = '(\\\\Service\\\\.+Service$)';
 
 }

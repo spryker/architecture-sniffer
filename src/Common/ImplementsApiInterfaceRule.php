@@ -12,7 +12,9 @@ class ImplementsApiInterfaceRule extends SprykerAbstractRule implements ClassAwa
 
     const RULE = 'Must implement an interface with same name and suffix \'Interface\'.';
 
-    /** @var string */
+    /**
+     * @var string
+     */
     protected $classRegex = '';
 
     /**

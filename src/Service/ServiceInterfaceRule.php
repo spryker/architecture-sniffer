@@ -8,7 +8,9 @@ use PHPMD\Rule\InterfaceAware;
 class ServiceInterfaceRule extends ApiInterfaceRule implements InterfaceAware
 {
 
-    /** @var string */
+    /**
+     * @var string
+     */
     protected $classRegex = '(\\\\Service\\\\.+ServiceInterface$)';
 
 }

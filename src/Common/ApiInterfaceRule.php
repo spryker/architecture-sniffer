@@ -7,7 +7,7 @@ use PHPMD\AbstractNode;
 use PHPMD\Node\MethodNode;
 use PHPMD\Rule\InterfaceAware;
 
-class APIInterfaceRule extends SprykerAbstractRule implements InterfaceAware
+class ApiInterfaceRule extends SprykerAbstractRule implements InterfaceAware
 {
 
     const RULE = 'Every method must also contain the @api tag in docblock and a contract text above.';

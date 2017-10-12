@@ -17,6 +17,14 @@
     </rule>
 
     <rule
+        name="ServiceInterfaceRule"
+        message="ServiceInterface: {0}"
+        class="ArchitectureSniffer\Service\ServiceInterfaceRule">
+
+        <priority>1</priority>
+    </rule>
+
+    <rule
         name="ServiceDependencyProviderMethodNameRule"
         message="DependencyProvider: {0}"
         class="ArchitectureSniffer\Service\DependencyProvider\DependencyProviderMethodNameRule">

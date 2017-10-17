@@ -8,7 +8,6 @@ use PHPMD\Rule\MethodAware;
 
 class FacadeReturnValueRule extends AbstractFacadeRule implements MethodAware
 {
-
     const RULE = 'Every Facade should only return native types or transfer objects.';
 
     /**
@@ -83,5 +82,4 @@ class FacadeReturnValueRule extends AbstractFacadeRule implements MethodAware
 
         return false;
     }
-
 }

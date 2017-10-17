@@ -8,7 +8,6 @@ use PHPMD\Rule\MethodAware;
 
 class ZedPersistenceFactoryCreateContainOneNewRule extends AbstractFactoryRule implements MethodAware
 {
-
     const RULE = 'A create*() method in factories must contain exactly 1 `new` statement for instantiation.';
 
     /**
@@ -57,9 +56,8 @@ class ZedPersistenceFactoryCreateContainOneNewRule extends AbstractFactoryRule i
                     $method->getFullQualifiedName(),
                     $count,
                     static::RULE
-                )
+                ),
             ]
         );
     }
-
 }

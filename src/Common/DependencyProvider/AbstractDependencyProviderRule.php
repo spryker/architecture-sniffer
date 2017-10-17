@@ -9,7 +9,6 @@ use PHPMD\Node\MethodNode;
 
 abstract class AbstractDependencyProviderRule extends AbstractRule
 {
-
     use DeprecationTrait;
 
     const RULE = 'DependencyProvider should only contain additional add*() or get*() methods.';
@@ -63,5 +62,4 @@ abstract class AbstractDependencyProviderRule extends AbstractRule
 
         $this->addViolation($method, [$message]);
     }
-
 }

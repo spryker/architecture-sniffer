@@ -8,7 +8,6 @@ use PHPMD\Rule\MethodAware;
 
 class ZedPersistenceFactoryGetContainNoNewRule extends AbstractFactoryRule implements MethodAware
 {
-
     const RULE = 'A `get*()` method in factories must not contain a `new` keyword.';
 
     /**
@@ -56,9 +55,8 @@ class ZedPersistenceFactoryGetContainNoNewRule extends AbstractFactoryRule imple
                     'The factory method %s contains %d new statements which violates rule "A get*() method must not contain a `new` keyword."',
                     $method->getFullQualifiedName(),
                     $count
-                )
+                ),
             ]
         );
     }
-
 }

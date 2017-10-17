@@ -9,7 +9,6 @@ use PHPMD\Rule\MethodAware;
 
 class ZedBusinessFactoryMethodReturnInterfaceRule extends AbstractFactoryRule implements MethodAware
 {
-
     const RULE = 'Every method in a Factory must only return an interface or an array of interfaces.';
 
     const ALLOWED_RETURN_TYPES_PATTERN = '/@return\s(?!((.*)Interface|callable))(.*)/';
@@ -84,5 +83,4 @@ class ZedBusinessFactoryMethodReturnInterfaceRule extends AbstractFactoryRule im
 
         return false;
     }
-
 }

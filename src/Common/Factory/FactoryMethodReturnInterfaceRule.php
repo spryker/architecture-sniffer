@@ -8,7 +8,6 @@ use PHPMD\Rule\MethodAware;
 
 class FactoryMethodReturnInterfaceRule extends AbstractFactoryRule implements MethodAware
 {
-
     const RULE = 'Every method in a Factory must only return an interface or an array of interfaces.';
 
     const ALLOWED_RETURN_TYPES_PATTERN = '/@return\s(?!((.*)Interface|callable))(.*)/';
@@ -45,7 +44,6 @@ class FactoryMethodReturnInterfaceRule extends AbstractFactoryRule implements Me
     {
         $comment = $node->getComment();
         if ($this->hasInvalidReturnType($comment)) {
-
             $class = $node->getParentName();
             $method = $node->getName();
             $fullClassName = $node->getFullQualifiedName();
@@ -88,5 +86,4 @@ class FactoryMethodReturnInterfaceRule extends AbstractFactoryRule implements Me
 
         return false;
     }
-
 }

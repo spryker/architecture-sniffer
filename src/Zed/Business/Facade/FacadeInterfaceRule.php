@@ -12,7 +12,6 @@ use PHPMD\Rule\ClassAware;
  */
 class FacadeInterfaceRule extends AbstractFacadeRule implements ClassAware
 {
-
     const RULE = 'Must implement an interface with same name and suffix \'Interface\'. Every method must also contain the @api tag in docblock and a contract text above.';
 
     /**
@@ -86,5 +85,4 @@ class FacadeInterfaceRule extends AbstractFacadeRule implements ClassAware
 
         return false;
     }
-
 }

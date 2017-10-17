@@ -8,7 +8,6 @@ use PHPMD\Rule\MethodAware;
 
 class DependencyProviderMethodNameRule extends AbstractDependencyProviderRule implements MethodAware
 {
-
     /**
      * @var array
      */
@@ -39,5 +38,4 @@ class DependencyProviderMethodNameRule extends AbstractDependencyProviderRule im
 
         $this->applyRule($node, $this->allowedProvideMethodNames);
     }
-
 }

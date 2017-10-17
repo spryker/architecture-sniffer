@@ -11,7 +11,6 @@ use PHPMD\Rule\ClassAware;
  */
 class FactoryNoLoopsRule extends AbstractFactoryRule implements ClassAware
 {
-
     const RULE = 'Factory methods should not contain loops.';
 
     /**
@@ -69,5 +68,4 @@ class FactoryNoLoopsRule extends AbstractFactoryRule implements ClassAware
             $this->addViolation($method, [$message]);
         }
     }
-
 }

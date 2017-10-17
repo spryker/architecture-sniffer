@@ -9,7 +9,6 @@ use PHPMD\Rule\ClassAware;
 
 class CommunicationControllerRule extends AbstractRule implements ClassAware
 {
-
     const RULE = 'All public controller methods have the suffix `*Action`.';
 
     /**
@@ -66,5 +65,4 @@ class CommunicationControllerRule extends AbstractRule implements ClassAware
             ]
         );
     }
-
 }

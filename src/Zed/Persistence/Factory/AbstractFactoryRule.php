@@ -8,7 +8,6 @@ use PHPMD\Node\MethodNode;
 
 abstract class AbstractFactoryRule extends AbstractRule
 {
-
     /**
      * @param \PHPMD\Node\AbstractNode $node
      *
@@ -29,5 +28,4 @@ abstract class AbstractFactoryRule extends AbstractRule
 
         return false;
     }
-
 }

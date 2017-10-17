@@ -11,7 +11,6 @@ use PHPMD\Rule\MethodAware;
  */
 class FactoryCreateContainOneNewRule extends AbstractFactoryRule implements MethodAware
 {
-
     const RULE = 'A create*() method in factories must contain exactly 1 `new` statement for instantiation.';
 
     /**
@@ -112,5 +111,4 @@ class FactoryCreateContainOneNewRule extends AbstractFactoryRule implements Meth
 
         return false;
     }
-
 }

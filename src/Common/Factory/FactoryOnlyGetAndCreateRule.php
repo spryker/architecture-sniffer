@@ -8,7 +8,6 @@ use PHPMD\Rule\ClassAware;
 
 class FactoryOnlyGetAndCreateRule extends AbstractFactoryRule implements ClassAware
 {
-
     const RULE = 'Factories should only contain get*() and create*() methods.';
 
     /**
@@ -54,5 +53,4 @@ class FactoryOnlyGetAndCreateRule extends AbstractFactoryRule implements ClassAw
 
         $this->addViolation($method, [$message]);
     }
-
 }

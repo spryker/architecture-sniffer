@@ -8,7 +8,6 @@ use PHPMD\Node\MethodNode;
 
 abstract class AbstractBridgeRule extends AbstractRule
 {
-
     /**
      * @param \PHPMD\Node\AbstractNode $node
      *
@@ -29,5 +28,4 @@ abstract class AbstractBridgeRule extends AbstractRule
 
         return false;
     }
-
 }

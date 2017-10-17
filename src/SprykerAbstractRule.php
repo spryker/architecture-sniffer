@@ -46,7 +46,6 @@ use PHPMD\Node\MethodNode;
 
 abstract class SprykerAbstractRule extends AbstractRule implements SprykerRuleInterface
 {
-
     /**
      * @param \PHPMD\Node\MethodNode $node
      *
@@ -56,5 +55,4 @@ abstract class SprykerAbstractRule extends AbstractRule implements SprykerRuleIn
     {
         return $node->getNode();
     }
-
 }

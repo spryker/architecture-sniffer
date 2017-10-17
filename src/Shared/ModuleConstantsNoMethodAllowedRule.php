@@ -8,7 +8,6 @@ use PHPMD\Rule\InterfaceAware;
 
 class ModuleConstantsNoMethodAllowedRule extends AbstractRule implements InterfaceAware
 {
-
     const RULE = 'The modules\' *Constants interfaces must only contain constants to be used with env config, no methods etc.';
 
     /**
@@ -39,10 +38,9 @@ class ModuleConstantsNoMethodAllowedRule extends AbstractRule implements Interfa
                         $node->getFullQualifiedName(),
                         $method->getName(),
                         static::RULE
-                    )
+                    ),
                 ]
             );
         }
     }
-
 }

@@ -9,7 +9,6 @@ use PHPMD\Rule\ClassAware;
 
 class LayerAccessRule extends AbstractRule implements ClassAware
 {
-
     /**
      * @return string
      */
@@ -163,5 +162,4 @@ class LayerAccessRule extends AbstractRule implements ClassAware
 
         return $patterns;
     }
-
 }

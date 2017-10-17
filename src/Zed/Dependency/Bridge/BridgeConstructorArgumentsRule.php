@@ -8,7 +8,6 @@ use PHPMD\Rule\MethodAware;
 
 class BridgeConstructorArgumentsRule extends AbstractBridgeRule implements MethodAware
 {
-
     const RULE = 'A bridge should only have a single argument in constructor. It is also used only on core, not in projects.';
 
     /**
@@ -58,5 +57,4 @@ class BridgeConstructorArgumentsRule extends AbstractBridgeRule implements Metho
 
         $this->addViolation($method, [$message]);
     }
-
 }

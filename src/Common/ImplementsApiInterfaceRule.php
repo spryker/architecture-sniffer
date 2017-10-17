@@ -9,7 +9,6 @@ use PHPMD\Rule\ClassAware;
 
 class ImplementsApiInterfaceRule extends SprykerAbstractRule implements ClassAware
 {
-
     const RULE = 'Must implement an interface with same name and suffix \'Interface\'.';
 
     /**
@@ -68,9 +67,8 @@ class ImplementsApiInterfaceRule extends SprykerAbstractRule implements ClassAwa
                     'The class %s does not implement an interface %s which violates rule: "' . static::RULE . '"',
                     $class->getFullQualifiedName(),
                     $expectedInterfaceName
-                )
+                ),
             ]
         );
     }
-
 }

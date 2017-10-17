@@ -14,7 +14,6 @@ use PHPMD\Rule\ClassAware;
  */
 class EnforceAbstractionInConstructor extends AbstractRule implements ClassAware
 {
-
     /**
      * @param \PHPMD\AbstractNode $node
      *
@@ -62,5 +61,4 @@ class EnforceAbstractionInConstructor extends AbstractRule implements ClassAware
 
         $this->addViolation($node, [$class->getName()]);
     }
-
 }

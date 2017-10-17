@@ -9,7 +9,6 @@ use PHPMD\Rule\ClassAware;
 
 class FacadeNoLogicRule extends AbstractFacadeRule implements ClassAware
 {
-
     const RULE = 'A Facade must not contain logic and only delegate.';
 
     /**
@@ -79,5 +78,4 @@ class FacadeNoLogicRule extends AbstractFacadeRule implements ClassAware
             $this->addViolation($method, [$message]);
         }
     }
-
 }

@@ -9,7 +9,6 @@ use PHPMD\Rule\ClassAware;
 
 class AllMethodsPublicInFacadeRule extends AbstractFacadeRule implements ClassAware
 {
-
     const RULE = 'A facade must only contain public methods.';
 
     /**
@@ -63,5 +62,4 @@ class AllMethodsPublicInFacadeRule extends AbstractFacadeRule implements ClassAw
             $this->addViolation($method, [$message]);
         }
     }
-
 }

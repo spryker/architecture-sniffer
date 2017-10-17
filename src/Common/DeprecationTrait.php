@@ -11,7 +11,6 @@ use PHPMD\Node\MethodNode;
 
 trait DeprecationTrait
 {
-
     /**
      * @var string
      */
@@ -26,5 +25,4 @@ trait DeprecationTrait
     {
         return (bool)preg_match($this->regexp, $method->getNode()->getDocComment());
     }
-
 }

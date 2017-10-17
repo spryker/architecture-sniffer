@@ -7,7 +7,6 @@ use PHPMD\Rule\MethodAware;
 
 class FactoryGetContainNoNewRule extends AbstractFactoryRule implements MethodAware
 {
-
     const RULE = 'A `get*()` method in factories must not contain a `new` keyword.';
 
     /**
@@ -55,9 +54,8 @@ class FactoryGetContainNoNewRule extends AbstractFactoryRule implements MethodAw
                     'The factory method %s contains %d new statements which violates rule "' . static::RULE . '"',
                     $method->getFullQualifiedName(),
                     $count
-                )
+                ),
             ]
         );
     }
-
 }

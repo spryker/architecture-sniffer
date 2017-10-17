@@ -18,7 +18,7 @@ class FacadeReturnValueRule extends AbstractFacadeRule implements MethodAware
         return static::RULE;
     }
 
-    const ALLOWED_RETURN_TYPES_PATTERN = '/@return\s(?!void|int|float|integer|string|array|\[\]|.*\[\]|bool|boolean|((.*)Transfer))(.*)/';
+    const ALLOWED_RETURN_TYPES_PATTERN = '/@return\s(?!void|int|float|integer|string|array|\[\]|.*\[\]|bool|boolean|((.+)Transfer))(.*)/';
     const INVALID_RETURN_TYPE_MATCH = 3;
 
     /**

@@ -22,7 +22,7 @@ abstract class AbstractFactoryRule extends AbstractRule
             $className = $node->getFullQualifiedName();
         }
 
-        if (preg_match('/\\\\Zed\\\\.*\\\\Business\\\\.*Factory$/', $className)) {
+        if (preg_match('/\\\\Zed\\\\\w+\\\\Business\\\\\w+Factory$/', $className)) {
             return true;
         }
 

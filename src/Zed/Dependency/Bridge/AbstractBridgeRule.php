@@ -22,7 +22,7 @@ abstract class AbstractBridgeRule extends AbstractRule
             $className = $node->getFullQualifiedName();
         }
 
-        if (preg_match('/\\\\Dependency\\\\.*\\\\.*Bridge$/', $className)) {
+        if (preg_match('/\\\\Dependency\\\\\w+\\\\\w+Bridge$/', $className)) {
             return true;
         }
 

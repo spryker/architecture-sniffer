@@ -27,7 +27,7 @@ abstract class AbstractDependencyProviderRule extends AbstractRule
             $className = $parent->getNamespaceName() . '\\' . $parent->getName();
         }
 
-        if (preg_match('/\\\\' . $application . '\\\\.*\\\\.*DependencyProvider$/', $className)) {
+        if (preg_match('/\\\\' . $application . '\\\\.*\\\\\w+DependencyProvider$/', $className)) {
             return true;
         }
 

@@ -22,7 +22,7 @@ abstract class AbstractFacadeRule extends AbstractRule
             $className = $node->getFullQualifiedName();
         }
 
-        if (preg_match('/\\\\Zed\\\\.*\\\\Business\\\\\w+Facade$/', $className)) {
+        if (preg_match('/\\\\Zed\\\\\w+\\\\Business\\\\\w+Facade$/', $className)) {
             return true;
         }
 

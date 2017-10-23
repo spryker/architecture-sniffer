@@ -8,7 +8,7 @@ use PHPMD\Rule\ClassAware;
 
 class FactoryOnlyGetAndCreateRule extends AbstractFactoryRule implements ClassAware
 {
-    const RULE = 'Factories should only contain magic, get*() and create*() methods.';
+    const RULE = 'Factories should only contain get*() and create*() methods.';
 
     /**
      * @return string

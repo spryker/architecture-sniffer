@@ -12,6 +12,14 @@ class CommunicationControllerRule extends AbstractRule implements ClassAware
     const RULE = 'All public controller methods have the suffix `*Action`.';
 
     /**
+     * @var array
+     */
+    protected $notActionMethodNames = [
+        'initialize',
+        '__construct',
+    ];
+
+    /**
      * @return string
      */
     public function getDescription()
@@ -55,6 +63,10 @@ class CommunicationControllerRule extends AbstractRule implements ClassAware
             return;
         }
 
+        if ($this->isNotActionMethod($method->getName())) {
+            return;
+        }
+
         $this->addViolation(
             $method,
             [
@@ -64,5 +76,15 @@ class CommunicationControllerRule extends AbstractRule implements ClassAware
                 ),
             ]
         );
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return bool
+     */
+    protected function isNotActionMethod($name)
+    {
+        return in_array($name, $this->notActionMethodNames);
     }
 }

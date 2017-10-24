@@ -76,22 +76,6 @@
     </rule>
 
     <rule
-        name="ZedPersistenceFactoryGetContainNoNewRule"
-        message="Zed Persistence Layer - Factory: {0}"
-        class="ArchitectureSniffer\Zed\Persistence\Factory\ZedPersistenceFactoryGetContainNoNewRule">
-
-        <priority>1</priority>
-    </rule>
-
-    <rule
-        name="ZedBusinessFactoryMethodReturnInterfaceRule"
-        message="Zed Business Layer - Factory: {0}"
-        class="ArchitectureSniffer\Zed\Business\Factory\ZedBusinessFactoryMethodReturnInterfaceRule">
-
-        <priority>3</priority>
-    </rule>
-
-    <rule
         name="ZedDependencyProviderMethodNameRule"
         message="Zed DependencyProvider - DependencyProvider: {0}"
         class="ArchitectureSniffer\Zed\DependencyProvider\DependencyProviderMethodNameRule">

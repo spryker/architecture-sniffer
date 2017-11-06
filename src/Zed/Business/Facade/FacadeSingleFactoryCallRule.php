@@ -82,16 +82,20 @@ class FacadeSingleFactoryCallRule extends AbstractFacadeRule implements ClassAwa
         $primaryPrefixes = $method->findChildrenOfType('MemberPrimaryPrefix');
 
         foreach ($primaryPrefixes as $key => $primaryPrefix) {
-            if ($this->isChildNameEqual($primaryPrefix, 0, static::PSEUDO_VAR_THIS)) {
-                if ($this->isChildNameEqual($primaryPrefix, 1, static::OBJECT_OPERATOR)) {
-                    if (!isset($primaryPrefixes[$key + 1])) {
-                        continue;
-                    }
+            if (!$this->isChildNameEqual($primaryPrefix, 0, static::PSEUDO_VAR_THIS)) {
+                continue;
+            }
 
-                    if ($this->isChildNameEqual($primaryPrefixes[$key + 1], 0, static::GET_FACTORY_METHOD)) {
-                        $factoryCallNumber++;
-                    }
-                }
+            if (!$this->isChildNameEqual($primaryPrefix, 1, static::OBJECT_OPERATOR)) {
+                continue;
+            }
+
+            if (!isset($primaryPrefixes[$key + 1])) {
+                continue;
+            }
+
+            if ($this->isChildNameEqual($primaryPrefixes[$key + 1], 0, static::GET_FACTORY_METHOD)) {
+                $factoryCallNumber++;
             }
         }
 

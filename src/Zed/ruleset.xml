@@ -60,6 +60,14 @@
     </rule>
 
     <rule
+            name="FacadeRule"
+            message="Zed Business Layer - Facade: {0}"
+            class="ArchitectureSniffer\Zed\Business\Facade\FacadeSingleFactoryCallRule">
+
+        <priority>1</priority>
+    </rule>
+
+    <rule
             name="BridgeConstructorArgumentsRule"
             message="Zed Dependency Bridge - Bridge: {0}"
             class="ArchitectureSniffer\Zed\Dependency\Bridge\BridgeConstructorArgumentsRule">

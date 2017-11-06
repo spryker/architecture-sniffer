@@ -9,7 +9,7 @@ use PHPMD\Rule\ClassAware;
 
 class FacadeSingleFactoryCallRule extends AbstractFacadeRule implements ClassAware
 {
-    const RULE = 'Every Facade method should have no more than one factory call operation.';
+    const RULE = 'Every Facade method should have no more than one factory call.';
 
     const PSEUDO_VAR_THIS = '$this';
     const OBJECT_OPERATOR = '->';
@@ -107,7 +107,6 @@ class FacadeSingleFactoryCallRule extends AbstractFacadeRule implements ClassAwa
      */
     protected function isChildNameEqual($primaryPrefix, $index, $value)
     {
-        return $primaryPrefix->getChild($index)
-                ->getName() === $value;
+        return $primaryPrefix->getChild($index)->getName() === $value;
     }
 }

@@ -65,7 +65,7 @@
             message="Factories: {0}"
             class="ArchitectureSniffer\Common\Factory\FactoryNoLogicRule">
 
-        <priority>2</priority>
+        <priority>3</priority>
     </rule>
 
     <!-- COMMON COMMUNICATION RULES -->

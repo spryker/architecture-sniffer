@@ -16,6 +16,9 @@ class ApiInterfaceRule extends SprykerAbstractRule implements InterfaceAware
      */
     protected $classRegex = '';
 
+    /**
+     * @var array
+     */
     protected $nonApiLayers = ['Facade', 'QueryContainer', 'Client', 'Service'];
 
     /**
@@ -54,6 +57,7 @@ class ApiInterfaceRule extends SprykerAbstractRule implements InterfaceAware
     /**
      * @param string $string
      * @param string $stringToSearch
+     * 
      * @return bool
      */
     protected function stringEndsWith($string, $stringToSearch)

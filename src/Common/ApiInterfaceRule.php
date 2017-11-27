@@ -57,7 +57,7 @@ class ApiInterfaceRule extends SprykerAbstractRule implements InterfaceAware
     /**
      * @param string $string
      * @param string $stringToSearch
-     * 
+     *
      * @return bool
      */
     protected function stringEndsWith($string, $stringToSearch)

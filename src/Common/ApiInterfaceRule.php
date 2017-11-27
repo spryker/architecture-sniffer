@@ -16,6 +16,8 @@ class ApiInterfaceRule extends SprykerAbstractRule implements InterfaceAware
      */
     protected $classRegex = '';
 
+    protected $nonApiLayers = ['Facade', 'QueryContainer', 'Client', 'Service'];
+
     /**
      * @return string
      */
@@ -35,10 +37,28 @@ class ApiInterfaceRule extends SprykerAbstractRule implements InterfaceAware
             return;
         }
 
+        $nodeNamespace = $node->getNamespaceName();
+        foreach ($this->nonApiLayers as $nonApiLayer) {
+            $nonApiLayerNamespace = 'Dependency\\' . $nonApiLayer;
+            if ($this->stringEndsWith($nodeNamespace, $nonApiLayerNamespace)) {
+                return;
+            }
+        }
+
         /** @var \PHPMD\Node\InterfaceNode $node */
         foreach ($node->getMethods() as $method) {
             $this->applyEveryInterfaceMethodMustHaveApiTagAndContractText($method);
         }
+    }
+
+    /**
+     * @param string $string
+     * @param string $stringToSearch
+     * @return bool
+     */
+    protected function stringEndsWith($string, $stringToSearch)
+    {
+        return (substr($string, strlen($string) - strlen($stringToSearch)) === $stringToSearch);
     }
 
     /**

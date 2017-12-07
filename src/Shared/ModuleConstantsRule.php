@@ -33,6 +33,7 @@ class ModuleConstantsRule extends AbstractRule implements InterfaceAware
         $moduleName = str_replace('Constants', '', $node->getName());
 
         foreach ($node->findChildrenOfType('ConstantDeclarator') as $constant) {
+            /** @var \PDepend\Source\AST\ASTValue|\PHPMD\AbstractNode $constant */
             $value = $constant->getValue()->getValue();
 
             $expectedConstantValue = strtoupper($moduleName) . ':' . $constant->getImage();

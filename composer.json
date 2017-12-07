@@ -24,12 +24,12 @@
   },
   "autoload": {
     "psr-4": {
-      "ArchitectureSniffer\\": "src"
+      "ArchitectureSniffer\\": "src/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "ArchitectureSniffer\\Test\\": "tests"
+      "ArchitectureSniffer\\Test\\": "tests/"
     }
   },
   "include-path":  ["src/"],

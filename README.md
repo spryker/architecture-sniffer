@@ -1,4 +1,5 @@
 # Architecture Sniffer
+[![Build Status](https://travis-ci.org/spryker/architecture-sniffer.svg?branch=master)](https://travis-ci.org/spryker/architecture-sniffer)
 [![Minimum PHP Version](http://img.shields.io/badge/php-%3E%3D%205.4-8892BF.svg)](https://php.net/)
 [![License](https://poser.pugx.org/spryker/architecture-sniffer/license.svg)](https://packagist.org/packages/spryker/architecture-sniffer)
 

@@ -19,6 +19,11 @@ Note: Lower priorities (higher numbers) always include the higher priorities (lo
 
 ## Usage
 
+Make sure you include the sniffer as `require-dev` dependency:
+```
+composer require --dev spryker/architecture-sniffer
+```
+
 ### Spryker Usage
 When using Spryker you can use the Spryker CLI console command for it:
 ```

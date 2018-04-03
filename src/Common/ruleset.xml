@@ -77,4 +77,24 @@
         <priority>1</priority>
     </rule>
 
+
+    <!-- COMMON COMMUNICATION PLUGIN RULES -->
+    <rule
+            name="PluginSuffixRule"
+            message="Plugin - Plugins must be suffixed with &quot;Plugin&quot;! Please check: &quot;{0}&quot;"
+            class="ArchitectureSniffer\Common\Plugin\PluginSuffixRule">
+
+        <priority>2</priority>
+    </rule>
+    <rule
+            name="PluginInterfaceSuffixRule"
+            message="Plugin - Plugin interfaces must be suffixed with &quot;PluginInterface&quot;! Please check: &quot;{0}&quot;"
+            class="ArchitectureSniffer\Common\Plugin\PluginInterfaceSuffixRule">
+
+        <priority>2</priority>
+    </rule>
+    <!-- EOF COMMON COMMUNICATION PLUGIN RULES -->
+
+    <!-- EOF COMMON COMMUNICATION RULES -->
+
 </ruleset>

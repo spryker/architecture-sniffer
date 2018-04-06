@@ -10,7 +10,7 @@ use PHPMD\Rule\ClassAware;
 abstract class AbstractPluginRule extends AbstractRule
 {
     protected const EXTENDS_CLASS_NAME = 'AbstractPlugin';
-    protected const PLUGIN_DIRECTORY_PATTERN = '#(Client|Yves|Service)\\\\.+\\\\Plugin\\\\(?!ServiceProvider|Provider)|Zed\\\\.+\\\\Communication\\\\Plugin\\\\#';
+    protected const PLUGIN_DIRECTORY_PATTERN = '#(Client|Yves|Service)\\\\.+\\\\Plugin\\\\(?!ServiceProvider|Provider)$|Communication\\\\Plugin\\\\[a-zA-Z0-9]+$#';
 
     /**
      * @param \PHPMD\AbstractNode $node

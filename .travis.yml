@@ -11,15 +11,10 @@ install:
   - composer install --no-interaction --prefer-dist
 
 script:
-<<<<<<< HEAD
   - vendor/bin/phpcs -p --extensions=php --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/
   - vendor/bin/phpstan analyze -l 1 src/
-=======
-  - vendor/bin/phpcs -p --extensions=php --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src
-  - vendor/bin/phpstan analyze src/ -l 1
   - vendor/bin/codecept build
   - vendor/bin/codecept run
->>>>>>> core-4299 added tests infrastructure and some basic tests
 
 notifications:
   email: false

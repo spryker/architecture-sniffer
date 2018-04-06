@@ -3,7 +3,6 @@
 namespace ArchitectureSniffer\Common\Factory;
 
 use PHPMD\AbstractNode;
-use PHPMD\Node\ClassNode;
 use PHPMD\Node\MethodNode;
 use PHPMD\Rule\MethodAware;
 

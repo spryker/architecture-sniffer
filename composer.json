@@ -22,7 +22,7 @@
     "spryker/code-sniffer": "*",
     "phpstan/phpstan": "^0.9.2",
     "phpunit/phpunit": "~5.2",
-    "codeception/codeception": "^2.4",
+    "codeception/codeception": "2.3.8",
     "symfony/var-dumper": "^4.0"
   },
   "autoload": {

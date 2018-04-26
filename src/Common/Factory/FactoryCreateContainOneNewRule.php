@@ -58,6 +58,11 @@ class FactoryCreateContainOneNewRule extends AbstractFactoryRule implements Meth
             return;
         }
 
+        $throwStatements = $method->findChildrenOfType('ThrowStatement');
+        if ($count - count($throwStatements) === 1) {
+            return;
+        }
+
         $methodName = $method->getParentName() . '::' . $method->getName() . '()';
         $className = $method->getFullQualifiedName();
 
@@ -103,7 +108,7 @@ class FactoryCreateContainOneNewRule extends AbstractFactoryRule implements Meth
         if ($primaryPrefixes[0]->getChild(0)->getName() === '$this' && substr($primaryPrefixes[0]->getChild(1)->getName(), 0, 6) === 'create') {
             return true;
         }
-        if ($primaryPrefixes[0]->getChild(0)->getName() === '$this' && substr($primaryPrefixes[0]->getChild(1)->getName(), 0, 6) === '->') {
+        if ($primaryPrefixes[0]->getChild(0)->getName() === '$this' && substr($primaryPrefixes[0]->getChild(1)->getName(), 0, 2) === '->') {
             if (substr($primaryPrefixes[1]->getChild(0)->getName(), 0, 6) === 'create') {
                 return true;
             }

@@ -8,7 +8,7 @@ use PHPMD\Rule\ClassAware;
 
 class DirectoryNoModelRule extends AbstractDirectoryRule implements ClassAware
 {
-    const RULE = 'Business models must not be in Model directory.';
+    const RULE = 'Business models must not be in a Model directory.';
 
     /**
      * @return string
@@ -33,13 +33,13 @@ class DirectoryNoModelRule extends AbstractDirectoryRule implements ClassAware
     }
 
     /**
-     * @param ClassNode $classNode
+     * @param \PHPMD\Node\ClassNode $classNode
      *
      * @return void
      */
     protected function applyRule(ClassNode $classNode)
     {
-        if (!preg_match('/Business\\\\Model/', $classNode->getNamespaceName())) {
+        if (!preg_match('/Business\\\\Model\\\\/', $classNode->getFullQualifiedName())) {
             return;
         }
 

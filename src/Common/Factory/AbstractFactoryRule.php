@@ -8,7 +8,7 @@ use PHPMD\Node\MethodNode;
 
 abstract class AbstractFactoryRule extends SprykerAbstractRule
 {
-    const PATTERN_ZED_FACTORY = '/\\\\+\\\\.+\\\\.+\\\\Business\\\\[^\\\\]+Factory$/';
+    const PATTERN_ZED_FACTORY = '/\\\\*\\\\.+\\\\.+\\\\Business\\\\[^\\\\]+Factory$/';
 
     /**
      * @param \PHPMD\Node\AbstractNode $node

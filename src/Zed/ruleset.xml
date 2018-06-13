@@ -91,4 +91,12 @@
         <priority>3</priority>
     </rule>
 
+    <!-- BUSINESS DIRECTORY RULES -->
+    <rule
+            name="ZedBusinessDirectoryNoModelRule"
+            message="Zed Business - Directory: {0}"
+            class="ArchitectureSniffer\Zed\Business\Directory\DirectoryNoModelRule">
+
+        <priority>3</priority>
+    </rule>
 </ruleset>

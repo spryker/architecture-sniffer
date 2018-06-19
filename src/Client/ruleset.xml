@@ -34,4 +34,12 @@
         <priority>3</priority>
     </rule>
 
+    <rule
+        name="NoClientInFrontendModuleRule"
+        message="Client: {0}"
+        class="ArchitectureSniffer\Client\NoClientInFrontendModuleRule">
+
+        <priority>3</priority>
+    </rule>
+
 </ruleset>

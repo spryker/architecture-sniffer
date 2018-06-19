@@ -11,7 +11,7 @@ Architecture Sniffer for Spryker core, eco-system and applications.
 
 - `1`: API and critical
 - `2`: Non critical (nice to have)
-- `3`: Experimental (too many false positives, needs further fixing until final)
+- `3`: Experimental (inspected code needs further fixing)
 
 We use and recommend minimum priority `2` by default for local and CI checks.
 
@@ -27,7 +27,7 @@ composer require --dev spryker/architecture-sniffer
 ### Spryker Usage
 When using Spryker you can use the Spryker CLI console command for it:
 ```
-console code:sniff:architecture [-m ModuleName] [optional-sub-path] -v
+console code:sniff:architecture [-m ModuleName] [optional-sub-path] -v [-p priority]
 ```
 Verbose output is recommended here.
 
@@ -55,7 +55,7 @@ Don't forget to update `ruleset.xml`.
 
 Every sniff needs a description as full sentence:
 ```php
-    const RULE = 'Every Foo needs Bar.';
+    protected const RULE = 'Every Foo needs Bar.';
 
     /**
      * @return string
@@ -65,6 +65,10 @@ Every sniff needs a description as full sentence:
         return static::RULE;
     }
 ```
+
+Every sniff needs to implement either the `ClassAware`, `FunctionAware`, `InterfaceAware`, or `MethodAware` interface to be recognised.
+To validate if the sniffer recognises your rule check if your rule is listed in Zed UI > Maintenance > Architecture sniffer OR run your rule.
+
 
 Also note:
 - The rule names must be unique across the rulesets.

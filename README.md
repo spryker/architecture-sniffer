@@ -67,7 +67,7 @@ Every sniff needs a description as full sentence:
 ```
 
 Every sniff needs to implement either the `ClassAware`, `FunctionAware`, `InterfaceAware`, or `MethodAware` interface to be recognised.
-To validate if the sniffer recognises your rule check if your rule is listed in Zed UI > Maintenance > Architecture sniffer OR run your rule.
+To validate that sniffer recognises your rule, check if your rule is listed in Zed UI > Maintenance > Architecture sniffer.
 
 
 Also note:

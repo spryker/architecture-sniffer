@@ -7,6 +7,7 @@
 
 namespace ArchitectureSniffer\Common;
 
+use PHPMD\Node\ClassNode;
 use PHPMD\Node\MethodNode;
 
 trait DeprecationTrait
@@ -24,5 +25,15 @@ trait DeprecationTrait
     protected function isMethodDeprecated(MethodNode $method)
     {
         return (bool)preg_match($this->regexp, $method->getNode()->getDocComment());
+    }
+
+    /**
+     * @param \PHPMD\Node\ClassNode $classNode
+     *
+     * @return bool
+     */
+    protected function isClassDeprecated(ClassNode $classNode)
+    {
+        return (bool)preg_match($this->regexp, $classNode->getNode()->getDocComment());
     }
 }

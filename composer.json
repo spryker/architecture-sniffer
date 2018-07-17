@@ -19,8 +19,9 @@
     "phpmd/phpmd": "^2.4"
   },
   "require-dev": {
-    "spryker/code-sniffer": "*",
-    "phpunit/phpunit": "~5.2"
+    "phpstan/phpstan": "^0.9.2",
+    "phpunit/phpunit": "~5.2",
+    "spryker/code-sniffer": "*"
   },
   "autoload": {
     "psr-4": {
@@ -35,6 +36,7 @@
   "include-path":  ["src/"],
   "scripts": {
     "cs-check": "vendor/bin/phpcs --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml -v --ignore=/architecture-sniffer/vendor/ ./",
-    "cs-fix": "vendor/bin/phpcbf --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml -v --ignore=/architecture-sniffer/vendor/ ./"
+    "cs-fix": "vendor/bin/phpcbf --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml -v --ignore=/architecture-sniffer/vendor/ ./",
+    "phpstan": "vendor/bin/phpstan analyze src/ -l 1"
   }
 }

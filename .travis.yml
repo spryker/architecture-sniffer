@@ -13,6 +13,7 @@ install:
 
 script:
   - vendor/bin/phpcs -p --extensions=php --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src
+  - vendor/bin/phpstan analyze src/ -l 1
 
 notifications:
   email: false

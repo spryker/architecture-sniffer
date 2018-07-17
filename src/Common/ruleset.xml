@@ -81,7 +81,7 @@
     <!-- COMMON COMMUNICATION PLUGIN RULES -->
     <rule
             name="PluginSuffixRule"
-            message="Plugin - Plugins must be suffixed with &quot;Plugin&quot;! Please check: &quot;{0}&quot;"
+            message="Plugin - Plugins must be suffixed with &quot;Plugin&quot; and PluginTests with &quot;PluginTest&quot;! Please check: &quot;{0}&quot;"
             class="ArchitectureSniffer\Common\Plugin\PluginSuffixRule">
 
         <priority>3</priority>

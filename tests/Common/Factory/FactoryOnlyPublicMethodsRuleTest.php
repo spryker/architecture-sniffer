@@ -17,7 +17,7 @@ class FactoryOnlyPublicMethodsRuleTest extends AbstractArchitectureSnifferRuleTe
      */
     public function testRuleAppliesWhenMethodIsProtected(): void
     {
-        $this->setTestFile('zedBusinessFactory.php');
+        $this->setTestFile('zedBusinessFactoryTest.php');
         $pluginSuffixRule = new FactoryOnlyPublicMethodsRule();
         $pluginSuffixRule->setReport($this->getReportMock(1));
         $pluginSuffixRule->apply($this->getMethodNode());
@@ -28,7 +28,7 @@ class FactoryOnlyPublicMethodsRuleTest extends AbstractArchitectureSnifferRuleTe
      */
     public function testRuleAppliesWhenMethodIsPrivate(): void
     {
-        $this->setTestFile('zedBusinessFactory.php');
+        $this->setTestFile('zedBusinessFactoryTest.php');
         $pluginSuffixRule = new FactoryOnlyPublicMethodsRule();
         $pluginSuffixRule->setReport($this->getReportMock(1));
         $pluginSuffixRule->apply($this->getMethodNode(1));
@@ -39,7 +39,7 @@ class FactoryOnlyPublicMethodsRuleTest extends AbstractArchitectureSnifferRuleTe
      */
     public function testRuleDoesNotApplyWhenMethodIsPublic(): void
     {
-        $this->setTestFile('zedBusinessFactory.php');
+        $this->setTestFile('zedBusinessFactoryTest.php');
         $pluginSuffixRule = new FactoryOnlyPublicMethodsRule();
         $pluginSuffixRule->setReport($this->getReportMock(0));
         $pluginSuffixRule->apply($this->getMethodNode(2));

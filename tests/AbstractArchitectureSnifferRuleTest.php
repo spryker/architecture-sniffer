@@ -1,7 +1,8 @@
 <?php
+
 /**
- * Copyright © 2018-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * MIT License
+ * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
 namespace ArchitectureSnifferTest;
@@ -28,6 +29,9 @@ abstract class AbstractArchitectureSnifferRuleTest extends Unit
      */
     protected $testFile;
 
+    /**
+     * @return void
+     */
     public function tearDown()
     {
         parent::tearDown();
@@ -78,7 +82,7 @@ abstract class AbstractArchitectureSnifferRuleTest extends Unit
     /**
      * @param null|int|string $nameOrPosition
      *
-     * @return TraitNode
+     * @return \PHPMD\Node\TraitNode
      */
     protected function getTraitNode($nameOrPosition = null): TraitNode
     {

@@ -35,10 +35,5 @@
       "ArchitectureSnifferTest\\": "tests/"
     }
   },
-  "include-path":  ["src/"],
-  "scripts": {
-    "cs-check": "vendor/bin/phpcs --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml -v src/",
-    "cs-fix": "vendor/bin/phpcbf --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml -v src/",
-    "phpstan": "vendor/bin/phpstan analyze src/ -l 1"
-  }
+  "include-path":  ["src/"]
 }

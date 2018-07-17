@@ -8,11 +8,14 @@ cache:
     - $HOME/.composer/cache
 
 install:
-  - composer install --no-interaction --prefer-dist
+  - composer self-update && composer --version
+  - composer install --no-interaction --optimize-autoloader
 
 script:
-  - vendor/bin/phpcs -p --extensions=php --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/
+  - vendor/bin/phpcs -p --extensions=php --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/Common/
   - vendor/bin/phpstan analyze -l 1 src/
+  - vendor/bin/codecept build
+  - vendor/bin/codecept run
 
 notifications:
   email: false

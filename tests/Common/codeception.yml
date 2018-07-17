@@ -1,0 +1,26 @@
+namespace: ArchitectureSnifferTest\Common
+
+paths:
+    tests: .
+    data: ../_data
+    support: _support
+    log: ../_output
+
+coverage:
+    enabled: true
+    remote: false
+    whitelist: { include: ['../../src/*'] }
+
+suites:
+    Plugin:
+        path: Plugin
+        class_name: CommonTester
+        modules:
+            enabled:
+                - Asserts
+    Factory:
+        path: Factory
+        class_name: CommonTester
+        modules:
+            enabled:
+                - Asserts

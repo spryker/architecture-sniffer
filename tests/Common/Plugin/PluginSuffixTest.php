@@ -15,7 +15,17 @@ class PluginSuffixTest extends AbstractArchitectureSnifferRuleTest
     /**
      * @return void
      */
-    public function testRuleAppliesWhenExtendsAbstractPluginSuffixIsMissing(): void
+    public function testRuleAppliesWhenExtendsAbstractPluginAndSuffixIsMissing(): void
+    {
+        $pluginSuffixRule = new PluginSuffixRule();
+        $pluginSuffixRule->setReport($this->getReportMock(1));
+        $pluginSuffixRule->apply($this->getClassNode());
+    }
+
+    /**
+     * @return void
+     */
+    public function testRuleAppliesForPluginTestAndSuffixIsMissing(): void
     {
         $pluginSuffixRule = new PluginSuffixRule();
         $pluginSuffixRule->setReport($this->getReportMock(1));
@@ -62,4 +72,13 @@ class PluginSuffixTest extends AbstractArchitectureSnifferRuleTest
         $pluginSuffixRule->apply($this->getClassNode());
     }
 
+    /**
+     * @return void
+     */
+    public function testRuleDoesNotApplyWhenTestPluginSuffixIsNotMissing(): void
+    {
+        $pluginSuffixRule = new PluginSuffixRule();
+        $pluginSuffixRule->setReport($this->getReportMock(0));
+        $pluginSuffixRule->apply($this->getClassNode());
+    }
 }

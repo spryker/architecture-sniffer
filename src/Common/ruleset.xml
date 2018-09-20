@@ -53,9 +53,9 @@
     </rule>
 
     <rule
-            name="FactoryOnlyGetAndCreateRule"
+            name="FactoryOnlyGetCreateOrBuildRule"
             message="Factories: {0}"
-            class="ArchitectureSniffer\Common\Factory\FactoryOnlyGetAndCreateRule">
+            class="ArchitectureSniffer\Common\Factory\FactoryOnlyGetCreateOrBuildRule">
 
         <priority>1</priority>
     </rule>

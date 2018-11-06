@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the Spryker Suite.
+ * MIT License
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
@@ -44,7 +44,7 @@ class DependencyProviderPropelQueryConstantNameRule extends AbstractDependencyPr
     {
         $constant = $method->getFirstChildOfType('ConstantPostfix');
 
-        if (0 !== preg_match(static::RULE_REGULAR_EXPRESSION_PATTERN, $constant->getName())) {
+        if (preg_match(static::RULE_REGULAR_EXPRESSION_PATTERN, $constant->getName()) !== 0) {
             return;
         }
 

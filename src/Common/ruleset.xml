@@ -68,6 +68,14 @@
         <priority>3</priority>
     </rule>
 
+    <rule
+        name="FactoryPropelQueryMethodNameRule"
+        message="Factories: {0}"
+        class="ArchitectureSniffer\Common\Factory\FactoryPropelQueryMethodNameRule">
+
+        <priority>1</priority>
+    </rule>
+
     <!-- COMMON COMMUNICATION RULES -->
     <rule
         name="CommunicationControllerRule"

@@ -75,7 +75,7 @@ abstract class AbstractDependencyProviderRule extends AbstractRule
             if ($isQueryReference) {
                 $methodPostfixChild = $method->getFirstChildOfType('MethodPostfix');
 
-                if ($methodPostfixChild->getName() === 'create') {
+                if ($methodPostfixChild !== null && $methodPostfixChild->getName() === 'create') {
                     return true;
                 }
             }

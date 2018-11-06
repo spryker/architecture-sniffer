@@ -8,6 +8,7 @@
 namespace ArchitectureSniffer\Zed\DependencyProvider;
 
 use ArchitectureSniffer\Common\DependencyProvider\AbstractDependencyProviderRule;
+use ArchitectureSniffer\SprykerPropelQueryRulePatterns;
 use PHPMD\AbstractNode;
 use PHPMD\Node\MethodNode;
 use PHPMD\Rule\MethodAware;
@@ -15,7 +16,6 @@ use PHPMD\Rule\MethodAware;
 class DependencyProviderPropelQueryMethodNameRule extends AbstractDependencyProviderRule implements MethodAware
 {
     public const RULE = 'Add propel query methods must be named like add*PropelQuery() in dependency provider.';
-    protected const RULE_REGULAR_EXPRESSION_PATTERN = '/^add([a-zA-Z]+)PropelQuery$/';
 
     /**
      * @param \PHPMD\AbstractNode $node
@@ -44,7 +44,7 @@ class DependencyProviderPropelQueryMethodNameRule extends AbstractDependencyProv
     {
         $methodName = $method->getName();
 
-        if (preg_match(static::RULE_REGULAR_EXPRESSION_PATTERN, $methodName) !== 0) {
+        if (preg_match(SprykerPropelQueryRulePatterns::PATTERN_PROPEL_QUERY_DEPENDENCY_PROVIDER_METHOD_NAME, $methodName) !== 0) {
             return;
         }
 

@@ -100,4 +100,20 @@
         <priority>3</priority>
     </rule>
 
+    <!-- Zed DependencyProvider - RFC Propel Query -->
+    <rule
+            name="ZedDependencyProviderPropelQueryConstantNameRule"
+            message="Zed DependencyProvider - DependencyProvider: {0}"
+            class="ArchitectureSniffer\Zed\DependencyProvider\DependencyProviderPropelQueryConstantNameRule">
+
+        <priority>1</priority>
+    </rule>
+    <rule
+            name="ZedDependencyProviderPropelQueryMethodNameRule"
+            message="Zed DependencyProvider - DependencyProvider: {0}"
+            class="ArchitectureSniffer\Zed\DependencyProvider\DependencyProviderPropelQueryMethodNameRule">
+
+        <priority>1</priority>
+    </rule>
+
 </ruleset>

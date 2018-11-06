@@ -59,12 +59,42 @@ abstract class AbstractDependencyProviderRule extends AbstractRule
             return;
         }
 
+        $this->addViolationMessage($method);
+    }
+
+    /**
+     * @param \PHPMD\Node\MethodNode $method
+     *
+     * @return bool
+     */
+    protected function hasPropelQueryAllocationExpression(MethodNode $method): bool
+    {
+        foreach ($method->findChildrenOfType('ClassOrInterfaceReference') as $referenceNode) {
+            $isQueryReference = (bool)strpos($referenceNode->getName(), 'Query');
+
+            if ($isQueryReference) {
+                $methodPostfixChild = $method->getFirstChildOfType('MethodPostfix');
+
+                if ($methodPostfixChild->getName() === 'create') {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @param \PHPMD\Node\AbstractNode $node
+     */
+    protected function addViolationMessage(AbstractNode $node): void
+    {
         $message = sprintf(
             'The DependencyProvider method %s() violates rule "%s"',
-            $method->getName(),
+            $node->getName(),
             static::RULE
         );
 
-        $this->addViolation($method, [$message]);
+        $this->addViolation($node, [$message]);
     }
 }

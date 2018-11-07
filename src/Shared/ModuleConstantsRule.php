@@ -13,7 +13,7 @@ use PHPMD\Rule\InterfaceAware;
 
 class ModuleConstantsRule extends AbstractRule implements InterfaceAware
 {
-    const RULE = 'The modules\' *Constants interfaces must only contain constants to be used with env config. Their values must be exactly the same as the const key prefixed with module name.';
+    public const RULE = 'The modules\' *Constants interfaces must only contain constants to be used with env config. Their values must be exactly the same as the const key prefixed with module name.';
 
     /**
      * @return string

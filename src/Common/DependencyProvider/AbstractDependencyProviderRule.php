@@ -16,7 +16,7 @@ abstract class AbstractDependencyProviderRule extends AbstractRule
 {
     use DeprecationTrait;
 
-    const RULE = 'DependencyProvider should only contain additional add*() or get*() methods.';
+    public const RULE = 'DependencyProvider should only contain additional add*() or get*() methods.';
 
     /**
      * @param \PHPMD\Node\AbstractNode $node
@@ -55,7 +55,7 @@ abstract class AbstractDependencyProviderRule extends AbstractRule
             return;
         }
 
-        if (0 != preg_match('/^(add|get).+/', $method->getName())) {
+        if (preg_match('/^(add|get).+/', $method->getName()) != 0) {
             return;
         }
 
@@ -88,6 +88,8 @@ abstract class AbstractDependencyProviderRule extends AbstractRule
 
     /**
      * @param \PHPMD\Node\AbstractNode $node
+     *
+     * @return void
      */
     protected function addViolationMessage(AbstractNode $node): void
     {

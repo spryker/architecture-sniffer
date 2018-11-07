@@ -13,7 +13,7 @@ use PHPMD\Rule\MethodAware;
 
 class FacadeReturnValueRule extends AbstractFacadeRule implements MethodAware
 {
-    const RULE = 'Every Facade should only return native types or transfer objects.';
+    public const RULE = 'Every Facade should only return native types or transfer objects.';
 
     /**
      * @return string
@@ -23,8 +23,8 @@ class FacadeReturnValueRule extends AbstractFacadeRule implements MethodAware
         return static::RULE;
     }
 
-    const ALLOWED_RETURN_TYPES_PATTERN = '/@return\s(?!void|int|float|integer|string|array|\[\]|.*\[\]|bool|boolean|((.+)Transfer))(.*)/';
-    const INVALID_RETURN_TYPE_MATCH = 3;
+    public const ALLOWED_RETURN_TYPES_PATTERN = '/@return\s(?!void|int|float|integer|string|array|\[\]|.*\[\]|bool|boolean|((.+)Transfer))(.*)/';
+    public const INVALID_RETURN_TYPE_MATCH = 3;
 
     /**
      * @param \PHPMD\AbstractNode $node

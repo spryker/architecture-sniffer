@@ -14,7 +14,7 @@ use PHPMD\Rule\ClassAware;
 
 class FacadeNoLogicRule extends AbstractFacadeRule implements ClassAware
 {
-    const RULE = 'A Facade must not contain logic and only delegate.';
+    public const RULE = 'A Facade must not contain logic and only delegate.';
 
     /**
      * @return string

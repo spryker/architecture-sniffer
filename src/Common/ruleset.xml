@@ -73,7 +73,7 @@
         message="Factories: {0}"
         class="ArchitectureSniffer\Common\Factory\FactoryPropelQueryMethodNameRule">
 
-        <priority>1</priority>
+        <priority>2</priority>
     </rule>
 
     <!-- COMMON COMMUNICATION RULES -->

@@ -102,18 +102,18 @@
 
     <!-- Zed DependencyProvider - RFC Propel Query -->
     <rule
-            name="ZedDependencyProviderPropelQueryConstantNameRule"
-            message="Zed DependencyProvider - DependencyProvider: {0}"
-            class="ArchitectureSniffer\Zed\DependencyProvider\DependencyProviderPropelQueryConstantNameRule">
+        name="ZedDependencyProviderPropelQueryConstantNameRule"
+        message="Zed DependencyProvider - DependencyProvider: {0}"
+        class="ArchitectureSniffer\Zed\DependencyProvider\DependencyProviderPropelQueryConstantNameRule">
 
-        <priority>1</priority>
+        <priority>2</priority>
     </rule>
     <rule
-            name="ZedDependencyProviderPropelQueryMethodNameRule"
-            message="Zed DependencyProvider - DependencyProvider: {0}"
-            class="ArchitectureSniffer\Zed\DependencyProvider\DependencyProviderPropelQueryMethodNameRule">
+        name="ZedDependencyProviderPropelQueryMethodNameRule"
+        message="Zed DependencyProvider - DependencyProvider: {0}"
+        class="ArchitectureSniffer\Zed\DependencyProvider\DependencyProviderPropelQueryMethodNameRule">
 
-        <priority>1</priority>
+        <priority>2</priority>
     </rule>
 
 </ruleset>

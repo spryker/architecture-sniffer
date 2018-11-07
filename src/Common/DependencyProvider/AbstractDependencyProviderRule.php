@@ -55,7 +55,7 @@ abstract class AbstractDependencyProviderRule extends AbstractRule
             return;
         }
 
-        if (preg_match('/^(add|get).+/', $method->getName()) != 0) {
+        if (preg_match('/^(add|get).+/', $method->getName()) !== 0) {
             return;
         }
 

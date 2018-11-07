@@ -72,12 +72,14 @@ abstract class AbstractDependencyProviderRule extends AbstractRule
         foreach ($method->findChildrenOfType('ClassOrInterfaceReference') as $referenceNode) {
             $isQueryReference = (bool)strpos($referenceNode->getName(), 'Query');
 
-            if ($isQueryReference) {
-                $methodPostfixChild = $method->getFirstChildOfType('MethodPostfix');
+            if (!$isQueryReference) {
+                return false;
+            }
 
-                if ($methodPostfixChild !== null && $methodPostfixChild->getName() === 'create') {
-                    return true;
-                }
+            $methodPostfixChild = $method->getFirstChildOfType('MethodPostfix');
+
+            if ($methodPostfixChild !== null && $methodPostfixChild->getName() === 'create') {
+                return true;
             }
         }
 

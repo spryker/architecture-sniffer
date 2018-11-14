@@ -1,0 +1,94 @@
+<?php
+
+/**
+ * MIT License
+ * For full license information, please view the LICENSE file that was distributed with this source code.
+ */
+
+namespace ArchitectureSniffer\Module\Transfer;
+
+class ModuleTransfer
+{
+    /**
+     * @var string
+     */
+    protected $moduleName;
+
+    /**
+     * @var string[]
+     */
+    protected $modulePaths;
+
+    /**
+     * @var string[]
+     */
+    protected $schemaPaths;
+
+    /**
+     * @var bool
+     */
+    protected $isExist = false;
+
+    /**
+     * @return string
+     */
+    public function getModuleName(): string
+    {
+        return $this->moduleName;
+    }
+
+    /**
+     * @param string $moduleName
+     *
+     * @return void
+     */
+    public function setModuleName(string $moduleName): void
+    {
+        $this->moduleName = $moduleName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getModulePaths(): string
+    {
+        return $this->modulePaths;
+    }
+
+    /**
+     * @param string[] $modulePaths
+     *
+     * @return void
+     */
+    public function setModulePaths(array $modulePaths): void
+    {
+        $this->modulePaths = $modulePaths;
+        $this->isExist = true;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getSchemaPaths(): array
+    {
+        return $this->schemaPaths;
+    }
+
+    /**
+     * @param string[] $schemaPaths
+     *
+     * @return void
+     */
+    public function setSchemaPaths(array $schemaPaths): void
+    {
+        $this->schemaPaths = $schemaPaths;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isExist(): bool
+    {
+        return $this->isExist;
+    }
+}

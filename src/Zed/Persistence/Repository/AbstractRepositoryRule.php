@@ -1,9 +1,13 @@
 <?php
 
+/**
+ * MIT License
+ * For full license information, please view the LICENSE file that was distributed with this source code.
+ */
+
 namespace ArchitectureSniffer\Zed\Persistence\Repository;
 
 use ArchitectureSniffer\SprykerAbstractRule;
-use PHPMD\Node\AbstractNode;
 use PHPMD\Node\MethodNode;
 
 abstract class AbstractRepositoryRule extends SprykerAbstractRule
@@ -11,7 +15,6 @@ abstract class AbstractRepositoryRule extends SprykerAbstractRule
     public const PATTERN_FACTORY = '/\\\\*\\\\.+\\\\.+\\\\[A-Za-z0-9]+Repository$/';
 
     /**
-     *
      * @param \PHPMD\Node\MethodNode $methodNode
      *
      * @return bool

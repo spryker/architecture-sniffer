@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * MIT License
+ * For full license information, please view the LICENSE file that was distributed with this source code.
+ */
+
 namespace ArchitectureSniffer\Zed\Persistence\Repository;
 
 use ArchitectureSniffer\Module\Transfer\ModuleTransfer;
@@ -36,7 +41,6 @@ class RepositoryPropelQueryJoinRule extends AbstractRepositoryRule implements Me
         foreach ($joinNames as $joinName) {
             $this->applyRule($joinName, $node);
         }
-
     }
 
     /**
@@ -62,10 +66,6 @@ class RepositoryPropelQueryJoinRule extends AbstractRepositoryRule implements Me
         }
 
         $moduleName = $this->findJoinModuleNameFromTables($joinName, $tableTransfers);
-
-        if ($moduleName === null) {
-            dd('Error!!!'); //todo: need to test this case
-        }
 
         if (in_array($moduleName, $docBlockModuleNames)) {
             return;
@@ -111,7 +111,7 @@ class RepositoryPropelQueryJoinRule extends AbstractRepositoryRule implements Me
      * @param \ArchitectureSniffer\Module\Transfer\ModuleTransfer $module
      * @param \ArchitectureSniffer\PropelQuery\Schema\Transfer\PropelSchemaTableTransfer[] $tableTransfers
      *
-     * @return array
+     * @return \ArchitectureSniffer\PropelQuery\Schema\Transfer\PropelSchemaTableTransfer[]
      */
     protected function getTableTransfers(ModuleTransfer $module, array $tableTransfers): array
     {
@@ -139,7 +139,7 @@ class RepositoryPropelQueryJoinRule extends AbstractRepositoryRule implements Me
      * @param string $joinName
      * @param \ArchitectureSniffer\PropelQuery\Schema\Transfer\PropelSchemaTableTransfer[] $tableTransfers
      *
-     * @return string
+     * @return string|null
      */
     protected function findJoinModuleNameFromTables(string $joinName, array $tableTransfers): ?string
     {
@@ -174,6 +174,8 @@ class RepositoryPropelQueryJoinRule extends AbstractRepositoryRule implements Me
      * @param \PHPMD\AbstractNode $node
      * @param string $joinName
      * @param string $moduleName
+     *
+     * @return void
      */
     protected function addViolationMessage(AbstractNode $node, string $joinName, string $moduleName): void
     {

@@ -99,10 +99,12 @@ class ModuleFinder implements ModuleFinderInterface
         $this->finder;
         $fileFinder = $this->finder->in($modulePaths)->name('*.schema.xml');
 
-        foreach ($fileFinder->files() as $file) {
-            /**
-             * @var \Symfony\Component\Finder\SplFileInfo $file
-             */
+        /**
+         * @var \Symfony\Component\Finder\SplFileInfo[] $files
+         */
+        $files = $fileFinder->files();
+
+        foreach ($files as $file) {
             $schemaPaths[] = $file->getRealPath();
         }
 

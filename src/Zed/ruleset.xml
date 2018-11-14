@@ -122,7 +122,7 @@
         message="Zed Persistence - Repository: {0}"
         class="ArchitectureSniffer\Zed\Persistence\Repository\RepositoryPropelQueryJoinRule">
 
-        <priority>2</priority>
+        <priority>5</priority>
     </rule>
 
 </ruleset>

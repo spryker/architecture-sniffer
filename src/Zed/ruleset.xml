@@ -106,14 +106,14 @@
         message="Zed DependencyProvider - DependencyProvider: {0}"
         class="ArchitectureSniffer\Zed\DependencyProvider\DependencyProviderPropelQueryConstantNameRule">
 
-        <priority>2</priority>
+        <priority>5</priority>
     </rule>
     <rule
         name="ZedDependencyProviderPropelQueryMethodNameRule"
         message="Zed DependencyProvider - DependencyProvider: {0}"
         class="ArchitectureSniffer\Zed\DependencyProvider\DependencyProviderPropelQueryMethodNameRule">
 
-        <priority>2</priority>
+        <priority>5</priority>
     </rule>
 
     <!-- Zed Repository - RFC Propel Query -->

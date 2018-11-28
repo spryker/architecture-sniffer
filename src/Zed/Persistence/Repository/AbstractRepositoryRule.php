@@ -12,7 +12,7 @@ use PHPMD\Node\MethodNode;
 
 abstract class AbstractRepositoryRule extends SprykerAbstractRule
 {
-    public const PATTERN_FACTORY = '/\\\\*\\\\.+\\\\.+\\\\[A-Za-z0-9]+Repository$/';
+    public const PATTERN_REPOSITORY = '/\\\\*\\\\.+\\\\.+\\\\[A-Za-z0-9]+Repository$/';
 
     /**
      * @param \PHPMD\Node\MethodNode $methodNode
@@ -30,7 +30,7 @@ abstract class AbstractRepositoryRule extends SprykerAbstractRule
             $className = $methodNode->getFullQualifiedName();
         }
 
-        if (preg_match(self::PATTERN_FACTORY, $className)) {
+        if (preg_match(self::PATTERN_REPOSITORY, $className)) {
             return true;
         }
 

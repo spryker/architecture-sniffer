@@ -22,9 +22,9 @@ class PropelQueryFacade implements PropelQueryFacadeInterface
      *
      * @return \PHPMD\AbstractNode[]
      */
-    public function getJoinNames(AbstractNode $node): array
+    public function getRelationTableNames(AbstractNode $node): array
     {
-        return $this->getFactory()->createNodeReader()->getJoinNames($node);
+        return $this->getFactory()->createMethodNodeReader()->getRelationNames($node);
     }
 
     /**
@@ -42,13 +42,13 @@ class PropelQueryFacade implements PropelQueryFacadeInterface
     /**
      * @param \PHPMD\AbstractNode $node
      *
-     * @return array
+     * @return string[]
      */
-    public function getDocBlockModules(AbstractNode $node): array
+    public function getDeclaredDependentModuleNames(AbstractNode $node): array
     {
         return $this->getFactory()
-            ->createDocBlockReader()
-            ->getModules($node);
+            ->createDocBlockNodeReader()
+            ->getModuleNames($node);
     }
 
     /**
@@ -71,7 +71,7 @@ class PropelQueryFacade implements PropelQueryFacadeInterface
      */
     public function getQueryModuleName(AbstractNode $node): string
     {
-        return $this->getFactory()->createNodeReader()->getQueryModuleName($node);
+        return $this->getFactory()->createMethodNodeReader()->getQueryModuleName($node);
     }
 
     /**
@@ -81,7 +81,7 @@ class PropelQueryFacade implements PropelQueryFacadeInterface
      */
     public function getModuleName(AbstractNode $node): string
     {
-        return $this->getFactory()->createNodeReader()->getModuleName($node);
+        return $this->getFactory()->createMethodNodeReader()->getModuleName($node);
     }
 
     /**

@@ -7,12 +7,12 @@
 
 namespace ArchitectureSniffer\Node\DocBlock\Reader;
 
-use ArchitectureSniffer\Node\DocBlock\Mapper\NodeDocBlockMapperInterface;
+use ArchitectureSniffer\Node\DocBlock\Mapper\DocBlockNodeMapperInterface;
 use phpDocumentor\Reflection\DocBlock;
 use phpDocumentor\Reflection\DocBlockFactoryInterface;
 use PHPMD\AbstractNode;
 
-class NodeDocBlockReader implements NodeDocBlockReaderInterface
+class DocBlockNodeReader implements DocBlockNodeReaderInterface
 {
     protected const TAG_MODULE = 'module';
 
@@ -22,15 +22,15 @@ class NodeDocBlockReader implements NodeDocBlockReaderInterface
     protected $docBlockFactory;
 
     /**
-     * @var \ArchitectureSniffer\Node\DocBlock\Mapper\NodeDocBlockMapperInterface
+     * @var \ArchitectureSniffer\Node\DocBlock\Mapper\DocBlockNodeMapperInterface
      */
     protected $docBlockMapper;
 
     /**
      * @param \phpDocumentor\Reflection\DocBlockFactoryInterface $docBlockFactory
-     * @param \ArchitectureSniffer\Node\DocBlock\Mapper\NodeDocBlockMapperInterface $docBlockMapper
+     * @param \ArchitectureSniffer\Node\DocBlock\Mapper\DocBlockNodeMapperInterface $docBlockMapper
      */
-    public function __construct(DocBlockFactoryInterface $docBlockFactory, NodeDocBlockMapperInterface $docBlockMapper)
+    public function __construct(DocBlockFactoryInterface $docBlockFactory, DocBlockNodeMapperInterface $docBlockMapper)
     {
         $this->docBlockFactory = $docBlockFactory;
         $this->docBlockMapper = $docBlockMapper;
@@ -39,9 +39,9 @@ class NodeDocBlockReader implements NodeDocBlockReaderInterface
     /**
      * @param \PHPMD\AbstractNode $node
      *
-     * @return array
+     * @return string[]
      */
-    public function getModules(AbstractNode $node): array
+    public function getModuleNames(AbstractNode $node): array
     {
         $docBlock = $this->getDocBlock($node);
 

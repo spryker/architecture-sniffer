@@ -9,18 +9,19 @@ namespace ArchitectureSniffer\Node\Method;
 
 use PHPMD\AbstractNode;
 
-class NodeMethodReader implements NodeMethodReaderInterface
+class MethodNodeReader implements MethodNodeReaderInterface
 {
     protected const PATTERN_JOIN_METHOD_NAME = '/^(left|inner|right|add)?(Join|join)(With|Condition)?/';
+    protected const PATTERN_QUERY_METHOD_NAME = '/^(create|get)|Query?/';
 
     /**
      * @param \PHPMD\AbstractNode $node
      *
      * @return string[]
      */
-    public function getJoinNames(AbstractNode $node): array
+    public function getRelationNames(AbstractNode $node): array
     {
-        $joins = [];
+        $relationNames = [];
 
         $children = $node->findChildrenOfType('MethodPostfix');
 
@@ -29,10 +30,10 @@ class NodeMethodReader implements NodeMethodReaderInterface
                 continue;
             }
 
-            $joins[] = $this->getJoinRelationName($child);
+            $relationNames[] = $this->getRelationNameFormJoinNode($child);
         }
 
-        return $joins;
+        return $relationNames;
     }
 
     /**
@@ -55,10 +56,26 @@ class NodeMethodReader implements NodeMethodReaderInterface
      */
     public function getQueryModuleName(AbstractNode $node): string
     {
-        $queryName = $node->getFirstChildOfType('ClassOrInterfaceReference')->getName();
-        $queryName = preg_replace('/^.+(Zed\\\\)/', '', $queryName);
+        $methodPostfix = $node->findChildrenOfType('MethodPostfix');
+        $classOrInterfaceReference = $node->findChildrenOfType('ClassOrInterfaceReference');
 
-        return preg_replace('/\\\\.+$/', '', $queryName);
+        /**@var AbstractNode[] $children*/
+        $children = array_merge($methodPostfix, $classOrInterfaceReference);
+
+        foreach ($children as $child) {
+            if (stripos($child->getName(), 'Query') === false) {
+                continue;
+            }
+
+            return preg_replace(
+                static::PATTERN_QUERY_METHOD_NAME,
+                '',
+                $child->getName()
+            );
+        }
+
+        dd($node->getFileName()); //todo: delete
+        return null;
     }
 
     /**
@@ -66,15 +83,15 @@ class NodeMethodReader implements NodeMethodReaderInterface
      *
      * @return string
      */
-    protected function getJoinRelationName(AbstractNode $join): string
+    protected function getRelationNameFormJoinNode(AbstractNode $join): string
     {
-        $joinName = $this->getJoinRelationNameFromMethodName($join);
+        $relationName = $this->getRelationNameFromMethodName($join);
 
-        if ($joinName !== '') {
-            return $joinName;
+        if ($relationName !== '') {
+            return $relationName;
         }
 
-        return $this->getJoinRelationNameFromParams($join);
+        return $this->getRelationNameFromJoinParams($join);
     }
 
     /**
@@ -82,7 +99,7 @@ class NodeMethodReader implements NodeMethodReaderInterface
      *
      * @return string
      */
-    protected function getJoinRelationNameFromParams(AbstractNode $child): string
+    protected function getRelationNameFromJoinParams(AbstractNode $child): string
     {
         $relationArgument = $child->getFirstChildOfType('Arguments');
         $relationArgument = $relationArgument->getFirstChildOfType('Literal');
@@ -95,19 +112,14 @@ class NodeMethodReader implements NodeMethodReaderInterface
      *
      * @return string
      */
-    protected function getJoinRelationNameFromMethodName(AbstractNode $join): string
+    protected function getRelationNameFromMethodName(AbstractNode $join): string
     {
-        $splitMethodNameByPattern = preg_split(
+        $joinRelationName = preg_replace(
             static::PATTERN_JOIN_METHOD_NAME,
-            $join->getName(),
-            -1,
-            PREG_SPLIT_NO_EMPTY
+            '',
+            $join->getName()
         );
 
-        if ($splitMethodNameByPattern === []) {
-            return '';
-        }
-
-        return $splitMethodNameByPattern[0];
+        return $joinRelationName;
     }
 }

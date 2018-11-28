@@ -19,18 +19,11 @@ class ModuleFinder implements ModuleFinderInterface
     protected $pathBuilder;
 
     /**
-     * @var \Symfony\Component\Finder\Finder
-     */
-    protected $finder;
-
-    /**
      * @param \ArchitectureSniffer\Path\PathBuilderInterface $pathBuilder
-     * @param \Symfony\Component\Finder\Finder $finder
      */
-    public function __construct(PathBuilderInterface $pathBuilder, Finder $finder)
+    public function __construct(PathBuilderInterface $pathBuilder)
     {
         $this->pathBuilder = $pathBuilder;
-        $this->finder = $finder;
     }
 
     /**
@@ -41,8 +34,8 @@ class ModuleFinder implements ModuleFinderInterface
      */
     public function findModuleByName(string $moduleName, string $rootPath): ModuleTransfer
     {
-        $module = $this->createModuleTransfer();
-        $module->setModuleName($moduleName);
+        $moduleTransfer = $this->createModuleTransfer();
+        $moduleTransfer->setModuleName($moduleName);
 
         $coreModulePath = $this->getCoreModulePath($moduleName, $rootPath);
         $projectModulePath = $this->getProjectModulePath($moduleName, $rootPath);
@@ -53,38 +46,38 @@ class ModuleFinder implements ModuleFinderInterface
         ]);
 
         if ($modulePaths === []) {
-            return $module;
+            return $moduleTransfer;
         }
 
         $schemas = $this->getModuleSchemaPaths($modulePaths);
 
-        $module->setModulePaths($modulePaths);
-        $module->setSchemaPaths($schemas);
+        $moduleTransfer->setModulePaths($modulePaths);
+        $moduleTransfer->setSchemaPaths($schemas);
 
-        return $module;
+        return $moduleTransfer;
     }
 
     /**
-     * @param array $moduleNames
+     * @param string[] $moduleNames
      * @param string $rootPath
      *
      * @return \ArchitectureSniffer\Module\Transfer\ModuleTransfer[]
      */
     public function findModulesByNames(array $moduleNames, string $rootPath): array
     {
-        $modules = [];
+        $moduleTransferCollection = [];
 
         foreach ($moduleNames as $moduleName) {
-            $module = $this->findModuleByName($moduleName, $rootPath);
+            $moduleTransfer = $this->findModuleByName($moduleName, $rootPath);
 
-            if (!$module->isExist()) {
+            if (!$moduleTransfer->exists()) {
                 continue;
             }
 
-            $modules[] = $module;
+            $moduleTransferCollection[] = $moduleTransfer;
         }
 
-        return $modules;
+        return $moduleTransferCollection;
     }
 
     /**
@@ -96,8 +89,7 @@ class ModuleFinder implements ModuleFinderInterface
     {
         $schemaPaths = [];
 
-        $this->finder;
-        $fileFinder = $this->finder->in($modulePaths)->name('*.schema.xml');
+        $fileFinder = $this->createFinder()->in($modulePaths)->name('*.schema.xml');
 
         /*** @var \Symfony\Component\Finder\SplFileInfo[] $files */
         $files = $fileFinder->files();
@@ -149,5 +141,13 @@ class ModuleFinder implements ModuleFinderInterface
     protected function createModuleTransfer(): ModuleTransfer
     {
         return new ModuleTransfer();
+    }
+
+    /**
+     * @return \Symfony\Component\Finder\Finder
+     */
+    protected function createFinder(): Finder
+    {
+        return new Finder();
     }
 }

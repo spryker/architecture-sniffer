@@ -35,7 +35,11 @@ class PropelSchemaTableFinder implements PropelSchemaTableFinderInterface
     {
         $tableTransfers = [];
 
-        $moduleName = $moduleTransfer->getModuleName();
+        $moduleName = $moduleTransfer->getModuleName(); //todo: can be null
+
+        if($moduleName === null) {
+            dd('ERROR!!'); //todo: delete
+        }
 
         foreach ($moduleTransfer->getSchemaPaths() as $schemaPath) {
             $schema = $this->reader->fromFile($schemaPath);
@@ -55,7 +59,7 @@ class PropelSchemaTableFinder implements PropelSchemaTableFinderInterface
      *
      * @return bool
      */
-    protected function isTableMain(array $table): bool
+    protected function isOwnerOfTable(array $table): bool
     {
         if (!isset($table['column'])) {
             return false;
@@ -67,23 +71,23 @@ class PropelSchemaTableFinder implements PropelSchemaTableFinderInterface
     /**
      * @param array $propelSchema
      * @param string $moduleName
-     * @param \ArchitectureSniffer\PropelQuery\Schema\Transfer\PropelSchemaTableTransfer[] $tableTransfers
+     * @param \ArchitectureSniffer\PropelQuery\Schema\Transfer\PropelSchemaTableTransfer[] $propelSchemaTableTransferCollection
      *
      * @return \ArchitectureSniffer\PropelQuery\Schema\Transfer\PropelSchemaTableTransfer[]
      */
-    protected function getTables(array $propelSchema, string $moduleName, array $tableTransfers): array
+    protected function getTables(array $propelSchema, string $moduleName, array $propelSchemaTableTransferCollection): array
     {
         $tables = $propelSchema['table'];
 
         if (isset($tables['name'])) {
-            return $this->getTableTransfer($tables, $moduleName, $tableTransfers);
+            return $this->getTableTransfer($tables, $moduleName, $propelSchemaTableTransferCollection);
         }
 
         foreach ($tables as $table) {
-            $tableTransfers = $this->getTableTransfer($table, $moduleName, $tableTransfers);
+            $propelSchemaTableTransferCollection = $this->getTableTransfer($table, $moduleName, $propelSchemaTableTransferCollection);
         }
 
-        return $tableTransfers;
+        return $propelSchemaTableTransferCollection;
     }
 
     /**
@@ -156,7 +160,7 @@ class PropelSchemaTableFinder implements PropelSchemaTableFinderInterface
 
         $transfer->setTableName($tableName);
 
-        if ($this->isTableMain($table)) {
+        if ($this->isOwnerOfTable($table)) {
             $transfer->setModuleName($moduleName);
         }
 
@@ -165,9 +169,34 @@ class PropelSchemaTableFinder implements PropelSchemaTableFinderInterface
         $tableTransfers[$tableName] = $transfer;
 
         if (isset($table['foreign-key'])) {
+            $transfer = $this->addReferencePhpNames($table, $transfer);
+            $tableTransfers[$tableName] = $transfer;
+
             $tableTransfers = $this->addRelations($table['foreign-key'], $tableTransfers);
         }
 
         return $tableTransfers;
+    }
+
+    protected function addReferencePhpNames(array $table, PropelSchemaTableTransfer $transfer): PropelSchemaTableTransfer
+    {
+        //todo: found case with phpName="CompanyType" refPhpName="CompanyType" !
+        $referencePhpNames = [];
+
+        $relations = $table['foreign-key'];
+
+        if (!isset($relations['foreignTable'])) {
+            $referencePhpNames = array_column($relations, 'refPhpName');
+        }
+
+        $referencePhpNames[] = $relations['refPhpName'] ?? null;
+        $referencePhpNames = array_filter($referencePhpNames);
+
+        $phpNames = $transfer->getPhpNames();
+        $phpNames = array_merge($phpNames, $referencePhpNames);
+
+        $transfer->setPhpNames($phpNames);
+
+        return $transfer;
     }
 }

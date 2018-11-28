@@ -10,12 +10,12 @@ namespace ArchitectureSniffer\PropelQuery;
 use ArchitectureSniffer\Module\ModuleFinder;
 use ArchitectureSniffer\Module\ModuleFinderInterface;
 use ArchitectureSniffer\Node\DocBlock\CustomTags\ModuleTag;
-use ArchitectureSniffer\Node\DocBlock\Mapper\NodeDocBlockMapper;
-use ArchitectureSniffer\Node\DocBlock\Mapper\NodeDocBlockMapperInterface;
-use ArchitectureSniffer\Node\DocBlock\Reader\NodeDocBlockReader;
-use ArchitectureSniffer\Node\DocBlock\Reader\NodeDocBlockReaderInterface;
-use ArchitectureSniffer\Node\Method\NodeMethodReader;
-use ArchitectureSniffer\Node\Method\NodeMethodReaderInterface;
+use ArchitectureSniffer\Node\DocBlock\Mapper\DocBlockNodeMapper;
+use ArchitectureSniffer\Node\DocBlock\Mapper\DocBlockNodeMapperInterface;
+use ArchitectureSniffer\Node\DocBlock\Reader\DocBlockNodeReader;
+use ArchitectureSniffer\Node\DocBlock\Reader\DocBlockNodeReaderInterface;
+use ArchitectureSniffer\Node\Method\MethodNodeReader;
+use ArchitectureSniffer\Node\Method\MethodNodeReaderInterface;
 use ArchitectureSniffer\Path\PathBuilder;
 use ArchitectureSniffer\Path\PathBuilderInterface;
 use ArchitectureSniffer\PropelQuery\Schema\PropelSchemaTableFinder;
@@ -29,22 +29,22 @@ use Zend\Config\Reader\Xml;
 class PropelQueryFactory
 {
     /**
-     * @return \ArchitectureSniffer\Node\DocBlock\Reader\NodeDocBlockReaderInterface
+     * @return \ArchitectureSniffer\Node\DocBlock\Reader\DocBlockNodeReaderInterface
      */
-    public function createDocBlockReader(): NodeDocBlockReaderInterface
+    public function createDocBlockNodeReader(): DocBlockNodeReaderInterface
     {
-        return new NodeDocBlockReader(
+        return new DocBlockNodeReader(
             $this->createDocBlockFactory(),
-            $this->createDocBlockMapper()
+            $this->createDocBlockNodeMapper()
         );
     }
 
     /**
-     * @return \ArchitectureSniffer\Node\Method\NodeMethodReaderInterface
+     * @return \ArchitectureSniffer\Node\Method\MethodNodeReaderInterface
      */
-    public function createNodeReader(): NodeMethodReaderInterface
+    public function createMethodNodeReader(): MethodNodeReaderInterface
     {
-        return new NodeMethodReader();
+        return new MethodNodeReader();
     }
 
     /**
@@ -53,8 +53,7 @@ class PropelQueryFactory
     public function createModuleFinder(): ModuleFinderInterface
     {
         return new ModuleFinder(
-            $this->createPathBuilder(),
-            $this->createSymfonyFinder()
+            $this->createPathBuilder()
         );
     }
 
@@ -72,24 +71,24 @@ class PropelQueryFactory
     public function createPropelSchemaTableFinder(): PropelSchemaTableFinderInterface
     {
         return new PropelSchemaTableFinder(
-            $this->createZendConfigXmlReader()
+            $this->createConfigReader()
         );
     }
 
     /**
      * @return \Zend\Config\Reader\ReaderInterface
      */
-    protected function createZendConfigXmlReader(): ReaderInterface
+    protected function createConfigReader(): ReaderInterface
     {
         return new Xml();
     }
 
     /**
-     * @return \ArchitectureSniffer\Node\DocBlock\Mapper\NodeDocBlockMapperInterface
+     * @return \ArchitectureSniffer\Node\DocBlock\Mapper\DocBlockNodeMapperInterface
      */
-    protected function createDocBlockMapper(): NodeDocBlockMapperInterface
+    protected function createDocBlockNodeMapper(): DocBlockNodeMapperInterface
     {
-        return new NodeDocBlockMapper();
+        return new DocBlockNodeMapper();
     }
 
     /**
@@ -108,13 +107,5 @@ class PropelQueryFactory
         return [
             'module' => ModuleTag::class,
         ];
-    }
-
-    /**
-     * @return \Symfony\Component\Finder\Finder
-     */
-    protected function createSymfonyFinder(): Finder
-    {
-        return new Finder();
     }
 }

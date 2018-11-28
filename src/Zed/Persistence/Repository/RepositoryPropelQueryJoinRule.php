@@ -14,7 +14,7 @@ use PHPMD\Rule\MethodAware;
 
 class RepositoryPropelQueryJoinRule extends AbstractRepositoryRule implements MethodAware
 {
-    public const RULE = 'All joins must be declared in DocBlock';
+    public const RULE = 'All dependent modules must be declared in the DocBlock.';
 
     /**
      * @var \ArchitectureSniffer\PropelQuery\PropelQueryFacade
@@ -32,50 +32,55 @@ class RepositoryPropelQueryJoinRule extends AbstractRepositoryRule implements Me
             return;
         }
 
-        $joinNames = $this->getFacade()->getJoinNames($node);
+        $relationTableNames = $this->getFacade()->getRelationTableNames($node);
 
-        if ($joinNames === []) {
+        if ($relationTableNames === []) {
             return;
         }
 
-        foreach ($joinNames as $joinName) {
-            $this->applyRule($joinName, $node);
+        $declaredDependentModuleNames = $this->getFacade()
+            ->getDeclaredDependentModuleNames($node);
+
+        $moduleTransfers = $this->getModuleTransfers(
+            $relationTableNames,
+            $node,
+            $declaredDependentModuleNames
+        );
+
+        $ownerModuleName = $this->getFacade()->getModuleName($node);
+
+        foreach ($relationTableNames as $relationTableName) {
+            $this->applyRule($relationTableName, $moduleTransfers, $declaredDependentModuleNames, $ownerModuleName, $node); //todo: many arguments
         }
     }
 
     /**
-     * @param string $joinName
-     * @param \PHPMD\AbstractNode $node
+     * @param string $relationTableName
+     * @param \ArchitectureSniffer\Module\Transfer\ModuleTransfer[] $moduleTransfers
+     *
+     * @param string[] $docBlockModuleNames
      *
      * @return void
      */
-    protected function applyRule(string $joinName, AbstractNode $node): void
+    protected function applyRule(string $relationTableName, array $moduleTransfers, array $docBlockModuleNames, string $ownerModuleName, $node): void
     {
-        $rootPath = $this->getFacade()->getRootApplicationFolderPathByFilePath($node->getFileName());
-
-        $docBlockModuleNames = $this->getFacade()->getDocBlockModules($node);
-
-        $moduleNames = $this->getModuleNames($joinName, $node, $docBlockModuleNames);
-
-        $moduleTransfers = $this->getFacade()->findModulesByNames($moduleNames, $rootPath);
-
         $tableTransfers = [];
-
+        //todo: lvl up
         foreach ($moduleTransfers as $moduleTransfer) {
-            $tableTransfers = $this->getTableTransfers($moduleTransfer, $tableTransfers);
+            $tableTransfers = $this->getTableTransferCollection($moduleTransfer, $tableTransfers);
         }
 
-        $moduleName = $this->findJoinModuleNameFromTables($joinName, $tableTransfers);
+        $moduleName = $this->getDependentModuleNameFromTables($relationTableName, $tableTransfers);
 
         if (in_array($moduleName, $docBlockModuleNames)) {
             return;
         }
 
-        if ($moduleName === $this->getFacade()->getModuleName($node)) {
+        if ($moduleName === $ownerModuleName) {
             return;
         }
 
-        $this->addViolationMessage($node, $joinName, $moduleName);
+        $this->addViolationMessage($node, $relationTableName, $moduleName);
     }
 
     /**
@@ -108,28 +113,34 @@ class RepositoryPropelQueryJoinRule extends AbstractRepositoryRule implements Me
     }
 
     /**
-     * @param \ArchitectureSniffer\Module\Transfer\ModuleTransfer $module
+     * @param \ArchitectureSniffer\Module\Transfer\ModuleTransfer $moduleTransfer
      * @param \ArchitectureSniffer\PropelQuery\Schema\Transfer\PropelSchemaTableTransfer[] $tableTransfers
      *
      * @return \ArchitectureSniffer\PropelQuery\Schema\Transfer\PropelSchemaTableTransfer[]
      */
-    protected function getTableTransfers(ModuleTransfer $module, array $tableTransfers): array
+    protected function getTableTransferCollection(ModuleTransfer $moduleTransfer, array $tableTransfers): array
     {
-        $moduleTableTransfer = $this->getFacade()->getTablesByModule($module);
+        //todo: renames this
+        $moduleTableTransferCollection = $this->getFacade()->getTablesByModule($moduleTransfer);
 
-        foreach ($moduleTableTransfer as $tableTransfer) {
-            $tableName = $tableTransfer->getTableName();
-            $phpNames = $tableTransfer->getPhpNames();
+        foreach ($moduleTableTransferCollection as $moduleTableTransfer) {
+            $tableName = $moduleTableTransfer->getTableName();
+            $phpNames = $moduleTableTransfer->getPhpNames();
             $phpNames[] = str_replace('_', '', ucwords($tableName, '_'));
 
             if (isset($tableTransfers[$tableName])) {
                 $table = $tableTransfers[$tableName];
 
-                $phpNames = array_unique(array_merge($table->getPhpNames(), $phpNames));
+                $phpNames = array_merge($table->getPhpNames(), $phpNames);
+                $moduleName = $table->getModuleName() ?? $moduleTableTransfer->getModuleName();
+
+                if ($moduleName !== null) {
+                    $moduleTableTransfer->setModuleName($moduleName);
+                }
             }
 
-            $tableTransfer->setPhpNames($phpNames);
-            $tableTransfers[$tableName] = $tableTransfer;
+            $moduleTableTransfer->setPhpNames(array_unique($phpNames));
+            $tableTransfers[$tableName] = $moduleTableTransfer;
         }
 
         return $tableTransfers;
@@ -141,7 +152,7 @@ class RepositoryPropelQueryJoinRule extends AbstractRepositoryRule implements Me
      *
      * @return string|null
      */
-    protected function findJoinModuleNameFromTables(string $joinName, array $tableTransfers): ?string
+    protected function getDependentModuleNameFromTables(string $joinName, array $tableTransfers): ?string
     {
         if ($tableTransfers === []) {
             return null;
@@ -194,5 +205,24 @@ class RepositoryPropelQueryJoinRule extends AbstractRepositoryRule implements Me
         $message .= $solutionMessage;
 
         $this->addViolation($node, [$message]);
+    }
+
+    /**
+     * @param string[] $joinNames
+     * @param \PHPMD\AbstractNode $node
+     * @param string[] $declaredDependentModuleNames
+     *
+     * @return \ArchitectureSniffer\Module\Transfer\ModuleTransfer[]
+     */
+    protected function getModuleTransfers(array $joinNames, AbstractNode $node, array $declaredDependentModuleNames): array
+    {
+        $rootPath = $this->getFacade()->getRootApplicationFolderPathByFilePath($node->getFileName());
+        $moduleNames = $declaredDependentModuleNames;
+
+        foreach ($joinNames as $joinName) {
+            $moduleNames = $this->getModuleNames($joinName, $node, $moduleNames);
+        }
+
+        return $this->getFacade()->findModulesByNames($moduleNames, $rootPath);
     }
 }

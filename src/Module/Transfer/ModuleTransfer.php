@@ -27,7 +27,7 @@ class ModuleTransfer
     /**
      * @var bool
      */
-    protected $isExist = false;
+    protected $exists = false;
 
     /**
      * @return string
@@ -63,7 +63,7 @@ class ModuleTransfer
     public function setModulePaths(array $modulePaths): void
     {
         $this->modulePaths = $modulePaths;
-        $this->isExist = true;
+        $this->exists = true;
     }
 
     /**
@@ -87,8 +87,8 @@ class ModuleTransfer
     /**
      * @return bool
      */
-    public function isExist(): bool
+    public function exists(): bool
     {
-        return $this->isExist;
+        return $this->exists;
     }
 }

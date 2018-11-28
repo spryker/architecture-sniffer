@@ -17,7 +17,7 @@ interface PropelQueryFacadeInterface
      *
      * @return \PHPMD\AbstractNode[]
      */
-    public function getJoinNames(AbstractNode $node): array;
+    public function getRelationTableNames(AbstractNode $node): array;
 
     /**
      * @param string $filePath
@@ -31,7 +31,7 @@ interface PropelQueryFacadeInterface
      *
      * @return array
      */
-    public function getDocBlockModules(AbstractNode $node): array;
+    public function getDeclaredDependentModuleNames(AbstractNode $node): array;
 
     /**
      * @param array $moduleNames

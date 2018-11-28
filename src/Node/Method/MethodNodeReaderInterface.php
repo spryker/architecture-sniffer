@@ -9,14 +9,14 @@ namespace ArchitectureSniffer\Node\Method;
 
 use PHPMD\AbstractNode;
 
-interface NodeMethodReaderInterface
+interface MethodNodeReaderInterface
 {
     /**
      * @param \PHPMD\AbstractNode $node
      *
      * @return \PHPMD\AbstractNode[]
      */
-    public function getJoinNames(AbstractNode $node): array;
+    public function getRelationNames(AbstractNode $node): array;
 
     /**
      * @param \PHPMD\AbstractNode $node

@@ -9,12 +9,12 @@ namespace ArchitectureSniffer\Node\DocBlock\Reader;
 
 use PHPMD\AbstractNode;
 
-interface NodeDocBlockReaderInterface
+interface DocBlockNodeReaderInterface
 {
     /**
      * @param \PHPMD\AbstractNode $node
      *
      * @return array
      */
-    public function getModules(AbstractNode $node): array;
+    public function getModuleNames(AbstractNode $node): array;
 }

@@ -11,9 +11,10 @@ class PathBuilder implements PathBuilderInterface
 {
     protected const CONST_NAME_APPLICATION_ROOT_DIR = 'APPLICATION_ROOT_DIR';
 
-    protected const PATH_MODULE_CORE_TEMPLATE = 'vendor/spryker/spryker/Bundles/%1$s/src/Spryker/Zed/%1$s';
-    protected const PATH_MODULE_PROJECT_TEMPLATE = 'src/Pyz/Zed/%s';
-    protected const PATH_MODULE_SCHEMA_FOLDER = 'Persistence/Propel/Schema';
+    protected const PATTERN_PATH_MODULE_CORE = 'vendor/spryker/spryker/Bundles/%1$s/src/Spryker/Zed/%1$s';
+    protected const PATTERN_PATH_MODULE_PROJECT = 'src/Pyz/Zed/%s';
+
+    protected const PATTERN_PATH_MODULE_SCHEMA_FOLDER = 'Persistence/Propel/Schema';
 
     /**
      * @param string $filePath
@@ -45,7 +46,7 @@ class PathBuilder implements PathBuilderInterface
      */
     public function getCoreModulePathByModuleName(string $moduleName, string $rootPath): string
     {
-        return $rootPath . sprintf(static::PATH_MODULE_CORE_TEMPLATE, $moduleName);
+        return $rootPath . sprintf(static::PATTERN_PATH_MODULE_CORE, $moduleName);
     }
 
     /**
@@ -56,7 +57,7 @@ class PathBuilder implements PathBuilderInterface
      */
     public function getProjectModulePathByModuleName(string $moduleName, string $rootPath): string
     {
-        return $rootPath . sprintf(static::PATH_MODULE_PROJECT_TEMPLATE, $moduleName);
+        return $rootPath . sprintf(static::PATTERN_PATH_MODULE_PROJECT, $moduleName);
     }
 
     /**
@@ -66,7 +67,7 @@ class PathBuilder implements PathBuilderInterface
      */
     public function getSchemaFolderPath(string $modulePath): string
     {
-        return $modulePath . PHP_EOL . static::PATH_MODULE_SCHEMA_FOLDER;
+        return $modulePath . PHP_EOL . static::PATTERN_PATH_MODULE_SCHEMA_FOLDER;
     }
 
     /**

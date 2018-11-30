@@ -11,7 +11,7 @@ use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
 use PHPMD\Rule\InterfaceAware;
 
-class ModuleConstantsIncorrectConstantValuesRule extends AbstractRule implements InterfaceAware
+class ModuleConstantsFormingConstantValuesRule extends AbstractRule implements InterfaceAware
 {
     public const RULE = 'The modules\' *Constants interfaces must only contain constants to be used with env config. Their values must be exactly the same as the const key prefixed with module name.';
 

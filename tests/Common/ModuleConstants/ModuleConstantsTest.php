@@ -7,7 +7,7 @@
 
 namespace ArchitectureSnifferTest\Common\ModuleConstants;
 
-use ArchitectureSniffer\Shared\ModuleConstantsIncorrectConstantValuesRule;
+use ArchitectureSniffer\Shared\ModuleConstantsFormingConstantValuesRule;
 use ArchitectureSniffer\Shared\ModuleConstantsPathRule;
 use ArchitectureSniffer\Shared\ModuleConstantsTypeRule;
 use ArchitectureSnifferTest\AbstractArchitectureSnifferRuleTest;
@@ -39,7 +39,7 @@ class ModuleConstantsTest extends AbstractArchitectureSnifferRuleTest
      */
     public function testRuleDoesNotApplyWhenModuleConstantsHasCorrectConstantValues(): void
     {
-        $pluginInterfaceSuffixRule = new ModuleConstantsIncorrectConstantValuesRule();
+        $pluginInterfaceSuffixRule = new ModuleConstantsFormingConstantValuesRule();
         $pluginInterfaceSuffixRule->setReport($this->getReportMock(0));
         $pluginInterfaceSuffixRule->apply($this->getInterfaceNode());
     }

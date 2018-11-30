@@ -11,9 +11,25 @@
     </description>
 
     <rule
-        name="ModuleConstantsRule"
+            name="ModuleConstantsPathRule"
+            message="Shared Module Constants: {0}"
+            class="ArchitectureSniffer\Shared\ModuleConstantsPathRule">
+
+        <priority>3</priority>
+    </rule>
+
+    <rule
+            name="ModuleConstantsTypeRule"
+            message="Shared Module Constants: {0}"
+            class="ArchitectureSniffer\Shared\ModuleConstantsTypeRule">
+
+        <priority>3</priority>
+    </rule>
+
+    <rule
+        name="ModuleConstantsIncorrectConstantValuesRule"
         message="Shared Module Constants: {0}"
-        class="ArchitectureSniffer\Shared\ModuleConstantsRule">
+        class="ArchitectureSniffer\Shared\ModuleConstantsIncorrectConstantValuesRule">
 
         <priority>3</priority>
     </rule>

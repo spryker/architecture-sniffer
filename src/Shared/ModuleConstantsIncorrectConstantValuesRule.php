@@ -11,9 +11,9 @@ use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
 use PHPMD\Rule\InterfaceAware;
 
-class ModuleConstantsRule extends AbstractRule implements InterfaceAware
+class ModuleConstantsIncorrectConstantValuesRule extends AbstractRule implements InterfaceAware
 {
-    const RULE = 'The modules\' *Constants interfaces must only contain constants to be used with env config. Their values must be exactly the same as the const key prefixed with module name.';
+    public const RULE = 'The modules\' *Constants interfaces must only contain constants to be used with env config. Their values must be exactly the same as the const key prefixed with module name.';
 
     /**
      * @return string
@@ -41,7 +41,7 @@ class ModuleConstantsRule extends AbstractRule implements InterfaceAware
             /** @var \PDepend\Source\AST\ASTValue|\PHPMD\AbstractNode $constant */
             $value = $constant->getValue()->getValue();
 
-            $expectedConstantValue = strtoupper($moduleName) . ':' . $constant->getImage();
+            $expectedConstantValue = strtoupper(preg_replace('/(?<!^)[A-Z]/', '_$0', $moduleName)) . ':' . $constant->getImage();
             if ($value === $expectedConstantValue) {
                 continue;
             }
@@ -52,6 +52,7 @@ class ModuleConstantsRule extends AbstractRule implements InterfaceAware
                 is_array($value) ? print_r($value, true) : $value,
                 static::RULE
             );
+
             $this->addViolation($node, [$message]);
         }
     }

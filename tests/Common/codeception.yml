@@ -24,3 +24,9 @@ suites:
         modules:
             enabled:
                 - Asserts
+    ModuleConstants:
+        path: ModuleConstants
+        class_name: CommonTester
+        modules:
+            enabled:
+                - Asserts

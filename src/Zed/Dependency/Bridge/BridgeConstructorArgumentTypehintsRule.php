@@ -14,7 +14,7 @@ use PHPMD\Rule\MethodAware;
 
 class BridgeConstructorArgumentTypehintsRule extends AbstractBridgeRule implements MethodAware
 {
-    const RULE = 'A bridge must not have a type-hint in constructor.';
+    public const RULE = 'A bridge must not have a type-hint in constructor.';
 
     /**
      * @return string

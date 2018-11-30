@@ -14,7 +14,7 @@ use PHPMD\Rule\ClassAware;
 
 class ImplementsApiInterfaceRule extends SprykerAbstractRule implements ClassAware
 {
-    const RULE = 'Must implement an interface with same name and suffix \'Interface\'.';
+    public const RULE = 'Must implement an interface with same name and suffix \'Interface\'.';
 
     /**
      * @var string

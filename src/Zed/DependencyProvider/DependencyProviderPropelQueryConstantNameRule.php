@@ -8,7 +8,6 @@
 namespace ArchitectureSniffer\Zed\DependencyProvider;
 
 use ArchitectureSniffer\Common\DependencyProvider\AbstractDependencyProviderRule;
-use ArchitectureSniffer\SprykerPropelQueryRulePatterns;
 use PHPMD\AbstractNode;
 use PHPMD\Node\MethodNode;
 use PHPMD\Rule\MethodAware;
@@ -16,7 +15,6 @@ use PHPMD\Rule\MethodAware;
 class DependencyProviderPropelQueryConstantNameRule extends AbstractDependencyProviderRule implements MethodAware
 {
     public const RULE = 'Propel query constants must be named like PROPEL_QUERY_* in dependency provider.';
-    protected const PATTERN_PROPEL_QUERY_CONSTANT_NAME = '/^PROPEL_QUERY_.+/';
 
     /**
      * @param \PHPMD\AbstractNode $node
@@ -45,10 +43,26 @@ class DependencyProviderPropelQueryConstantNameRule extends AbstractDependencyPr
     {
         $constant = $methodNode->getFirstChildOfType('ConstantPostfix');
 
-        if (preg_match(static::PATTERN_PROPEL_QUERY_CONSTANT_NAME, $constant->getName()) !== 0) {
+        if ($this->isPropelQueryConstant($constant->getName())) {
             return;
         }
 
         $this->addViolationMessage($methodNode);
+    }
+
+    /**
+     * @param string $constantName
+     *
+     * @return bool
+     */
+    protected function isPropelQueryConstant(string $constantName): bool
+    {
+        $propelQueryConstantPattern = '/^PROPEL_QUERY_.+/';
+
+        if (!preg_match($propelQueryConstantPattern, $constantName)) {
+            return false;
+        }
+
+        return true;
     }
 }

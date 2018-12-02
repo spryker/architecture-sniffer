@@ -8,7 +8,6 @@
 namespace ArchitectureSniffer\Zed\DependencyProvider;
 
 use ArchitectureSniffer\Common\DependencyProvider\AbstractDependencyProviderRule;
-use ArchitectureSniffer\SprykerPropelQueryRulePatterns;
 use PHPMD\AbstractNode;
 use PHPMD\Node\MethodNode;
 use PHPMD\Rule\MethodAware;

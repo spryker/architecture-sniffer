@@ -1,4 +1,4 @@
-<?php
+<?php /** @noinspection ALL */
 
 /**
  * MIT License
@@ -7,17 +7,22 @@
 
 namespace ArchitectureSniffer\Zed\Persistence\Repository;
 
-use ArchitectureSniffer\Module\Transfer\ModuleTransfer;
+use ArchitectureSniffer\PropelQuery\ClassNode\Transfer\ClassNodeTransfer;
+use ArchitectureSniffer\PropelQuery\Method\Transfer\MethodTransfer;
 use ArchitectureSniffer\PropelQuery\PropelQueryFacade;
+use ArchitectureSniffer\PropelQuery\PropelQueryFacadeInterface;
+use ArchitectureSniffer\PropelQuery\Schema\Transfer\PropelSchemaTableTransfer;
+use InvalidArgumentException;
 use PHPMD\AbstractNode;
-use PHPMD\Rule\MethodAware;
+use PHPMD\Node\ClassNode;
+use PHPMD\Rule\ClassAware;
 
-class RepositoryPropelQueryJoinRule extends AbstractRepositoryRule implements MethodAware
+class RepositoryPropelQueryJoinRule extends AbstractRepositoryRule implements ClassAware
 {
     public const RULE = 'All dependent modules must be declared in the DocBlock.';
 
     /**
-     * @var \ArchitectureSniffer\PropelQuery\PropelQueryFacade
+     * @var \ArchitectureSniffer\PropelQuery\PropelQueryFacadeInterface
      */
     protected $facade;
 
@@ -32,147 +37,95 @@ class RepositoryPropelQueryJoinRule extends AbstractRepositoryRule implements Me
             return;
         }
 
-        $relationTableNames = $this->getFacade()->getRelationTableNames($node);
+        $classNodeTransfer = $this->getClassNodeTransfer($node);
 
-        if ($relationTableNames === []) {
+        try {
+            $methodTransferCollection = $this->getFacade()->getMethodTransferCollectionWithRelations($classNodeTransfer);
+        } catch (InvalidArgumentException $e) {
+            /*
+             * DocBlock exception Spryker\Zed\SalesStatistics\Persistence\SalesStatisticsRepository::getDataTopOrderStatistic()
+             * Delete try\catch block after fix
+             */
             return;
         }
 
-        $declaredDependentModuleNames = $this->getFacade()
-            ->getDeclaredDependentModuleNames($node);
+        if ($methodTransferCollection === []) {
+            return;
+        }
 
-        $moduleTransfers = $this->getModuleTransfers(
-            $relationTableNames,
-            $node,
-            $declaredDependentModuleNames
-        );
+        $moduleTransfers = $this->getFacade()->getModuleTransfers($methodTransferCollection, $classNodeTransfer);
 
-        $ownerModuleName = $this->getFacade()->getModuleName($node);
+        $tableTransferCollection = $this->getFacade()->getTableTransfers($moduleTransfers, $classNodeTransfer);
 
-        foreach ($relationTableNames as $relationTableName) {
-            $this->applyRule($relationTableName, $moduleTransfers, $declaredDependentModuleNames, $ownerModuleName, $node); //todo: many arguments
+        foreach ($methodTransferCollection as $methodTransfer) {
+            $this->applyRule($methodTransfer, $tableTransferCollection, $classNodeTransfer);
         }
     }
 
     /**
-     * @param string $relationTableName
-     * @param \ArchitectureSniffer\Module\Transfer\ModuleTransfer[] $moduleTransfers
-     *
-     * @param string[] $docBlockModuleNames
+     * @param \ArchitectureSniffer\PropelQuery\Method\Transfer\MethodTransfer $methodTransfer
+     * @param \ArchitectureSniffer\PropelQuery\Schema\Transfer\PropelSchemaTableTransfer[] $tableTransferCollection
+     * @param \ArchitectureSniffer\PropelQuery\ClassNode\Transfer\ClassNodeTransfer $classNodeTransfer
      *
      * @return void
      */
-    protected function applyRule(string $relationTableName, array $moduleTransfers, array $docBlockModuleNames, string $ownerModuleName, $node): void
-    {
-        $tableTransfers = [];
-        //todo: lvl up
-        foreach ($moduleTransfers as $moduleTransfer) {
-            $tableTransfers = $this->getTableTransferCollection($moduleTransfer, $tableTransfers);
-        }
+    protected function applyRule(
+        MethodTransfer $methodTransfer,
+        array $tableTransferCollection,
+        ClassNodeTransfer $classNodeTransfer
+    ): void {
+        $relationNames = $methodTransfer->getRelationNames();
 
-        $moduleName = $this->getDependentModuleNameFromTables($relationTableName, $tableTransfers);
+        $moduleNames = [];
+        $declaredModules = $methodTransfer->getDeclaredDependentModuleNames();
 
-        if (in_array($moduleName, $docBlockModuleNames)) {
-            return;
-        }
+        foreach ($relationNames as $relationTableName) {
+            $relationTableTransfer = $this->findRelationTableTransfer(
+                $relationTableName,
+                $tableTransferCollection
+            );
 
-        if ($moduleName === $ownerModuleName) {
-            return;
-        }
-
-        $this->addViolationMessage($node, $relationTableName, $moduleName);
-    }
-
-    /**
-     * @param string $joinName
-     *
-     * @return string
-     */
-    protected function getPossibleModuleNameByJoinName(string $joinName): string
-    {
-        return str_replace(['Spy', 'Pyz', 'Query'], '', $joinName);
-    }
-
-    /**
-     * @param string $joinName
-     * @param \PHPMD\AbstractNode $node
-     * @param array $docBlockModuleNames
-     *
-     * @return array
-     */
-    protected function getModuleNames(string $joinName, AbstractNode $node, array $docBlockModuleNames): array
-    {
-        $moduleNames[] = $this->getFacade()->getQueryModuleName($node);
-        $moduleNames[] = $this->getFacade()->getModuleName($node);
-
-        $moduleNames = array_merge($moduleNames, $docBlockModuleNames);
-
-        $moduleNames[] = $this->getPossibleModuleNameByJoinName($joinName);
-
-        return array_unique($moduleNames);
-    }
-
-    /**
-     * @param \ArchitectureSniffer\Module\Transfer\ModuleTransfer $moduleTransfer
-     * @param \ArchitectureSniffer\PropelQuery\Schema\Transfer\PropelSchemaTableTransfer[] $tableTransfers
-     *
-     * @return \ArchitectureSniffer\PropelQuery\Schema\Transfer\PropelSchemaTableTransfer[]
-     */
-    protected function getTableTransferCollection(ModuleTransfer $moduleTransfer, array $tableTransfers): array
-    {
-        //todo: renames this
-        $moduleTableTransferCollection = $this->getFacade()->getTablesByModule($moduleTransfer);
-
-        foreach ($moduleTableTransferCollection as $moduleTableTransfer) {
-            $tableName = $moduleTableTransfer->getTableName();
-            $phpNames = $moduleTableTransfer->getPhpNames();
-            $phpNames[] = str_replace('_', '', ucwords($tableName, '_'));
-
-            if (isset($tableTransfers[$tableName])) {
-                $table = $tableTransfers[$tableName];
-
-                $phpNames = array_merge($table->getPhpNames(), $phpNames);
-                $moduleName = $table->getModuleName() ?? $moduleTableTransfer->getModuleName();
-
-                if ($moduleName !== null) {
-                    $moduleTableTransfer->setModuleName($moduleName);
-                }
+            if ($relationTableTransfer === null) {
+                continue; //todo: must be deleted with implementation AddJoinCondition and Add JoinObject
             }
 
-            $moduleTableTransfer->setPhpNames(array_unique($phpNames));
-            $tableTransfers[$tableName] = $moduleTableTransfer;
-        }
+            $moduleName = $relationTableTransfer->getModuleName();
 
-        return $tableTransfers;
-    }
+            $ownerModuleName = $classNodeTransfer->getClassModuleName();
 
-    /**
-     * @param string $joinName
-     * @param \ArchitectureSniffer\PropelQuery\Schema\Transfer\PropelSchemaTableTransfer[] $tableTransfers
-     *
-     * @return string|null
-     */
-    protected function getDependentModuleNameFromTables(string $joinName, array $tableTransfers): ?string
-    {
-        if ($tableTransfers === []) {
-            return null;
-        }
-
-        foreach ($tableTransfers as $tableTransfer) {
-            $phpName = $tableTransfer->getPhpNames();
-
-            if (in_array($joinName, $phpName)) {
-                return $tableTransfer->getModuleName();
+            if ($moduleName === $ownerModuleName) {
+                continue;
             }
+
+            $moduleNames[] = $moduleName;
+
+            if (in_array($moduleName, $declaredModules)) {
+                continue;
+            }
+
+            $this->addViolationMessage(
+                $methodTransfer->getMethodName(),
+                $relationTableName,
+                $moduleName,
+                $classNodeTransfer->getNode()
+            );
         }
 
-        return null;
+        $extraDeclaredModules = array_diff($declaredModules, $moduleNames);
+
+        if ($extraDeclaredModules !== []) {
+            $this->addExtraDeclaredModulesViolationMessage(
+                $methodTransfer->getMethodName(),
+                $extraDeclaredModules,
+                $classNodeTransfer->getNode()
+            );
+        }
     }
 
     /**
-     * @return \ArchitectureSniffer\PropelQuery\PropelQueryFacade
+     * @return \ArchitectureSniffer\PropelQuery\PropelQueryFacadeInterface
      */
-    protected function getFacade(): PropelQueryFacade
+    protected function getFacade(): PropelQueryFacadeInterface
     {
         if (!$this->facade) {
             $this->facade = new PropelQueryFacade();
@@ -182,24 +135,25 @@ class RepositoryPropelQueryJoinRule extends AbstractRepositoryRule implements Me
     }
 
     /**
-     * @param \PHPMD\AbstractNode $node
-     * @param string $joinName
+     * @param string $methodName
+     * @param string $relationTableName
      * @param string $moduleName
+     * @param \PHPMD\Node\ClassNode $node
      *
      * @return void
      */
-    protected function addViolationMessage(AbstractNode $node, string $joinName, string $moduleName): void
+    protected function addViolationMessage(string $methodName, string $relationTableName, string $moduleName, ClassNode $node): void
     {
         $message = sprintf(
             'The Repository method %s() violates rule "%s". ',
-            $node->getName(),
+            $methodName,
             static::RULE
         );
 
         $solutionMessage = sprintf(
             'Please add @module %s for %s join.',
             $moduleName,
-            $joinName
+            $relationTableName
         );
 
         $message .= $solutionMessage;
@@ -208,21 +162,93 @@ class RepositoryPropelQueryJoinRule extends AbstractRepositoryRule implements Me
     }
 
     /**
-     * @param string[] $joinNames
-     * @param \PHPMD\AbstractNode $node
-     * @param string[] $declaredDependentModuleNames
+     * @param string $relationTableName
+     * @param \ArchitectureSniffer\PropelQuery\Schema\Transfer\PropelSchemaTableTransfer[] $tableTransfers
      *
-     * @return \ArchitectureSniffer\Module\Transfer\ModuleTransfer[]
+     * @return \ArchitectureSniffer\PropelQuery\Schema\Transfer\PropelSchemaTableTransfer $tableTransfer
      */
-    protected function getModuleTransfers(array $joinNames, AbstractNode $node, array $declaredDependentModuleNames): array
+    protected function findRelationTableTransfer(string $relationTableName, array $tableTransfers): ?PropelSchemaTableTransfer
     {
-        $rootPath = $this->getFacade()->getRootApplicationFolderPathByFilePath($node->getFileName());
-        $moduleNames = $declaredDependentModuleNames;
-
-        foreach ($joinNames as $joinName) {
-            $moduleNames = $this->getModuleNames($joinName, $node, $moduleNames);
+        if ($tableTransfers === []) {
+            return null;
         }
 
-        return $this->getFacade()->findModulesByNames($moduleNames, $rootPath);
+        foreach ($tableTransfers as $tableTransfer) {
+            $phpName = $tableTransfer->getPhpName();
+
+            if ($relationTableName === $phpName) {
+                return $tableTransfer;
+            }
+
+            $relations = $tableTransfer->getRelations();
+
+            foreach ($relations as $relation) {
+                $relationPhpName = $relation->getPhpName();
+                $referencePhpName = $relation->getRefPhpName();
+
+                if ($relationPhpName === $relationTableName) {
+                    return $tableTransfers[$relation->getTableName()];
+                }
+
+                if ($referencePhpName === $relationTableName) {
+                    return $tableTransfer;
+                }
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * @param \PHPMD\Node\ClassNode $node
+     *
+     * @return \ArchitectureSniffer\PropelQuery\ClassNode\Transfer\ClassNodeTransfer
+     */
+    protected function getClassNodeTransfer(ClassNode $node): ClassNodeTransfer
+    {
+        $className = $node->getName();
+        $classNamespace = $node->getNamespaceName();
+        $classFilePath = $node->getFileName();
+        $classModuleName = $this->getFacade()->getModuleName($node);
+
+        $pathTransfer = $this->getFacade()->getPath($classFilePath);
+        $reflectionNodeClass = $this->getFacade()->getReflectionClassByNode($node);
+
+        $classNodeTransfer = new ClassNodeTransfer();
+
+        $classNodeTransfer->setClassName($className);
+        $classNodeTransfer->setClassNamespace($classNamespace);
+        $classNodeTransfer->setClassFilePath($classFilePath);
+        $classNodeTransfer->setClassModuleName($classModuleName);
+        $classNodeTransfer->setNode($node);
+        $classNodeTransfer->setReflectionClass($reflectionNodeClass);
+        $classNodeTransfer->setPathTransfer($pathTransfer);
+
+        return $classNodeTransfer;
+    }
+
+    /**
+     * @param string $methodName
+     * @param string[] $extraDeclaredModules
+     * @param \PHPMD\Node\ClassNode $node
+     *
+     * @return void
+     */
+    protected function addExtraDeclaredModulesViolationMessage(string $methodName, array $extraDeclaredModules, ClassNode $node)
+    {
+        $message = sprintf(
+            'The Repository method %s() violates rule "%s". ',
+            $methodName,
+            static::RULE
+        );
+
+        $solutionMessage = sprintf(
+            'Please remove next declared @module: %s .',
+            implode(', ', $extraDeclaredModules)
+        );
+
+        $message .= $solutionMessage;
+
+        $this->addViolation($node, [$message]);
     }
 }

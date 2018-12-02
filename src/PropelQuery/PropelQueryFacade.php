@@ -7,8 +7,10 @@
 
 namespace ArchitectureSniffer\PropelQuery;
 
-use ArchitectureSniffer\Module\Transfer\ModuleTransfer;
+use ArchitectureSniffer\Path\Transfer\PathTransfer;
+use ArchitectureSniffer\PropelQuery\ClassNode\Transfer\ClassNodeTransfer;
 use PHPMD\AbstractNode;
+use Roave\BetterReflection\Reflection\ReflectionClass;
 
 class PropelQueryFacade implements PropelQueryFacadeInterface
 {
@@ -20,78 +22,73 @@ class PropelQueryFacade implements PropelQueryFacadeInterface
     /**
      * @param \PHPMD\AbstractNode $node
      *
-     * @return \PHPMD\AbstractNode[]
+     * @return string
      */
-    public function getRelationTableNames(AbstractNode $node): array
+    public function getModuleName(AbstractNode $node): string
     {
-        return $this->getFactory()->createMethodNodeReader()->getRelationNames($node);
+        return $this->getFactory()
+            ->createNodeReader()
+            ->getModuleName($node);
+    }
+
+    /**
+     * @param \ArchitectureSniffer\PropelQuery\ClassNode\Transfer\ClassNodeTransfer $classNodeTransfer
+     *
+     * @return \ArchitectureSniffer\PropelQuery\Method\Transfer\MethodTransfer[]
+     */
+    public function getMethodTransferCollectionWithRelations(ClassNodeTransfer $classNodeTransfer): array
+    {
+        return $this->getFactory()
+            ->createMethodFinder()
+            ->getMethodTransferCollectionWithRelations($classNodeTransfer);
+    }
+
+    /**
+     * @param \PHPMD\AbstractNode $node
+     *
+     * @return \Roave\BetterReflection\Reflection\ReflectionClass
+     */
+    public function getReflectionClassByNode(AbstractNode $node): ReflectionClass
+    {
+        return $this->getFactory()
+            ->createNodeReader()
+            ->getReflectionClassByNode($node);
+    }
+
+    /**
+     * @param array $methodTransferCollection
+     * @param \ArchitectureSniffer\PropelQuery\ClassNode\Transfer\ClassNodeTransfer $classNodeTransfer
+     *
+     * @return \ArchitectureSniffer\Module\Transfer\ModuleTransfer[]
+     */
+    public function getModuleTransfers(array $methodTransferCollection, ClassNodeTransfer $classNodeTransfer): array
+    {
+        return $this->getFactory()
+            ->createModuleFinder()
+            ->getModuleTransfers($methodTransferCollection, $classNodeTransfer);
+    }
+
+    /**
+     * @param \ArchitectureSniffer\Module\Transfer\ModuleTransfer[] $moduleTransfers
+     * @param \ArchitectureSniffer\PropelQuery\ClassNode\Transfer\ClassNodeTransfer $classNodeTransfer
+     *
+     * @return \ArchitectureSniffer\PropelQuery\Schema\Transfer\PropelSchemaTableTransfer[]
+     */
+    public function getTableTransfers(array $moduleTransfers, ClassNodeTransfer $classNodeTransfer): array
+    {
+        return $this->getFactory()
+            ->createPropelSchemaTableFinder()
+            ->getTablesByModules($moduleTransfers, $classNodeTransfer);
     }
 
     /**
      * @param string $filePath
      *
-     * @return string
+     * @return \ArchitectureSniffer\Path\Transfer\PathTransfer
      */
-    public function getRootApplicationFolderPathByFilePath(string $filePath): string
+    public function getPath(string $filePath): PathTransfer
     {
-        return $this->getFactory()
-            ->createPathBuilder()
-            ->getRootApplicationFolderPathByFilePath($filePath);
-    }
-
-    /**
-     * @param \PHPMD\AbstractNode $node
-     *
-     * @return string[]
-     */
-    public function getDeclaredDependentModuleNames(AbstractNode $node): array
-    {
-        return $this->getFactory()
-            ->createDocBlockNodeReader()
-            ->getModuleNames($node);
-    }
-
-    /**
-     * @param array $moduleNames
-     * @param string $rootPath
-     *
-     * @return \ArchitectureSniffer\Module\Transfer\ModuleTransfer[]
-     */
-    public function findModulesByNames(array $moduleNames, string $rootPath): array
-    {
-        return $this->getFactory()
-            ->createModuleFinder()
-            ->findModulesByNames($moduleNames, $rootPath);
-    }
-
-    /**
-     * @param \PHPMD\AbstractNode $node
-     *
-     * @return string
-     */
-    public function getQueryModuleName(AbstractNode $node): string
-    {
-        return $this->getFactory()->createMethodNodeReader()->getQueryModuleName($node);
-    }
-
-    /**
-     * @param \PHPMD\AbstractNode $node
-     *
-     * @return string
-     */
-    public function getModuleName(AbstractNode $node): string
-    {
-        return $this->getFactory()->createMethodNodeReader()->getModuleName($node);
-    }
-
-    /**
-     * @param \ArchitectureSniffer\Module\Transfer\ModuleTransfer $module
-     *
-     * @return \ArchitectureSniffer\PropelQuery\Schema\Transfer\PropelSchemaTableTransfer[]
-     */
-    public function getTablesByModule(ModuleTransfer $module): array
-    {
-        return $this->getFactory()->createPropelSchemaTableFinder()->getTablesByModule($module);
+        return $this->getFactory()->createPathBuilder()->getPath($filePath);
     }
 
     /**

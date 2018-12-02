@@ -1,4 +1,4 @@
-<?php
+<?php /** @noinspection ALL */
 
 /**
  * MIT License
@@ -7,14 +7,33 @@
 
 namespace ArchitectureSniffer\Path;
 
+use ArchitectureSniffer\Path\Transfer\PathTransfer;
+
 class PathBuilder implements PathBuilderInterface
 {
     protected const CONST_NAME_APPLICATION_ROOT_DIR = 'APPLICATION_ROOT_DIR';
 
-    protected const PATTERN_PATH_MODULE_CORE = 'vendor/spryker/spryker/Bundles/%1$s/src/Spryker/Zed/%1$s';
-    protected const PATTERN_PATH_MODULE_PROJECT = 'src/Pyz/Zed/%s';
-
     protected const PATTERN_PATH_MODULE_SCHEMA_FOLDER = 'Persistence/Propel/Schema';
+
+    /**
+     * @param string $filePath
+     *
+     * @return \ArchitectureSniffer\Path\Transfer\PathTransfer
+     */
+    public function getPath(string $filePath): PathTransfer
+    {
+        $rootPath = $this->getRootApplicationFolderPathByFilePath($filePath);
+        $corePath = $this->getCorePath($rootPath);
+        $projectPath = $this->getProjectPath($rootPath);
+
+        $pathTransfer = new PathTransfer();
+
+        $pathTransfer->setRootPath($rootPath);
+        $pathTransfer->setCorePath($corePath);
+        $pathTransfer->setProjectPath($projectPath);
+
+        return $pathTransfer;
+    }
 
     /**
      * @param string $filePath
@@ -39,25 +58,68 @@ class PathBuilder implements PathBuilderInterface
     }
 
     /**
-     * @param string $moduleName
      * @param string $rootPath
      *
      * @return string
      */
-    public function getCoreModulePathByModuleName(string $moduleName, string $rootPath): string
+    public function getProjectPath(string $rootPath): string
     {
-        return $rootPath . sprintf(static::PATTERN_PATH_MODULE_CORE, $moduleName);
+        $path = rtrim($rootPath, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+        $path .= implode(DIRECTORY_SEPARATOR, [
+            'src',
+            'Pyz',
+            'Zed',
+        ]);
+
+        return rtrim($path, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+    }
+
+    /**
+     * @param string $rootPath
+     *
+     * @return string
+     */
+    public function getCorePath(string $rootPath): string
+    {
+        $path = rtrim($rootPath, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+        $path .= implode(DIRECTORY_SEPARATOR, [
+            'vendor',
+            'spryker',
+            'spryker',
+            'Bundles',
+        ]);
+
+        return rtrim($path, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
     }
 
     /**
      * @param string $moduleName
-     * @param string $rootPath
+     * @param \ArchitectureSniffer\Path\Transfer\PathTransfer $pathTransfer
      *
      * @return string
      */
-    public function getProjectModulePathByModuleName(string $moduleName, string $rootPath): string
+    public function getCoreModulePathByModuleName(string $moduleName, PathTransfer $pathTransfer): string
     {
-        return $rootPath . sprintf(static::PATTERN_PATH_MODULE_PROJECT, $moduleName);
+        $coreModulePattern = implode(DIRECTORY_SEPARATOR, [
+            '%1$s',
+            'src',
+            'Spryker',
+            'Zed',
+            '%1$s',
+        ]);
+
+        return $pathTransfer->getCorePath() . sprintf($coreModulePattern, $moduleName);
+    }
+
+    /**
+     * @param string $moduleName
+     * @param \ArchitectureSniffer\Path\Transfer\PathTransfer $pathTransfer
+     *
+     * @return string
+     */
+    public function getProjectModulePathByModuleName(string $moduleName, PathTransfer $pathTransfer): string
+    {
+        return $pathTransfer->getProjectPath() . $moduleName;
     }
 
     /**
@@ -67,7 +129,7 @@ class PathBuilder implements PathBuilderInterface
      */
     public function getSchemaFolderPath(string $modulePath): string
     {
-        return $modulePath . PHP_EOL . static::PATTERN_PATH_MODULE_SCHEMA_FOLDER;
+        return $modulePath . DIRECTORY_SEPARATOR . static::PATTERN_PATH_MODULE_SCHEMA_FOLDER;
     }
 
     /**

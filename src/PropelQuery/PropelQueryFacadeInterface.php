@@ -7,47 +7,13 @@
 
 namespace ArchitectureSniffer\PropelQuery;
 
-use ArchitectureSniffer\Module\Transfer\ModuleTransfer;
+use ArchitectureSniffer\Path\Transfer\PathTransfer;
+use ArchitectureSniffer\PropelQuery\ClassNode\Transfer\ClassNodeTransfer;
 use PHPMD\AbstractNode;
+use Roave\BetterReflection\Reflection\ReflectionClass;
 
 interface PropelQueryFacadeInterface
 {
-    /**
-     * @param \PHPMD\AbstractNode $node
-     *
-     * @return \PHPMD\AbstractNode[]
-     */
-    public function getRelationTableNames(AbstractNode $node): array;
-
-    /**
-     * @param string $filePath
-     *
-     * @return string
-     */
-    public function getRootApplicationFolderPathByFilePath(string $filePath): string;
-
-    /**
-     * @param \PHPMD\AbstractNode $node
-     *
-     * @return array
-     */
-    public function getDeclaredDependentModuleNames(AbstractNode $node): array;
-
-    /**
-     * @param array $moduleNames
-     * @param string $rootPath
-     *
-     * @return \ArchitectureSniffer\Module\Transfer\ModuleTransfer[]
-     */
-    public function findModulesByNames(array $moduleNames, string $rootPath): array;
-
-    /**
-     * @param \PHPMD\AbstractNode $node
-     *
-     * @return string
-     */
-    public function getQueryModuleName(AbstractNode $node): string;
-
     /**
      * @param \PHPMD\AbstractNode $node
      *
@@ -56,9 +22,39 @@ interface PropelQueryFacadeInterface
     public function getModuleName(AbstractNode $node): string;
 
     /**
-     * @param \ArchitectureSniffer\Module\Transfer\ModuleTransfer $module
+     * @param \ArchitectureSniffer\PropelQuery\ClassNode\Transfer\ClassNodeTransfer $classNodeTransfer
+     *
+     * @return \ArchitectureSniffer\PropelQuery\Method\Transfer\MethodTransfer[]
+     */
+    public function getMethodTransferCollectionWithRelations(ClassNodeTransfer $classNodeTransfer): array;
+
+    /**
+     * @param string $filePath
+     *
+     * @return \ArchitectureSniffer\Path\Transfer\PathTransfer
+     */
+    public function getPath(string $filePath): PathTransfer;
+
+    /**
+     * @param \PHPMD\AbstractNode $node
+     *
+     * @return \Roave\BetterReflection\Reflection\ReflectionClass
+     */
+    public function getReflectionClassByNode(AbstractNode $node): ReflectionClass;
+
+    /**
+     * @param array $methodTransferCollection
+     * @param \ArchitectureSniffer\PropelQuery\ClassNode\Transfer\ClassNodeTransfer $classNodeTransfer
+     *
+     * @return \ArchitectureSniffer\Module\Transfer\ModuleTransfer[]
+     */
+    public function getModuleTransfers(array $methodTransferCollection, ClassNodeTransfer $classNodeTransfer): array;
+
+    /**
+     * @param \ArchitectureSniffer\Module\Transfer\ModuleTransfer[] $moduleTransfers
+     * @param \ArchitectureSniffer\PropelQuery\ClassNode\Transfer\ClassNodeTransfer $classNodeTransfer
      *
      * @return \ArchitectureSniffer\PropelQuery\Schema\Transfer\PropelSchemaTableTransfer[]
      */
-    public function getTablesByModule(ModuleTransfer $module): array;
+    public function getTableTransfers(array $moduleTransfers, ClassNodeTransfer $classNodeTransfer): array;
 }

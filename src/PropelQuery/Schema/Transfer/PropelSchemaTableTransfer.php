@@ -20,9 +20,14 @@ class PropelSchemaTableTransfer
     protected $moduleName;
 
     /**
-     * @var string[]
+     * @var string
      */
-    protected $phpNames = [];
+    protected $phpName;
+
+    /**
+     * @var \ArchitectureSniffer\PropelQuery\Schema\Transfer\PropelSchemaTableRelationTransfer[]
+     */
+    protected $relations = [];
 
     /**
      * @return string
@@ -43,9 +48,9 @@ class PropelSchemaTableTransfer
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getModuleName(): string
+    public function getModuleName(): ?string
     {
         return $this->moduleName;
     }
@@ -61,20 +66,38 @@ class PropelSchemaTableTransfer
     }
 
     /**
-     * @return string[]
+     * @return string|null
      */
-    public function getPhpNames(): array
+    public function getPhpName(): ?string
     {
-        return $this->phpNames;
+        return $this->phpName;
     }
 
     /**
-     * @param string[] $phpNames
+     * @param string $phpName
      *
      * @return void
      */
-    public function setPhpNames(array $phpNames): void
+    public function setPhpName(string $phpName): void
     {
-        $this->phpNames = $phpNames;
+        $this->phpName = $phpName;
+    }
+
+    /**
+     * @return \ArchitectureSniffer\PropelQuery\Schema\Transfer\PropelSchemaTableRelationTransfer[]
+     */
+    public function getRelations(): array
+    {
+        return $this->relations;
+    }
+
+    /**
+     * @param \ArchitectureSniffer\PropelQuery\Schema\Transfer\PropelSchemaTableRelationTransfer[] $relations
+     *
+     * @return void
+     */
+    public function setRelations(array $relations): void
+    {
+        $this->relations = $relations;
     }
 }

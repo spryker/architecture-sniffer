@@ -48,9 +48,9 @@ class ModuleTransfer
     }
 
     /**
-     * @return string
+     * @return string[]
      */
-    public function getModulePaths(): string
+    public function getModulePaths(): array
     {
         return $this->modulePaths;
     }

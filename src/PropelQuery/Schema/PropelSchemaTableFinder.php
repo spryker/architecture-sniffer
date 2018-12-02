@@ -8,7 +8,12 @@
 namespace ArchitectureSniffer\PropelQuery\Schema;
 
 use ArchitectureSniffer\Module\Transfer\ModuleTransfer;
+use ArchitectureSniffer\Path\PathBuilderInterface;
+use ArchitectureSniffer\PropelQuery\ClassNode\Transfer\ClassNodeTransfer;
+use ArchitectureSniffer\PropelQuery\Module\ModuleFinderInterface;
+use ArchitectureSniffer\PropelQuery\Schema\Transfer\PropelSchemaTableRelationTransfer;
 use ArchitectureSniffer\PropelQuery\Schema\Transfer\PropelSchemaTableTransfer;
+use Symfony\Component\Finder\Finder;
 use Zend\Config\Reader\ReaderInterface;
 
 class PropelSchemaTableFinder implements PropelSchemaTableFinderInterface
@@ -19,30 +24,99 @@ class PropelSchemaTableFinder implements PropelSchemaTableFinderInterface
     protected $reader;
 
     /**
-     * @param \Zend\Config\Reader\ReaderInterface $reader
+     * @var \ArchitectureSniffer\PropelQuery\Module\ModuleFinderInterface
      */
-    public function __construct(ReaderInterface $reader)
-    {
+    protected $moduleFinder;
+
+    /**
+     * @var \ArchitectureSniffer\Path\PathBuilderInterface
+     */
+    protected $pathBuilder;
+
+    /**
+     * @param \Zend\Config\Reader\ReaderInterface $reader
+     * @param \ArchitectureSniffer\Path\PathBuilderInterface $pathBuilder
+     * @param \ArchitectureSniffer\PropelQuery\Module\ModuleFinderInterface $moduleFinder
+     */
+    public function __construct(
+        ReaderInterface $reader,
+        PathBuilderInterface $pathBuilder,
+        ModuleFinderInterface $moduleFinder
+    ) {
         $this->reader = $reader;
+        $this->pathBuilder = $pathBuilder;
+        $this->moduleFinder = $moduleFinder;
     }
 
     /**
-     * @param \ArchitectureSniffer\Module\Transfer\ModuleTransfer $moduleTransfer
+     * @param \ArchitectureSniffer\Module\Transfer\ModuleTransfer[] $moduleTransfers
+     * @param \ArchitectureSniffer\PropelQuery\ClassNode\Transfer\ClassNodeTransfer $classNodeTransfer
      *
      * @return \ArchitectureSniffer\PropelQuery\Schema\Transfer\PropelSchemaTableTransfer[]
      */
-    public function getTablesByModule(ModuleTransfer $moduleTransfer): array
+    public function getTablesByModules(array $moduleTransfers, ClassNodeTransfer $classNodeTransfer): array
     {
+        /**@var \ArchitectureSniffer\PropelQuery\Schema\Transfer\PropelSchemaTableTransfer[] $tableTransfers */
         $tableTransfers = [];
 
-        $moduleName = $moduleTransfer->getModuleName(); //todo: can be null
+        foreach ($moduleTransfers as $moduleTransfer) {
+            $moduleTableTransfer = $this->getTablesByModule($moduleTransfer);
 
-        if($moduleName === null) {
-            dd('ERROR!!'); //todo: delete
+            foreach ($moduleTableTransfer as $tableTransfer) {
+                $tableName = $tableTransfer->getTableName();
+
+                if (isset($tableTransfers[$tableName])) {
+                    $tableTransfer = $this->mergeTableTransfers($tableTransfers[$tableName], $tableTransfer);
+                }
+
+                $tableTransfers[$tableName] = $tableTransfer;
+            }
         }
 
-        foreach ($moduleTransfer->getSchemaPaths() as $schemaPath) {
-            $schema = $this->reader->fromFile($schemaPath);
+        return $this->addMissedTables($tableTransfers, $classNodeTransfer);
+    }
+
+    /**
+     * @param \ArchitectureSniffer\PropelQuery\Schema\Transfer\PropelSchemaTableTransfer $tableTransfer
+     * @param \ArchitectureSniffer\PropelQuery\ClassNode\Transfer\ClassNodeTransfer $classNodeTransfer
+     *
+     * @return \ArchitectureSniffer\PropelQuery\Schema\Transfer\PropelSchemaTableTransfer|null
+     */
+    public function findTableByTableName(PropelSchemaTableTransfer $tableTransfer, ClassNodeTransfer $classNodeTransfer): ?PropelSchemaTableTransfer
+    {
+        $tableName = $tableTransfer->getTableName();
+
+        $phpName = $tableTransfer->getPhpName() ?? str_replace('_', '', ucwords($tableName, '_'));
+
+        $tableSearchPattern = '/<table name="%s".*phpName="(.*)%s".*?>/';
+        $pattern = sprintf($tableSearchPattern, $tableName, $phpName);
+
+        $finder = $this->createFinder();
+
+        $corePropelSchemaFolderPattern = $classNodeTransfer->getPathTransfer()->getCorePath() . implode(
+            DIRECTORY_SEPARATOR,
+            ['*', 'src', '*', '*', '*', 'Persistence', 'Propel', 'Schema']
+        );
+        $projectPropelSchemaFolderPattern = $classNodeTransfer->getPathTransfer()->getProjectPath() . implode(
+            DIRECTORY_SEPARATOR,
+            ['*', 'Persistence', 'Propel', 'Schema']
+        );
+
+        $finder->in([
+            $corePropelSchemaFolderPattern,
+            $projectPropelSchemaFolderPattern,
+        ])->name('*.schema.xml')->contains($pattern);
+
+        $tableTransfers = [];
+
+        /** @var \SplFileInfo[] $schemaFiles */
+        $schemaFiles = $finder->files();
+
+        foreach ($schemaFiles as $file) {
+            $schemaFilePath = $file->getRealPath();
+
+            $moduleName = $this->moduleFinder->getModuleNameByFilePath($schemaFilePath);
+            $schema = $this->reader->fromFile($schemaFilePath);
 
             $tableTransfers = $this->getTables(
                 $schema,
@@ -51,7 +125,7 @@ class PropelSchemaTableFinder implements PropelSchemaTableFinderInterface
             );
         }
 
-        return $tableTransfers;
+        return $tableTransfers[$tableName];
     }
 
     /**
@@ -98,48 +172,33 @@ class PropelSchemaTableFinder implements PropelSchemaTableFinderInterface
      */
     protected function addPhpName(array $table, PropelSchemaTableTransfer $transfer): PropelSchemaTableTransfer
     {
-        if (!isset($table['phpName'])) {
-            return $transfer;
+        if (isset($table['phpName'])) {
+            $transfer->setPhpName($table['phpName']);
         }
 
-        $phpNames = $transfer->getPhpNames();
-        $phpNames[] = $table['phpName'];
-
-        $transfer->setPhpNames(array_unique($phpNames));
+        if ($transfer->getPhpName() === null) {
+            $defaultPropelPhpName = str_replace('_', '', ucwords($transfer->getTableName(), '_'));
+            $transfer->setPhpName($defaultPropelPhpName);
+        }
 
         return $transfer;
     }
 
     /**
-     * @param array $table
+     * @param array $relationTables
+     * @param \ArchitectureSniffer\PropelQuery\Schema\Transfer\PropelSchemaTableTransfer $parentTableTransfer
      * @param \ArchitectureSniffer\PropelQuery\Schema\Transfer\PropelSchemaTableTransfer[] $tableTransfers
      *
      * @return \ArchitectureSniffer\PropelQuery\Schema\Transfer\PropelSchemaTableTransfer[]
      */
-    protected function addRelations(array $table, array $tableTransfers): array
+    protected function addRelations(array $relationTables, PropelSchemaTableTransfer $parentTableTransfer, array $tableTransfers): array
     {
-        if (isset($table['foreignTable'])) {
-            $relationTableName = $table['foreignTable'];
-
-            $transfer = $tableTransfers[$relationTableName] ?? new PropelSchemaTableTransfer();
-            $transfer->setTableName($relationTableName);
-
-            $transfer = $this->addPhpName($table, $transfer);
-
-            $tableTransfers[$relationTableName] = $transfer;
-
-            return $tableTransfers;
+        if (isset($relationTables['foreignTable'])) {
+            return $this->addRelation($relationTables, $parentTableTransfer, $tableTransfers);
         }
 
-        foreach ($table as $relation) {
-            $relationTableName = $relation['foreignTable'];
-
-            $transfer = $tableTransfers[$relationTableName] ?? new PropelSchemaTableTransfer();
-            $transfer->setTableName($relationTableName);
-
-            $transfer = $this->addPhpName($relation, $transfer);
-
-            $tableTransfers[$relationTableName] = $transfer;
+        foreach ($relationTables as $relationTable) {
+            $tableTransfers = $this->addRelation($relationTable, $parentTableTransfer, $tableTransfers);
         }
 
         return $tableTransfers;
@@ -165,38 +224,157 @@ class PropelSchemaTableFinder implements PropelSchemaTableFinderInterface
         }
 
         $transfer = $this->addPhpName($table, $transfer);
-
         $tableTransfers[$tableName] = $transfer;
 
         if (isset($table['foreign-key'])) {
-            $transfer = $this->addReferencePhpNames($table, $transfer);
-            $tableTransfers[$tableName] = $transfer;
-
-            $tableTransfers = $this->addRelations($table['foreign-key'], $tableTransfers);
+            $tableTransfers = $this->addRelations($table['foreign-key'], $transfer, $tableTransfers);
         }
 
         return $tableTransfers;
     }
 
-    protected function addReferencePhpNames(array $table, PropelSchemaTableTransfer $transfer): PropelSchemaTableTransfer
-    {
-        //todo: found case with phpName="CompanyType" refPhpName="CompanyType" !
-        $referencePhpNames = [];
+    /**
+     * @param \ArchitectureSniffer\PropelQuery\Schema\Transfer\PropelSchemaTableTransfer $mainTableTransfer
+     * @param \ArchitectureSniffer\PropelQuery\Schema\Transfer\PropelSchemaTableTransfer $additionalTableTransfer
+     *
+     * @return \ArchitectureSniffer\PropelQuery\Schema\Transfer\PropelSchemaTableTransfer
+     */
+    protected function mergeTableTransfers(
+        PropelSchemaTableTransfer $mainTableTransfer,
+        PropelSchemaTableTransfer $additionalTableTransfer
+    ): PropelSchemaTableTransfer {
 
-        $relations = $table['foreign-key'];
+        $phpName = $mainTableTransfer->getPhpName() ?? $additionalTableTransfer->getPhpName();
+        $moduleName = $mainTableTransfer->getModuleName() ?? $additionalTableTransfer->getModuleName();
 
-        if (!isset($relations['foreignTable'])) {
-            $referencePhpNames = array_column($relations, 'refPhpName');
+        if ($phpName !== null) {
+            $mainTableTransfer->setPhpName($phpName);
         }
 
-        $referencePhpNames[] = $relations['refPhpName'] ?? null;
-        $referencePhpNames = array_filter($referencePhpNames);
+        if ($moduleName !== null) {
+            $mainTableTransfer->setModuleName($moduleName);
+        }
 
-        $phpNames = $transfer->getPhpNames();
-        $phpNames = array_merge($phpNames, $referencePhpNames);
+        $relations = array_merge($mainTableTransfer->getRelations(), $additionalTableTransfer->getRelations());
+        $mainTableTransfer->setRelations($relations);
 
-        $transfer->setPhpNames($phpNames);
+        return $mainTableTransfer;
+    }
 
-        return $transfer;
+    /**
+     * @param \ArchitectureSniffer\PropelQuery\Schema\Transfer\PropelSchemaTableTransfer[] $tableTransfers
+     * @param \ArchitectureSniffer\PropelQuery\ClassNode\Transfer\ClassNodeTransfer $classNodeTransfer
+     *
+     * @return \ArchitectureSniffer\PropelQuery\Schema\Transfer\PropelSchemaTableTransfer[]
+     */
+    protected function addMissedTables(array $tableTransfers, ClassNodeTransfer $classNodeTransfer): array
+    {
+        foreach ($tableTransfers as $tableTransfer) {
+            if ($tableTransfer->getModuleName() !== null) {
+                continue;
+            }
+
+            $missedTableTransfer = $this->findTableByTableName($tableTransfer, $classNodeTransfer);
+
+            if ($missedTableTransfer === null) {
+                continue;
+            }
+
+            $phpName = $missedTableTransfer->getPhpName() ?? $tableTransfer->getPhpName();
+            $moduleName = $missedTableTransfer->getModuleName() ?? $tableTransfer->getModuleName();
+
+            $tableTransfer->setPhpName($phpName);
+            $tableTransfer->setModuleName($moduleName);
+            $tableTransfers[$tableTransfer->getTableName()] = $tableTransfer;
+        }
+
+        return $tableTransfers;
+    }
+
+    /**
+     * @param array $relationTable
+     * @param \ArchitectureSniffer\PropelQuery\Schema\Transfer\PropelSchemaTableTransfer $parentTableTransfer
+     * @param \ArchitectureSniffer\PropelQuery\Schema\Transfer\PropelSchemaTableTransfer[] $tableTransfers
+     *
+     * @return \ArchitectureSniffer\PropelQuery\Schema\Transfer\PropelSchemaTableTransfer[]
+     */
+    protected function addRelation(array $relationTable, PropelSchemaTableTransfer $parentTableTransfer, array $tableTransfers): array
+    {
+        $relationTableName = $relationTable['foreignTable'];
+
+        $relatedTableTransfer = $tableTransfers[$relationTableName] ?? new PropelSchemaTableTransfer();
+        $relatedTableTransfer->setTableName($relationTableName);
+
+        $relationTransfer = new PropelSchemaTableRelationTransfer();
+        $relationTransfer->setTableName($parentTableTransfer->getTableName());
+
+        $phpName = $relationTable['phpName'] ?? $parentTableTransfer->getPhpName();
+        if ($phpName !== null) {
+            $relationTransfer->setPhpName($phpName);
+        }
+
+        $refPhpName = $relationTable['refPhpName'] ?? $relatedTableTransfer->getPhpName();
+        if ($refPhpName !== null) {
+            $relationTransfer->setRefPhpName($refPhpName);
+        }
+
+        $relations = $relatedTableTransfer->getRelations();
+        $relations[$parentTableTransfer->getTableName()] = $relationTransfer;
+        $relatedTableTransfer->setRelations($relations);
+
+        $relationTransfer = new PropelSchemaTableRelationTransfer();
+        $relationTransfer->setTableName($relatedTableTransfer->getTableName());
+
+        $phpName = $relationTable['phpName'] ?? $relatedTableTransfer->getPhpName();
+        if ($phpName !== null) {
+            $relationTransfer->setPhpName($phpName);
+        }
+
+        $refPhpName = $relationTable['refPhpName'] ?? $parentTableTransfer->getPhpName();
+
+        if ($refPhpName !== null) {
+            $relationTransfer->setRefPhpName($refPhpName);
+        }
+
+        $relations = $parentTableTransfer->getRelations();
+        $relations[$relatedTableTransfer->getTableName()] = $relationTransfer;
+        $parentTableTransfer->setRelations($relations);
+
+        $tableTransfers[$relationTableName] = $relatedTableTransfer;
+        $tableTransfers[$parentTableTransfer->getTableName()] = $parentTableTransfer;
+
+        return $tableTransfers;
+    }
+
+    /**
+     * @return \Symfony\Component\Finder\Finder
+     */
+    protected function createFinder(): Finder
+    {
+        return new Finder();
+    }
+
+    /**
+     * @param \ArchitectureSniffer\Module\Transfer\ModuleTransfer $moduleTransfer
+     *
+     * @return \ArchitectureSniffer\PropelQuery\Schema\Transfer\PropelSchemaTableTransfer[]
+     */
+    protected function getTablesByModule(ModuleTransfer $moduleTransfer): array
+    {
+        $tableTransfers = [];
+        $schemaPaths = $moduleTransfer->getSchemaPaths();
+
+        foreach ($schemaPaths as $schemaPath) {
+            $moduleName = $moduleTransfer->getModuleName();
+            $schema = $this->reader->fromFile($schemaPath);
+
+            $tableTransfers = $this->getTables(
+                $schema,
+                $moduleName,
+                $tableTransfers
+            );
+        }
+
+        return $tableTransfers;
     }
 }

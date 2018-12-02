@@ -9,6 +9,7 @@ namespace ArchitectureSniffer\Module;
 
 use ArchitectureSniffer\Module\Transfer\ModuleTransfer;
 use ArchitectureSniffer\Path\PathBuilderInterface;
+use ArchitectureSniffer\Path\Transfer\PathTransfer;
 use Symfony\Component\Finder\Finder;
 
 class ModuleFinder implements ModuleFinderInterface
@@ -28,17 +29,17 @@ class ModuleFinder implements ModuleFinderInterface
 
     /**
      * @param string $moduleName
-     * @param string $rootPath
+     * @param \ArchitectureSniffer\Path\Transfer\PathTransfer $pathTransfer
      *
      * @return \ArchitectureSniffer\Module\Transfer\ModuleTransfer
      */
-    public function findModuleByName(string $moduleName, string $rootPath): ModuleTransfer
+    public function findModuleByName(string $moduleName, PathTransfer $pathTransfer): ModuleTransfer
     {
         $moduleTransfer = $this->createModuleTransfer();
         $moduleTransfer->setModuleName($moduleName);
 
-        $coreModulePath = $this->getCoreModulePath($moduleName, $rootPath);
-        $projectModulePath = $this->getProjectModulePath($moduleName, $rootPath);
+        $coreModulePath = $this->getCoreModulePath($moduleName, $pathTransfer);
+        $projectModulePath = $this->getProjectModulePath($moduleName, $pathTransfer);
 
         $modulePaths = array_filter([
             $coreModulePath,
@@ -59,16 +60,16 @@ class ModuleFinder implements ModuleFinderInterface
 
     /**
      * @param string[] $moduleNames
-     * @param string $rootPath
+     * @param \ArchitectureSniffer\Path\Transfer\PathTransfer $pathTransfer
      *
      * @return \ArchitectureSniffer\Module\Transfer\ModuleTransfer[]
      */
-    public function findModulesByNames(array $moduleNames, string $rootPath): array
+    public function findModulesByNames(array $moduleNames, PathTransfer $pathTransfer): array
     {
         $moduleTransferCollection = [];
 
         foreach ($moduleNames as $moduleName) {
-            $moduleTransfer = $this->findModuleByName($moduleName, $rootPath);
+            $moduleTransfer = $this->findModuleByName($moduleName, $pathTransfer);
 
             if (!$moduleTransfer->exists()) {
                 continue;
@@ -103,13 +104,13 @@ class ModuleFinder implements ModuleFinderInterface
 
     /**
      * @param string $moduleName
-     * @param string $rootPath
+     * @param \ArchitectureSniffer\Path\Transfer\PathTransfer $pathTransfer
      *
      * @return string|null
      */
-    protected function getCoreModulePath(string $moduleName, string $rootPath): ?string
+    protected function getCoreModulePath(string $moduleName, PathTransfer $pathTransfer): ?string
     {
-        $path = $this->pathBuilder->getCoreModulePathByModuleName($moduleName, $rootPath);
+        $path = $this->pathBuilder->getCoreModulePathByModuleName($moduleName, $pathTransfer);
 
         if (!file_exists($path)) {
             return null;
@@ -120,13 +121,13 @@ class ModuleFinder implements ModuleFinderInterface
 
     /**
      * @param string $moduleName
-     * @param string $rootPath
+     * @param \ArchitectureSniffer\Path\Transfer\PathTransfer $pathTransfer
      *
      * @return string|null
      */
-    protected function getProjectModulePath(string $moduleName, string $rootPath): ?string
+    protected function getProjectModulePath(string $moduleName, PathTransfer $pathTransfer): ?string
     {
-        $path = $this->pathBuilder->getProjectModulePathByModuleName($moduleName, $rootPath);
+        $path = $this->pathBuilder->getProjectModulePathByModuleName($moduleName, $pathTransfer);
 
         if (!file_exists($path)) {
             return null;

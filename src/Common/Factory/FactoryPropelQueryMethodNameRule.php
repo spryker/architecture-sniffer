@@ -14,7 +14,9 @@ use PHPMD\Rule\MethodAware;
 
 class FactoryPropelQueryMethodNameRule extends AbstractFactoryRule implements MethodAware
 {
-    public const RULE = 'Getter propel query methods must be named like get*PropelQuery() in factory.';
+    public const RULE = 'Get propel query methods must be named like get*PropelQuery() in factory.';
+    protected const PATTERN_PROPEL_QUERY_CONSTANT_NAME = '/^PROPEL_QUERY_.+/';
+    protected const PATTERN_PROPEL_QUERY_FACTORY_METHOD_NAME = '/^get([a-zA-Z]+)PropelQuery$/';
 
     /**
      * @param \PHPMD\AbstractNode $node
@@ -43,23 +45,21 @@ class FactoryPropelQueryMethodNameRule extends AbstractFactoryRule implements Me
             return;
         }
 
-        if (preg_match(SprykerPropelQueryRulePatterns::PATTERN_PROPEL_QUERY_CONSTANT_NAME, $constant->getName()) === 0) {
+        if (preg_match(static::PATTERN_PROPEL_QUERY_CONSTANT_NAME, $constant->getName()) === 0) {
             return;
         }
 
         $methodName = $node->getName();
 
-        if (preg_match(SprykerPropelQueryRulePatterns::PATTERN_PROPEL_QUERY_FACTORY_METHOD_NAME, $methodName) !== 0) {
+        if (preg_match(static::PATTERN_PROPEL_QUERY_FACTORY_METHOD_NAME, $methodName) !== 0) {
             return;
         }
 
         $class = $node->getParentName();
-        $fullClassName = $node->getFullQualifiedName();
 
         $message = sprintf(
-            '%s (%s) returns a concrete class which violates the rule "%s"',
+            '%s violates rule "%s"',
             "{$class}::{$methodName}()",
-            $fullClassName,
             static::RULE
         );
 

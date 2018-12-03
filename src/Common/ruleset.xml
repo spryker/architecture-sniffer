@@ -110,6 +110,13 @@
 
         <priority>3</priority>
     </rule>
+    <rule
+            name="BridgeMethodsRule"
+            message="Bridges: {0}"
+            class="ArchitectureSniffer\Common\Bridge\BridgeMethodsRule">
+
+        <priority>3</priority>
+    </rule>
     <!-- EOF COMMON BRIDGE RULES -->
 
     <!-- EOF COMMON COMMUNICATION RULES -->

@@ -95,7 +95,6 @@ class PropelSchemaTableFinder implements PropelSchemaTableFinderInterface
 
             $moduleName = $this->moduleFinder->getModuleNameByFilePath($schemaFilePath);
             $schema = $this->reader->fromFile($schemaFilePath);
-
             $tableTransfers = $this->getTables(
                 $schema,
                 $moduleName,
@@ -103,7 +102,7 @@ class PropelSchemaTableFinder implements PropelSchemaTableFinderInterface
             );
         }
 
-        return $tableTransfers[$tableName];
+        return $tableTransfers[$tableTransfer->getTableName()];
     }
 
     /**

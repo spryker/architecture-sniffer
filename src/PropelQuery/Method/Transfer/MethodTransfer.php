@@ -7,7 +7,9 @@
 
 namespace ArchitectureSniffer\PropelQuery\Method\Transfer;
 
-class MethodTransfer
+use ArchitectureSniffer\Transfer\TransferInterface;
+
+class MethodTransfer implements TransferInterface
 {
     /**
      * @var string

@@ -7,7 +7,9 @@
 
 namespace ArchitectureSniffer\Path\Transfer;
 
-class PathTransfer
+use ArchitectureSniffer\Transfer\TransferInterface;
+
+class PathTransfer implements TransferInterface
 {
     /**
      * @var string

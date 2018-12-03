@@ -7,7 +7,9 @@
 
 namespace ArchitectureSniffer\PropelQuery\Schema\Transfer;
 
-class PropelSchemaTableRelationTransfer
+use ArchitectureSniffer\Transfer\TransferInterface;
+
+class PropelSchemaTableRelationTransfer implements TransferInterface
 {
     /**
      * @var string

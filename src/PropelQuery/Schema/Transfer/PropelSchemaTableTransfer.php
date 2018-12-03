@@ -7,7 +7,9 @@
 
 namespace ArchitectureSniffer\PropelQuery\Schema\Transfer;
 
-class PropelSchemaTableTransfer
+use ArchitectureSniffer\Transfer\TransferInterface;
+
+class PropelSchemaTableTransfer implements TransferInterface
 {
     /**
      * @var string
@@ -30,9 +32,9 @@ class PropelSchemaTableTransfer
     protected $relations = [];
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getTableName(): string
+    public function getTableName(): ?string
     {
         return $this->tableName;
     }

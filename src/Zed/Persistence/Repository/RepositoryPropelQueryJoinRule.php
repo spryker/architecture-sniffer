@@ -237,7 +237,7 @@ class RepositoryPropelQueryJoinRule extends AbstractRepositoryRule implements Cl
     protected function addExtraDeclaredModulesViolationMessage(string $methodName, array $extraDeclaredModules, ClassNode $node)
     {
         $message = sprintf(
-            'The Repository method %s() violates rule "%s". ',
+            'The Repository method `%s()` violates rule `%s`. ',
             $methodName,
             static::RULE
         );

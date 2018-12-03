@@ -78,7 +78,7 @@ class ModuleFinder implements ModuleFinderInterface
      */
     public function getModuleNameByFilePath(string $filePath): string
     {
-        $rootPath = $this->pathBuilder->getRootApplicationFolderPathByFilePath($filePath);
+        $rootPath = $this->pathBuilder->getRootApplicationDirectoryPathByFilePath($filePath);
 
         $modulePath = str_replace([
             $this->pathBuilder->getCorePath($rootPath),

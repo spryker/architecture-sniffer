@@ -7,7 +7,9 @@
 
 namespace ArchitectureSniffer\Module\Transfer;
 
-class ModuleTransfer
+use ArchitectureSniffer\Transfer\TransferInterface;
+
+class ModuleTransfer implements TransferInterface
 {
     /**
      * @var string

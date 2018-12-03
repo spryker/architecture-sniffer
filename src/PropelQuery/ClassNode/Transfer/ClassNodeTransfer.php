@@ -8,10 +8,11 @@
 namespace ArchitectureSniffer\PropelQuery\ClassNode\Transfer;
 
 use ArchitectureSniffer\Path\Transfer\PathTransfer;
+use ArchitectureSniffer\Transfer\TransferInterface;
 use PHPMD\Node\ClassNode;
 use Roave\BetterReflection\Reflection\ReflectionClass;
 
-class ClassNodeTransfer
+class ClassNodeTransfer implements TransferInterface
 {
     /**
      * @var string

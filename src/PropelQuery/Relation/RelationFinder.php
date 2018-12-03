@@ -19,7 +19,7 @@ class RelationFinder implements RelationFinderInterface
      * @param \PHPMD\AbstractNode $node
      * @param \Roave\BetterReflection\Reflection\ReflectionClass $reflectionNodeClass
      *
-     * @return array
+     * @return string[]
      */
     public function getRelationNames(AbstractNode $node, ReflectionClass $reflectionNodeClass): array
     {

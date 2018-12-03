@@ -12,6 +12,7 @@ use ArchitectureSniffer\PropelQuery\ClassNode\Transfer\ClassNodeTransfer;
 use ArchitectureSniffer\PropelQuery\Method\Transfer\MethodTransfer;
 use ArchitectureSniffer\PropelQuery\Query\QueryFinderInterface;
 use ArchitectureSniffer\PropelQuery\Relation\RelationFinderInterface;
+use PHPMD\Node\MethodNode;
 
 class MethodFinder implements MethodFinderInterface
 {
@@ -73,22 +74,42 @@ class MethodFinder implements MethodFinderInterface
                 $reflectionClass
             );
 
-            $declaredDependentModuleNames = $this->docBlockNodeReader->getModuleNames($methodNode);
-
             $methodName = $methodNode->getName();
 
-            $methodTransfer = new MethodTransfer();
-
-            $methodTransfer->setClassName($className);
-            $methodTransfer->setNamespace($methodNode->getFullQualifiedName());
-            $methodTransfer->setMethodName($methodName);
-            $methodTransfer->setQueryNames($queryNames);
-            $methodTransfer->setRelationNames($relationTablesNames);
-            $methodTransfer->setDeclaredDependentModuleNames($declaredDependentModuleNames);
-
-            $methodTransferCollection[$methodName] = $methodTransfer;
+            $methodTransferCollection[$methodName] = $this->createMethodTransfer(
+                $className,
+                $methodNode,
+                $queryNames,
+                $relationTablesNames
+            );
         }
 
         return $methodTransferCollection;
+    }
+
+    /**
+     * @param string $className
+     * @param \PHPMD\Node\MethodNode $methodNode
+     * @param string[] $queryNames
+     * @param string[] $relationTablesNames
+     *
+     * @return \ArchitectureSniffer\PropelQuery\Method\Transfer\MethodTransfer
+     */
+    protected function createMethodTransfer(
+        string $className,
+        MethodNode $methodNode,
+        array $queryNames,
+        array $relationTablesNames
+    ): MethodTransfer {
+        $methodTransfer = new MethodTransfer();
+
+        $methodTransfer->setClassName($className);
+        $methodTransfer->setNamespace($methodNode->getFullQualifiedName());
+        $methodTransfer->setMethodName($methodNode->getName());
+        $methodTransfer->setQueryNames($queryNames);
+        $methodTransfer->setRelationNames($relationTablesNames);
+        $methodTransfer->setDeclaredDependentModuleNames($this->docBlockNodeReader->getModuleNames($methodNode));
+
+        return $methodTransfer;
     }
 }

@@ -16,7 +16,7 @@ interface PathBuilderInterface
      *
      * @return string
      */
-    public function getRootApplicationFolderPathByFilePath(string $filePath): string;
+    public function getRootApplicationDirectoryPathByFilePath(string $filePath): string;
 
     /**
      * @param string $moduleName
@@ -39,7 +39,7 @@ interface PathBuilderInterface
      *
      * @return string
      */
-    public function getSchemaFolderPath(string $modulePath): string;
+    public function getSchemaPath(string $modulePath): string;
 
     /**
      * @param string $rootPath

@@ -22,7 +22,7 @@ class PathBuilder implements PathBuilderInterface
      */
     public function getPath(string $filePath): PathTransfer
     {
-        $rootPath = $this->getRootApplicationFolderPathByFilePath($filePath);
+        $rootPath = $this->getRootApplicationDirectoryPathByFilePath($filePath);
         $corePath = $this->getCorePath($rootPath);
         $projectPath = $this->getProjectPath($rootPath);
 
@@ -40,7 +40,7 @@ class PathBuilder implements PathBuilderInterface
      *
      * @return string
      */
-    public function getRootApplicationFolderPathByFilePath(string $filePath): string
+    public function getRootApplicationDirectoryPathByFilePath(string $filePath): string
     {
         if ($this->isApplicationRootDefined()) {
             return ${static::CONST_NAME_APPLICATION_ROOT_DIR};
@@ -108,7 +108,7 @@ class PathBuilder implements PathBuilderInterface
             '%1$s',
         ]);
 
-        return $pathTransfer->getCorePath() . sprintf($coreModulePattern, $moduleName);
+        return $pathTransfer->getCorePath() . sprintf($coreModulePattern, $moduleName) . DIRECTORY_SEPARATOR;
     }
 
     /**
@@ -119,7 +119,7 @@ class PathBuilder implements PathBuilderInterface
      */
     public function getProjectModulePathByModuleName(string $moduleName, PathTransfer $pathTransfer): string
     {
-        return $pathTransfer->getProjectPath() . $moduleName;
+        return $pathTransfer->getProjectPath() . $moduleName . DIRECTORY_SEPARATOR;
     }
 
     /**
@@ -127,9 +127,9 @@ class PathBuilder implements PathBuilderInterface
      *
      * @return string
      */
-    public function getSchemaFolderPath(string $modulePath): string
+    public function getSchemaPath(string $modulePath): string
     {
-        return $modulePath . DIRECTORY_SEPARATOR . static::PATTERN_PATH_MODULE_SCHEMA_FOLDER;
+        return $modulePath . DIRECTORY_SEPARATOR . static::PATTERN_PATH_MODULE_SCHEMA_FOLDER . DIRECTORY_SEPARATOR;
     }
 
     /**

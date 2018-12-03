@@ -95,6 +95,23 @@
     </rule>
     <!-- EOF COMMON COMMUNICATION PLUGIN RULES -->
 
+    <!-- COMMON BRIDGE RULES -->
+    <rule
+            name="BridgeNameRule"
+            message="Bridges: {0}"
+            class="ArchitectureSniffer\Common\Bridge\BridgeNameRule">
+
+        <priority>3</priority>
+    </rule>
+    <rule
+            name="BridgePathRule"
+            message="Bridges: {0}"
+            class="ArchitectureSniffer\Common\Bridge\BridgePathRule">
+
+        <priority>3</priority>
+    </rule>
+    <!-- EOF COMMON BRIDGE RULES -->
+
     <!-- EOF COMMON COMMUNICATION RULES -->
 
 </ruleset>

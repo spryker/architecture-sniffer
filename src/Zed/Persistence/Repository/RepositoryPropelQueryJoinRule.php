@@ -86,7 +86,7 @@ class RepositoryPropelQueryJoinRule extends AbstractRepositoryRule implements Cl
             );
 
             if ($relationTableTransfer === null) {
-                continue; //todo: must be deleted with implementation AddJoinCondition and Add JoinObject
+                continue;
             }
 
             $moduleName = $relationTableTransfer->getModuleName();
@@ -145,13 +145,13 @@ class RepositoryPropelQueryJoinRule extends AbstractRepositoryRule implements Cl
     protected function addViolationMessage(string $methodName, string $relationTableName, string $moduleName, ClassNode $node): void
     {
         $message = sprintf(
-            'The Repository method %s() violates rule "%s". ',
+            'The Repository method `%s()` violates rule `%s`. ',
             $methodName,
             static::RULE
         );
 
         $solutionMessage = sprintf(
-            'Please add @module %s for %s join.',
+            'Please add `@module %s` for `%s` join.',
             $moduleName,
             $relationTableName
         );

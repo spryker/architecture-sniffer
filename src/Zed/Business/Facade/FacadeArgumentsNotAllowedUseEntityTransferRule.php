@@ -15,7 +15,7 @@ use PHPMD\Rule\MethodAware;
 
 class FacadeArgumentsNotAllowedUseEntityTransferRule extends AbstractFacadeRule implements MethodAware
 {
-    public const RULE = 'Every Facade methods shouldn`t use entity transfers.';
+    public const RULE = 'Facade methods shouldn`t use entity transfers.';
 
     protected const NAMESPACE_TRANSFERS = 'Generated\Shared\Transfer';
     protected const PATTERN_SUFFIX_ENTITY_TRANSFER = '/EntityTransfer?/';
@@ -71,7 +71,7 @@ class FacadeArgumentsNotAllowedUseEntityTransferRule extends AbstractFacadeRule 
         }
 
         $message = sprintf(
-            'The Facade method %s is using an invalid argument `%s` type which violates the rule `%s`',
+            'The Facade method `%s` is using an invalid argument `%s` type which violates the rule `%s`',
             $node->getFullQualifiedName(),
             $class->getName(),
             static::RULE

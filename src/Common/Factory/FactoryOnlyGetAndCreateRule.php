@@ -13,7 +13,7 @@ use PHPMD\Rule\ClassAware;
 
 class FactoryOnlyGetAndCreateRule extends AbstractFactoryRule implements ClassAware
 {
-    const RULE = 'Factories should only contain get*() and create*() methods.';
+    public const RULE = 'Factories should only contain get*() and create*() methods.';
 
     /**
      * @return string
@@ -46,7 +46,7 @@ class FactoryOnlyGetAndCreateRule extends AbstractFactoryRule implements ClassAw
      */
     protected function applyRule(MethodNode $method)
     {
-        if (0 != preg_match('/^(\_\_|create|get).+/', $method->getName())) {
+        if (preg_match('/^(\_\_|create|get).+/', $method->getName()) !== 0) {
             return;
         }
 

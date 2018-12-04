@@ -12,12 +12,9 @@ use PHPMD\AbstractNode;
 use PHPMD\Node\MethodNode;
 use PHPMD\Rule\MethodAware;
 
-/**
- *
- */
 class FacadeArgumentsRule extends AbstractFacadeRule implements MethodAware
 {
-    const RULE = 'Every Facade should only retrieve native types or transfer objects.';
+    public const RULE = 'Every Facade should only retrieve native types or transfer objects.';
 
     /**
      * @return string

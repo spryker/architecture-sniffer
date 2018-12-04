@@ -13,7 +13,7 @@ use PHPMD\Rule\MethodAware;
 
 class FactoryGetContainNoNewRule extends AbstractFactoryRule implements MethodAware
 {
-    const RULE = 'A `get*()` method in factories must not contain a `new` keyword.';
+    public const RULE = 'A `get*()` method in factories must not contain a `new` keyword.';
 
     /**
      * @return string
@@ -44,7 +44,7 @@ class FactoryGetContainNoNewRule extends AbstractFactoryRule implements MethodAw
      */
     protected function applyRule(MethodNode $method)
     {
-        if ('get' != substr($method->getName(), 0, 3)) {
+        if (substr($method->getName(), 0, 3) != 'get') {
             return;
         }
 

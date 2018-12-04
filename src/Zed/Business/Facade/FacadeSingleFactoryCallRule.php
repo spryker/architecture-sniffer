@@ -14,11 +14,11 @@ use PHPMD\Rule\ClassAware;
 
 class FacadeSingleFactoryCallRule extends AbstractFacadeRule implements ClassAware
 {
-    const RULE = 'Every Facade method should have no more than one factory call.';
+    public const RULE = 'Every Facade method should have no more than one factory call.';
 
-    const PSEUDO_VAR_THIS = '$this';
-    const OBJECT_OPERATOR = '->';
-    const GET_FACTORY_METHOD = 'getFactory';
+    public const PSEUDO_VAR_THIS = '$this';
+    public const OBJECT_OPERATOR = '->';
+    public const GET_FACTORY_METHOD = 'getFactory';
 
     /**
      * @return string

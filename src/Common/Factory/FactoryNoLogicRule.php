@@ -18,8 +18,8 @@ use PHPMD\Rule\MethodAware;
  */
 class FactoryNoLogicRule extends AbstractFactoryRule implements MethodAware
 {
-    const RULE = 'Factory should not contain any business logic.';
-    const SWITCH_STATEMENT = 'switch';
+    public const RULE = 'Factory should not contain any business logic.';
+    public const SWITCH_STATEMENT = 'switch';
 
     /**
      * @var array

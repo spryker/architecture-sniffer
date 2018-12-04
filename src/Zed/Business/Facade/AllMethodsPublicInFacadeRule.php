@@ -14,7 +14,7 @@ use PHPMD\Rule\ClassAware;
 
 class AllMethodsPublicInFacadeRule extends AbstractFacadeRule implements ClassAware
 {
-    const RULE = 'A facade must only contain public methods.';
+    public const RULE = 'A facade must only contain public methods.';
 
     /**
      * @return string

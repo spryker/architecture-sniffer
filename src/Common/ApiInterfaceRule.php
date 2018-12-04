@@ -14,7 +14,7 @@ use PHPMD\Rule\InterfaceAware;
 
 class ApiInterfaceRule extends SprykerAbstractRule implements InterfaceAware
 {
-    const RULE = 'Every method must also contain the @api tag in docblock and a contract text above.';
+    public const RULE = 'Every method must also contain the @api tag in docblock and a contract text above.';
 
     /**
      * @var string

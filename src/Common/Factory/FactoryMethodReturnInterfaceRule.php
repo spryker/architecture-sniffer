@@ -13,10 +13,10 @@ use PHPMD\Rule\MethodAware;
 
 class FactoryMethodReturnInterfaceRule extends AbstractFactoryRule implements MethodAware
 {
-    const RULE = 'Every method in a Factory must only return an interface or an array of interfaces.';
+    public const RULE = 'Every method in a Factory must only return an interface or an array of interfaces.';
 
-    const ALLOWED_RETURN_TYPES_PATTERN = '/@return\s(?!((.*)Interface|callable))(.*)/';
-    const INVALID_RETURN_TYPE_MATCH = 3;
+    public const ALLOWED_RETURN_TYPES_PATTERN = '/@return\s(?!((.*)Interface|callable))(.*)/';
+    public const INVALID_RETURN_TYPE_MATCH = 3;
 
     /**
      * @return string

@@ -73,7 +73,7 @@ abstract class AbstractDependencyProviderRule extends AbstractRule
             $isQueryReference = (bool)strpos($referenceNode->getName(), 'Query');
 
             if (!$isQueryReference) {
-                return false;
+                continue;
             }
 
             $methodPostfixChild = $method->getFirstChildOfType('MethodPostfix');

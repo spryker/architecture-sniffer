@@ -7,14 +7,13 @@
 
 namespace ArchitectureSniffer\Common\Factory;
 
-use ArchitectureSniffer\SprykerPropelQueryRulePatterns;
 use PHPMD\AbstractNode;
 use PHPMD\Node\MethodNode;
 use PHPMD\Rule\MethodAware;
 
 class FactoryPropelQueryMethodNameRule extends AbstractFactoryRule implements MethodAware
 {
-    public const RULE = 'Getter propel query methods must be named like get*PropelQuery() in factory.';
+    public const RULE = 'Get propel query methods must be named like get*PropelQuery() in factory.';
 
     /**
      * @param \PHPMD\AbstractNode $node
@@ -43,26 +42,56 @@ class FactoryPropelQueryMethodNameRule extends AbstractFactoryRule implements Me
             return;
         }
 
-        if (preg_match(SprykerPropelQueryRulePatterns::PATTERN_PROPEL_QUERY_CONSTANT_NAME, $constant->getName()) === 0) {
+        if (!$this->isPropelQueryConstant($constant->getName())) {
             return;
         }
 
         $methodName = $node->getName();
 
-        if (preg_match(SprykerPropelQueryRulePatterns::PATTERN_PROPEL_QUERY_FACTORY_METHOD_NAME, $methodName) !== 0) {
+        if (!$this->isPropelQueryFactoryMethod($methodName)) {
             return;
         }
 
         $class = $node->getParentName();
-        $fullClassName = $node->getFullQualifiedName();
 
         $message = sprintf(
-            '%s (%s) returns a concrete class which violates the rule "%s"',
+            '%s violates rule "%s"',
             "{$class}::{$methodName}()",
-            $fullClassName,
             static::RULE
         );
 
         $this->addViolation($node, [$message]);
+    }
+
+    /**
+     * @param string $constantName
+     *
+     * @return bool
+     */
+    protected function isPropelQueryConstant(string $constantName): bool
+    {
+        $propelQueryConstantPattern = '/^PROPEL_QUERY_.+/';
+
+        if (!preg_match($propelQueryConstantPattern, $constantName)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * @param string $methodName
+     *
+     * @return bool
+     */
+    protected function isPropelQueryFactoryMethod(string $methodName): bool
+    {
+        $propelQueryFactoryMethodPattern = '/^get([a-zA-Z]+)PropelQuery$/';
+
+        if (!preg_match($propelQueryFactoryMethodPattern, $methodName)) {
+            return false;
+        }
+
+        return true;
     }
 }

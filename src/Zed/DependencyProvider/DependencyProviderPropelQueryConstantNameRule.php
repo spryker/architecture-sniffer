@@ -8,7 +8,6 @@
 namespace ArchitectureSniffer\Zed\DependencyProvider;
 
 use ArchitectureSniffer\Common\DependencyProvider\AbstractDependencyProviderRule;
-use ArchitectureSniffer\SprykerPropelQueryRulePatterns;
 use PHPMD\AbstractNode;
 use PHPMD\Node\MethodNode;
 use PHPMD\Rule\MethodAware;
@@ -36,18 +35,34 @@ class DependencyProviderPropelQueryConstantNameRule extends AbstractDependencyPr
     }
 
     /**
-     * @param \PHPMD\Node\MethodNode $method
+     * @param \PHPMD\Node\MethodNode $methodNode
      *
      * @return void
      */
-    protected function applyPropelQueryConstNameRule(MethodNode $method): void
+    protected function applyPropelQueryConstNameRule(MethodNode $methodNode): void
     {
-        $constant = $method->getFirstChildOfType('ConstantPostfix');
+        $constant = $methodNode->getFirstChildOfType('ConstantPostfix');
 
-        if (preg_match(SprykerPropelQueryRulePatterns::PATTERN_PROPEL_QUERY_CONSTANT_NAME, $constant->getName()) !== 0) {
+        if ($this->isPropelQueryConstant($constant->getName())) {
             return;
         }
 
-        $this->addViolationMessage($method);
+        $this->addViolationMessage($methodNode);
+    }
+
+    /**
+     * @param string $constantName
+     *
+     * @return bool
+     */
+    protected function isPropelQueryConstant(string $constantName): bool
+    {
+        $propelQueryConstantPattern = '/^PROPEL_QUERY_.+/';
+
+        if (!preg_match($propelQueryConstantPattern, $constantName)) {
+            return false;
+        }
+
+        return true;
     }
 }

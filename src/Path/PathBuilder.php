@@ -8,6 +8,7 @@
 namespace ArchitectureSniffer\Path;
 
 use ArchitectureSniffer\Path\Transfer\PathTransfer;
+use Zend\Filter\Word\CamelCaseToSeparator;
 
 class PathBuilder implements PathBuilderInterface
 {
@@ -67,9 +68,13 @@ class PathBuilder implements PathBuilderInterface
         $rootPath = $this->getRootApplicationDirectoryPathByFilePath($filePath);
 
         $path = rtrim($rootPath, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
-        $path .= 'src' . DIRECTORY_SEPARATOR;
+        $path .= implode(DIRECTORY_SEPARATOR, [
+            'src',
+            'Pyz',
+            'Zed',
+        ]);
 
-        return $path;
+        return rtrim($path, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
     }
 
     /**
@@ -98,15 +103,21 @@ class PathBuilder implements PathBuilderInterface
      */
     public function getCoreModulePathByModuleName(string $moduleName, PathTransfer $pathTransfer): string
     {
+        $moduleDirectoryName = $moduleName;
+
+        if (!strpos($pathTransfer->getCorePath(), 'Bundles')) {
+            $moduleDirectoryName = $this->formatCamelCaseToSnakeCase($moduleName);
+        }
+
         $coreModulePattern = implode(DIRECTORY_SEPARATOR, [
-            '%1$s',
+            '%s',
             'src',
             'Spryker',
             'Zed',
-            '%1$s',
+            '%s',
         ]);
 
-        return $pathTransfer->getCorePath() . sprintf($coreModulePattern, $moduleName) . DIRECTORY_SEPARATOR;
+        return $pathTransfer->getCorePath() . sprintf($coreModulePattern, $moduleDirectoryName, $moduleName) . DIRECTORY_SEPARATOR;
     }
 
     /**
@@ -136,5 +147,15 @@ class PathBuilder implements PathBuilderInterface
     protected function isApplicationRootDefined(): bool
     {
         return defined(static::CONST_NAME_APPLICATION_ROOT_DIR);
+    }
+
+    /**
+     * @param string $string
+     *
+     * @return string
+     */
+    protected function formatCamelCaseToSnakeCase(string $string)
+    {
+        return strtolower((new CamelCaseToSeparator('-'))->filter($moduleName));
     }
 }

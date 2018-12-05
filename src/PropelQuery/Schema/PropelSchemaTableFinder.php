@@ -46,7 +46,7 @@ class PropelSchemaTableFinder implements PropelSchemaTableFinderInterface
         ModuleFinderInterface $moduleFinder
     ) {
         $this->reader = $reader;
-        $this->pathBuilder = $pathBuilder;
+        $this->pathBuilder = $pathBuilder; //todo: don't use
         $this->moduleFinder = $moduleFinder;
     }
 

@@ -34,9 +34,14 @@ class NodeReader implements NodeReaderInterface
     public function getModuleName(AbstractNode $node): string
     {
         $filePath = $node->getFileName();
-        $filePath = preg_replace('/^.+Zed\//', '', $filePath);
 
-        return preg_replace('/\/Persistence.+$/', '', $filePath);
+        $moduleNamePattern = '/^.+(Spryker([a-zA-Z]+|)|Pyz)\%1$s[a-zA-Z]+\%1$s/';
+        $moduleNamePattern = sprintf($moduleNamePattern, DIRECTORY_SEPARATOR);
+
+        $moduleName = preg_replace($moduleNamePattern, '', $filePath);
+        $moduleName = explode(DIRECTORY_SEPARATOR, $moduleName);
+
+        return array_shift($moduleName);
     }
 
     /**

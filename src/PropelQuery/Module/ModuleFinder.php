@@ -78,14 +78,14 @@ class ModuleFinder implements ModuleFinderInterface
      */
     public function getModuleNameByFilePath(string $filePath): string
     {
-        $rootPath = $this->pathBuilder->getRootApplicationDirectoryPathByFilePath($filePath);
-
         $modulePath = str_replace([
-            $this->pathBuilder->getCorePath($rootPath),
-            $this->pathBuilder->getProjectPath($rootPath),
+            $this->pathBuilder->getCorePath($filePath),
+            $this->pathBuilder->getProjectPath($filePath),
         ], '', $filePath);
 
-        return array_shift(explode(DIRECTORY_SEPARATOR, $modulePath));
+        $modulePath = explode(DIRECTORY_SEPARATOR, $modulePath);
+
+        return ucfirst(array_shift($modulePath));
     }
 
     /**

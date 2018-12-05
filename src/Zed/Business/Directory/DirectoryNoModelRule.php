@@ -13,7 +13,7 @@ use PHPMD\Rule\ClassAware;
 
 class DirectoryNoModelRule extends AbstractDirectoryRule implements ClassAware
 {
-    const RULE = 'Business models must not be in a Model directory.';
+    public const RULE = 'Business models must not be in a Model directory.';
 
     /**
      * @return string

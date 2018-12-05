@@ -48,7 +48,7 @@ class FactoryPropelQueryMethodNameRule extends AbstractFactoryRule implements Me
 
         $methodName = $node->getName();
 
-        if (!$this->isPropelQueryFactoryMethod($methodName)) {
+        if ($this->isPropelQueryFactoryMethod($methodName)) {
             return;
         }
 

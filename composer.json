@@ -19,6 +19,7 @@
     "phpmd/phpmd": "^2.4",
     "symfony/finder": "*",
     "zendframework/zend-config": "*",
+    "zendframework/zend-filter": "*",
     "roave/better-reflection": "*"
   },
   "require-dev": {

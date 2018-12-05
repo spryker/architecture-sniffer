@@ -24,3 +24,9 @@ suites:
         modules:
             enabled:
                 - Asserts
+    Bridge:
+        path: Bridge
+        class_name: CommonTester
+        modules:
+            enabled:
+            - Asserts

@@ -13,7 +13,7 @@ use PHPMD\Node\MethodNode;
 
 abstract class AbstractFactoryRule extends SprykerAbstractRule
 {
-    const PATTERN_FACTORY = '/\\\\*\\\\.+\\\\.+\\\\[A-Za-z0-9]+(Business|Service|Communication)Factory$/';
+    public const PATTERN_FACTORY = '/\\\\*\\\\.+\\\\.+\\\\[A-Za-z0-9]+(Business|Service|Communication)Factory$/';
 
     /**
      * @param \PHPMD\Node\AbstractNode $node

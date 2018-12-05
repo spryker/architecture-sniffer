@@ -129,7 +129,7 @@ class LayerAccessRule extends AbstractRule implements ClassAware
         foreach ($node->getDependencies() as $dependency) {
             $targetQName = sprintf('%s\\%s', $dependency->getNamespaceName(), $dependency->getName());
 
-            foreach ($patterns as list($srcPattern, $targetPattern, $message)) {
+            foreach ($patterns as [$srcPattern, $targetPattern, $message]) {
                 if (preg_match($srcPattern, $node->getFullQualifiedName()) === 0) {
                     continue;
                 }
@@ -159,7 +159,7 @@ class LayerAccessRule extends AbstractRule implements ClassAware
     protected function collectPatterns(ClassNode $class)
     {
         $patterns = [];
-        foreach ($this->patterns as list($srcPattern, $targetPattern, $message)) {
+        foreach ($this->patterns as [$srcPattern, $targetPattern, $message]) {
             if (preg_match($srcPattern, $class->getNamespaceName())) {
                 $patterns[] = [$srcPattern, $targetPattern, $message];
             }

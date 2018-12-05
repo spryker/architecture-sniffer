@@ -23,8 +23,8 @@ class PathBuilder implements PathBuilderInterface
     public function getPath(string $filePath): PathTransfer
     {
         $rootPath = $this->getRootApplicationDirectoryPathByFilePath($filePath);
-        $corePath = $this->getCorePath($rootPath);
-        $projectPath = $this->getProjectPath($rootPath);
+        $corePath = $this->getCorePath($filePath);
+        $projectPath = $this->getProjectPath($filePath);
 
         $pathTransfer = new PathTransfer();
 
@@ -58,38 +58,36 @@ class PathBuilder implements PathBuilderInterface
     }
 
     /**
-     * @param string $rootPath
+     * @param string $filePath
      *
      * @return string
      */
-    public function getProjectPath(string $rootPath): string
+    public function getProjectPath(string $filePath): string
     {
-        $path = rtrim($rootPath, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
-        $path .= implode(DIRECTORY_SEPARATOR, [
-            'src',
-            'Pyz',
-            'Zed',
-        ]);
+        $rootPath = $this->getRootApplicationDirectoryPathByFilePath($filePath);
 
-        return rtrim($path, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+        $path = rtrim($rootPath, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+        $path .= 'src' . DIRECTORY_SEPARATOR;
+
+        return $path;
     }
 
     /**
-     * @param string $rootPath
+     * @param string $filePath
      *
      * @return string
      */
-    public function getCorePath(string $rootPath): string
+    public function getCorePath(string $filePath): string
     {
-        $path = rtrim($rootPath, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
-        $path .= implode(DIRECTORY_SEPARATOR, [
-            'vendor',
-            'spryker',
-            'spryker',
-            'Bundles',
-        ]);
+        $rootPath = $this->getRootApplicationDirectoryPathByFilePath($filePath);
+        $corePath = mb_substr($filePath, 0, mb_strpos($filePath, 'src'));
+        $corePath = rtrim($corePath, DIRECTORY_SEPARATOR);
+        $corePath = explode(DIRECTORY_SEPARATOR, $corePath);
 
-        return rtrim($path, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+        array_pop($corePath);
+        $corePath = implode(DIRECTORY_SEPARATOR, $corePath);
+
+        return rtrim($corePath, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
     }
 
     /**

@@ -7,7 +7,6 @@
 
 namespace ArchitectureSniffer\Common\Bridge;
 
-use PDepend\Source\AST\ASTInterface;
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
 use PHPMD\Node\InterfaceNode;
@@ -15,14 +14,15 @@ use PHPMD\Rule\ClassAware;
 
 class BridgeNameRule extends AbstractRule implements ClassAware
 {
-    const RULE = 'A bridge name must have \'{target_module_name}To{target_module_name}{layer_name}Bridge\' structure.';
+    protected const CLASS_RULE = 'A bridge name must have \'{target_module_name}To{target_module_name}{layer_name}Bridge\' structure.';
+    protected const INTERFACE_RULE = 'A bridge interface name must have \'{target_module_name}To{target_module_name}{layer_name}Interface\' structure.';
 
     /**
      * @return string
      */
     public function getDescription()
     {
-        return static::RULE;
+        return static::CLASS_RULE;
     }
 
     /**
@@ -32,7 +32,7 @@ class BridgeNameRule extends AbstractRule implements ClassAware
      */
     public function apply(AbstractNode $node)
     {
-        if (preg_match('([A-Za-z0-9]+Bridge$)', $node->getName()) === 0||
+        if (preg_match('([A-Za-z0-9]+Bridge$)', $node->getName()) === 0 ||
             preg_match('#.*\\\\Dependency\\\\.*#', $node->getNamespaceName()) === 0) {
             return;
         }
@@ -43,7 +43,13 @@ class BridgeNameRule extends AbstractRule implements ClassAware
         $this->verifyInterface($node, $namespaceParts);
     }
 
-    protected function verifyClass($node, $namespaceParts)
+    /**
+     * @param \PHPMD\AbstractNode $node
+     * @param array $namespaceParts
+     *
+     * @return void
+     */
+    protected function verifyClass(AbstractNode $node, array $namespaceParts): void
     {
         $expectedBridgeNameRegexp = '#^' . $namespaceParts['moduleName'] . 'To[\w]+' . $namespaceParts['layerName'] . 'Bridge$#';
 
@@ -55,15 +61,22 @@ class BridgeNameRule extends AbstractRule implements ClassAware
             'The bridge name is not \'%sTo{target_module_name}%sBridge\'. That violates the rule "%s"',
             $namespaceParts['moduleName'],
             $namespaceParts['layerName'],
-            static::RULE
+            static::CLASS_RULE
         );
 
         $this->addViolation($node, [$message]);
     }
 
-    protected function verifyInterface($node, $namespaceParts)
+    /**
+     * @param \PHPMD\AbstractNode $node
+     * @param array $namespaceParts
+     *
+     * @return void
+     */
+    protected function verifyInterface(AbstractNode $node, array $namespaceParts): void
     {
-        $interfaceNode = new InterfaceNode($node->getInterfaces()[0]);
+        $firstInterface = $node->getInterfaces()[0];
+        $interfaceNode = new InterfaceNode($firstInterface);
 
         $expectedBridgeInterfaceNameRegexp = '#^' . $namespaceParts['moduleName'] . 'To[\w]+' . $namespaceParts['layerName'] . 'Interface$#';
 
@@ -72,22 +85,18 @@ class BridgeNameRule extends AbstractRule implements ClassAware
                 'The bridge interface name is not \'%sTo{target_module_name}%sInterface\'. That violates the rule "%s"',
                 $namespaceParts['moduleName'],
                 $namespaceParts['layerName'],
-                static::RULE
+                static::INTERFACE_RULE
             );
             $this->addViolation($interfaceNode, [$message]);
 
             return;
         }
 
+        if (str_replace('Interface', 'Bridge', $interfaceNode->getName()) !== $node->getName()) {
+            $message = 'The bridge interface name must have the same name postfix as the bridge class has.';
+            $this->addViolation($interfaceNode, [$message]);
 
-        if (str_replace('Interface', 'Bridge', $interfaceNode->getName()) === $node->getName()) {
             return;
         }
-
-        $message = sprintf(
-            'The bridge interface must have the same name postfix.',
-            static::RULE
-        );
-        $this->addViolation($interfaceNode, [$message]);
     }
 }

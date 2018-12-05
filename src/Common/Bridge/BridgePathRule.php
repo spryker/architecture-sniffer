@@ -14,14 +14,15 @@ use PHPMD\Rule\ClassAware;
 
 class BridgePathRule extends AbstractRule implements ClassAware
 {
-    const RULE = 'A bridge must lie in "Dependency" folder.';
+    protected const CLASS_RULE = 'A bridge must lie in "Dependency" folder.';
+    protected const INTERFACE_RULE = 'A bridge interface must lie in "Dependency" folder.';
 
     /**
      * @return string
      */
     public function getDescription()
     {
-        return static::RULE;
+        return static::CLASS_RULE;
     }
 
     /**
@@ -39,7 +40,12 @@ class BridgePathRule extends AbstractRule implements ClassAware
         $this->verifyInterface($node);
     }
 
-    protected function verifyClass($node)
+    /**
+     * @param \PHPMD\AbstractNode $node
+     *
+     * @return void
+     */
+    protected function verifyClass(AbstractNode $node): void
     {
         if (preg_match('#.*\\\\Dependency\\\\.*#', $node->getNamespaceName()) !== 0) {
             return;
@@ -47,15 +53,20 @@ class BridgePathRule extends AbstractRule implements ClassAware
 
         $message = sprintf(
             'The bridge is not lie in "Dependency" folder. That violates the rule "%s"',
-            static::RULE
+            static::CLASS_RULE
         );
-
         $this->addViolation($node, [$message]);
     }
 
-    protected function verifyInterface($node)
+    /**
+     * @param \PHPMD\AbstractNode $node
+     *
+     * @return void
+     */
+    protected function verifyInterface(AbstractNode $node): void
     {
-        $interfaceNode = new InterfaceNode($node->getInterfaces()[0]);
+        $firstInterface = $node->getInterfaces()[0];
+        $interfaceNode = new InterfaceNode($firstInterface);
 
         if (preg_match('#.*\\\\Dependency\\\\.*#', $interfaceNode->getNamespaceName()) !== 0) {
             return;
@@ -63,7 +74,7 @@ class BridgePathRule extends AbstractRule implements ClassAware
 
         $message = sprintf(
             'The bridge interface is not lie in "Dependency" folder. That violates the rule "%s"',
-            static::RULE
+            static::INTERFACE_RULE
         );
         $this->addViolation($interfaceNode, [$message]);
     }

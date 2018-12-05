@@ -5,7 +5,7 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
-namespace ArchitectureSnifferTest\Common\ModuleConstants;
+namespace ArchitectureSnifferTest\Shared\ModuleConstants;
 
 use ArchitectureSniffer\Shared\ModuleConstantsFormingConstantValuesRule;
 use ArchitectureSniffer\Shared\ModuleConstantsPathRule;
@@ -19,9 +19,9 @@ class ModuleConstantsTest extends AbstractArchitectureSnifferRuleTest
      */
     public function testRuleAppliesWhenModuleConstantsLiesNotInSharedDirectory(): void
     {
-        $pluginInterfaceSuffixRule = new ModuleConstantsPathRule();
-        $pluginInterfaceSuffixRule->setReport($this->getReportMock(1));
-        $pluginInterfaceSuffixRule->apply($this->getInterfaceNode());
+        $moduleConstantsPathRule = new ModuleConstantsPathRule();
+        $moduleConstantsPathRule->setReport($this->getReportMock(1));
+        $moduleConstantsPathRule->apply($this->getInterfaceNode());
     }
 
     /**
@@ -29,9 +29,9 @@ class ModuleConstantsTest extends AbstractArchitectureSnifferRuleTest
      */
     public function testRuleAppliesWhenModuleConstantsIsNotInterface(): void
     {
-        $pluginInterfaceSuffixRule = new ModuleConstantsTypeRule();
-        $pluginInterfaceSuffixRule->setReport($this->getReportMock(1));
-        $pluginInterfaceSuffixRule->apply($this->getClassNode());
+        $moduleConstantsTypeRule = new ModuleConstantsTypeRule();
+        $moduleConstantsTypeRule->setReport($this->getReportMock(1));
+        $moduleConstantsTypeRule->apply($this->getClassNode());
     }
 
     /**
@@ -39,8 +39,8 @@ class ModuleConstantsTest extends AbstractArchitectureSnifferRuleTest
      */
     public function testRuleDoesNotApplyWhenModuleConstantsHasCorrectConstantValues(): void
     {
-        $pluginInterfaceSuffixRule = new ModuleConstantsFormingConstantValuesRule();
-        $pluginInterfaceSuffixRule->setReport($this->getReportMock(0));
-        $pluginInterfaceSuffixRule->apply($this->getInterfaceNode());
+        $moduleConstantsFormingConstantValuesRule = new ModuleConstantsFormingConstantValuesRule();
+        $moduleConstantsFormingConstantValuesRule->setReport($this->getReportMock(0));
+        $moduleConstantsFormingConstantValuesRule->apply($this->getInterfaceNode());
     }
 }

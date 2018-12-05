@@ -1,4 +1,4 @@
-namespace: ArchitectureSnifferTest\Common
+namespace: ArchitectureSnifferTest\Shared
 
 paths:
     tests: .
@@ -12,15 +12,9 @@ coverage:
     whitelist: { include: ['../../src/*'] }
 
 suites:
-    Plugin:
-        path: Plugin
-        class_name: CommonTester
-        modules:
-            enabled:
-                - Asserts
-    Factory:
-        path: Factory
-        class_name: CommonTester
+    ModuleConstants:
+        path: ModuleConstants
+        class_name: SharedTester
         modules:
             enabled:
                 - Asserts

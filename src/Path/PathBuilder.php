@@ -156,6 +156,6 @@ class PathBuilder implements PathBuilderInterface
      */
     protected function formatCamelCaseToSnakeCase(string $string)
     {
-        return strtolower((new CamelCaseToSeparator('-'))->filter($moduleName));
+        return strtolower((new CamelCaseToSeparator('-'))->filter($string));
     }
 }

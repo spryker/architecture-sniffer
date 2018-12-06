@@ -20,6 +20,14 @@
     </rule>
 
     <rule
+            name="FacadeArgumentsNotAllowedUseEntityTransferRule"
+            message="Zed Business Layer - Facade: {0}"
+            class="ArchitectureSniffer\Zed\Business\Facade\FacadeArgumentsNotAllowedUseEntityTransferRule">
+
+        <priority>3</priority>
+    </rule>
+
+    <rule
             name="FacadeArgumentsRule"
             message="Zed Business Layer - Facade: {0}"
             class="ArchitectureSniffer\Zed\Business\Facade\FacadeArgumentsRule">
@@ -96,6 +104,15 @@
             name="ZedBusinessDirectoryNoModelRule"
             message="Zed Business - Directory: {0}"
             class="ArchitectureSniffer\Zed\Business\Directory\DirectoryNoModelRule">
+
+        <priority>3</priority>
+    </rule>
+
+    <!-- COMMUNICATION PLUGIN RULES -->
+    <rule
+        name="PluginArgumentsNotAllowedUseEntityTransferRule"
+        message="Zed Communication Layer - Plugin: {0}"
+        class="ArchitectureSniffer\Zed\Communication\Plugin\PluginArgumentsNotAllowedUseEntityTransferRule">
 
         <priority>3</priority>
     </rule>

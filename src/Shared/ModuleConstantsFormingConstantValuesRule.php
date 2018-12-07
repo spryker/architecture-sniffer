@@ -41,7 +41,12 @@ class ModuleConstantsFormingConstantValuesRule extends AbstractRule implements I
             /** @var \PDepend\Source\AST\ASTValue|\PHPMD\AbstractNode $constant */
             $value = $constant->getValue()->getValue();
 
-            $expectedConstantValue = strtoupper(preg_replace('/(?<!^)[A-Z]/', '_$0', $moduleName)) . ':' . $constant->getImage();
+            $expectedConstantValue = sprintf(
+                '%s:%s',
+                $this->getUnderscoredConstantName($moduleName),
+                $constant->getImage()
+            );
+
             if ($value === $expectedConstantValue) {
                 continue;
             }
@@ -55,5 +60,15 @@ class ModuleConstantsFormingConstantValuesRule extends AbstractRule implements I
 
             $this->addViolation($node, [$message]);
         }
+    }
+
+    /**
+     * @param string $moduleName
+     *
+     * @return string
+     */
+    protected function getUnderscoredConstantName(string $moduleName): string
+    {
+        return strtoupper(preg_replace('/(?<!^)[A-Z]/', '_$0', $moduleName));
     }
 }

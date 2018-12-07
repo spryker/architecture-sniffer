@@ -33,7 +33,7 @@ class FactoryCreateContainOneNewRule extends AbstractFactoryRule implements Meth
      */
     public function apply(AbstractNode $node)
     {
-        if (!$this->isFactory($node)) {
+        if (!$this->isFactoryExceptPersistence($node)) {
             return;
         }
 

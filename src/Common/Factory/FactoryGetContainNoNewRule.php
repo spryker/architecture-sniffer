@@ -30,7 +30,7 @@ class FactoryGetContainNoNewRule extends AbstractFactoryRule implements MethodAw
      */
     public function apply(AbstractNode $node)
     {
-        if (!$this->isFactory($node)) {
+        if (!$this->isFactoryExceptPersistence($node)) {
             return;
         }
 

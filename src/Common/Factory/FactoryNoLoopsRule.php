@@ -43,7 +43,7 @@ class FactoryNoLoopsRule extends AbstractFactoryRule implements ClassAware
      */
     public function apply(AbstractNode $node)
     {
-        if (!$this->isFactory($node)) {
+        if (!$this->isFactoryExceptPersistence($node)) {
             return;
         }
 

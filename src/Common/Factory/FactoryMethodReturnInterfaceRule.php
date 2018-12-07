@@ -33,7 +33,7 @@ class FactoryMethodReturnInterfaceRule extends AbstractFactoryRule implements Me
      */
     public function apply(AbstractNode $node)
     {
-        if (!$this->isFactory($node)) {
+        if (!$this->isFactoryExceptPersistence($node)) {
             return;
         }
 

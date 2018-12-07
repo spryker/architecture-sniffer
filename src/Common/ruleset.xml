@@ -68,6 +68,14 @@
         <priority>3</priority>
     </rule>
 
+    <rule
+            name="FactoryOnlyPublicMethodsRule"
+            message="Factories: {0}"
+            class="ArchitectureSniffer\Common\Factory\FactoryOnlyPublicMethodsRule">
+
+        <priority>3</priority>
+    </rule>
+
     <!-- COMMON COMMUNICATION RULES -->
     <rule
         name="CommunicationControllerRule"

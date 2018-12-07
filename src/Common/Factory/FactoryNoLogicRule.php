@@ -43,7 +43,7 @@ class FactoryNoLogicRule extends AbstractFactoryRule implements MethodAware
      */
     public function apply(AbstractNode $node)
     {
-        if (!$this->isFactory($node)) {
+        if (!$this->isFactoryExceptPersistence($node)) {
             return;
         }
 

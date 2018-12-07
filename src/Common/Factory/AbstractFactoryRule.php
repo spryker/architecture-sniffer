@@ -25,7 +25,7 @@ abstract class AbstractFactoryRule extends SprykerAbstractRule
     {
         $className = $this->getClassName($node);
 
-        if (preg_match(self::PATTERN_FACTORY, $className) === 0) {
+        if (preg_match(static::PATTERN_FACTORY, $className) === 0) {
             return false;
         }
 
@@ -41,7 +41,7 @@ abstract class AbstractFactoryRule extends SprykerAbstractRule
     {
         $className = $this->getClassName($node);
 
-        if (preg_match(self::PATTERN_FACTORY_EXCEPT_PERSISTENCE, $className) === 0) {
+        if (preg_match(static::PATTERN_FACTORY_EXCEPT_PERSISTENCE, $className) === 0) {
             return false;
         }
 

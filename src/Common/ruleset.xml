@@ -93,6 +93,13 @@
 
         <priority>3</priority>
     </rule>
+    <rule
+            name="NewPluginExtensionModuleRule"
+            message="Plugin: {0}"
+            class="ArchitectureSniffer\Common\Plugin\NewPluginExtensionModuleRule">
+
+        <priority>3</priority>
+    </rule>
     <!-- EOF COMMON COMMUNICATION PLUGIN RULES -->
 
     <!-- EOF COMMON COMMUNICATION RULES -->

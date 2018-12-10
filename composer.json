@@ -1,7 +1,7 @@
 {
   "name": "spryker/architecture-sniffer",
   "type": "library",
-  "description": "architecture-sniffer module",
+  "description": "Spryker Architecture Sniffer",
   "homepage": "http://spryker.com",
   "license": "MIT",
   "require": {

@@ -1,19 +1,9 @@
 {
   "name": "spryker/architecture-sniffer",
-  "description": "Spryker Code Architecture Sniffer",
   "type": "library",
+  "description": "Spryker Architecture Sniffer",
+  "homepage": "https://spryker.com",
   "license": "MIT",
-  "keywords": ["framework", "sniffer", "architecture", "standards"],
-  "homepage": "http://spryker.com",
-  "authors": [
-    {
-      "name": "Spryker",
-      "homepage": "http://spryker.com"
-    }
-  ],
-  "support": {
-    "source": "https://github.com/spryker/architecture-sniffer"
-  },
   "require": {
     "php": ">=7.1",
     "phpmd/phpmd": "^2.4",
@@ -29,6 +19,26 @@
     "spryker/code-sniffer": "*",
     "symfony/var-dumper": "^4.0"
   },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "config": {
+    "sort-packages": true
+  },
+  "keywords": [
+    "framework",
+    "sniffer",
+    "architecture",
+    "standards"
+  ],
+  "authors": [
+    {
+      "name": "Spryker",
+      "homepage": "https://spryker.com"
+    }
+  ],
+  "support": {
+    "source": "https://github.com/spryker/architecture-sniffer"
+  },
   "autoload": {
     "psr-4": {
       "ArchitectureSniffer\\": "src/"
@@ -39,5 +49,7 @@
       "ArchitectureSnifferTest\\": "tests/"
     }
   },
-  "include-path":  ["src/"]
+  "include-path": [
+    "src/"
+  ]
 }

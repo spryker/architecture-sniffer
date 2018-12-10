@@ -7,12 +7,11 @@
 
 namespace ArchitectureSniffer\Common\Factory;
 
-use ArchitectureSniffer\SprykerAbstractRule;
 use PHPMD\AbstractNode;
 use PHPMD\Node\MethodNode;
 use PHPMD\Rule\MethodAware;
 
-class FactoryOnlyPublicMethodsRule extends SprykerAbstractRule implements MethodAware
+class FactoryOnlyPublicMethodsRule extends AbstractFactoryRule implements MethodAware
 {
     public const RULE = 'All the factory methods should be public by default';
 
@@ -23,9 +22,7 @@ class FactoryOnlyPublicMethodsRule extends SprykerAbstractRule implements Method
      */
     public function apply(AbstractNode $node)
     {
-        $className = $node->getNode()->getParent()->getNamespacedName();
-
-        if (preg_match('/\\\\*\\\\.+\\\\.+\\\\[A-Za-z0-9]+(Business|Service|Communication|Persistence)Factory$/', $className) === 0) {
+        if (!$this->isFactory($node)) {
             return;
         }
 

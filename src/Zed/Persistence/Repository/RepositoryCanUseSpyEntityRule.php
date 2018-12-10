@@ -8,18 +8,11 @@
 namespace ArchitectureSniffer\Zed\Persistence\Repository;
 
 use PHPMD\AbstractNode;
-use PHPMD\AbstractRule;
 use PHPMD\Node\ClassNode;
 use PHPMD\Rule\ClassAware;
 
-class RepositoryCanUseSpyEntityRule extends AbstractRule implements ClassAware
+class RepositoryCanUseSpyEntityRule extends AbstractRepositoryRule implements ClassAware
 {
-    /**
-     * TODO: Changes after CrossModule Propel Query usage rule release
-     * - AbstractRule will be changed on AbstractRepositoryRule.
-     * - isRepository() method will be removed.
-     */
-
     public const RULE = 'Entity can be initialized in Repository only.';
 
     protected const PATTERN_NAMESPACE_APPLICATION_ZED = '/^[a-zA-Z]+\\\\Zed\\\\/';
@@ -108,7 +101,7 @@ class RepositoryCanUseSpyEntityRule extends AbstractRule implements ClassAware
      */
     protected function isExcludedModule(ClassNode $classNode): bool
     {
-        $moduleName = $this->getModuleName($classNode);
+        $moduleName = $this->getModuleName($classNode->getNamespaceName());
 
         foreach ($this->getExcludedModuleNamePatterns() as $excludedModuleNamePattern) {
             if (preg_match($excludedModuleNamePattern, $moduleName)) {
@@ -133,41 +126,5 @@ class RepositoryCanUseSpyEntityRule extends AbstractRule implements ClassAware
             '/SearchConnector$/',
             '/SearchExtension$/',
         ];
-    }
-
-    /**
-     * @param \PHPMD\Node\ClassNode $classNode
-     *
-     * @return bool
-     */
-    protected function isRepository(ClassNode $classNode): bool
-    {
-        $repositoryPattern = '/\\\\*\\\\.+\\\\.+\\\\[A-Za-z0-9]+Repository$/';
-
-        if ($classNode instanceof ClassNode) {
-            $className = $classNode->getNamespaceName() . '\\' . $classNode->getName();
-        } else {
-            $className = $classNode->getFullQualifiedName();
-        }
-
-        if (preg_match($repositoryPattern, $className)) {
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * @param \PHPMD\Node\ClassNode $classNode
-     *
-     * @return string
-     */
-    protected function getModuleName(ClassNode $classNode): string
-    {
-        $namespace = $classNode->getNamespaceName();
-        $namespace = preg_replace(static::PATTERN_NAMESPACE_APPLICATION_ZED, '', $namespace);
-        $namespace = explode('\\', $namespace);
-
-        return array_shift($namespace);
     }
 }

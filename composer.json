@@ -2,7 +2,7 @@
   "name": "spryker/architecture-sniffer",
   "type": "library",
   "description": "Spryker Architecture Sniffer",
-  "homepage": "http://spryker.com",
+  "homepage": "https://spryker.com",
   "license": "MIT",
   "require": {
     "php": ">=7.1",
@@ -33,7 +33,7 @@
   "authors": [
     {
       "name": "Spryker",
-      "homepage": "http://spryker.com"
+      "homepage": "https://spryker.com"
     }
   ],
   "support": {

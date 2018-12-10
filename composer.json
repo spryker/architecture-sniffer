@@ -39,6 +39,16 @@
   "support": {
     "source": "https://github.com/spryker/architecture-sniffer"
   },
+  "autoload": {
+    "psr-4": {
+      "ArchitectureSniffer\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "ArchitectureSnifferTest\\": "tests/"
+    }
+  },
   "include-path": [
     "src/"
   ]

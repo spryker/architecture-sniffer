@@ -117,4 +117,13 @@
         <priority>3</priority>
     </rule>
 
+    <!-- Zed Repository - RFC Spy Entity -->
+    <rule
+        name="RepositoryCanUseSpyEntityRule"
+        message="Zed Business - Directory: {0}"
+        class="ArchitectureSniffer\Zed\Persistence\Repository\RepositoryCanUseSpyEntityRule">
+
+        <priority>3</priority>
+    </rule>
+
 </ruleset>

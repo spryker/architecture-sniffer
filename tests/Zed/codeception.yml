@@ -24,3 +24,9 @@ suites:
         modules:
             enabled:
                 - Asserts
+    Persistence:
+        path: Persistence
+        class_name: CommonTester
+        modules:
+          enabled:
+            - Asserts

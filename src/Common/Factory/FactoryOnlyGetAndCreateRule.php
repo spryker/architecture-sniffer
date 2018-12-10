@@ -30,7 +30,7 @@ class FactoryOnlyGetAndCreateRule extends AbstractFactoryRule implements ClassAw
      */
     public function apply(AbstractNode $node)
     {
-        if (!$this->isFactoryExceptPersistence($node)) {
+        if (!$this->isFactory($node)) {
             return;
         }
 

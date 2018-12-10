@@ -7,12 +7,12 @@
 
 namespace ArchitectureSniffer\Common\Plugin;
 
+use ArchitectureSniffer\SprykerAbstractRule;
 use PDepend\Source\AST\ASTClass;
 use PHPMD\AbstractNode;
-use PHPMD\AbstractRule;
 use PHPMD\Rule\ClassAware;
 
-abstract class AbstractPluginRule extends AbstractRule
+abstract class AbstractPluginRule extends SprykerAbstractRule
 {
     protected const EXTENDS_CLASS_NAME = 'AbstractPlugin';
     protected const PLUGIN_DIRECTORY_PATTERN = '#(Client|Yves|Service)\\\\.+\\\\Plugin\\\\(?!ServiceProvider|Provider)$|Communication\\\\Plugin\\\\[a-zA-Z0-9]+$#';

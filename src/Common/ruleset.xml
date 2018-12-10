@@ -68,6 +68,22 @@
         <priority>3</priority>
     </rule>
 
+    <rule
+            name="FactoryOnlyPublicMethodsRule"
+            message="Factories: {0}"
+            class="ArchitectureSniffer\Common\Factory\FactoryOnlyPublicMethodsRule">
+
+        <priority>3</priority>
+    </rule>
+
+    <rule
+        name="FactoryPropelQueryMethodNameRule"
+        message="Factories: {0}"
+        class="ArchitectureSniffer\Common\Factory\FactoryPropelQueryMethodNameRule">
+
+        <priority>3</priority>
+    </rule>
+
     <!-- COMMON COMMUNICATION RULES -->
     <rule
         name="CommunicationControllerRule"
@@ -86,6 +102,7 @@
 
         <priority>3</priority>
     </rule>
+
     <rule
             name="PluginInterfaceSuffixRule"
             message="Plugin - Plugin interfaces must be suffixed with &quot;PluginInterface&quot;! Please check: &quot;{0}&quot;"
@@ -93,7 +110,39 @@
 
         <priority>3</priority>
     </rule>
+
+    <rule
+            name="NewPluginExtensionModuleRule"
+            message="Plugin: {0}"
+            class="ArchitectureSniffer\Common\Plugin\NewPluginExtensionModuleRule">
+
+        <priority>3</priority>
+    </rule>
     <!-- EOF COMMON COMMUNICATION PLUGIN RULES -->
+
+    <!-- COMMON BRIDGE RULES -->
+    <rule
+            name="BridgeNameRule"
+            message="Bridges: {0}"
+            class="ArchitectureSniffer\Common\Bridge\BridgeNameRule">
+
+        <priority>3</priority>
+    </rule>
+    <rule
+            name="BridgePathRule"
+            message="Bridges: {0}"
+            class="ArchitectureSniffer\Common\Bridge\BridgePathRule">
+
+        <priority>3</priority>
+    </rule>
+    <rule
+            name="BridgeMethodsRule"
+            message="Bridges: {0}"
+            class="ArchitectureSniffer\Common\Bridge\BridgeMethodsRule">
+
+        <priority>3</priority>
+    </rule>
+    <!-- EOF COMMON BRIDGE RULES -->
 
     <!-- EOF COMMON COMMUNICATION RULES -->
 

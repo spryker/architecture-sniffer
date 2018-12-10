@@ -1,0 +1,32 @@
+namespace: ArchitectureSnifferTest\Zed
+
+paths:
+  tests: .
+  data: ../_data
+  support: _support
+  log: ../_output
+
+coverage:
+  enabled: true
+  remote: false
+  whitelist: { include: ['../../src/*'] }
+
+suites:
+  Business:
+    path: Business
+    class_name: CommonTester
+    modules:
+      enabled:
+        - Asserts
+  Communication:
+    path: Communication/*/
+    class_name: CommonTester
+    modules:
+      enabled:
+        - Asserts
+  Persistence:
+    path: Persistence
+    class_name: CommonTester
+    modules:
+      enabled:
+        - Asserts

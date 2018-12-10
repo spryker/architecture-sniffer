@@ -44,7 +44,7 @@ class FactoryGetContainNoNewRule extends AbstractFactoryRule implements MethodAw
      */
     protected function applyRule(MethodNode $method)
     {
-        if (substr($method->getName(), 0, 3) != 'get') {
+        if (substr($method->getName(), 0, 3) !== 'get') {
             return;
         }
 

@@ -7,8 +7,8 @@
 
 namespace ArchitectureSniffer\Common\Bridge;
 
+use ArchitectureSniffer\SprykerAbstractRule;
 use PHPMD\AbstractNode;
-use PHPMD\AbstractRule;
 use PHPMD\Node\ClassNode;
 use PHPMD\Node\InterfaceNode;
 use PHPMD\Node\MethodNode;
@@ -16,7 +16,7 @@ use PHPMD\Rule\ClassAware;
 use ReflectionClass;
 use ReflectionMethod;
 
-class BridgeMethodsRule extends AbstractRule implements ClassAware
+class BridgeMethodsRule extends SprykerAbstractRule implements ClassAware
 {
     protected const RULE = 'All bridge methods must have exactly the same signature as their interface';
 
@@ -41,7 +41,12 @@ class BridgeMethodsRule extends AbstractRule implements ClassAware
             return;
         }
 
-        $firstInterface = $node->getInterfaces()[0];
+        $firstInterface = $this->findFirstClassInterface($node);
+
+        if ($firstInterface === null) {
+            return;
+        }
+
         $interfaceNode = new InterfaceNode($firstInterface);
 
         $this->verifyClass($node, $interfaceNode);
@@ -166,12 +171,12 @@ class BridgeMethodsRule extends AbstractRule implements ClassAware
         $notMatchingMethods = [];
 
         foreach ($interfaceNode->getMethods() as $interfaceMethod) {
-            $bridgedInterfaceReflectionMethod = $bridgedInterfaceReflection->getMethod($interfaceMethod->getName());
-
-            if (!$bridgedInterfaceReflectionMethod) {
+            if (!$bridgedInterfaceReflection->hasMethod($interfaceMethod->getName())) {
                 $notMatchingMethods[] = $interfaceMethod;
                 continue;
             }
+
+            $bridgedInterfaceReflectionMethod = $bridgedInterfaceReflection->getMethod($interfaceMethod->getName());
 
             $interfaceMethodName = sprintf('%s::%s', $interfaceNode->getFullQualifiedName(), $interfaceMethod->getName());
             $interfaceMethodReflection = new ReflectionMethod($interfaceMethodName);
@@ -239,6 +244,7 @@ class BridgeMethodsRule extends AbstractRule implements ClassAware
                     return null;
                 }
 
+                //todo: Spryker\Zed\Ratepay\Dependency\Facade\RatepayToSalesAggregatorBridge - need to fix
                 return new ReflectionClass($matches['interfaceName']);
             }
         }

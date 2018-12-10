@@ -27,7 +27,12 @@ class NewPluginExtensionModuleRule extends AbstractPluginRule implements ClassAw
             return;
         }
 
-        $firstInterface = $node->getInterfaces()[0];
+        $firstInterface = $this->findFirstClassInterface($node);
+
+        if ($firstInterface === null) {
+            return;
+        }
+
         $interfaceReflection = new ReflectionClass($firstInterface->getNamespacedName());
 
         $this->verifyInterface($node, $interfaceReflection);

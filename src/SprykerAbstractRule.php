@@ -7,7 +7,9 @@
 
 namespace ArchitectureSniffer;
 
+use PDepend\Source\AST\AbstractASTClassOrInterface;
 use PHPMD\AbstractRule;
+use PHPMD\Node\ClassNode;
 use PHPMD\Node\MethodNode;
 
 abstract class SprykerAbstractRule extends AbstractRule implements SprykerRuleInterface
@@ -38,5 +40,21 @@ abstract class SprykerAbstractRule extends AbstractRule implements SprykerRuleIn
         }
 
         return $matches['moduleName'];
+    }
+
+    /**
+     * @param \PHPMD\Node\ClassNode $node
+     *
+     * @return \PDepend\Source\AST\AbstractASTClassOrInterface|null
+     */
+    protected function findFirstClassInterface(ClassNode $node): ?AbstractASTClassOrInterface
+    {
+        $classNodeInterfaces = $node->getInterfaces();
+
+        if (!$classNodeInterfaces->count()) {
+            return null;
+        }
+
+        return $classNodeInterfaces[0];
     }
 }

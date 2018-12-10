@@ -5,4 +5,5 @@ composer.lock
 phpunit.phar
 
 tests/Common/_support/
+tests/Zed/_support/
 tests/_output/

@@ -20,6 +20,14 @@
     </rule>
 
     <rule
+            name="FacadeArgumentsNotAllowedUseEntityTransferRule"
+            message="Zed Business Layer - Facade: {0}"
+            class="ArchitectureSniffer\Zed\Business\Facade\FacadeArgumentsNotAllowedUseEntityTransferRule">
+
+        <priority>3</priority>
+    </rule>
+
+    <rule
             name="FacadeArgumentsRule"
             message="Zed Business Layer - Facade: {0}"
             class="ArchitectureSniffer\Zed\Business\Facade\FacadeArgumentsRule">
@@ -100,6 +108,15 @@
         <priority>3</priority>
     </rule>
 
+    <!-- COMMUNICATION PLUGIN RULES -->
+    <rule
+        name="PluginArgumentsNotAllowedUseEntityTransferRule"
+        message="Zed Communication Layer - Plugin: {0}"
+        class="ArchitectureSniffer\Zed\Communication\Plugin\PluginArgumentsNotAllowedUseEntityTransferRule">
+
+        <priority>3</priority>
+    </rule>
+
     <!-- Zed DependencyProvider - RFC Propel Query -->
     <rule
         name="ZedDependencyProviderPropelQueryConstantNameRule"
@@ -122,7 +139,16 @@
         message="Zed Persistence - Repository: {0}"
         class="ArchitectureSniffer\Zed\Persistence\Repository\RepositoryPropelQueryJoinRule">
 
-        <priority>5</priority>
+        <priority>4</priority>
+    </rule>
+
+    <!-- Zed Repository - RFC Spy Entity -->
+    <rule
+        name="RepositoryCanUseSpyEntityRule"
+        message="Zed Business - Directory: {0}"
+        class="ArchitectureSniffer\Zed\Persistence\Repository\RepositoryCanUseSpyEntityRule">
+
+        <priority>3</priority>
     </rule>
 
 </ruleset>

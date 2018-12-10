@@ -1,4 +1,4 @@
-namespace: ArchitectureSnifferTest\Common
+namespace: ArchitectureSnifferTest\Zed
 
 paths:
   tests: .
@@ -12,20 +12,20 @@ coverage:
   whitelist: { include: ['../../src/*'] }
 
 suites:
-  Plugin:
-    path: Plugin
+  Business:
+    path: Business
     class_name: CommonTester
     modules:
       enabled:
         - Asserts
-  Factory:
-    path: Factory
+  Communication:
+    path: Communication/*/
     class_name: CommonTester
     modules:
       enabled:
         - Asserts
-  Bridge:
-    path: Bridge
+  Persistence:
+    path: Persistence
     class_name: CommonTester
     modules:
       enabled:

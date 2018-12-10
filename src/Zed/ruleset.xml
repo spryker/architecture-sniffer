@@ -100,4 +100,29 @@
         <priority>3</priority>
     </rule>
 
+    <!-- Zed DependencyProvider - RFC Propel Query -->
+    <rule
+        name="ZedDependencyProviderPropelQueryConstantNameRule"
+        message="Zed DependencyProvider - DependencyProvider: {0}"
+        class="ArchitectureSniffer\Zed\DependencyProvider\DependencyProviderPropelQueryConstantNameRule">
+
+        <priority>3</priority>
+    </rule>
+    <rule
+        name="ZedDependencyProviderPropelQueryMethodNameRule"
+        message="Zed DependencyProvider - DependencyProvider: {0}"
+        class="ArchitectureSniffer\Zed\DependencyProvider\DependencyProviderPropelQueryMethodNameRule">
+
+        <priority>3</priority>
+    </rule>
+
+    <!-- Zed Repository - RFC Propel Query -->
+    <rule
+        name="ZedPersistenceRepositoryPropelQueryJoinRule"
+        message="Zed Persistence - Repository: {0}"
+        class="ArchitectureSniffer\Zed\Persistence\Repository\RepositoryPropelQueryJoinRule">
+
+        <priority>5</priority>
+    </rule>
+
 </ruleset>

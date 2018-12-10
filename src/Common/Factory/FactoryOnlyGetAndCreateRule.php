@@ -46,7 +46,7 @@ class FactoryOnlyGetAndCreateRule extends AbstractFactoryRule implements ClassAw
      */
     protected function applyRule(MethodNode $method)
     {
-        if (preg_match('/^(\_\_|create|get).+/', $method->getName()) != 0) {
+        if (preg_match('/^(\_\_|create|get).+/', $method->getName()) !== 0) {
             return;
         }
 

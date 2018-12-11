@@ -136,7 +136,12 @@ class FactoryCreateContainOneNewRule extends AbstractFactoryRule implements Meth
         return false;
     }
 
-    private function isStaticMethodCall(AbstractNode $methodCall)
+    /**
+     * @param \PHPMD\AbstractNode $methodCall
+     *
+     * @return bool
+     */
+    protected function isStaticMethodCall(AbstractNode $methodCall): bool
     {
         return $methodCall->getChild(0)->getNode() instanceof ASTClassOrInterfaceReference &&
             $methodCall->getChild(1)->getNode() instanceof ASTMethodPostfix &&
@@ -144,12 +149,22 @@ class FactoryCreateContainOneNewRule extends AbstractFactoryRule implements Meth
             !$this->isCallingSelf($methodCall);
     }
 
-    private function isCallingParent(AbstractNode $methodCall)
+    /**
+     * @param \PHPMD\AbstractNode $methodCall
+     *
+     * @return bool
+     */
+    protected function isCallingParent(AbstractNode $methodCall): bool
     {
         return $methodCall->getChild(0)->getNode() instanceof ASTParentReference;
     }
 
-    private function isCallingSelf(AbstractNode $methodCall)
+    /**
+     * @param \PHPMD\AbstractNode $methodCall
+     *
+     * @return bool
+     */
+    protected function isCallingSelf(AbstractNode $methodCall): bool
     {
         return $methodCall->getChild(0)->getNode() instanceof ASTSelfReference;
     }

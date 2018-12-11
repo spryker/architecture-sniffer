@@ -27,7 +27,19 @@ class NewPluginExtensionModuleRule extends AbstractPluginRule implements ClassAw
             return;
         }
 
-        $firstInterface = $this->findFirstClassInterface($node);
+        $classNodeInterfaces = $node->getInterfaces();
+
+        if (!$classNodeInterfaces->count()) {
+            $message = sprintf(
+                'The Plugin `%s` doesn\'t have any interfaces.',
+                $node->getName()
+            );
+            $this->addViolation($node, [$message]);
+
+            return;
+        }
+
+        $firstInterface = $classNodeInterfaces[0];
 
         if ($firstInterface === null) {
             return;

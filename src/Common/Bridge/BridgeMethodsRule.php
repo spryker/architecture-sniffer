@@ -41,11 +41,19 @@ class BridgeMethodsRule extends SprykerAbstractRule implements ClassAware
             return;
         }
 
-        $firstInterface = $this->findFirstClassInterface($node);
+        $classNodeInterfaces = $node->getInterfaces();
 
-        if ($firstInterface === null) {
+        if (!$classNodeInterfaces->count()) {
+            $message = sprintf(
+                'The bridge `%s` doesn\'t  have any interfaces.',
+                $node->getName()
+            );
+            $this->addViolation($node, [$message]);
+
             return;
         }
+
+        $firstInterface = $classNodeInterfaces[0];
 
         $interfaceNode = new InterfaceNode($firstInterface);
 

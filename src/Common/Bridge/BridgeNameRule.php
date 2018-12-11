@@ -75,7 +75,20 @@ class BridgeNameRule extends AbstractRule implements ClassAware
      */
     protected function verifyInterface(AbstractNode $node, array $namespaceParts): void
     {
-        $firstInterface = $node->getInterfaces()[0];
+        $classNodeInterfaces = $node->getInterfaces();
+
+        if (!$classNodeInterfaces->count()) {
+            $message = sprintf(
+                'The bridge `%s` doesn\'t  have any interfaces.',
+                $node->getName()
+            );
+            $this->addViolation($node, [$message]);
+
+            return;
+        }
+
+        $firstInterface = $classNodeInterfaces[0];
+
         $interfaceNode = new InterfaceNode($firstInterface);
 
         $expectedBridgeInterfaceNameRegexp = '#^' . $namespaceParts['moduleName'] . 'To[\w]+' . $namespaceParts['layerName'] . 'Interface$#';

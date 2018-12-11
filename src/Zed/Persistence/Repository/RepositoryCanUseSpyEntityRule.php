@@ -74,7 +74,13 @@ class RepositoryCanUseSpyEntityRule extends AbstractRepositoryRule implements Cl
         $entityNamePattern = '/^Spy/';
         $queryNamePattern = '/Query$/';
 
-        $className = $allocatedClass->getFirstChildOfType('ClassReference')->getName();
+        $classReference = $allocatedClass->getFirstChildOfType('ClassReference');
+
+        if ($classReference === null) {
+            return;
+        }
+
+        $className = $classReference->getName();
         $className = explode('\\', $className);
         $className = array_pop($className);
 

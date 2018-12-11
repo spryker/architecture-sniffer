@@ -65,7 +65,19 @@ class BridgePathRule extends AbstractRule implements ClassAware
      */
     protected function verifyInterface(AbstractNode $node): void
     {
-        $firstInterface = $node->getInterfaces()[0];
+        $classNodeInterfaces = $node->getInterfaces();
+
+        if (!$classNodeInterfaces->count()) {
+            $message = sprintf(
+                'The bridge `%s` doesn\'t  have any interfaces.',
+                $node->getName()
+            );
+            $this->addViolation($node, [$message]);
+
+            return;
+        }
+
+        $firstInterface = $classNodeInterfaces[0];
         $interfaceNode = new InterfaceNode($firstInterface);
 
         if (preg_match('#.*\\\\Dependency\\\\.*#', $interfaceNode->getNamespaceName()) !== 0) {

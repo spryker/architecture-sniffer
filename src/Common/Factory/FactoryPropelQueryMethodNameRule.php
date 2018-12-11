@@ -26,6 +26,10 @@ class FactoryPropelQueryMethodNameRule extends AbstractFactoryRule implements Me
             return;
         }
 
+        if ($this->isMethodDeprecated($node)) {
+            return;
+        }
+
         $this->applyRule($node);
     }
 

@@ -34,6 +34,10 @@ class FactoryGetContainNoNewRule extends AbstractFactoryRule implements MethodAw
             return;
         }
 
+        if ($this->isMethodDeprecated($node)) {
+            return;
+        }
+
         $this->applyRule($node);
     }
 

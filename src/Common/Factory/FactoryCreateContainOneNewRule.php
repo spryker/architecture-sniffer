@@ -41,6 +41,10 @@ class FactoryCreateContainOneNewRule extends AbstractFactoryRule implements Meth
             return;
         }
 
+        if ($this->isMethodDeprecated($node)) {
+            return;
+        }
+
         $this->applyRule($node);
     }
 
@@ -181,6 +185,11 @@ class FactoryCreateContainOneNewRule extends AbstractFactoryRule implements Meth
         return $methodCall->getChild(0)->getNode() instanceof ASTSelfReference;
     }
 
+    /**
+     * @param string $methodName
+     *
+     * @return bool
+     */
     protected function isMethodNameStartsWithCreate(string $methodName): bool
     {
         return substr($methodName, 0, 6) === 'create';

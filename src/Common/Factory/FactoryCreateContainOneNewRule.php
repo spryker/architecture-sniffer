@@ -7,6 +7,10 @@
 
 namespace ArchitectureSniffer\Common\Factory;
 
+use PDepend\Source\AST\ASTClassOrInterfaceReference;
+use PDepend\Source\AST\ASTMethodPostfix;
+use PDepend\Source\AST\ASTParentReference;
+use PDepend\Source\AST\ASTSelfReference;
 use PHPMD\AbstractNode;
 use PHPMD\Node\MethodNode;
 use PHPMD\Rule\MethodAware;
@@ -110,15 +114,58 @@ class FactoryCreateContainOneNewRule extends AbstractFactoryRule implements Meth
             return false;
         }
 
-        if ($primaryPrefixes[0]->getChild(0)->getName() === '$this' && substr($primaryPrefixes[0]->getChild(1)->getName(), 0, 6) === 'create') {
+        $firstPrimaryPrefix = $primaryPrefixes[0];
+
+        if ($firstPrimaryPrefix->getChild(0)->getName() === '$this' && substr($firstPrimaryPrefix->getChild(1)->getName(), 0, 6) === 'create') {
             return true;
         }
-        if ($primaryPrefixes[0]->getChild(0)->getName() === '$this' && substr($primaryPrefixes[0]->getChild(1)->getName(), 0, 2) === '->') {
+
+        if ($firstPrimaryPrefix->getChild(0)->getName() === '$this' && substr($firstPrimaryPrefix->getChild(1)->getName(), 0, 2) === '->') {
             if (substr($primaryPrefixes[1]->getChild(0)->getName(), 0, 6) === 'create') {
                 return true;
             }
         }
 
+        if ($firstPrimaryPrefix->getParent()->getName() === 'return' &&
+            $firstPrimaryPrefix->getChild(1)->getNode()->getImage() === 'create' &&
+            $this->isStaticMethodCall($firstPrimaryPrefix)
+        ) {
+            return true;
+        }
+
         return false;
+    }
+
+    /**
+     * @param \PHPMD\AbstractNode $methodCall
+     *
+     * @return bool
+     */
+    protected function isStaticMethodCall(AbstractNode $methodCall): bool
+    {
+        return $methodCall->getChild(0)->getNode() instanceof ASTClassOrInterfaceReference &&
+            $methodCall->getChild(1)->getNode() instanceof ASTMethodPostfix &&
+            !$this->isCallingParent($methodCall) &&
+            !$this->isCallingSelf($methodCall);
+    }
+
+    /**
+     * @param \PHPMD\AbstractNode $methodCall
+     *
+     * @return bool
+     */
+    protected function isCallingParent(AbstractNode $methodCall): bool
+    {
+        return $methodCall->getChild(0)->getNode() instanceof ASTParentReference;
+    }
+
+    /**
+     * @param \PHPMD\AbstractNode $methodCall
+     *
+     * @return bool
+     */
+    protected function isCallingSelf(AbstractNode $methodCall): bool
+    {
+        return $methodCall->getChild(0)->getNode() instanceof ASTSelfReference;
     }
 }

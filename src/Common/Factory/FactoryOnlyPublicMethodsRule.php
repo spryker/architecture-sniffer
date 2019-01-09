@@ -26,6 +26,10 @@ class FactoryOnlyPublicMethodsRule extends AbstractFactoryRule implements Method
             return;
         }
 
+        if ($this->isMethodDeprecated($node)) {
+            return;
+        }
+
         $this->applyRule($node);
     }
 

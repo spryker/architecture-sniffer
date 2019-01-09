@@ -47,6 +47,10 @@ class FactoryNoLogicRule extends AbstractFactoryRule implements MethodAware
             return;
         }
 
+        if ($this->isMethodDeprecated($node)) {
+            return;
+        }
+
         $this->applyRule($node);
     }
 

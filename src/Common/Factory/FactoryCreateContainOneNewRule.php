@@ -41,6 +41,10 @@ class FactoryCreateContainOneNewRule extends AbstractFactoryRule implements Meth
             return;
         }
 
+        if ($this->isMethodDeprecated($node)) {
+            return;
+        }
+
         $this->applyRule($node);
     }
 
@@ -116,21 +120,33 @@ class FactoryCreateContainOneNewRule extends AbstractFactoryRule implements Meth
 
         $firstPrimaryPrefix = $primaryPrefixes[0];
 
-        if ($firstPrimaryPrefix->getChild(0)->getName() === '$this' && substr($firstPrimaryPrefix->getChild(1)->getName(), 0, 6) === 'create') {
+        if ($firstPrimaryPrefix->getChild(0)->getName() === '$this' && $this->isMethodNameStartsWithCreate($firstPrimaryPrefix->getChild(1)->getName())) {
             return true;
         }
 
         if ($firstPrimaryPrefix->getChild(0)->getName() === '$this' && substr($firstPrimaryPrefix->getChild(1)->getName(), 0, 2) === '->') {
-            if (substr($primaryPrefixes[1]->getChild(0)->getName(), 0, 6) === 'create') {
+            if ($this->isMethodNameStartsWithCreate($primaryPrefixes[1]->getChild(0)->getName())) {
                 return true;
             }
         }
 
         if ($firstPrimaryPrefix->getParent()->getName() === 'return' &&
-            $firstPrimaryPrefix->getChild(1)->getNode()->getImage() === 'create' &&
+            $this->isMethodNameStartsWithCreate($firstPrimaryPrefix->getChild(1)->getNode()->getImage()) &&
             $this->isStaticMethodCall($firstPrimaryPrefix)
         ) {
             return true;
+        }
+
+        foreach ($primaryPrefixes as $primaryPrefix) {
+            if ($primaryPrefix->getParent()->getName() === 'return') {
+                $returnNodeChildren = $primaryPrefix->findChildrenOfType('MethodPostfix');
+
+                foreach ($returnNodeChildren as $returnNodeChild) {
+                    if ($this->isMethodNameStartsWithCreate($returnNodeChild->getChild(0)->getName())) {
+                        return true;
+                    }
+                }
+            }
         }
 
         return false;
@@ -167,5 +183,15 @@ class FactoryCreateContainOneNewRule extends AbstractFactoryRule implements Meth
     protected function isCallingSelf(AbstractNode $methodCall): bool
     {
         return $methodCall->getChild(0)->getNode() instanceof ASTSelfReference;
+    }
+
+    /**
+     * @param string $methodName
+     *
+     * @return bool
+     */
+    protected function isMethodNameStartsWithCreate(string $methodName): bool
+    {
+        return substr($methodName, 0, 6) === 'create';
     }
 }

@@ -76,7 +76,7 @@ class RelationFinder implements RelationFinderInterface
     /**
      * @param \PHPMD\AbstractNode $joinNode
      *
-     * @return string
+     * @return string|null
      */
     protected function getRelationNameFromMethodName(AbstractNode $joinNode): ?string
     {

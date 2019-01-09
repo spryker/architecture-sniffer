@@ -165,7 +165,7 @@ class RepositoryPropelQueryJoinRule extends AbstractRepositoryRule implements Cl
      * @param string $relationTableName
      * @param \ArchitectureSniffer\PropelQuery\Schema\Transfer\PropelSchemaTableTransfer[] $tableTransfers
      *
-     * @return \ArchitectureSniffer\PropelQuery\Schema\Transfer\PropelSchemaTableTransfer $tableTransfer
+     * @return \ArchitectureSniffer\PropelQuery\Schema\Transfer\PropelSchemaTableTransfer|null $tableTransfer
      */
     protected function findRelationTableTransfer(string $relationTableName, array $tableTransfers): ?PropelSchemaTableTransfer
     {

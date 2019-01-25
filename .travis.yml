@@ -8,7 +8,6 @@ cache:
     - $HOME/.composer/cache
 
 install:
-  - composer self-update && composer --version
   - composer install --no-interaction --optimize-autoloader
 
 script:

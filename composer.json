@@ -3,7 +3,7 @@
   "type": "library",
   "description": "Spryker Architecture Sniffer",
   "homepage": "https://spryker.com",
-  "license": "MIT",
+  "license": "proprietary",
   "require": {
     "php": ">=7.1",
     "phpmd/phpmd": "^2.4",

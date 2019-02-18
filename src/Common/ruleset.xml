@@ -140,7 +140,7 @@
             message="Bridges: {0}"
             class="ArchitectureSniffer\Common\Bridge\BridgeMethodsRule">
 
-        <priority>3</priority>
+        <priority>2</priority>
     </rule>
     <!-- EOF COMMON BRIDGE RULES -->
 

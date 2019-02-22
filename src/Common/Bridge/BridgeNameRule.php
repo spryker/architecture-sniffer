@@ -14,8 +14,8 @@ use PHPMD\Rule\ClassAware;
 
 class BridgeNameRule extends AbstractRule implements ClassAware
 {
-    protected const CLASS_RULE = 'A bridge name must have \'{target_module_name}To{target_module_name}{layer_name}Bridge\' structure.';
-    protected const INTERFACE_RULE = 'A bridge interface name must have \'{target_module_name}To{target_module_name}{layer_name}Interface\' structure.';
+    protected const CLASS_RULE = 'A bridge name must have \'{source_module_name}To{target_module_name}{layer_name}Bridge\' structure.';
+    protected const INTERFACE_RULE = 'A bridge interface name must have \'{source_module_name}To{target_module_name}{layer_name}Interface\' structure.';
 
     /**
      * @return string

@@ -17,7 +17,7 @@ use PHPMD\AbstractNode;
 use PHPMD\Node\ClassNode;
 use PHPMD\Rule\ClassAware;
 
-class RepositoryPropelQueryJoinRule extends AbstractRepositoryRule implements ClassAware
+class RepositoryPropelQueryJoinRule extends AbstractPersistenceRule implements ClassAware
 {
     public const RULE = 'All dependent modules must be declared in the DocBlock.';
 

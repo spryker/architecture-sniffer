@@ -16,6 +16,7 @@ use InvalidArgumentException;
 use PHPMD\AbstractNode;
 use PHPMD\Node\ClassNode;
 use PHPMD\Rule\ClassAware;
+use ArchitectureSniffer\Zed\Persistence\AbstractPersistenceRule;
 
 class RepositoryPropelQueryJoinRule extends AbstractPersistenceRule implements ClassAware
 {

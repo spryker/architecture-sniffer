@@ -5,18 +5,15 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace ArchitectureSniffer\Zed\Persistence\Repository;
+namespace ArchitectureSniffer\Zed\Persistence;
 
 use PHPMD\AbstractNode;
 use PHPMD\Node\ClassNode;
 use PHPMD\Rule\ClassAware;
 
-/**
- * @deprecated This class has been replaced by \ArchitectureSniffer\Zed\Persistence\SpyEntityUsageRule
- */
-class RepositoryCanUseSpyEntityRule extends AbstractRepositoryRule implements ClassAware
+class SpyEntityUsageRule extends AbstractPersistenceRule implements ClassAware
 {
-    public const RULE = 'Entity can be initialized in Repository only.';
+    public const RULE = 'Entity can be initialized in Repository or EntityManager only.';
 
     protected const PATTERN_NAMESPACE_APPLICATION_ZED = '/^[a-zA-Z]+\\\\Zed\\\\/';
 
@@ -36,6 +33,10 @@ class RepositoryCanUseSpyEntityRule extends AbstractRepositoryRule implements Cl
         }
 
         if ($this->isRepository($node)) {
+            return;
+        }
+
+        if ($this->isEntityManager($node)) {
             return;
         }
 

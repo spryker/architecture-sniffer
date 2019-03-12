@@ -10,6 +10,9 @@ namespace ArchitectureSniffer\Zed\Persistence\Repository;
 use ArchitectureSniffer\SprykerAbstractRule;
 use PHPMD\Node\ClassNode;
 
+/**
+ * @deprecated This class has been replaced by \ArchitectureSniffer\Zed\Persistence\AbstractPersistenceRule
+ */
 abstract class AbstractRepositoryRule extends SprykerAbstractRule
 {
     public const PATTERN_REPOSITORY = '/\\\\*\\\\.+\\\\.+\\\\[A-Za-z0-9]+Repository$/';

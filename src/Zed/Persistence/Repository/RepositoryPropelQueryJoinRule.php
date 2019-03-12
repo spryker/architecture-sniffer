@@ -12,11 +12,11 @@ use ArchitectureSniffer\PropelQuery\Method\Transfer\MethodTransfer;
 use ArchitectureSniffer\PropelQuery\PropelQueryFacade;
 use ArchitectureSniffer\PropelQuery\PropelQueryFacadeInterface;
 use ArchitectureSniffer\PropelQuery\Schema\Transfer\PropelSchemaTableTransfer;
+use ArchitectureSniffer\Zed\Persistence\AbstractPersistenceRule;
 use InvalidArgumentException;
 use PHPMD\AbstractNode;
 use PHPMD\Node\ClassNode;
 use PHPMD\Rule\ClassAware;
-use ArchitectureSniffer\Zed\Persistence\AbstractPersistenceRule;
 
 class RepositoryPropelQueryJoinRule extends AbstractPersistenceRule implements ClassAware
 {

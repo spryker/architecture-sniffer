@@ -5,19 +5,19 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace ArchitectureSnifferTest\Zed\Persistence\Repository;
+namespace ArchitectureSnifferTest\Zed\Persistence;
 
-use ArchitectureSniffer\Zed\Persistence\Repository\RepositoryCanUseSpyEntityRule;
+use ArchitectureSniffer\Zed\Persistence\SpyEntityUsageRule;
 use ArchitectureSnifferTest\AbstractArchitectureSnifferRuleTest;
 
-class RepositoryCanUseSpyEntityRuleTest extends AbstractArchitectureSnifferRuleTest
+class SpyEntityUsageRuleTest extends AbstractArchitectureSnifferRuleTest
 {
     /**
      * @return void
      */
     public function testRepositoryCanCreateSpyEntity(): void
     {
-        $pluginSuffixRule = new RepositoryCanUseSpyEntityRule();
+        $pluginSuffixRule = new SpyEntityUsageRule();
         $pluginSuffixRule->setReport($this->getReportMock(0));
         $pluginSuffixRule->apply($this->getClassNode());
     }
@@ -27,7 +27,7 @@ class RepositoryCanUseSpyEntityRuleTest extends AbstractArchitectureSnifferRuleT
      */
     public function testFacadeCanNotCreateSpyEntity(): void
     {
-        $pluginSuffixRule = new RepositoryCanUseSpyEntityRule();
+        $pluginSuffixRule = new SpyEntityUsageRule();
         $pluginSuffixRule->setReport($this->getReportMock(1));
         $pluginSuffixRule->apply($this->getClassNode());
     }

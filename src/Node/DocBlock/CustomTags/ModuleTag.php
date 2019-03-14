@@ -34,7 +34,7 @@ class ModuleTag extends BaseTag implements StaticMethod
      * @param \phpDocumentor\Reflection\DocBlock\DescriptionFactory|null $descriptionFactory
      * @param \phpDocumentor\Reflection\Types\Context|null $context
      *
-     * @return self
+     * @return static
      */
     public static function create($body, ?DescriptionFactory $descriptionFactory = null, ?Context $context = null): self
     {

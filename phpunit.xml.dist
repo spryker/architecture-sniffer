@@ -7,10 +7,9 @@
          mapTestClassNameToCoveredClassName="false"
          strict="false"
          verbose="false"
-         bootstrap="./tests/bootstrap.php">
+         bootstrap="tests/_bootstrap.php">
     <testsuites>
         <testsuite name="architecture-sniffer">
-            <file>tests/SprykerStandardTest.php</file>
         </testsuite>
     </testsuites>
 </phpunit>

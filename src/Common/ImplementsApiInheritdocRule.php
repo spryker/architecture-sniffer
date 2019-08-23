@@ -36,17 +36,6 @@ class ImplementsApiInheritdocRule extends SprykerAbstractRule implements ClassAw
      */
     public function apply(AbstractNode $node)
     {
-        $this->addViolation(
-            'a',
-            [
-                sprintf(
-                    'The interface method %s does not contain an @api tag or contract text ' .
-                    'which violates rule: "%s"',
-                    'a',
-                    self::RULE
-                ),
-            ]
-        );
         $nodeNamespace = $node->getNamespaceName();
         foreach ($this->apiClasses as $apiClass) {
             $nonApiNamespace = 'Dependency\\' . $apiClass;

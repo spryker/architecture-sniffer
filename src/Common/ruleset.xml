@@ -18,6 +18,13 @@
         <priority>1</priority>
     </rule>
 
+    <rule
+            name="ImplementsApiInheritdocRule"
+            message="Access: {0}"
+            class="ArchitectureSniffer\Common\ImplementsApiInheritdocRule">
+
+        <priority>1</priority>
+    </rule>
 
     <!-- COMMON FACTORY RULES -->
     <rule

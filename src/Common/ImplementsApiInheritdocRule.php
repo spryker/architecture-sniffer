@@ -10,21 +10,16 @@ namespace ArchitectureSniffer\Common;
 use ArchitectureSniffer\SprykerAbstractRule;
 use PHPMD\AbstractNode;
 use PHPMD\Node\MethodNode;
-use PHPMD\Rule\InterfaceAware;
+use PHPMD\Rule\ClassAware;
 
-class ApiInterfaceRule extends SprykerAbstractRule implements InterfaceAware
+class ImplementsApiInheritdocRule extends SprykerAbstractRule implements ClassAware
 {
-    public const RULE = 'Every method must also contain the @api tag in docblock and a contract text above.';
-
-    /**
-     * @var string
-     */
-    protected $classRegex = '';
+    public const RULE = 'Every API method must also contain the @inheritdoc tag in docblock and a contract text above.';
 
     /**
      * @var array
      */
-    protected $apiClasses = ['Facade', 'QueryContainer', 'Client', 'Service'];
+    protected $apiClasses = ['Facade', 'QueryContainer', 'Client', 'Service', 'Plugin'];
 
     /**
      * @return string
@@ -41,16 +36,28 @@ class ApiInterfaceRule extends SprykerAbstractRule implements InterfaceAware
      */
     public function apply(AbstractNode $node)
     {
-        if (empty($this->classRegex) || preg_match($this->classRegex, $node->getFullQualifiedName()) === 0) {
-            return;
-        }
-
+        $this->addViolation(
+            'a',
+            [
+                sprintf(
+                    'The interface method %s does not contain an @api tag or contract text ' .
+                    'which violates rule: "%s"',
+                    'a',
+                    self::RULE
+                ),
+            ]
+        );
         $nodeNamespace = $node->getNamespaceName();
-        foreach ($this->apiClasses as $nonApiLayer) {
-            $nonApiLayerNamespace = 'Dependency\\' . $nonApiLayer;
-            if ($this->stringEndsWith($nodeNamespace, $nonApiLayerNamespace)) {
+        foreach ($this->apiClasses as $apiClass) {
+            $nonApiNamespace = 'Dependency\\' . $apiClass;
+            if ($this->stringEndsWith($nodeNamespace, $nonApiNamespace)) {
                 return;
             }
+        }
+
+        $nodeClassName = $node->getName();
+        if (!preg_match('/(' . implode('|', $this->apiClasses) . ')$/', $nodeClassName)) {
+            return;
         }
 
         /** @var \PHPMD\Node\InterfaceNode $node */
@@ -82,7 +89,7 @@ class ApiInterfaceRule extends SprykerAbstractRule implements InterfaceAware
             '(
                 \*\s+[{}A-Z0-9\-]+.*\s+
                 \*?\s*
-                \*\s+@api
+                \*\s+@inheritdoc
             )xi',
             $comment
         )) {

@@ -220,7 +220,6 @@ class PropelSchemaTableFinder implements PropelSchemaTableFinderInterface
         PropelSchemaTableTransfer $mainTableTransfer,
         PropelSchemaTableTransfer $additionalTableTransfer
     ): PropelSchemaTableTransfer {
-
         $phpName = $mainTableTransfer->getPhpName() ?? $additionalTableTransfer->getPhpName();
         $moduleName = $mainTableTransfer->getModuleName() ?? $additionalTableTransfer->getModuleName();
 

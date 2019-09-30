@@ -32,7 +32,8 @@ class ModuleConstantsPathRule extends AbstractRule implements ClassAware, Interf
     public function apply(AbstractNode $node)
     {
         if (preg_match('#[A-Za-z0-9]+Constants$#', $node->getName()) === 0 ||
-            preg_match('#\\\\Shared\\\\#', $node->getNamespaceName()) !== 0) {
+            preg_match('#\\\\Shared\\\\#', $node->getNamespaceName()) !== 0
+        ) {
             return;
         }
 

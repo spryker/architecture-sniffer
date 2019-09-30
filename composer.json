@@ -49,7 +49,10 @@
       "ArchitectureSnifferTest\\": "tests/"
     }
   },
-  "include-path": [
-    "src/"
-  ]
+  "scripts": {
+    "cs-check": "phpcs --colors -v -p -s --extensions=php --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/",
+    "cs-fix": "phpcbf --colors -v -p --extensions=php --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/",
+    "stan": "phpstan analyze -l 1 src/",
+    "test": "codecept build && codecept run"
+  }
 }

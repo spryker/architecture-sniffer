@@ -103,6 +103,7 @@ class FactoryCreateContainOneNewRule extends AbstractFactoryRule implements Meth
         }
 
         $firstPrimaryPrefix = $primaryPrefixes[0];
+
         return $firstPrimaryPrefix->getChild(0)->getName() === 'parent';
     }
 

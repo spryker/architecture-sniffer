@@ -33,7 +33,8 @@ class BridgeNameRule extends AbstractRule implements ClassAware
     public function apply(AbstractNode $node)
     {
         if (preg_match('([A-Za-z0-9]+Bridge$)', $node->getName()) === 0 ||
-            preg_match('#.*\\\\Dependency\\\\.*#', $node->getNamespaceName()) === 0) {
+            preg_match('#.*\\\\Dependency\\\\.*#', $node->getNamespaceName()) === 0
+        ) {
             return;
         }
 

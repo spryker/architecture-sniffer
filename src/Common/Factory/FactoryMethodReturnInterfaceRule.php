@@ -15,7 +15,7 @@ class FactoryMethodReturnInterfaceRule extends AbstractFactoryRule implements Me
 {
     public const RULE = 'Every method in a Factory must only return an interface or an array of interfaces.';
 
-    public const ALLOWED_RETURN_TYPES_PATTERN = '/@return\s(?!((.*)Interface|callable))(.*)/';
+    public const ALLOWED_RETURN_TYPES_PATTERN = '/@return\s(?!((.*)Interface|(.*)DataProvider|callable))(.*)/';
     public const INVALID_RETURN_TYPE_MATCH = 3;
 
     /**

@@ -14,10 +14,10 @@ use PHPMD\Rule\ClassAware;
 
 class ImplementsApiInheritDocRule extends SprykerAbstractRule implements ClassAware
 {
-    public const RULE = 'Every API public method must also contain the {@inheritDoc} tag in docblock.';
+    protected const RULE = 'Every API public method must also contain the {@inheritDoc} tag in docblock.';
 
     /**
-     * @var array
+     * @var string[]
      */
     protected $apiClasses = ['Facade', 'QueryContainer', 'Client', 'Service', 'Plugin'];
 
@@ -30,54 +30,51 @@ class ImplementsApiInheritDocRule extends SprykerAbstractRule implements ClassAw
     }
 
     /**
-     * @param \PHPMD\AbstractNode $node
+     * @param \PHPMD\AbstractNode $classNode
      *
      * @return void
      */
-    public function apply(AbstractNode $node)
+    public function apply(AbstractNode $classNode)
     {
-        $nodeNamespace = $node->getNamespaceName();
-        if (strpos($nodeNamespace, 'Dependency\\') !== false) {
+        $classNamespace = $classNode->getNamespaceName();
+        if (strpos($classNamespace, 'Dependency\\') !== false) {
             return;
         }
 
-        $nodeClassName = $node->getName();
-        if (!preg_match('/(' . implode('|', $this->apiClasses) . ')$/', $nodeClassName)) {
+        $className = $classNode->getName();
+        if (!preg_match('/(' . implode('|', $this->apiClasses) . ')$/', $className)) {
             return;
         }
 
-        /** @var \PHPMD\Node\InterfaceNode $node */
+        /** @var \PHPMD\Node\InterfaceNode $classNode */
         /** @var \PDepend\Source\AST\ASTMethod $method */
-        foreach ($node->getMethods() as $method) {
+        foreach ($classNode->getMethods() as $method) {
             if (!$method->isPublic()) {
                 continue;
             }
-            $this->applyOnMethod($method);
+            $this->applyOnPublicMethod($method);
         }
     }
 
     /**
-     * @param \PHPMD\Node\MethodNode|\PDepend\Source\AST\ASTMethod $method
+     * @param \PHPMD\Node\MethodNode|\PDepend\Source\AST\ASTMethod $methodNode
      *
      * @return void
      */
-    protected function applyOnMethod(MethodNode $method)
+    protected function applyOnPublicMethod(MethodNode $methodNode)
     {
-        $comment = $method->getComment();
-        if (preg_match(
-            '/\{\@inheritDoc\}/',
-            $comment
-        )) {
+        $methodDocBlock = $methodNode->getComment();
+        if (preg_match('/\{\@inheritDoc\}/', $methodDocBlock)) {
             return;
         }
 
         $this->addViolation(
-            $method,
+            $methodNode,
             [
                 sprintf(
                     'The public class method %s does not contain an {@inheritDoc} tag ' .
                     'which violates rule: "%s"',
-                    $method->getFullQualifiedName(),
+                    $methodNode->getFullQualifiedName(),
                     static::RULE
                 ),
             ]

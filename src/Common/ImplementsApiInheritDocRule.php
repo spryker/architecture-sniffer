@@ -12,9 +12,9 @@ use PHPMD\AbstractNode;
 use PHPMD\Node\MethodNode;
 use PHPMD\Rule\ClassAware;
 
-class ImplementsApiInheritdocRule extends SprykerAbstractRule implements ClassAware
+class ImplementsApiInheritDocRule extends SprykerAbstractRule implements ClassAware
 {
-    public const RULE = 'Every API method must also contain the @inheritdoc tag in docblock and a contract text above.';
+    public const RULE = 'Every API method must also contain the @inheritDoc tag in docblock.';
 
     /**
      * @var array
@@ -37,11 +37,8 @@ class ImplementsApiInheritdocRule extends SprykerAbstractRule implements ClassAw
     public function apply(AbstractNode $node)
     {
         $nodeNamespace = $node->getNamespaceName();
-        foreach ($this->apiClasses as $apiClass) {
-            $nonApiNamespace = 'Dependency\\' . $apiClass;
-            if ($this->stringEndsWith($nodeNamespace, $nonApiNamespace)) {
-                return;
-            }
+        if (strpos($nodeNamespace, 'Dependency\\') !== false) {
+            return;
         }
 
         $nodeClassName = $node->getName();
@@ -51,19 +48,8 @@ class ImplementsApiInheritdocRule extends SprykerAbstractRule implements ClassAw
 
         /** @var \PHPMD\Node\InterfaceNode $node */
         foreach ($node->getMethods() as $method) {
-            $this->applyEveryInterfaceMethodMustHaveApiTagAndContractText($method);
+            $this->applyOnMethod($method);
         }
-    }
-
-    /**
-     * @param string $string
-     * @param string $stringToSearch
-     *
-     * @return bool
-     */
-    protected function stringEndsWith($string, $stringToSearch)
-    {
-        return (substr($string, strlen($string) - strlen($stringToSearch)) === $stringToSearch);
     }
 
     /**
@@ -71,15 +57,11 @@ class ImplementsApiInheritdocRule extends SprykerAbstractRule implements ClassAw
      *
      * @return void
      */
-    protected function applyEveryInterfaceMethodMustHaveApiTagAndContractText(MethodNode $method)
+    protected function applyOnMethod(MethodNode $method)
     {
         $comment = $method->getComment();
         if (preg_match(
-            '(
-                \*\s+[{}A-Z0-9\-]+.*\s+
-                \*?\s*
-                \*\s+@inheritdoc
-            )xi',
+            '/\{\@inheritDoc\}/',
             $comment
         )) {
             return;
@@ -89,10 +71,10 @@ class ImplementsApiInheritdocRule extends SprykerAbstractRule implements ClassAw
             $method,
             [
                 sprintf(
-                    'The interface method %s does not contain an @api tag or contract text ' .
+                    'The interface method %s does not contain an @api tag ' .
                     'which violates rule: "%s"',
                     $method->getFullQualifiedName(),
-                    self::RULE
+                    static::RULE
                 ),
             ]
         );

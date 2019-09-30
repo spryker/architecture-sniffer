@@ -19,9 +19,9 @@
     </rule>
 
     <rule
-            name="ImplementsApiInheritdocRule"
+            name="ImplementsApiInheritDocRule"
             message="Access: {0}"
-            class="ArchitectureSniffer\Common\ImplementsApiInheritdocRule">
+            class="ArchitectureSniffer\Common\ImplementsApiInheritDocRule">
 
         <priority>1</priority>
     </rule>

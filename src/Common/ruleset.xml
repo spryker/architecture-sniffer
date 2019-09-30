@@ -23,7 +23,7 @@
             message="Access: {0}"
             class="ArchitectureSniffer\Common\ImplementsApiInheritDocRule">
 
-        <priority>1</priority>
+        <priority>3</priority>
     </rule>
 
     <!-- COMMON FACTORY RULES -->

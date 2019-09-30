@@ -14,7 +14,7 @@ use PHPMD\Rule\ClassAware;
 
 class ImplementsApiInheritDocRule extends SprykerAbstractRule implements ClassAware
 {
-    public const RULE = 'Every API method must also contain the @inheritDoc tag in docblock.';
+    public const RULE = 'Every API public method must also contain the {@inheritDoc} tag in docblock.';
 
     /**
      * @var array
@@ -47,7 +47,11 @@ class ImplementsApiInheritDocRule extends SprykerAbstractRule implements ClassAw
         }
 
         /** @var \PHPMD\Node\InterfaceNode $node */
+        /** @var \PDepend\Source\AST\ASTMethod $method */
         foreach ($node->getMethods() as $method) {
+            if (!$method->isPublic()) {
+                continue;
+            }
             $this->applyOnMethod($method);
         }
     }
@@ -71,7 +75,7 @@ class ImplementsApiInheritDocRule extends SprykerAbstractRule implements ClassAw
             $method,
             [
                 sprintf(
-                    'The interface method %s does not contain an @api tag ' .
+                    'The public class method %s does not contain an {@inheritDoc} tag ' .
                     'which violates rule: "%s"',
                     $method->getFullQualifiedName(),
                     static::RULE

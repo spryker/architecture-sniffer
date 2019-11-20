@@ -30,7 +30,7 @@ class ImplementsApiInheritDocRule extends SprykerAbstractRule implements ClassAw
     }
 
     /**
-     * @param \PHPMD\AbstractNode $classNode
+     * @param \PHPMD\AbstractNode|\PHPMD\Node\InterfaceNode $classNode
      *
      * @return void
      */
@@ -46,7 +46,6 @@ class ImplementsApiInheritDocRule extends SprykerAbstractRule implements ClassAw
             return;
         }
 
-        /** @var \PHPMD\Node\InterfaceNode $classNode */
         /** @var \PDepend\Source\AST\ASTMethod $method */
         foreach ($classNode->getMethods() as $method) {
             if (!$method->isPublic()) {
@@ -64,7 +63,7 @@ class ImplementsApiInheritDocRule extends SprykerAbstractRule implements ClassAw
     protected function applyOnPublicMethod(MethodNode $methodNode)
     {
         $methodDocBlock = $methodNode->getComment();
-        if (preg_match('/\{\@inheritDoc\}/', $methodDocBlock)) {
+        if (preg_match('/\{\@inheritDoc\}/i', $methodDocBlock)) {
             return;
         }
 

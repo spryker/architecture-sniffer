@@ -24,7 +24,7 @@ class ApiInterfaceRule extends SprykerAbstractRule implements InterfaceAware
     /**
      * @var array
      */
-    protected $nonApiLayers = ['Facade', 'QueryContainer', 'Client', 'Service'];
+    protected $apiClasses = ['Facade', 'QueryContainer', 'Client', 'Service'];
 
     /**
      * @return string
@@ -46,7 +46,7 @@ class ApiInterfaceRule extends SprykerAbstractRule implements InterfaceAware
         }
 
         $nodeNamespace = $node->getNamespaceName();
-        foreach ($this->nonApiLayers as $nonApiLayer) {
+        foreach ($this->apiClasses as $nonApiLayer) {
             $nonApiLayerNamespace = 'Dependency\\' . $nonApiLayer;
             if ($this->stringEndsWith($nodeNamespace, $nonApiLayerNamespace)) {
                 return;

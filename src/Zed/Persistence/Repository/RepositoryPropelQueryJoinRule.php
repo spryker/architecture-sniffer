@@ -166,7 +166,7 @@ class RepositoryPropelQueryJoinRule extends AbstractPersistenceRule implements C
      * @param string $relationTableName
      * @param \ArchitectureSniffer\PropelQuery\Schema\Transfer\PropelSchemaTableTransfer[] $tableTransfers
      *
-     * @return \ArchitectureSniffer\PropelQuery\Schema\Transfer\PropelSchemaTableTransfer|null $tableTransfer
+     * @return \ArchitectureSniffer\PropelQuery\Schema\Transfer\PropelSchemaTableTransfer|null
      */
     protected function findRelationTableTransfer(string $relationTableName, array $tableTransfers): ?PropelSchemaTableTransfer
     {

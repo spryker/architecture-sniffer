@@ -60,7 +60,7 @@ Every sniff needs a description as full sentence:
     /**
      * @return string
      */
-    public function getDescription()
+    public function getDescription(): string
     {
         return static::RULE;
     }

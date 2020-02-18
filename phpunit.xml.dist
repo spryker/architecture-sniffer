@@ -1,13 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit backupGlobals="true"
-         colors="false"
-         convertErrorsToExceptions="true"
-         convertNoticesToExceptions="true"
-         convertWarningsToExceptions="true"
-         mapTestClassNameToCoveredClassName="false"
-         strict="false"
-         verbose="false"
-         bootstrap="tests/_bootstrap.php">
+<phpunit bootstrap="tests/_bootstrap.php">
     <testsuites>
         <testsuite name="architecture-sniffer">
         </testsuite>

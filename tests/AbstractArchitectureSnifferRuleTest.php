@@ -50,7 +50,7 @@ abstract class AbstractArchitectureSnifferRuleTest extends Unit
     }
 
     /**
-     * @param null|int|string $nameOrPosition
+     * @param string|int|null $nameOrPosition
      *
      * @return \PHPMD\Node\ClassNode
      */
@@ -65,7 +65,7 @@ abstract class AbstractArchitectureSnifferRuleTest extends Unit
     }
 
     /**
-     * @param null|int|string $nameOrPosition
+     * @param string|int|null $nameOrPosition
      *
      * @return \PHPMD\Node\InterfaceNode
      */
@@ -80,7 +80,7 @@ abstract class AbstractArchitectureSnifferRuleTest extends Unit
     }
 
     /**
-     * @param null|int|string $nameOrPosition
+     * @param string|int|null $nameOrPosition
      *
      * @return \PHPMD\Node\TraitNode
      */
@@ -95,7 +95,7 @@ abstract class AbstractArchitectureSnifferRuleTest extends Unit
     }
 
     /**
-     * @param null|int|string $nameOrPosition
+     * @param string|int|null $nameOrPosition
      *
      * @return \PHPMD\Node\MethodNode
      */
@@ -113,7 +113,7 @@ abstract class AbstractArchitectureSnifferRuleTest extends Unit
     }
 
     /**
-     * @param null|int|string $nameOrPosition
+     * @param string|int|null $nameOrPosition
      *
      * @return \PHPMD\Node\FunctionNode
      */
@@ -140,7 +140,7 @@ abstract class AbstractArchitectureSnifferRuleTest extends Unit
      */
     protected function getRelativePathToTestFile(): string
     {
-        $classNameFragments = explode('\\', get_class($this));
+        $classNameFragments = explode('\\', static::class);
         array_shift($classNameFragments);
 
         return implode(DIRECTORY_SEPARATOR, $classNameFragments) . DIRECTORY_SEPARATOR;
@@ -168,7 +168,7 @@ abstract class AbstractArchitectureSnifferRuleTest extends Unit
 
     /**
      * @param \Iterator|\PDepend\Source\AST\ASTArtifact[] $nodes
-     * @param null|int|string $nameOrPosition
+     * @param string|int|null $nameOrPosition
      *
      * @throws \ErrorException
      *
@@ -224,9 +224,9 @@ abstract class AbstractArchitectureSnifferRuleTest extends Unit
     /**
      * @param int $expectedInvokes
      *
-     * @return \PHPMD\Report|\PHPUnit_Framework_MockObject_MockObject
+     * @return \PHPMD\Report|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function getReportMock(int $expectedInvokes = -1)
+    protected function getReportMock(int $expectedInvokes = -1): Report
     {
         if ($expectedInvokes < 0) {
             $expects = $this->atLeastOnce();

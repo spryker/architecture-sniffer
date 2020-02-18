@@ -88,7 +88,8 @@ class SpyEntityUsageRule extends AbstractPersistenceRule implements ClassAware
         $className = explode('\\', $className);
         $className = array_pop($className);
 
-        if (!preg_match($entityNamePattern, $className)
+        if (
+            !preg_match($entityNamePattern, $className)
             || preg_match($queryNamePattern, $className)
         ) {
             return;

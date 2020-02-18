@@ -78,14 +78,16 @@ class ApiInterfaceRule extends SprykerAbstractRule implements InterfaceAware
     protected function applyEveryInterfaceMethodMustHaveApiTagAndContractText(MethodNode $method)
     {
         $comment = $method->getComment();
-        if (preg_match(
-            '(
+        if (
+            preg_match(
+                '(
                 \*\s+[{}A-Z0-9\-]+.*\s+
                 \*?\s*
                 \*\s+@api
             )xi',
-            $comment
-        )) {
+                $comment
+            )
+        ) {
             return;
         }
 

@@ -131,7 +131,8 @@ class FactoryCreateContainOneNewRule extends AbstractFactoryRule implements Meth
             }
         }
 
-        if ($firstPrimaryPrefix->getParent()->getName() === 'return' &&
+        if (
+            $firstPrimaryPrefix->getParent()->getName() === 'return' &&
             $this->isMethodNameStartsWithCreate($firstPrimaryPrefix->getChild(1)->getNode()->getImage()) &&
             $this->isStaticMethodCall($firstPrimaryPrefix)
         ) {

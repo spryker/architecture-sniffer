@@ -1,12 +1,7 @@
 language: php
 php:
   - 7.1
-  - 7.3
-
-cache:
-  directories:
-    - vendor
-    - $HOME/.composer/cache
+  - 7.4
 
 install:
   - composer install --no-interaction --optimize-autoloader
@@ -15,6 +10,10 @@ script:
   - composer test
   - composer cs-check
   - composer stan
+
+cache:
+  directories:
+    - $HOME/.composer/cache
 
 notifications:
   email: false

@@ -15,7 +15,7 @@
   "require-dev": {
     "codeception/codeception": "^2.4",
     "phpstan/phpstan": "^0.11.1",
-    "phpunit/phpunit": "~5.2",
+    "phpunit/phpunit": "^5.2",
     "spryker/code-sniffer": "*",
     "symfony/var-dumper": "^4.0"
   },
@@ -50,8 +50,8 @@
     }
   },
   "scripts": {
-    "cs-check": "phpcs --colors -v -p -s --extensions=php --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/",
-    "cs-fix": "phpcbf --colors -v -p --extensions=php --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/",
+    "cs-check": "phpcs --colors -p -s --extensions=php --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml --ignore=/tests/_data/ src/ tests/",
+    "cs-fix": "phpcbf --colors -p --extensions=php --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml --ignore=/tests/_data/ src/ tests/",
     "stan": "phpstan analyze -l 1 src/",
     "test": "codecept build && codecept run"
   },

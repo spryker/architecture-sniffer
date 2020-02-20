@@ -96,6 +96,15 @@ class BridgeMethodsRule extends SprykerAbstractRule implements ClassAware
     protected function verifyInterface(ClassNode $node, InterfaceNode $interfaceNode): void
     {
         $bridgedInterfaceReflection = $this->getBridgedInterfaceReflection($node->getMethods());
+        if ($bridgedInterfaceReflection === null) {
+            $message = sprintf(
+                'The bridge is missing an interface. That violates the rule "%s"',
+                static::RULE
+            );
+            $this->addViolation($interfaceNode, [$message]);
+
+            return;
+        }
 
         $notMatchingMethods = $this->findNotMatchingMethodsForBridgeInterface($interfaceNode, $bridgedInterfaceReflection);
 
@@ -105,7 +114,6 @@ class BridgeMethodsRule extends SprykerAbstractRule implements ClassAware
                 $notMatchingMethod->getName(),
                 static::RULE
             );
-
             $this->addViolation($interfaceNode, [$message]);
         }
     }

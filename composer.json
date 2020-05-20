@@ -5,7 +5,7 @@
   "homepage": "https://spryker.com",
   "license": "MIT",
   "require": {
-    "php": ">=7.1",
+    "php": ">=7.2",
     "phpmd/phpmd": "^2.4",
     "symfony/finder": "*",
     "zendframework/zend-config": "*",
@@ -19,7 +19,6 @@
     "spryker/code-sniffer": "*",
     "symfony/var-dumper": "^4.0"
   },
-  "minimum-stability": "dev",
   "prefer-stable": true,
   "config": {
     "sort-packages": true

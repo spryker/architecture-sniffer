@@ -6,7 +6,7 @@
   "license": "MIT",
   "require": {
     "php": ">=7.2",
-    "phpmd/phpmd": "^2.4",
+    "phpmd/phpmd": "^2.4.1",
     "symfony/finder": "*",
     "zendframework/zend-config": "*",
     "zendframework/zend-filter": "*",

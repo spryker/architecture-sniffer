@@ -15,13 +15,13 @@ use ArchitectureSniffer\PropelQuery\Module\ModuleFinderInterface;
 use ArchitectureSniffer\PropelQuery\Schema\Transfer\PropelSchemaTableRelationTransfer;
 use ArchitectureSniffer\PropelQuery\Schema\Transfer\PropelSchemaTableTransfer;
 use Countable;
+use Laminas\Config\Reader\ReaderInterface;
 use Symfony\Component\Finder\Finder;
-use Zend\Config\Reader\ReaderInterface;
 
 class PropelSchemaTableFinder implements PropelSchemaTableFinderInterface
 {
     /**
-     * @var \Zend\Config\Reader\ReaderInterface
+     * @var \Laminas\Config\Reader\ReaderInterface
      */
     protected $reader;
 
@@ -36,7 +36,7 @@ class PropelSchemaTableFinder implements PropelSchemaTableFinderInterface
     protected $pathBuilder;
 
     /**
-     * @param \Zend\Config\Reader\ReaderInterface $reader
+     * @param \Laminas\Config\Reader\ReaderInterface $reader
      * @param \ArchitectureSniffer\Path\PathBuilderInterface $pathBuilder
      * @param \ArchitectureSniffer\PropelQuery\Module\ModuleFinderInterface $moduleFinder
      */

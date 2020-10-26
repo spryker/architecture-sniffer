@@ -5,11 +5,11 @@
   "homepage": "https://spryker.com",
   "license": "MIT",
   "require": {
+    "laminas/laminas-config": "*",
+    "laminas/laminas-filter": "*",
     "php": ">=7.2",
     "phpmd/phpmd": "^2.4.1",
     "symfony/finder": "*",
-    "zendframework/zend-config": "*",
-    "zendframework/zend-filter": "*",
     "roave/better-reflection": "*"
   },
   "require-dev": {

@@ -8,7 +8,7 @@
 namespace ArchitectureSniffer\Path;
 
 use ArchitectureSniffer\Path\Transfer\PathTransfer;
-use Zend\Filter\Word\CamelCaseToSeparator;
+use Laminas\Filter\Word\CamelCaseToSeparator;
 
 class PathBuilder implements PathBuilderInterface
 {

@@ -5,7 +5,7 @@
   "homepage": "https://spryker.com",
   "license": "MIT",
   "require": {
-    "php": ">=7.2",
+    "php": ">=7.3",
     "phpmd/phpmd": "^2.4.1",
     "spryker/laminas": "*",
     "symfony/finder": "*",

@@ -27,12 +27,12 @@ use ArchitectureSniffer\PropelQuery\Relation\RelationFinder;
 use ArchitectureSniffer\PropelQuery\Relation\RelationFinderInterface;
 use ArchitectureSniffer\PropelQuery\Schema\PropelSchemaTableFinder;
 use ArchitectureSniffer\PropelQuery\Schema\PropelSchemaTableFinderInterface;
+use Laminas\Config\Reader\ReaderInterface;
+use Laminas\Config\Reader\Xml;
 use phpDocumentor\Reflection\DocBlockFactory;
 use phpDocumentor\Reflection\DocBlockFactoryInterface;
 use Roave\BetterReflection\BetterReflection;
 use Roave\BetterReflection\Reflector\ClassReflector;
-use Zend\Config\Reader\ReaderInterface;
-use Zend\Config\Reader\Xml;
 
 class PropelQueryFactory
 {
@@ -128,7 +128,7 @@ class PropelQueryFactory
     }
 
     /**
-     * @return \Zend\Config\Reader\ReaderInterface
+     * @return \Laminas\Config\Reader\ReaderInterface
      */
     protected function createConfigReader(): ReaderInterface
     {

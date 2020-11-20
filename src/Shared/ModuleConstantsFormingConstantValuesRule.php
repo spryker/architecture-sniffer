@@ -41,10 +41,10 @@ class ModuleConstantsFormingConstantValuesRule extends AbstractRule implements I
 
         foreach ($node->findChildrenOfType('ConstantDeclarator') as $constant) {
             /** @var \PDepend\Source\AST\ASTValue|\PHPMD\AbstractNode $constant */
-            $value = $constant->getValue()->getValue();
+            $value = $constant->getValue()->getValue()->getImage();
 
             $expectedConstantValue = sprintf(
-                '%s:%s',
+                "'%s:%s'",
                 $this->getUnderscoredConstantName($moduleName),
                 $constant->getImage()
             );

@@ -22,6 +22,12 @@ jobs:
         ]
 
     steps:
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-version }}
+          extensions: mbstring, intl, pdo_mysql
+
       - name: Checkout
         uses: actions/checkout@v1
         with:
@@ -47,12 +53,6 @@ jobs:
         run: |
           composer --version
           composer install --optimize-autoloader
-
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: ${{ matrix.php-version }}
-          extensions: mbstring, intl, pdo_mysql
 
       - name: Codecept run
         run: composer test

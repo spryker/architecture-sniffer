@@ -1,9 +1,14 @@
 name: CI
 
-on: [
-    push,
-    pull_request
-]
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+  schedule:
+    - cron: "0 0 * * *"
+      branches:
+        - 'master'
 
 jobs:
   validation:
@@ -12,24 +17,26 @@ jobs:
       fail-fast: false
       matrix:
         php-version: [
-            '7.4',
-            'nightly'
+            '7.3',
+            '7.4'
         ]
 
     steps:
-      - uses: actions/checkout@v1
+      - name: Checkout
+        uses: actions/checkout@v1
         with:
           fetch-depth: 1
 
-      - name: Validate composer.json and composer.lock
+      - name: Composer validate
         run: composer validate
 
-      - name: Get Composer Cache Directory
+      - name: Composer get cache directory
         id: composer-cache
         run: |
           echo "::set-output name=dir::$(composer config cache-files-dir)"
 
-      - uses: actions/cache@v2
+      - name: Composer cache
+        uses: actions/cache@v2
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}

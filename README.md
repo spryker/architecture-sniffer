@@ -1,5 +1,6 @@
 # Architecture Sniffer
-[![Build Status](https://travis-ci.org/spryker/architecture-sniffer.svg?branch=master)](https://travis-ci.org/spryker/architecture-sniffer)
+[![CI](https://github.com/spryker/architecture-sniffer/workflows/CI/badge.svg?branch=master)](https://travis-ci.org/spryker/architecture-sniffer)
+[![Coverage](https://codecov.io/gh/spryker/architecture-sniffer/branch/master/graph/badge.svg?token=4AKCKMRg3G)](https://codecov.io/gh/spryker/architecture-sniffer)
 [![Minimum PHP Version](http://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
 [![License](https://poser.pugx.org/spryker/architecture-sniffer/license.svg)](https://packagist.org/packages/spryker/architecture-sniffer)
 [![Total Downloads](https://poser.pugx.org/spryker/architecture-sniffer/d/total.svg)](https://packagist.org/packages/spryker/architecture-sniffer)

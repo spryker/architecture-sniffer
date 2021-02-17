@@ -24,6 +24,12 @@ suites:
     modules:
       enabled:
         - Asserts
+  Dependency:
+    path: Dependency/*/
+    class_name: CommonTester
+    modules:
+      enabled:
+        - Asserts
   Persistence:
     path: Persistence
     class_name: CommonTester

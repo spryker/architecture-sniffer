@@ -37,7 +37,7 @@ class BridgeInterfaceNamingConventionRule extends AbstractBridgeRule
 
         $classExists = class_exists($concreteClassName);
 
-        if ($result === 1) {
+        if (!$classExists) {
             return;
         }
 

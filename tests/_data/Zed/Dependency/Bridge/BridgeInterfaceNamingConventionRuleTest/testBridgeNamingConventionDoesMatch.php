@@ -5,17 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spyryker\Zed\Module\Business;
+namespace Spyryker\Zed\Module\Dependency\Bridge;
 
 use Orm\Zed\Persistence\SpyTestEntity;
 
-class TestFacade
+class MyConcreteToOtherConcreteBridge
 {
-    /**
-     * @return void
-     */
-    protected function createTestSpyEntity(): void
-    {
-        $spyTestEntity = new SpyTestEntity();
-    }
 }

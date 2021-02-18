@@ -8,8 +8,6 @@
 namespace ArchitectureSniffer\Zed\Dependency\Bridge;
 
 use PHPMD\AbstractNode;
-use PHPMD\Node\MethodNode;
-use PHPMD\Rule\MethodAware;
 
 class BridgeInterfaceNamingConventionRule extends AbstractBridgeRule
 {
@@ -28,7 +26,7 @@ class BridgeInterfaceNamingConventionRule extends AbstractBridgeRule
     }
 
     /**
-     * @param \PHPMD\Node\AbstractNode $method
+     * @param \PHPMD\Node\AbstractNode $node
      *
      * @return void
      */
@@ -37,7 +35,7 @@ class BridgeInterfaceNamingConventionRule extends AbstractBridgeRule
         $className = $node->getFullQualifiedName();
         $concreteClassName = substr($className, 0, -9) . 'Bridge';
 
-        $classExists = \class_exists($concreteClassName);
+        $classExists = class_exists($concreteClassName);
 
         if ($result === 1) {
             return;

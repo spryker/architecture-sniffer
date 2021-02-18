@@ -7,7 +7,6 @@
 
 namespace ArchitectureSnifferTest\Zed\Dependency\Bridge;
 
-use ArchitectureSniffer\Zed\Dependency\Bridge\BridgeInterfaceNamingConventionRule;
 use ArchitectureSnifferTest\AbstractArchitectureSnifferRuleTest;
 
 class BridgeInterfaceNamingConventionRuleTest extends AbstractArchitectureSnifferRuleTest

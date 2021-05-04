@@ -1,59 +1,59 @@
 {
-  "name": "spryker/architecture-sniffer",
-  "type": "library",
-  "description": "Spryker Architecture Sniffer",
-  "homepage": "https://spryker.com",
-  "license": "MIT",
-  "require": {
-    "php": ">=7.3",
-    "phpmd/phpmd": "^2.4.1",
-    "spryker/laminas": "*",
-    "symfony/finder": "*",
-    "roave/better-reflection": "*"
-  },
-  "require-dev": {
-    "codeception/codeception": "^2.4",
-    "phpstan/phpstan": "^0.12",
-    "phpunit/phpunit": "^5.2",
-    "spryker/code-sniffer": "*",
-    "symfony/var-dumper": "^4.0"
-  },
-  "prefer-stable": true,
-  "config": {
-    "sort-packages": true
-  },
-  "keywords": [
-    "framework",
-    "sniffer",
-    "architecture",
-    "standards"
-  ],
-  "authors": [
-    {
-      "name": "Spryker",
-      "homepage": "https://spryker.com"
-    }
-  ],
-  "support": {
-    "source": "https://github.com/spryker/architecture-sniffer"
-  },
-  "autoload": {
-    "psr-4": {
-      "ArchitectureSniffer\\": "src/"
-    }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "ArchitectureSnifferTest\\": "tests/"
-    }
-  },
-  "scripts": {
-    "cs-check": "phpcs --colors -p -s --extensions=php --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml --ignore=/tests/_data/,/_support/ src/ tests/",
-    "cs-fix": "phpcbf --colors -p --extensions=php --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml --ignore=/tests/_data/,/_support/ src/ tests/",
-    "stan": "phpstan analyze -l 1 src/",
-    "test": "codecept build && codecept run"
-  },
-  "include-path": [
-    "src/"
-  ]
+    "name": "spryker/architecture-sniffer",
+    "type": "library",
+    "description": "Spryker Architecture Sniffer",
+    "homepage": "https://spryker.com",
+    "license": "MIT",
+    "require": {
+        "php": ">=7.3",
+        "phpmd/phpmd": "^2.4.1",
+        "spryker/laminas": "*",
+        "symfony/finder": "*",
+        "roave/better-reflection": "*"
+    },
+    "require-dev": {
+        "codeception/codeception": "^2.4",
+        "phpstan/phpstan": "^0.12",
+        "phpunit/phpunit": "^5.2",
+        "spryker/code-sniffer": "*",
+        "symfony/var-dumper": "^4.0"
+    },
+    "prefer-stable": true,
+    "config": {
+        "sort-packages": true
+    },
+    "keywords": [
+        "framework",
+        "sniffer",
+        "architecture",
+        "standards"
+    ],
+    "authors": [
+        {
+            "name": "Spryker",
+            "homepage": "https://spryker.com"
+        }
+    ],
+    "support": {
+        "source": "https://github.com/spryker/architecture-sniffer"
+    },
+    "autoload": {
+        "psr-4": {
+            "ArchitectureSniffer\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "ArchitectureSnifferTest\\": "tests/"
+        }
+    },
+    "scripts": {
+        "cs-check": "phpcs --colors -p -s --extensions=php --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml --ignore=/tests/_data/,/_support/ src/ tests/",
+        "cs-fix": "phpcbf --colors -p --extensions=php --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml --ignore=/tests/_data/,/_support/ src/ tests/",
+        "stan": "phpstan analyze -l 1 src/",
+        "test": "codecept build && codecept run"
+    },
+    "include-path": [
+        "src/"
+    ]
 }

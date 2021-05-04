@@ -5,10 +5,7 @@ on:
   push:
     branches:
       - master
-  schedule:
-    - cron: "0 0 * * *"
-      branches:
-        - 'master'
+  workflow_dispatch:
 
 jobs:
   validation:
@@ -29,9 +26,7 @@ jobs:
           extensions: mbstring, intl, pdo_mysql
 
       - name: Checkout
-        uses: actions/checkout@v1
-        with:
-          fetch-depth: 1
+        uses: actions/checkout@v2
 
       - name: Composer validate
         run: composer validate

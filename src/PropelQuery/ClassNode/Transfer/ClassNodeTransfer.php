@@ -10,7 +10,7 @@ namespace ArchitectureSniffer\PropelQuery\ClassNode\Transfer;
 use ArchitectureSniffer\Path\Transfer\PathTransfer;
 use ArchitectureSniffer\Transfer\TransferInterface;
 use PHPMD\Node\ClassNode;
-use Roave\BetterReflection\Reflection\ReflectionClass;
+use PHPStan\BetterReflection\Reflection\ReflectionClass;
 
 class ClassNodeTransfer implements TransferInterface
 {
@@ -40,7 +40,7 @@ class ClassNodeTransfer implements TransferInterface
     protected $node;
 
     /**
-     * @var \Roave\BetterReflection\Reflection\ReflectionClass
+     * @var \PHPStan\BetterReflection\Reflection\ReflectionClass
      */
     protected $reflectionClass;
 
@@ -68,7 +68,7 @@ class ClassNodeTransfer implements TransferInterface
     }
 
     /**
-     * @return \Roave\BetterReflection\Reflection\ReflectionClass
+     * @return \PHPStan\BetterReflection\Reflection\ReflectionClass
      */
     public function getReflectionClass(): ReflectionClass
     {
@@ -76,7 +76,7 @@ class ClassNodeTransfer implements TransferInterface
     }
 
     /**
-     * @param \Roave\BetterReflection\Reflection\ReflectionClass $reflectionClass
+     * @param \PHPStan\BetterReflection\Reflection\ReflectionClass $reflectionClass
      *
      * @return void
      */

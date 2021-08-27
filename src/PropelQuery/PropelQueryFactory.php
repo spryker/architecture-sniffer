@@ -31,8 +31,8 @@ use Laminas\Config\Reader\ReaderInterface;
 use Laminas\Config\Reader\Xml;
 use phpDocumentor\Reflection\DocBlockFactory;
 use phpDocumentor\Reflection\DocBlockFactoryInterface;
-use Roave\BetterReflection\BetterReflection;
-use Roave\BetterReflection\Reflector\ClassReflector;
+use PHPStan\BetterReflection\BetterReflection;
+use PHPStan\BetterReflection\Reflector\ClassReflector;
 
 class PropelQueryFactory
 {
@@ -92,7 +92,7 @@ class PropelQueryFactory
     }
 
     /**
-     * @return \Roave\BetterReflection\Reflector\ClassReflector
+     * @return \PHPStan\BetterReflection\Reflector\ClassReflector
      */
     public function createClassReflector(): ClassReflector
     {

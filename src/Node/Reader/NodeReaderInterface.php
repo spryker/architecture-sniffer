@@ -8,7 +8,7 @@
 namespace ArchitectureSniffer\Node\Reader;
 
 use PHPMD\AbstractNode;
-use Roave\BetterReflection\Reflection\ReflectionClass;
+use PHPStan\BetterReflection\Reflection\ReflectionClass;
 
 interface NodeReaderInterface
 {
@@ -29,7 +29,7 @@ interface NodeReaderInterface
     /**
      * @param \PHPMD\AbstractNode $node
      *
-     * @return \Roave\BetterReflection\Reflection\ReflectionClass
+     * @return \PHPStan\BetterReflection\Reflection\ReflectionClass
      */
     public function getReflectionClassByNode(AbstractNode $node): ReflectionClass;
 }

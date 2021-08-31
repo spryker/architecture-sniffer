@@ -42,7 +42,7 @@ class CommunicationControllerRule extends AbstractRule implements ClassAware
         if (preg_match('(\\\\[^\\\\]+Controller$)', $node->getFullQualifiedName()) === 0) {
             return;
         }
-        if ($node->getName() === 'AbstractController') {
+        if ($this->isAbstractController($node)) {
             return;
         }
 
@@ -50,6 +50,16 @@ class CommunicationControllerRule extends AbstractRule implements ClassAware
         foreach ($node->getMethods() as $method) {
             $this->applyPublicMethodsHaveActionSuffix($method);
         }
+    }
+
+    /**
+     * @param \PHPMD\AbstractNode $node
+     *
+     * @return bool
+     */
+    protected function isAbstractController(AbstractNode $node): bool
+    {
+        return $node->getName() === 'AbstractController' || $node->getName() === 'AbstractGatewayController';
     }
 
     /**

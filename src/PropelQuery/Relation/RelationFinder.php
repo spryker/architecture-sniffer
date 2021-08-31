@@ -8,7 +8,7 @@
 namespace ArchitectureSniffer\PropelQuery\Relation;
 
 use PHPMD\AbstractNode;
-use Roave\BetterReflection\Reflection\ReflectionClass;
+use PHPStan\BetterReflection\Reflection\ReflectionClass;
 
 class RelationFinder implements RelationFinderInterface
 {
@@ -17,7 +17,7 @@ class RelationFinder implements RelationFinderInterface
 
     /**
      * @param \PHPMD\AbstractNode $node
-     * @param \Roave\BetterReflection\Reflection\ReflectionClass $reflectionNodeClass
+     * @param \PHPStan\BetterReflection\Reflection\ReflectionClass $reflectionNodeClass
      *
      * @return string[]
      */
@@ -58,7 +58,7 @@ class RelationFinder implements RelationFinderInterface
 
     /**
      * @param \PHPMD\AbstractNode $relationNode
-     * @param \Roave\BetterReflection\Reflection\ReflectionClass $reflectionNodeClass
+     * @param \PHPStan\BetterReflection\Reflection\ReflectionClass $reflectionNodeClass
      *
      * @return string|null
      */
@@ -95,7 +95,7 @@ class RelationFinder implements RelationFinderInterface
 
     /**
      * @param \PHPMD\AbstractNode $joinNode
-     * @param \Roave\BetterReflection\Reflection\ReflectionClass $reflectionNodeClass
+     * @param \PHPStan\BetterReflection\Reflection\ReflectionClass $reflectionNodeClass
      *
      * @return string|null
      */

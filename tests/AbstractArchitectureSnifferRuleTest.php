@@ -32,7 +32,7 @@ abstract class AbstractArchitectureSnifferRuleTest extends Unit
     /**
      * @return void
      */
-    public function tearDown()
+    protected function tearDown(): void
     {
         parent::tearDown();
 

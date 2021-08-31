@@ -8,7 +8,7 @@
 namespace ArchitectureSniffer\PropelQuery\Query;
 
 use PHPMD\Node\AbstractNode;
-use Roave\BetterReflection\Reflection\ReflectionClass;
+use PHPStan\BetterReflection\Reflection\ReflectionClass;
 
 class QueryFinder implements QueryFinderInterface
 {
@@ -16,7 +16,7 @@ class QueryFinder implements QueryFinderInterface
 
     /**
      * @param \PHPMD\Node\AbstractNode $node
-     * @param \Roave\BetterReflection\Reflection\ReflectionClass $reflectionNodeClass
+     * @param \PHPStan\BetterReflection\Reflection\ReflectionClass $reflectionNodeClass
      *
      * @return string[]
      */

@@ -15,7 +15,7 @@ jobs:
       matrix:
         php-version: [
             '7.3',
-            '7.4'
+            '8.0'
         ]
 
     steps:
@@ -51,7 +51,7 @@ jobs:
 
       - name: Codeception tests
         run: |
-          if [[ ${{ matrix.php-version }} == '7.4' ]]; then
+          if [[ ${{ matrix.php-version }} == '7.3' ]]; then
             vendor/bin/codecept build
             XDEBUG_MODE=coverage vendor/bin/codecept run --coverage-xml
           else
@@ -59,7 +59,7 @@ jobs:
           fi
 
       - name: Code Coverage Report
-        if: success() && matrix.php-version == '7.4'
+        if: success() && matrix.php-version == '7.3'
         uses: codecov/codecov-action@v1
 
       - name: CodeStyle checks
@@ -67,3 +67,46 @@ jobs:
 
       - name: PHPStan checks
         run: composer stan
+
+  prefer-lowest:
+    runs-on: ubuntu-18.04
+    strategy:
+      fail-fast: false
+      matrix:
+        php-version: [
+            '7.3'
+        ]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-version }}
+          extensions: mbstring, intl, pdo_mysql
+
+      - name: Get Composer Cache Directory
+        id: composer-cache
+        run: |
+          echo "::set-output name=dir::$(composer config cache-files-dir)"
+
+      - name: Composer cache
+        uses: actions/cache@v2
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: ${{ runner.os }}-composer-
+
+      - name: Composer prefer-lowest
+        run: composer update --prefer-dist --no-interaction --prefer-lowest --prefer-stable -o
+
+      - name: Composer require dereuromark/composer-prefer-lowest package
+        run: composer require --dev dereuromark/composer-prefer-lowest
+
+      - name: Codecept run test
+        run: composer test
+
+      - name: Validate prefer lowest
+        run: vendor/bin/validate-prefer-lowest

@@ -10,7 +10,7 @@ namespace ArchitectureSniffer\PropelQuery;
 use ArchitectureSniffer\Path\Transfer\PathTransfer;
 use ArchitectureSniffer\PropelQuery\ClassNode\Transfer\ClassNodeTransfer;
 use PHPMD\AbstractNode;
-use Roave\BetterReflection\Reflection\ReflectionClass;
+use PHPStan\BetterReflection\Reflection\ReflectionClass;
 
 interface PropelQueryFacadeInterface
 {
@@ -38,7 +38,7 @@ interface PropelQueryFacadeInterface
     /**
      * @param \PHPMD\AbstractNode $node
      *
-     * @return \Roave\BetterReflection\Reflection\ReflectionClass
+     * @return \PHPStan\BetterReflection\Reflection\ReflectionClass
      */
     public function getReflectionClassByNode(AbstractNode $node): ReflectionClass;
 

@@ -34,7 +34,7 @@ class FacadeInterfaceRule extends AbstractFacadeRule implements ClassAware
      */
     public function apply(AbstractNode $node)
     {
-        if (!$this->isFacade($node)) {
+        if (!$this->isFacade($node) || $this->isAbstractFacade($node)) {
             return;
         }
 

@@ -33,4 +33,14 @@ abstract class AbstractFacadeRule extends AbstractRule
 
         return false;
     }
+
+    /**
+     * @param \PHPMD\Node\AbstractNode $node
+     *
+     * @return bool
+     */
+    protected function isAbstractFacade(AbstractNode $node): bool
+    {
+        return $node->getName() === 'AbstractFacade';
+    }
 }

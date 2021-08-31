@@ -13,7 +13,7 @@ use PHPMD\Rule\MethodAware;
 
 class BridgeConstructorArgumentsRule extends AbstractBridgeRule implements MethodAware
 {
-    public const RULE = 'A bridge should only have a single argument in constructor. It is also used only on core, not in projects.';
+    public const RULE = 'A bridge should only have a single internal dependency in constructor. It is also used only on core, not in projects.';
 
     /**
      * @return string
@@ -48,18 +48,31 @@ class BridgeConstructorArgumentsRule extends AbstractBridgeRule implements Metho
             return;
         }
 
-        $params = $method->getParameters();
-        if (count($params) === 1) {
+        $internalDependenciesCount = $this->getInternalDependenciesCount($method);
+
+        if ($internalDependenciesCount <= 1) {
             return;
         }
 
         $message = sprintf(
-            'The %s is having %s parameters which violates the rule "%s"',
-            count($params),
+            'The %s is having %s internal dependencies which violates the rule "%s"',
             $method->getFullQualifiedName(),
+            $internalDependenciesCount,
             static::RULE
         );
 
         $this->addViolation($method, [$message]);
+    }
+
+    /**
+     * @param \PHPMD\Node\MethodNode $method
+     *
+     * @return int
+     */
+    protected function getInternalDependenciesCount(MethodNode $method): int
+    {
+        preg_match_all('/@param \\\\Spryker.*\\\\/', $method->getComment(), $matches);
+
+        return count($matches[0]);
     }
 }

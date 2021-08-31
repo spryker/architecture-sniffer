@@ -71,7 +71,7 @@ class BridgeConstructorArgumentsRule extends AbstractBridgeRule implements Metho
      */
     protected function getInternalDependenciesCount(MethodNode $method): int
     {
-        preg_match_all('/@param \\\Spryker.*/', $method->getComment(), $matches);
+        preg_match_all('/@param \\\\Spryker.*\\\\/', $method->getComment(), $matches);
 
         return count($matches[0]);
     }

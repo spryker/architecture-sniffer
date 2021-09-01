@@ -81,7 +81,7 @@ class ApiInterfaceRule extends SprykerAbstractRule implements InterfaceAware
         if (
             preg_match(
                 '(
-                \*\s+[{}A-Z0-9\-]+.*\s+
+                \*\s+["{}\[\],=>$A-Z0-9\-]+.*\s+
                 \*?\s*
                 \*\s+@api
             )xi',

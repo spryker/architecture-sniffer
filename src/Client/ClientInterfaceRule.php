@@ -15,5 +15,5 @@ class ClientInterfaceRule extends ApiInterfaceRule implements InterfaceAware
     /**
      * @var string
      */
-    protected $classRegex = '(\\\\Client\\\\.+ClientInterface$)';
+    protected $classRegex = '(\\\\Client\\\\[A-Za-z]+\\\\[A-Za-z]+ClientInterface$)';
 }

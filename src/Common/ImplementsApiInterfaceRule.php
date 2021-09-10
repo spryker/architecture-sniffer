@@ -36,17 +36,31 @@ class ImplementsApiInterfaceRule extends SprykerAbstractRule implements ClassAwa
      */
     public function apply(AbstractNode $node)
     {
-        /** @var \PDepend\Source\AST\ASTClass $node */
-        if ($node->isAbstract()) {
-            return;
-        }
-
-        if (empty($this->classRegex) || preg_match($this->classRegex, $node->getFullQualifiedName()) === 0) {
+        if (!$this->isApplicable($node)) {
             return;
         }
 
         /** @var \PHPMD\Node\ClassNode $node */
         $this->applyImplementsInterfaceWithSameNameAndSuffix($node);
+    }
+
+    /**
+     * @param \PHPMD\AbstractNode $node
+     *
+     * @return bool
+     */
+    protected function isApplicable(AbstractNode $node): bool
+    {
+        /** @var \PDepend\Source\AST\ASTClass $node */
+        if ($node->isAbstract()) {
+            return false;
+        }
+
+        if (empty($this->classRegex) || preg_match($this->classRegex, $node->getFullQualifiedName()) === 0) {
+            return false;
+        }
+
+        return true;
     }
 
     /**

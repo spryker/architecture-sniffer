@@ -8,6 +8,7 @@
 namespace ArchitectureSniffer\Service;
 
 use ArchitectureSniffer\Common\ImplementsApiInterfaceRule;
+use PHPMD\AbstractNode;
 use PHPMD\Rule\ClassAware;
 
 class ServiceRule extends ImplementsApiInterfaceRule implements ClassAware
@@ -16,4 +17,14 @@ class ServiceRule extends ImplementsApiInterfaceRule implements ClassAware
      * @var string
      */
     protected $classRegex = '(\\\\Service\\\\.+Service$)';
+
+    /**
+     * @param \PHPMD\AbstractNode $node
+     *
+     * @return bool
+     */
+    protected function isApplicable(AbstractNode $node): bool
+    {
+        return $node->getName() !== 'AbstractService' && parent::isApplicable($node);
+    }
 }

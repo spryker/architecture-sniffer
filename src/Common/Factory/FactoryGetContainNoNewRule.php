@@ -30,15 +30,29 @@ class FactoryGetContainNoNewRule extends AbstractFactoryRule implements MethodAw
      */
     public function apply(AbstractNode $node)
     {
-        if (!$this->isFactory($node)) {
-            return;
-        }
-
-        if ($this->isMethodDeprecated($node)) {
+        if (!$this->isApplicable($node)) {
             return;
         }
 
         $this->applyRule($node);
+    }
+
+    /**
+     * @param \PHPMD\AbstractNode $node
+     *
+     * @return bool
+     */
+    protected function isApplicable(AbstractNode $node): bool
+    {
+        if (!$this->isFactory($node) || $this->isAbstractFactory($node)) {
+            return false;
+        }
+
+        if ($this->isMethodDeprecated($node)) {
+            return false;
+        }
+
+        return true;
     }
 
     /**

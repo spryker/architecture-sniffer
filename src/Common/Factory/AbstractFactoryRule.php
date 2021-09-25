@@ -32,6 +32,16 @@ abstract class AbstractFactoryRule extends SprykerAbstractRule
     }
 
     /**
+     * @param \PHPMD\Node\AbstractNode|\PDepend\Source\AST\ASTClass $node
+     *
+     * @return bool
+     */
+    protected function isAbstractFactory(AbstractNode $node): bool
+    {
+        return $node->isAbstract() || preg_match('/Abstract.*Factory$/', $this->getClassName($node));
+    }
+
+    /**
      * @param \PHPMD\Node\AbstractNode $node
      *
      * @return string

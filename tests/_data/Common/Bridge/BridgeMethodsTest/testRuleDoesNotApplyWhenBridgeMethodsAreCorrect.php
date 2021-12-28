@@ -18,14 +18,14 @@ class SessionToCacheClientBridge implements SessionToCacheClientInterface
     {
     }
 
-    public function save(string $key, DataObject $data, string $prefix = null)
+    public function save(string $key, DataObject $data, string $prefix = null): DataObject
     {
     }
 }
 
 interface SessionToCacheClientInterface
 {
-    public function save(string $key, DataObject $data, string $prefix = null);
+    public function save(string $key, DataObject $data, string $prefix = null): DataObject;
 }
 
 // Data objects
@@ -44,5 +44,5 @@ use StructuredData\DataObject;
 
 interface CacheClientInterface
 {
-    public function save(string $key, DataObject $data, string $prefix = null);
+    public function save(string $key, DataObject $data, string $prefix = null): DataObject;
 }

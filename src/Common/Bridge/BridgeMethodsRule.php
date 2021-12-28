@@ -7,6 +7,7 @@
 
 namespace ArchitectureSniffer\Common\Bridge;
 
+use ArchitectureSniffer\ArchitectureSnifferFactoryAwareTrait;
 use ArchitectureSniffer\SprykerAbstractRule;
 use PHPMD\AbstractNode;
 use PHPMD\Node\ClassNode;
@@ -18,6 +19,8 @@ use ReflectionMethod;
 
 class BridgeMethodsRule extends SprykerAbstractRule implements ClassAware
 {
+    use ArchitectureSnifferFactoryAwareTrait;
+
     protected const RULE = 'All bridge methods must have exactly the same signature as their interface';
 
     /**
@@ -58,7 +61,6 @@ class BridgeMethodsRule extends SprykerAbstractRule implements ClassAware
         $firstInterface = $classNodeInterfaces[0];
 
         $interfaceNode = new InterfaceNode($firstInterface);
-
         $this->verifyClass($node, $interfaceNode);
         $this->verifyInterface($node, $interfaceNode);
     }
@@ -104,6 +106,17 @@ class BridgeMethodsRule extends SprykerAbstractRule implements ClassAware
             $this->addViolation($interfaceNode, [$message]);
 
             return;
+        }
+
+        $invalidReturnTypeMethods = $this->findInvalidReturnTypesMethodsForBridgeInterface($interfaceNode, $bridgedInterfaceReflection);
+
+        foreach ($invalidReturnTypeMethods as $invalidReturnTypeMethod) {
+            $message = sprintf(
+                'The bridge interface has incorrect method \'%s\' signature. Metod has invalid return type.   That violates the rule "%s"',
+                $invalidReturnTypeMethod->getName(),
+                static::RULE
+            );
+            $this->addViolation($interfaceNode, [$message]);
         }
 
         $notMatchingMethods = $this->findNotMatchingMethodsForBridgeInterface($interfaceNode, $bridgedInterfaceReflection);
@@ -211,6 +224,103 @@ class BridgeMethodsRule extends SprykerAbstractRule implements ClassAware
     }
 
     /**
+     * @param \PHPMD\Node\InterfaceNode $interfaceNode
+     * @param \ReflectionClass $bridgedInterfaceReflection
+     *
+     * @return array
+     */
+    protected function findInvalidReturnTypesMethodsForBridgeInterface(InterfaceNode $interfaceNode, ReflectionClass $bridgedInterfaceReflection): array
+    {
+        $invalidReturnTypeMethods = [];
+
+        foreach ($interfaceNode->getMethods() as $interfaceMethod) {
+
+            $interfaceMethodName = sprintf('%s::%s', $interfaceNode->getFullQualifiedName(), $interfaceMethod->getName());
+            $interfaceMethodReflection = new ReflectionMethod($interfaceMethodName);
+
+            $interfaceMethodReturnType = (string)$interfaceMethodReflection->getReturnType();
+            $validReturnTypeFromParentInterface = $this->getValidReturnTypeFromParentInterface($interfaceMethod, $bridgedInterfaceReflection);
+            $returnTypeFromDocComment = $this->getPhpDocCommentReturnType($interfaceMethod->getComment());
+
+            if ($this->compareReturnTypes($interfaceMethodReturnType, $validReturnTypeFromParentInterface, $returnTypeFromDocComment)) {
+                continue;
+            }
+
+            $invalidReturnTypeMethods[] = $interfaceMethod;
+        }
+
+        return $invalidReturnTypeMethods;
+    }
+
+    /**
+     * @param \PHPMD\Node\MethodNode $interfaceNode
+     * @param \ReflectionClass $bridgedInterfaceReflection
+     *
+     * @return string|null
+     */
+    protected function getValidReturnTypeFromParentInterface(MethodNode $interfaceMethod, ReflectionClass $bridgedInterfaceReflection): ?string
+    {
+
+        if (!$bridgedInterfaceReflection->hasMethod($interfaceMethod->getName())) {
+            return null;
+        }
+
+        if ($bridgedInterfaceReflection->getMethod($interfaceMethod->getName())->hasReturnType()) {
+            return (string)$bridgedInterfaceReflection
+                    ->getMethod($interfaceMethod->getName())
+                    ->getReturnType();
+        }
+
+        return $this->getPhpDocCommentReturnType($bridgedInterfaceReflection->getMethod($interfaceMethod->getName())->getDocComment());
+    }
+
+
+    /**
+     * @param string $interfaceMethodReturnType
+     * @param string|null $validReturnTypeFromParentInterface
+     * @param string|null $returnTypeFromDocComment
+     *
+     * @return bool
+     */
+    protected function compareReturnTypes(?string $interfaceMethodReturnType, ?string $validReturnTypeFromParentInterface, ?string $returnTypeFromDocComment): bool
+    {
+        if (!$interfaceMethodReturnType) {
+            return false;
+        }
+
+        if ($validReturnTypeFromParentInterface && $validReturnTypeFromParentInterface !== $interfaceMethodReturnType) {
+            return false;
+        }
+
+        if ($returnTypeFromDocComment && $returnTypeFromDocComment !== $interfaceMethodReturnType) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * @param string $comment
+     * @return string|null
+     */
+    protected function getPhpDocCommentReturnType(?string $docComment): ?string
+    {
+        if (!$docComment) {
+            return null;
+        }
+
+        $docblock = $this->getFactory()->createPhpDocumetorDocBlock($docComment);
+        $returnTags = $docblock->getTagsByName('return');
+
+        if (count($returnTags)) {
+            return ltrim($returnTags[0], '\\');
+        }
+
+        return null;
+    }
+
+
+    /**
      * @param \ReflectionMethod $firstMethod
      * @param \ReflectionMethod $secondMethod
      *
@@ -221,7 +331,7 @@ class BridgeMethodsRule extends SprykerAbstractRule implements ClassAware
         $firstMethodParameters = $firstMethod->getParameters();
         $secondMethodParameters = $secondMethod->getParameters();
 
-        if (count($firstMethodParameters) !== count($secondMethodParameters)) {
+        if ($this->countRequireParams($firstMethodParameters) !== $this->countRequireParams($secondMethodParameters)) {
             return false;
         }
 
@@ -269,5 +379,22 @@ class BridgeMethodsRule extends SprykerAbstractRule implements ClassAware
         }
 
         return null;
+    }
+
+    /**
+     * @param \ReflectionParameter[] $params
+     * @return int
+     */
+    protected function countRequireParams(array $params): int
+    {
+        $countParams = 0;
+
+        foreach ($params as $param) {
+            if (!$param->isDefaultValueAvailable()) {
+                $countParams++;
+            }
+        }
+
+        return $countParams;
     }
 }

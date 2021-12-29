@@ -59,10 +59,10 @@ class ModuleFinder implements ModuleFinderInterface
     }
 
     /**
-     * @param string[] $moduleNames
+     * @param array<string> $moduleNames
      * @param \ArchitectureSniffer\Path\Transfer\PathTransfer $pathTransfer
      *
-     * @return \ArchitectureSniffer\Module\Transfer\ModuleTransfer[]
+     * @return array<\ArchitectureSniffer\Module\Transfer\ModuleTransfer>
      */
     public function findModulesByNames(array $moduleNames, PathTransfer $pathTransfer): array
     {
@@ -84,7 +84,7 @@ class ModuleFinder implements ModuleFinderInterface
     /**
      * @param array $modulePaths
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getModuleSchemaPaths(array $modulePaths): array
     {
@@ -92,7 +92,7 @@ class ModuleFinder implements ModuleFinderInterface
 
         $fileFinder = $this->createFinder()->in($modulePaths)->name('*.schema.xml');
 
-        /*** @var \Symfony\Component\Finder\SplFileInfo[] $files */
+        /** @var array<\Symfony\Component\Finder\SplFileInfo> $files */
         $files = $fileFinder->files();
 
         foreach ($files as $file) {

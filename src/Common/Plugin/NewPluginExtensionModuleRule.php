@@ -14,6 +14,9 @@ use ReflectionClass;
 
 class NewPluginExtensionModuleRule extends AbstractPluginRule implements ClassAware
 {
+    /**
+     * @var string
+     */
     protected const RULE = 'A plugin class must implement a ModuleExtension\'s interface instead of implementing an extension interface of Module';
 
     /**
@@ -32,7 +35,7 @@ class NewPluginExtensionModuleRule extends AbstractPluginRule implements ClassAw
         if (!$classNodeInterfaces->count()) {
             $message = sprintf(
                 'The Plugin `%s` doesn\'t have any interfaces.',
-                $node->getName()
+                $node->getName(),
             );
             $this->addViolation($node, [$message]);
 
@@ -83,9 +86,9 @@ class NewPluginExtensionModuleRule extends AbstractPluginRule implements ClassAw
                 sprintf(
                     'The plugin class implements %s interface without participation of Extension module which violates rule "%s"',
                     $interfaceName,
-                    static::RULE
+                    static::RULE,
                 ),
-            ]
+            ],
         );
     }
 }

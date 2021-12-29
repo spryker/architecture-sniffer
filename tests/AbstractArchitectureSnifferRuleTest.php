@@ -59,8 +59,8 @@ abstract class AbstractArchitectureSnifferRuleTest extends Unit
         return new ClassNode(
             $this->getNodeForCallingTestCase(
                 $this->parseTestCaseSource()->getClasses(),
-                $nameOrPosition
-            )
+                $nameOrPosition,
+            ),
         );
     }
 
@@ -74,8 +74,8 @@ abstract class AbstractArchitectureSnifferRuleTest extends Unit
         return new InterfaceNode(
             $this->getNodeForCallingTestCase(
                 $this->parseTestCaseSource()->getInterfaces(),
-                $nameOrPosition
-            )
+                $nameOrPosition,
+            ),
         );
     }
 
@@ -89,8 +89,8 @@ abstract class AbstractArchitectureSnifferRuleTest extends Unit
         return new TraitNode(
             $this->getNodeForCallingTestCase(
                 $this->parseTestCaseSource()->getTraits(),
-                $nameOrPosition
-            )
+                $nameOrPosition,
+            ),
         );
     }
 
@@ -107,8 +107,8 @@ abstract class AbstractArchitectureSnifferRuleTest extends Unit
                     ->getTypes()
                     ->current()
                     ->getMethods(),
-                $nameOrPosition
-            )
+                $nameOrPosition,
+            ),
         );
     }
 
@@ -122,8 +122,8 @@ abstract class AbstractArchitectureSnifferRuleTest extends Unit
         return new FunctionNode(
             $this->getNodeForCallingTestCase(
                 $this->parseTestCaseSource()->getFunctions(),
-                $nameOrPosition
-            )
+                $nameOrPosition,
+            ),
         );
     }
 
@@ -214,7 +214,7 @@ abstract class AbstractArchitectureSnifferRuleTest extends Unit
         $parser = new PHPParserGeneric(
             $tokenizer,
             $builder,
-            new MemoryCacheDriver()
+            new MemoryCacheDriver(),
         );
         $parser->parse();
 

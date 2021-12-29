@@ -13,6 +13,9 @@ use PHPMD\Rule\MethodAware;
 
 class FactoryOnlyPublicMethodsRule extends AbstractFactoryRule implements MethodAware
 {
+    /**
+     * @var string
+     */
     public const RULE = 'All the factory methods should be public by default';
 
     /**
@@ -49,7 +52,7 @@ class FactoryOnlyPublicMethodsRule extends AbstractFactoryRule implements Method
         $message = sprintf(
             'The factory method \'%s()\' is not public which violates the rule "%s"',
             $method,
-            static::RULE
+            static::RULE,
         );
 
         $this->addViolation($node, [$message]);

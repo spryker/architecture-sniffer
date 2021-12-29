@@ -49,7 +49,7 @@ class MethodFinder implements MethodFinderInterface
     /**
      * @param \ArchitectureSniffer\PropelQuery\ClassNode\Transfer\ClassNodeTransfer $classNodeTransfer
      *
-     * @return \ArchitectureSniffer\PropelQuery\Method\Transfer\MethodTransfer[]
+     * @return array<\ArchitectureSniffer\PropelQuery\Method\Transfer\MethodTransfer>
      */
     public function getMethodTransferCollectionWithRelations(ClassNodeTransfer $classNodeTransfer): array
     {
@@ -62,7 +62,7 @@ class MethodFinder implements MethodFinderInterface
         foreach ($classMethods as $methodNode) {
             $relationTablesNames = $this->relationFinder->getRelationNames(
                 $methodNode,
-                $reflectionClass
+                $reflectionClass,
             );
 
             if ($relationTablesNames === []) {
@@ -71,7 +71,7 @@ class MethodFinder implements MethodFinderInterface
 
             $queryNames = $this->queryFinder->getQueryNames(
                 $methodNode,
-                $reflectionClass
+                $reflectionClass,
             );
 
             $methodName = $methodNode->getName();
@@ -80,7 +80,7 @@ class MethodFinder implements MethodFinderInterface
                 $className,
                 $methodNode,
                 $queryNames,
-                $relationTablesNames
+                $relationTablesNames,
             );
         }
 
@@ -90,8 +90,8 @@ class MethodFinder implements MethodFinderInterface
     /**
      * @param string $className
      * @param \PHPMD\Node\MethodNode $methodNode
-     * @param string[] $queryNames
-     * @param string[] $relationTablesNames
+     * @param array<string> $queryNames
+     * @param array<string> $relationTablesNames
      *
      * @return \ArchitectureSniffer\PropelQuery\Method\Transfer\MethodTransfer
      */

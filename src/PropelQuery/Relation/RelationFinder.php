@@ -12,14 +12,21 @@ use PHPStan\BetterReflection\Reflection\ReflectionClass;
 
 class RelationFinder implements RelationFinderInterface
 {
+    /**
+     * @var string
+     */
     protected const PATTERN_JOIN_METHOD_NAME = '/^(left|inner|right|add)?(Join|join)(With)?/';
+
+    /**
+     * @var string
+     */
     protected const PATTERN_IGNORE_JOIN_NAME = '/(Condition|Object)/';
 
     /**
      * @param \PHPMD\AbstractNode $node
      * @param \PHPStan\BetterReflection\Reflection\ReflectionClass $reflectionNodeClass
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getRelationNames(AbstractNode $node, ReflectionClass $reflectionNodeClass): array
     {
@@ -83,7 +90,7 @@ class RelationFinder implements RelationFinderInterface
         $joinRelationName = preg_replace(
             static::PATTERN_JOIN_METHOD_NAME,
             '',
-            $joinNode->getName()
+            $joinNode->getName(),
         );
 
         if (preg_match(static::PATTERN_IGNORE_JOIN_NAME, $joinRelationName)) {

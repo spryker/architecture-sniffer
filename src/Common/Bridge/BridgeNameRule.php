@@ -14,7 +14,14 @@ use PHPMD\Rule\ClassAware;
 
 class BridgeNameRule extends AbstractRule implements ClassAware
 {
+    /**
+     * @var string
+     */
     protected const CLASS_RULE = 'A bridge name must have \'{source_module_name}To{target_module_name}{layer_name}Bridge\' structure.';
+
+    /**
+     * @var string
+     */
     protected const INTERFACE_RULE = 'A bridge interface name must have \'{source_module_name}To{target_module_name}{layer_name}Interface\' structure.';
 
     /**
@@ -63,7 +70,7 @@ class BridgeNameRule extends AbstractRule implements ClassAware
             'The bridge name is not \'%sTo{target_module_name}%sBridge\'. That violates the rule "%s"',
             $namespaceParts['moduleName'],
             $namespaceParts['layerName'],
-            static::CLASS_RULE
+            static::CLASS_RULE,
         );
 
         $this->addViolation($node, [$message]);
@@ -82,7 +89,7 @@ class BridgeNameRule extends AbstractRule implements ClassAware
         if (!$classNodeInterfaces->count()) {
             $message = sprintf(
                 'The bridge `%s` doesn\'t  have any interfaces.',
-                $node->getName()
+                $node->getName(),
             );
             $this->addViolation($node, [$message]);
 
@@ -100,7 +107,7 @@ class BridgeNameRule extends AbstractRule implements ClassAware
                 'The bridge interface name is not \'%sTo{target_module_name}%sInterface\'. That violates the rule "%s"',
                 $namespaceParts['moduleName'],
                 $namespaceParts['layerName'],
-                static::INTERFACE_RULE
+                static::INTERFACE_RULE,
             );
             $this->addViolation($interfaceNode, [$message]);
 

@@ -44,7 +44,7 @@ class BridgeInterfaceNamingConventionRule extends AbstractBridgeRule
         $message = sprintf(
             'Bridge interface `%s` has no matching concrete `%s`',
             $className,
-            $concreteClassName
+            $concreteClassName,
         );
 
         $this->addViolation($node, [$message]);

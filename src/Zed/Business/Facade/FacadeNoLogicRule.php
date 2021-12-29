@@ -14,6 +14,9 @@ use PHPMD\Rule\ClassAware;
 
 class FacadeNoLogicRule extends AbstractFacadeRule implements ClassAware
 {
+    /**
+     * @var string
+     */
     public const RULE = 'A Facade must not contain logic and only delegate.';
 
     /**
@@ -77,7 +80,7 @@ class FacadeNoLogicRule extends AbstractFacadeRule implements ClassAware
                 'The method %s contains a "%s" statement which violates the rule "%s"',
                 $method->getFullQualifiedName(),
                 $statement->getImage(),
-                static::RULE
+                static::RULE,
             );
 
             $this->addViolation($method, [$message]);

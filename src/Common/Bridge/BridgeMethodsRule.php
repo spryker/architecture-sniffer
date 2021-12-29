@@ -18,6 +18,9 @@ use ReflectionMethod;
 
 class BridgeMethodsRule extends SprykerAbstractRule implements ClassAware
 {
+    /**
+     * @var string
+     */
     protected const RULE = 'All bridge methods must have exactly the same signature as their interface';
 
     /**
@@ -48,7 +51,7 @@ class BridgeMethodsRule extends SprykerAbstractRule implements ClassAware
         if (!$classNodeInterfaces->count()) {
             $message = sprintf(
                 'The bridge `%s` doesn\'t  have any interfaces.',
-                $node->getName()
+                $node->getName(),
             );
             $this->addViolation($node, [$message]);
 
@@ -80,7 +83,7 @@ class BridgeMethodsRule extends SprykerAbstractRule implements ClassAware
             $message = sprintf(
                 'The bridge has incorrect method \'%s\' signature. That violates the rule "%s"',
                 $notMatchingMethod->getName(),
-                static::RULE
+                static::RULE,
             );
 
             $this->addViolation($node, [$message]);
@@ -99,7 +102,7 @@ class BridgeMethodsRule extends SprykerAbstractRule implements ClassAware
         if ($bridgedInterfaceReflection === null) {
             $message = sprintf(
                 'The bridge is missing an interface. That violates the rule "%s"',
-                static::RULE
+                static::RULE,
             );
             $this->addViolation($interfaceNode, [$message]);
 
@@ -112,15 +115,15 @@ class BridgeMethodsRule extends SprykerAbstractRule implements ClassAware
             $message = sprintf(
                 'The bridge interface has incorrect method \'%s\' signature. That violates the rule "%s"',
                 $notMatchingMethod->getName(),
-                static::RULE
+                static::RULE,
             );
             $this->addViolation($interfaceNode, [$message]);
         }
     }
 
     /**
-     * @param \PHPMD\Node\MethodNode[] $classMethods
-     * @param \PHPMD\Node\MethodNode[] $interfaceMethods
+     * @param array<\PHPMD\Node\MethodNode> $classMethods
+     * @param array<\PHPMD\Node\MethodNode> $interfaceMethods
      *
      * @return array|null
      */
@@ -237,7 +240,7 @@ class BridgeMethodsRule extends SprykerAbstractRule implements ClassAware
     }
 
     /**
-     * @param \PHPMD\Node\MethodNode[] $classMethods
+     * @param array<\PHPMD\Node\MethodNode> $classMethods
      *
      * @return \ReflectionClass|null
      */

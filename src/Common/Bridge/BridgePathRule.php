@@ -14,7 +14,14 @@ use PHPMD\Rule\ClassAware;
 
 class BridgePathRule extends AbstractRule implements ClassAware
 {
+    /**
+     * @var string
+     */
     protected const CLASS_RULE = 'A bridge must lie in "Dependency" folder.';
+
+    /**
+     * @var string
+     */
     protected const INTERFACE_RULE = 'A bridge interface must lie in "Dependency" folder.';
 
     /**
@@ -53,7 +60,7 @@ class BridgePathRule extends AbstractRule implements ClassAware
 
         $message = sprintf(
             'The bridge is not lie in "Dependency" folder. That violates the rule "%s"',
-            static::CLASS_RULE
+            static::CLASS_RULE,
         );
         $this->addViolation($node, [$message]);
     }
@@ -70,7 +77,7 @@ class BridgePathRule extends AbstractRule implements ClassAware
         if (!$classNodeInterfaces->count()) {
             $message = sprintf(
                 'The bridge `%s` doesn\'t  have any interfaces.',
-                $node->getName()
+                $node->getName(),
             );
             $this->addViolation($node, [$message]);
 
@@ -86,7 +93,7 @@ class BridgePathRule extends AbstractRule implements ClassAware
 
         $message = sprintf(
             'The bridge interface is not lie in "Dependency" folder. That violates the rule "%s"',
-            static::INTERFACE_RULE
+            static::INTERFACE_RULE,
         );
         $this->addViolation($interfaceNode, [$message]);
     }

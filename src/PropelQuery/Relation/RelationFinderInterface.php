@@ -16,7 +16,7 @@ interface RelationFinderInterface
      * @param \PHPMD\AbstractNode $node
      * @param \PHPStan\BetterReflection\Reflection\ReflectionClass $reflectionNodeClass
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getRelationNames(AbstractNode $node, ReflectionClass $reflectionNodeClass): array;
 }

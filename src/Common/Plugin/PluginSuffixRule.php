@@ -12,7 +12,14 @@ use PHPMD\Rule\ClassAware;
 
 class PluginSuffixRule extends AbstractPluginRule implements ClassAware
 {
+    /**
+     * @var string
+     */
     protected const EXPECTED_CLASS_NAME_SUFFIX = 'Plugin';
+
+    /**
+     * @var string
+     */
     protected const EXPECTED_TEST_CLASS_NAME_SUFFIX = 'PluginTest';
 
     /**

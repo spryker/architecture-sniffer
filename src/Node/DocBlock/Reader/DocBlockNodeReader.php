@@ -14,6 +14,9 @@ use PHPMD\AbstractNode;
 
 class DocBlockNodeReader implements DocBlockNodeReaderInterface
 {
+    /**
+     * @var string
+     */
     protected const TAG_MODULE = 'module';
 
     /**
@@ -39,7 +42,7 @@ class DocBlockNodeReader implements DocBlockNodeReaderInterface
     /**
      * @param \PHPMD\AbstractNode $node
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getModuleNames(AbstractNode $node): array
     {

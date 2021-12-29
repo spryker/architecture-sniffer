@@ -16,6 +16,9 @@ class NoClientInFrontendModuleRule extends SprykerAbstractRule implements ClassA
 {
     use DeprecationTrait;
 
+    /**
+     * @var string
+     */
     protected const RULE = 'There should be no Client layer in frontend modules.';
 
     /**
@@ -46,9 +49,9 @@ class NoClientInFrontendModuleRule extends SprykerAbstractRule implements ClassA
             [
                 sprintf(
                     'The %s class is in Client layer which violates rule "' . static::RULE . '"',
-                    $node->getFullQualifiedName()
+                    $node->getFullQualifiedName(),
                 ),
-            ]
+            ],
         );
     }
 }

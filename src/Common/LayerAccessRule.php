@@ -99,7 +99,7 @@ class LayerAccessRule extends AbstractRule implements ClassAware
     ];
 
     /**
-     * @param \PHPMD\AbstractNode $node
+     * @param \PHPMD\AbstractTypeNode $node
      *
      * @return void
      */
@@ -109,11 +109,10 @@ class LayerAccessRule extends AbstractRule implements ClassAware
 
         $this->applyPatterns($node, $patterns);
 
-        /** @var \PHPMD\Node\AbstractTypeNode $node */
         foreach ($node->getMethods() as $method) {
             $this->applyPatterns(
                 $method,
-                $patterns
+                $patterns,
             );
         }
     }
@@ -143,9 +142,9 @@ class LayerAccessRule extends AbstractRule implements ClassAware
                         str_replace(
                             ['{type}', '{source}', '{target}'],
                             [ucfirst($node->getType()), $node->getFullQualifiedName(), $targetQName],
-                            $message
+                            $message,
                         ),
-                    ]
+                    ],
                 );
             }
         }

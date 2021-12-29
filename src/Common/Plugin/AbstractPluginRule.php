@@ -14,7 +14,14 @@ use PHPMD\Rule\ClassAware;
 
 abstract class AbstractPluginRule extends SprykerAbstractRule
 {
+    /**
+     * @var string
+     */
     protected const EXTENDS_CLASS_NAME = 'AbstractPlugin';
+
+    /**
+     * @var string
+     */
     protected const PLUGIN_DIRECTORY_PATTERN = '#(Client|Yves|Service)\\\\.+\\\\Plugin\\\\(?!ServiceProvider|Provider)$|Communication\\\\Plugin\\\\[a-zA-Z0-9]+$#';
 
     /**
@@ -78,7 +85,7 @@ abstract class AbstractPluginRule extends SprykerAbstractRule
     /**
      * @param \PHPMD\AbstractNode $node
      *
-     * @return \PDepend\Source\AST\ASTClassOrInterfaceReference[]
+     * @return array<\PDepend\Source\AST\ASTClassOrInterfaceReference>
      */
     protected function getInterfaceReferences(AbstractNode $node): array
     {

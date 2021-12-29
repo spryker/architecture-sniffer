@@ -112,7 +112,7 @@ class BridgeMethodsRule extends SprykerAbstractRule implements ClassAware
 
         foreach ($invalidReturnTypeMethods as $invalidReturnTypeMethod) {
             $message = sprintf(
-                'The bridge interface has incorrect method \'%s\' signature. Metod has invalid return type.   That violates the rule "%s"',
+                'The bridge interface has incorrect method \'%s\' signature. Metod has missing or invalid return type. That violates the rule "%s"',
                 $invalidReturnTypeMethod->getName(),
                 static::RULE
             );

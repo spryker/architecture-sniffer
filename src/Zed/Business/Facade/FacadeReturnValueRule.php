@@ -13,6 +13,9 @@ use PHPMD\Rule\MethodAware;
 
 class FacadeReturnValueRule extends AbstractFacadeRule implements MethodAware
 {
+    /**
+     * @var string
+     */
     public const RULE = 'Every Facade should only return native types or transfer objects.';
 
     /**
@@ -23,7 +26,14 @@ class FacadeReturnValueRule extends AbstractFacadeRule implements MethodAware
         return static::RULE;
     }
 
+    /**
+     * @var string
+     */
     public const ALLOWED_RETURN_TYPES_PATTERN = '/@return\s(?!void|int|float|integer|string|array|\[\]|.*\[\]|bool|boolean|((.+)Transfer))(.*)/';
+
+    /**
+     * @var int
+     */
     public const INVALID_RETURN_TYPE_MATCH = 3;
 
     /**
@@ -53,7 +63,7 @@ class FacadeReturnValueRule extends AbstractFacadeRule implements MethodAware
                 'The %s is using an invalid return type "%s" which violates the rule "%s"',
                 $node->getFullQualifiedName(),
                 $this->getInvalidReturnType($comment),
-                static::RULE
+                static::RULE,
             );
 
             $this->addViolation($node, [$message]);

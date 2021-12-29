@@ -14,6 +14,9 @@ use PHPMD\Rule\ClassAware;
 
 class CommunicationControllerRule extends AbstractRule implements ClassAware
 {
+    /**
+     * @var string
+     */
     public const RULE = 'All public controller methods have the suffix `*Action`.';
 
     /**
@@ -33,7 +36,7 @@ class CommunicationControllerRule extends AbstractRule implements ClassAware
     }
 
     /**
-     * @param \PHPMD\AbstractNode $node
+     * @param \PHPMD\ClassNode $node
      *
      * @return void
      */
@@ -46,7 +49,6 @@ class CommunicationControllerRule extends AbstractRule implements ClassAware
             return;
         }
 
-        /** @var \PHPMD\Node\ClassNode $node */
         foreach ($node->getMethods() as $method) {
             $this->applyPublicMethodsHaveActionSuffix($method);
         }
@@ -63,7 +65,7 @@ class CommunicationControllerRule extends AbstractRule implements ClassAware
     }
 
     /**
-     * @param \PHPMD\Node\MethodNode $method
+     * @param \PDepend\Source\AST\ASTMethod $method
      *
      * @return void
      */
@@ -73,7 +75,6 @@ class CommunicationControllerRule extends AbstractRule implements ClassAware
             return;
         }
 
-        /** @var \PDepend\Source\AST\ASTMethod $method */
         if ($method->isProtected() || $method->isPrivate()) {
             return;
         }
@@ -87,9 +88,9 @@ class CommunicationControllerRule extends AbstractRule implements ClassAware
             [
                 sprintf(
                     'The controller method %s is not suffixed with "Action" which violates rule "' . static::RULE . '"',
-                    $method->getFullQualifiedName()
+                    $method->getFullQualifiedName(),
                 ),
-            ]
+            ],
         );
     }
 

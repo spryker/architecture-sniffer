@@ -13,6 +13,9 @@ use PHPMD\Rule\ClassAware;
 
 class FactoryOnlyGetAndCreateRule extends AbstractFactoryRule implements ClassAware
 {
+    /**
+     * @var string
+     */
     public const RULE = 'Factories should only contain get*() and create*() methods.';
 
     /**
@@ -53,7 +56,7 @@ class FactoryOnlyGetAndCreateRule extends AbstractFactoryRule implements ClassAw
         $message = sprintf(
             'The factory method %s() violates rule "%s"',
             $method->getName(),
-            static::RULE
+            static::RULE,
         );
 
         $this->addViolation($method, [$message]);

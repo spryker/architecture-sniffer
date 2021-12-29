@@ -13,8 +13,14 @@ use PHPMD\Rule\ClassAware;
 
 class SpyEntityUsageRule extends AbstractPersistenceRule implements ClassAware
 {
+    /**
+     * @var string
+     */
     public const RULE = 'Entity can be initialized in Repository or EntityManager only.';
 
+    /**
+     * @var string
+     */
     protected const PATTERN_NAMESPACE_APPLICATION_ZED = '/^[a-zA-Z]+\\\\Zed\\\\/';
 
     /**
@@ -99,7 +105,7 @@ class SpyEntityUsageRule extends AbstractPersistenceRule implements ClassAware
             'Entity `%s` initialized in `%s`. The class violates rule `%s`.',
             $className,
             $classNode->getFullQualifiedName(),
-            static::RULE
+            static::RULE,
         );
 
         $this->addViolation($classNode, [$message]);
@@ -124,7 +130,7 @@ class SpyEntityUsageRule extends AbstractPersistenceRule implements ClassAware
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function getExcludedModuleNamePatterns(): array
     {

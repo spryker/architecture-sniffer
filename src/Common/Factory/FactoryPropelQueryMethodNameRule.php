@@ -13,6 +13,9 @@ use PHPMD\Rule\MethodAware;
 
 class FactoryPropelQueryMethodNameRule extends AbstractFactoryRule implements MethodAware
 {
+    /**
+     * @var string
+     */
     public const RULE = 'Get propel query methods must be named like get*PropelQuery() in factory.';
 
     /**
@@ -61,7 +64,7 @@ class FactoryPropelQueryMethodNameRule extends AbstractFactoryRule implements Me
         $message = sprintf(
             '%s violates rule "%s"',
             "{$class}::{$methodName}()",
-            static::RULE
+            static::RULE,
         );
 
         $this->addViolation($node, [$message]);

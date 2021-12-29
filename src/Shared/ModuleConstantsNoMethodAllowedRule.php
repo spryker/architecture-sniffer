@@ -13,6 +13,9 @@ use PHPMD\Rule\InterfaceAware;
 
 class ModuleConstantsNoMethodAllowedRule extends AbstractRule implements InterfaceAware
 {
+    /**
+     * @var string
+     */
     public const RULE = 'The modules\' *Constants interfaces must only contain constants to be used with env config, no methods etc.';
 
     /**
@@ -42,9 +45,9 @@ class ModuleConstantsNoMethodAllowedRule extends AbstractRule implements Interfa
                         'Interface %s defines a method %s() which violates rule "%s"',
                         $node->getFullQualifiedName(),
                         $method->getName(),
-                        static::RULE
+                        static::RULE,
                     ),
-                ]
+                ],
             );
         }
     }

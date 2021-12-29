@@ -12,6 +12,9 @@ use PHPMD\Node\MethodNode;
 
 abstract class SprykerAbstractRule extends AbstractRule implements SprykerRuleInterface
 {
+    /**
+     * @var array
+     */
     protected const APPLICATION_LAYERS = ['Zed', 'Client', 'Yves', 'Service', 'Shared', 'Glue'];
 
     /**

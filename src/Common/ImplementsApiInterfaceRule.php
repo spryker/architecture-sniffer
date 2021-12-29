@@ -14,6 +14,9 @@ use PHPMD\Rule\ClassAware;
 
 class ImplementsApiInterfaceRule extends SprykerAbstractRule implements ClassAware
 {
+    /**
+     * @var string
+     */
     public const RULE = 'Must implement an interface with same name and suffix \'Interface\'.';
 
     /**
@@ -30,7 +33,7 @@ class ImplementsApiInterfaceRule extends SprykerAbstractRule implements ClassAwa
     }
 
     /**
-     * @param \PHPMD\AbstractNode $node
+     * @param \PHPMD\Node\ClassNode $node
      *
      * @return void
      */
@@ -40,18 +43,16 @@ class ImplementsApiInterfaceRule extends SprykerAbstractRule implements ClassAwa
             return;
         }
 
-        /** @var \PHPMD\Node\ClassNode $node */
         $this->applyImplementsInterfaceWithSameNameAndSuffix($node);
     }
 
     /**
-     * @param \PHPMD\AbstractNode $node
+     * @param \PDepend\Source\AST\ASTClass $node
      *
      * @return bool
      */
     protected function isApplicable(AbstractNode $node): bool
     {
-        /** @var \PDepend\Source\AST\ASTClass $node */
         if ($node->isAbstract()) {
             return false;
         }
@@ -85,9 +86,9 @@ class ImplementsApiInterfaceRule extends SprykerAbstractRule implements ClassAwa
                 sprintf(
                     'The class %s does not implement an interface %s which violates rule: "' . static::RULE . '"',
                     $class->getFullQualifiedName(),
-                    $expectedInterfaceName
+                    $expectedInterfaceName,
                 ),
-            ]
+            ],
         );
     }
 }

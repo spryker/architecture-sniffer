@@ -12,8 +12,14 @@ use Laminas\Filter\Word\CamelCaseToSeparator;
 
 class PathBuilder implements PathBuilderInterface
 {
+    /**
+     * @var string
+     */
     protected const CONST_NAME_APPLICATION_ROOT_DIR = 'APPLICATION_ROOT_DIR';
 
+    /**
+     * @var string
+     */
     protected const PATTERN_PATH_MODULE_SCHEMA_FOLDER = 'Persistence/Propel/Schema';
 
     /**

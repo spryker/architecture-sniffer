@@ -12,13 +12,16 @@ use PHPStan\BetterReflection\Reflection\ReflectionClass;
 
 class QueryFinder implements QueryFinderInterface
 {
+    /**
+     * @var string
+     */
     protected const PATTERN_QUERY_METHOD_NAME = '/^(create|get).*Query?/';
 
     /**
      * @param \PHPMD\Node\AbstractNode $node
      * @param \PHPStan\BetterReflection\Reflection\ReflectionClass $reflectionNodeClass
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getQueryNames(AbstractNode $node, ReflectionClass $reflectionNodeClass): array
     {
@@ -52,7 +55,7 @@ class QueryFinder implements QueryFinderInterface
     /**
      * @param \PHPMD\Node\AbstractNode $node
      *
-     * @return \PHPMD\Node\AbstractNode[]
+     * @return array<\PHPMD\Node\AbstractNode>
      */
     protected function getQueryNodes(AbstractNode $node): array
     {

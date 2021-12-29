@@ -16,6 +16,9 @@ use PHPMD\Rule\ClassAware;
  */
 class FactoryNoLoopsRule extends AbstractFactoryRule implements ClassAware
 {
+    /**
+     * @var string
+     */
     public const RULE = 'Factory methods should not contain loops.';
 
     /**
@@ -67,7 +70,7 @@ class FactoryNoLoopsRule extends AbstractFactoryRule implements ClassAware
             $message = sprintf(
                 'The method %s contains a "%s" statement which violates rule "' . static::RULE . '"',
                 $method->getFullQualifiedName(),
-                $statement->getImage()
+                $statement->getImage(),
             );
 
             $this->addViolation($method, [$message]);

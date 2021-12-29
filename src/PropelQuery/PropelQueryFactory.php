@@ -43,7 +43,7 @@ class PropelQueryFactory
     {
         return new DocBlockNodeReader(
             $this->createDocBlockFactory(),
-            $this->createDocBlockNodeMapper()
+            $this->createDocBlockNodeMapper(),
         );
     }
 
@@ -53,7 +53,7 @@ class PropelQueryFactory
     public function createNodeReader(): NodeReaderInterface
     {
         return new NodeReader(
-            $this->createClassReflector()
+            $this->createClassReflector(),
         );
     }
 
@@ -67,7 +67,7 @@ class PropelQueryFactory
         return new ModuleFinder(
             $architectureSnifferModuleFinder,
             $this->createClassReflector(),
-            $this->createPathBuilder()
+            $this->createPathBuilder(),
         );
     }
 
@@ -87,7 +87,7 @@ class PropelQueryFactory
         return new PropelSchemaTableFinder(
             $this->createConfigReader(),
             $this->createPathBuilder(),
-            $this->createModuleFinder()
+            $this->createModuleFinder(),
         );
     }
 
@@ -107,7 +107,7 @@ class PropelQueryFactory
         return new MethodFinder(
             $this->createRelationFinder(),
             $this->createQueryFinder(),
-            $this->createDocBlockNodeReader()
+            $this->createDocBlockNodeReader(),
         );
     }
 

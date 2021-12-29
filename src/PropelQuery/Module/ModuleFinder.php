@@ -45,10 +45,10 @@ class ModuleFinder implements ModuleFinderInterface
     }
 
     /**
-     * @param \ArchitectureSniffer\PropelQuery\Method\Transfer\MethodTransfer[] $methodTransferCollection
+     * @param array<\ArchitectureSniffer\PropelQuery\Method\Transfer\MethodTransfer> $methodTransferCollection
      * @param \ArchitectureSniffer\PropelQuery\ClassNode\Transfer\ClassNodeTransfer $classNodeTransfer
      *
-     * @return \ArchitectureSniffer\Module\Transfer\ModuleTransfer[]
+     * @return array<\ArchitectureSniffer\Module\Transfer\ModuleTransfer>
      */
     public function getModuleTransfers(array $methodTransferCollection, ClassNodeTransfer $classNodeTransfer): array
     {
@@ -58,16 +58,16 @@ class ModuleFinder implements ModuleFinderInterface
     }
 
     /**
-     * @param string[] $moduleNames
+     * @param array<string> $moduleNames
      * @param \ArchitectureSniffer\PropelQuery\ClassNode\Transfer\ClassNodeTransfer $classNodeTransfer
      *
-     * @return \ArchitectureSniffer\Module\Transfer\ModuleTransfer[]
+     * @return array<\ArchitectureSniffer\Module\Transfer\ModuleTransfer>
      */
     public function getModuleTransfersByModuleNames(array $moduleNames, ClassNodeTransfer $classNodeTransfer): array
     {
         return $this->moduleFinder->findModulesByNames(
             $moduleNames,
-            $classNodeTransfer->getPathTransfer()
+            $classNodeTransfer->getPathTransfer(),
         );
     }
 
@@ -89,10 +89,10 @@ class ModuleFinder implements ModuleFinderInterface
     }
 
     /**
-     * @param \ArchitectureSniffer\PropelQuery\Method\Transfer\MethodTransfer[] $methodTransferCollection
+     * @param array<\ArchitectureSniffer\PropelQuery\Method\Transfer\MethodTransfer> $methodTransferCollection
      * @param \ArchitectureSniffer\PropelQuery\ClassNode\Transfer\ClassNodeTransfer $classNodeTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getModuleNames(array $methodTransferCollection, ClassNodeTransfer $classNodeTransfer): array
     {
@@ -109,7 +109,7 @@ class ModuleFinder implements ModuleFinderInterface
             $moduleNames[] = str_replace(
                 ['get', 'create', 'Spy', 'Pyz', 'Query'],
                 '',
-                $methodTransfer->getQueryNames()
+                $methodTransfer->getQueryNames(),
             );
         }
 
@@ -125,7 +125,7 @@ class ModuleFinder implements ModuleFinderInterface
      * @param array $methodTransferCollection
      * @param \ArchitectureSniffer\PropelQuery\ClassNode\Transfer\ClassNodeTransfer $classNodeTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getQueryNames(array $methodTransferCollection, ClassNodeTransfer $classNodeTransfer): array
     {
@@ -143,10 +143,10 @@ class ModuleFinder implements ModuleFinderInterface
     }
 
     /**
-     * @param string[] $queryNames
+     * @param array<string> $queryNames
      * @param \ArchitectureSniffer\PropelQuery\ClassNode\Transfer\ClassNodeTransfer $classNodeTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getModuleNamesByQueryNames(array $queryNames, ClassNodeTransfer $classNodeTransfer): array
     {

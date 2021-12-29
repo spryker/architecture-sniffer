@@ -12,6 +12,9 @@ use PHPMD\Rule\InterfaceAware;
 
 class PluginInterfaceSuffixRule extends AbstractPluginRule implements InterfaceAware
 {
+    /**
+     * @var string
+     */
     protected const EXPECTED_INTERFACE_NAME_SUFFIX = 'PluginInterface';
 
     /**

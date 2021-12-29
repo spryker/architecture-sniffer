@@ -14,6 +14,9 @@ use PHPMD\Rule\ClassAware;
 
 class FacadeRule extends AbstractFacadeRule implements ClassAware
 {
+    /**
+     * @var string
+     */
     public const RULE = 'A facade must not have properties. It must also not contain any instantiations, only delegation.';
 
     /**
@@ -58,9 +61,9 @@ class FacadeRule extends AbstractFacadeRule implements ClassAware
             [
                 sprintf(
                     'The are properties in class %s which violates rule "' . static::RULE . '"',
-                    $class->getFullQualifiedName()
+                    $class->getFullQualifiedName(),
                 ),
-            ]
+            ],
         );
     }
 
@@ -80,9 +83,9 @@ class FacadeRule extends AbstractFacadeRule implements ClassAware
             [
                 sprintf(
                     'The method %s uses "new" to instantiate an object which violates rule "No instantiations with \'new\'"',
-                    $method->getFullQualifiedName()
+                    $method->getFullQualifiedName(),
                 ),
-            ]
+            ],
         );
     }
 }

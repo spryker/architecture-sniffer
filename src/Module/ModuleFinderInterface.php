@@ -24,7 +24,7 @@ interface ModuleFinderInterface
      * @param array $moduleNames
      * @param \ArchitectureSniffer\Path\Transfer\PathTransfer $pathTransfer
      *
-     * @return \ArchitectureSniffer\Module\Transfer\ModuleTransfer[]
+     * @return array<\ArchitectureSniffer\Module\Transfer\ModuleTransfer>
      */
     public function findModulesByNames(array $moduleNames, PathTransfer $pathTransfer): array;
 }

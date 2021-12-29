@@ -20,13 +20,12 @@ use PHPMD\Rule\ClassAware;
 class EnforceAbstractionInConstructor extends AbstractRule implements ClassAware
 {
     /**
-     * @param \PHPMD\AbstractNode $node
+     * @param \PHPMD\ClassNode $node
      *
      * @return void
      */
     public function apply(AbstractNode $node)
     {
-        /** @var \PHPMD\Node\ClassNode $node */
         $methods = $node->getMethods();
         foreach ($methods as $method) {
             if (strtolower($method->getName()) !== '__construct') {

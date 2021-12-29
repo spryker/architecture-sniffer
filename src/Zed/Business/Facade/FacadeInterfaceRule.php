@@ -17,6 +17,9 @@ use PHPMD\Rule\ClassAware;
  */
 class FacadeInterfaceRule extends AbstractFacadeRule implements ClassAware
 {
+    /**
+     * @var string
+     */
     public const RULE = 'Must implement an interface with same name and suffix \'Interface\'. Every method must also contain the @api tag in docblock and a contract text above.';
 
     /**
@@ -55,7 +58,7 @@ class FacadeInterfaceRule extends AbstractFacadeRule implements ClassAware
                 'The %s is missing a "%sInterface" which violates the rule "%s"',
                 $node->getImage(),
                 $node->getImage(),
-                static::RULE
+                static::RULE,
             );
 
             $this->addViolation($node, [$message]);

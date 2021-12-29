@@ -18,7 +18,14 @@ use PHPMD\Rule\MethodAware;
  */
 class FactoryNoLogicRule extends AbstractFactoryRule implements MethodAware
 {
+    /**
+     * @var string
+     */
     public const RULE = 'Factory should not contain any business logic.';
+
+    /**
+     * @var string
+     */
     public const SWITCH_STATEMENT = 'switch';
 
     /**
@@ -105,7 +112,7 @@ class FactoryNoLogicRule extends AbstractFactoryRule implements MethodAware
             'The method %s contains a "%s" statement which violates the rule "%s"',
             $method->getFullQualifiedName(),
             $statementName,
-            static::RULE
+            static::RULE,
         );
 
         $this->addViolation($method, [$message]);

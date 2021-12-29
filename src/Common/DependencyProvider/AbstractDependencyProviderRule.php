@@ -16,6 +16,9 @@ abstract class AbstractDependencyProviderRule extends AbstractRule
 {
     use DeprecationTrait;
 
+    /**
+     * @var string
+     */
     public const RULE = 'DependencyProvider should only contain additional add*() or get*() methods.';
 
     /**
@@ -96,7 +99,7 @@ abstract class AbstractDependencyProviderRule extends AbstractRule
         $message = sprintf(
             'The DependencyProvider method %s() violates rule "%s"',
             $node->getName(),
-            static::RULE
+            static::RULE,
         );
 
         $this->addViolation($node, [$message]);

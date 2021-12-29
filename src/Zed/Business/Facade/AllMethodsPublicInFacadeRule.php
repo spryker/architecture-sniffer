@@ -14,6 +14,9 @@ use PHPMD\Rule\ClassAware;
 
 class AllMethodsPublicInFacadeRule extends AbstractFacadeRule implements ClassAware
 {
+    /**
+     * @var string
+     */
     public const RULE = 'A facade must only contain public methods.';
 
     /**
@@ -61,7 +64,7 @@ class AllMethodsPublicInFacadeRule extends AbstractFacadeRule implements ClassAw
             $message = sprintf(
                 'The method "%s" is not public which violates rule "%s"',
                 $method->getFullQualifiedName(),
-                static::RULE
+                static::RULE,
             );
 
             $this->addViolation($method, [$message]);

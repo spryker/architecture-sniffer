@@ -14,10 +14,13 @@ use PHPMD\Rule\ClassAware;
 
 class ImplementsApiInheritDocRule extends SprykerAbstractRule implements ClassAware
 {
+    /**
+     * @var string
+     */
     protected const RULE = 'Every API public method must also contain the {@inheritDoc} tag in docblock.';
 
     /**
-     * @var string[]
+     * @var array<string>
      */
     protected $apiClasses = ['Facade', 'QueryContainer', 'Client', 'Service', 'Plugin'];
 
@@ -74,9 +77,9 @@ class ImplementsApiInheritDocRule extends SprykerAbstractRule implements ClassAw
                     'The public class method %s does not contain an {@inheritDoc} tag ' .
                     'which violates rule: "%s"',
                     $methodNode->getFullQualifiedName(),
-                    static::RULE
+                    static::RULE,
                 ),
-            ]
+            ],
         );
     }
 }

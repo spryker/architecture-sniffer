@@ -16,9 +16,19 @@ use PHPMD\Rule\ClassAware;
 
 class PluginArgumentsNotAllowedUseEntityTransferRule extends AbstractPluginRule implements ClassAware
 {
+    /**
+     * @var string
+     */
     public const RULE = 'Plugin methods shouldn`t use entity transfers.';
 
+    /**
+     * @var string
+     */
     protected const NAMESPACE_TRANSFERS = 'Generated\Shared\Transfer';
+
+    /**
+     * @var string
+     */
     protected const PATTERN_SUFFIX_ENTITY_TRANSFER = '/EntityTransfer?/';
 
     /**
@@ -79,7 +89,7 @@ class PluginArgumentsNotAllowedUseEntityTransferRule extends AbstractPluginRule 
             'The Plugin method `%s` is using an invalid argument `%s` type which violates the rule `%s`',
             $node->getFullQualifiedName(),
             $class->getName(),
-            static::RULE
+            static::RULE,
         );
 
         $this->addViolation($node, [$message]);

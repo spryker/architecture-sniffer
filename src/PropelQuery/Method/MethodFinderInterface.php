@@ -14,7 +14,7 @@ interface MethodFinderInterface
     /**
      * @param \ArchitectureSniffer\PropelQuery\ClassNode\Transfer\ClassNodeTransfer $classNodeTransfer
      *
-     * @return \ArchitectureSniffer\PropelQuery\Method\Transfer\MethodTransfer[]
+     * @return array<\ArchitectureSniffer\PropelQuery\Method\Transfer\MethodTransfer>
      */
     public function getMethodTransferCollectionWithRelations(ClassNodeTransfer $classNodeTransfer): array;
 }

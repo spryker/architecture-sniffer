@@ -34,7 +34,7 @@ class PropelQueryFacade implements PropelQueryFacadeInterface
     /**
      * @param \ArchitectureSniffer\PropelQuery\ClassNode\Transfer\ClassNodeTransfer $classNodeTransfer
      *
-     * @return \ArchitectureSniffer\PropelQuery\Method\Transfer\MethodTransfer[]
+     * @return array<\ArchitectureSniffer\PropelQuery\Method\Transfer\MethodTransfer>
      */
     public function getMethodTransferCollectionWithRelations(ClassNodeTransfer $classNodeTransfer): array
     {
@@ -59,7 +59,7 @@ class PropelQueryFacade implements PropelQueryFacadeInterface
      * @param array $methodTransferCollection
      * @param \ArchitectureSniffer\PropelQuery\ClassNode\Transfer\ClassNodeTransfer $classNodeTransfer
      *
-     * @return \ArchitectureSniffer\Module\Transfer\ModuleTransfer[]
+     * @return array<\ArchitectureSniffer\Module\Transfer\ModuleTransfer>
      */
     public function getModuleTransfers(array $methodTransferCollection, ClassNodeTransfer $classNodeTransfer): array
     {
@@ -69,10 +69,10 @@ class PropelQueryFacade implements PropelQueryFacadeInterface
     }
 
     /**
-     * @param \ArchitectureSniffer\Module\Transfer\ModuleTransfer[] $moduleTransfers
+     * @param array<\ArchitectureSniffer\Module\Transfer\ModuleTransfer> $moduleTransfers
      * @param \ArchitectureSniffer\PropelQuery\ClassNode\Transfer\ClassNodeTransfer $classNodeTransfer
      *
-     * @return \ArchitectureSniffer\PropelQuery\Schema\Transfer\PropelSchemaTableTransfer[]
+     * @return array<\ArchitectureSniffer\PropelQuery\Schema\Transfer\PropelSchemaTableTransfer>
      */
     public function getTableTransfers(array $moduleTransfers, ClassNodeTransfer $classNodeTransfer): array
     {

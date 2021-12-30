@@ -27,7 +27,7 @@ class PropelSchemaTableTransfer implements TransferInterface
     protected $phpName;
 
     /**
-     * @var \ArchitectureSniffer\PropelQuery\Schema\Transfer\PropelSchemaTableRelationTransfer[]
+     * @var array<\ArchitectureSniffer\PropelQuery\Schema\Transfer\PropelSchemaTableRelationTransfer>
      */
     protected $relations = [];
 
@@ -86,7 +86,7 @@ class PropelSchemaTableTransfer implements TransferInterface
     }
 
     /**
-     * @return \ArchitectureSniffer\PropelQuery\Schema\Transfer\PropelSchemaTableRelationTransfer[]
+     * @return array<\ArchitectureSniffer\PropelQuery\Schema\Transfer\PropelSchemaTableRelationTransfer>
      */
     public function getRelations(): array
     {
@@ -94,7 +94,7 @@ class PropelSchemaTableTransfer implements TransferInterface
     }
 
     /**
-     * @param \ArchitectureSniffer\PropelQuery\Schema\Transfer\PropelSchemaTableRelationTransfer[] $relations
+     * @param array<\ArchitectureSniffer\PropelQuery\Schema\Transfer\PropelSchemaTableRelationTransfer> $relations
      *
      * @return void
      */

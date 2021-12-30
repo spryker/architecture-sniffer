@@ -13,6 +13,9 @@ use PHPMD\Rule\ClassAware;
 
 class DirectoryNoModelRule extends AbstractDirectoryRule implements ClassAware
 {
+    /**
+     * @var string
+     */
     public const RULE = 'Business models must not be in a Model directory.';
 
     /**
@@ -51,7 +54,7 @@ class DirectoryNoModelRule extends AbstractDirectoryRule implements ClassAware
         $message = sprintf(
             'The %s is inside a Model directory which violates rule "%s"',
             $classNode->getFullQualifiedName(),
-            static::RULE
+            static::RULE,
         );
 
         $this->addViolation($classNode, [$message]);

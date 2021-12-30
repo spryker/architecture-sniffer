@@ -14,6 +14,9 @@ use PHPMD\Rule\MethodAware;
 
 class FacadeArgumentsRule extends AbstractFacadeRule implements MethodAware
 {
+    /**
+     * @var string
+     */
     public const RULE = 'Every Facade should only retrieve native types or transfer objects.';
 
     /**
@@ -67,7 +70,7 @@ class FacadeArgumentsRule extends AbstractFacadeRule implements MethodAware
         $message = sprintf(
             'The %s is using an invalid argument type which violates the rule "%s"',
             $node->getFullQualifiedName(),
-            static::RULE
+            static::RULE,
         );
 
         $this->addViolation($node, [$message]);

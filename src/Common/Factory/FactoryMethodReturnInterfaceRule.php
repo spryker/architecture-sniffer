@@ -13,9 +13,19 @@ use PHPMD\Rule\MethodAware;
 
 class FactoryMethodReturnInterfaceRule extends AbstractFactoryRule implements MethodAware
 {
+    /**
+     * @var string
+     */
     public const RULE = 'Every method in a Factory must only return an interface or an array of interfaces.';
 
+    /**
+     * @var string
+     */
     public const ALLOWED_RETURN_TYPES_PATTERN = '/@return\s(?!((.*)Interface|(.*)DataProvider|callable))(.*)/';
+
+    /**
+     * @var int
+     */
     public const INVALID_RETURN_TYPE_MATCH = 3;
 
     /**
@@ -61,7 +71,7 @@ class FactoryMethodReturnInterfaceRule extends AbstractFactoryRule implements Me
                 '%s (%s) returns a concrete class which violates the rule "%s"',
                 "{$class}::{$method}()",
                 $fullClassName,
-                static::RULE
+                static::RULE,
             );
 
             $this->addViolation($node, [$message]);

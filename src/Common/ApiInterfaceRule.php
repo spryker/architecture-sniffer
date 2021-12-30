@@ -14,6 +14,9 @@ use PHPMD\Rule\InterfaceAware;
 
 class ApiInterfaceRule extends SprykerAbstractRule implements InterfaceAware
 {
+    /**
+     * @var string
+     */
     public const RULE = 'Every method must also contain the @api tag in docblock and a contract text above.';
 
     /**
@@ -35,7 +38,7 @@ class ApiInterfaceRule extends SprykerAbstractRule implements InterfaceAware
     }
 
     /**
-     * @param \PHPMD\AbstractNode $node
+     * @param \PHPMD\Node\InterfaceNode $node
      *
      * @return void
      */
@@ -53,7 +56,6 @@ class ApiInterfaceRule extends SprykerAbstractRule implements InterfaceAware
             }
         }
 
-        /** @var \PHPMD\Node\InterfaceNode $node */
         foreach ($node->getMethods() as $method) {
             $this->applyEveryInterfaceMethodMustHaveApiTagAndContractText($method);
         }
@@ -85,7 +87,7 @@ class ApiInterfaceRule extends SprykerAbstractRule implements InterfaceAware
                 \*?\s*
                 \*\s+@api
             )xi',
-                $comment
+                $comment,
             )
         ) {
             return;
@@ -98,9 +100,9 @@ class ApiInterfaceRule extends SprykerAbstractRule implements InterfaceAware
                     'The interface method %s does not contain an @api tag or contract text ' .
                     'which violates rule: "%s"',
                     $method->getFullQualifiedName(),
-                    self::RULE
+                    self::RULE,
                 ),
-            ]
+            ],
         );
     }
 }

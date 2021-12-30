@@ -13,6 +13,9 @@ use PHPMD\Rule\MethodAware;
 
 class BridgeConstructorArgumentsRule extends AbstractBridgeRule implements MethodAware
 {
+    /**
+     * @var string
+     */
     public const RULE = 'A bridge should only have a single internal dependency in constructor. It is also used only on core, not in projects.';
 
     /**
@@ -58,7 +61,7 @@ class BridgeConstructorArgumentsRule extends AbstractBridgeRule implements Metho
             'The %s is having %s internal dependencies which violates the rule "%s"',
             $method->getFullQualifiedName(),
             $internalDependenciesCount,
-            static::RULE
+            static::RULE,
         );
 
         $this->addViolation($method, [$message]);

@@ -14,6 +14,9 @@ use PHPMD\Rule\InterfaceAware;
 
 class ModuleConstantsPathRule extends AbstractRule implements ClassAware, InterfaceAware
 {
+    /**
+     * @var string
+     */
     protected const RULE = 'An environment configuration must lie in "Shared" layer.';
 
     /**
@@ -40,7 +43,7 @@ class ModuleConstantsPathRule extends AbstractRule implements ClassAware, Interf
 
         $message = sprintf(
             'The environment configuration is not lie in "Shared" layer. That violates the rule "%s"',
-            static::RULE
+            static::RULE,
         );
 
         $this->addViolation($node, [$message]);

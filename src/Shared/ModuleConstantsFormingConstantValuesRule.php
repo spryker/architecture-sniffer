@@ -13,6 +13,9 @@ use PHPMD\Rule\InterfaceAware;
 
 class ModuleConstantsFormingConstantValuesRule extends AbstractRule implements InterfaceAware
 {
+    /**
+     * @var string
+     */
     public const RULE = 'The modules\' *Constants interfaces must only contain constants to be used with env config. Their values must be exactly the same as the const key prefixed with module name.';
 
     /**
@@ -46,7 +49,7 @@ class ModuleConstantsFormingConstantValuesRule extends AbstractRule implements I
             $expectedConstantValue = sprintf(
                 "'%s:%s'",
                 $this->getUnderscoredConstantName($moduleName),
-                $constant->getImage()
+                $constant->getImage(),
             );
 
             if ($value === $expectedConstantValue) {
@@ -57,7 +60,7 @@ class ModuleConstantsFormingConstantValuesRule extends AbstractRule implements I
                 'The constant value is expected to be "%s" but is "%s". This violates the rule "%s"',
                 $expectedConstantValue,
                 is_array($value) ? print_r($value, true) : $value,
-                static::RULE
+                static::RULE,
             );
 
             $this->addViolation($node, [$message]);

@@ -13,6 +13,9 @@ use PHPMD\Rule\ClassAware;
 
 class ModuleConstantsTypeRule extends AbstractRule implements ClassAware
 {
+    /**
+     * @var string
+     */
     protected const RULE = 'An environment configuration must be an interface.';
 
     /**
@@ -36,7 +39,7 @@ class ModuleConstantsTypeRule extends AbstractRule implements ClassAware
 
         $message = sprintf(
             'The environment configuration is not an interface. That violates the rule "%s"',
-            static::RULE
+            static::RULE,
         );
 
         $this->addViolation($node, [$message]);

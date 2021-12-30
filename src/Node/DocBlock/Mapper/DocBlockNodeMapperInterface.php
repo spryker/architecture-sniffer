@@ -10,7 +10,7 @@ namespace ArchitectureSniffer\Node\DocBlock\Mapper;
 interface DocBlockNodeMapperInterface
 {
     /**
-     * @param \phpDocumentor\Reflection\DocBlock\Tags\BaseTag[] $tags
+     * @param array<\phpDocumentor\Reflection\DocBlock\Tags\BaseTag> $tags
      *
      * @return array
      */

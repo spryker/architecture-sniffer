@@ -16,7 +16,7 @@ interface QueryFinderInterface
      * @param \PHPMD\Node\AbstractNode $node
      * @param \PHPStan\BetterReflection\Reflection\ReflectionClass $reflectionNodeClass
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getQueryNames(AbstractNode $node, ReflectionClass $reflectionNodeClass): array;
 }

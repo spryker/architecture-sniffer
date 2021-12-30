@@ -17,12 +17,12 @@ class ModuleTransfer implements TransferInterface
     protected $moduleName;
 
     /**
-     * @var string[]
+     * @var array<string>
      */
     protected $modulePaths;
 
     /**
-     * @var string[]
+     * @var array<string>
      */
     protected $schemaPaths;
 
@@ -50,7 +50,7 @@ class ModuleTransfer implements TransferInterface
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getModulePaths(): array
     {
@@ -58,7 +58,7 @@ class ModuleTransfer implements TransferInterface
     }
 
     /**
-     * @param string[] $modulePaths
+     * @param array<string> $modulePaths
      *
      * @return void
      */
@@ -69,7 +69,7 @@ class ModuleTransfer implements TransferInterface
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getSchemaPaths(): array
     {
@@ -77,7 +77,7 @@ class ModuleTransfer implements TransferInterface
     }
 
     /**
-     * @param string[] $schemaPaths
+     * @param array<string> $schemaPaths
      *
      * @return void
      */

@@ -13,10 +13,10 @@ use ArchitectureSniffer\PropelQuery\Schema\Transfer\PropelSchemaTableTransfer;
 interface PropelSchemaTableFinderInterface
 {
     /**
-     * @param \ArchitectureSniffer\Module\Transfer\ModuleTransfer[] $moduleTransfers
+     * @param array<\ArchitectureSniffer\Module\Transfer\ModuleTransfer> $moduleTransfers
      * @param \ArchitectureSniffer\PropelQuery\ClassNode\Transfer\ClassNodeTransfer $classNodeTransfer
      *
-     * @return \ArchitectureSniffer\PropelQuery\Schema\Transfer\PropelSchemaTableTransfer[]
+     * @return array<\ArchitectureSniffer\PropelQuery\Schema\Transfer\PropelSchemaTableTransfer>
      */
     public function getTablesByModules(array $moduleTransfers, ClassNodeTransfer $classNodeTransfer): array;
 

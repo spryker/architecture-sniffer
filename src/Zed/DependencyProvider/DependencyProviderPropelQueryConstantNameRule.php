@@ -14,6 +14,9 @@ use PHPMD\Rule\MethodAware;
 
 class DependencyProviderPropelQueryConstantNameRule extends AbstractDependencyProviderRule implements MethodAware
 {
+    /**
+     * @var string
+     */
     public const RULE = 'Propel query constants must be named like PROPEL_QUERY_* in dependency provider.';
 
     /**

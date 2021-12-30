@@ -27,17 +27,17 @@ class MethodTransfer implements TransferInterface
     protected $methodName;
 
     /**
-     * @var string[]
+     * @var array<string>
      */
     protected $queryNames = [];
 
     /**
-     * @var string[]
+     * @var array<string>
      */
     protected $relationNames = [];
 
     /**
-     * @var string[]
+     * @var array<string>
      */
     protected $declaredDependentModuleNames = [];
 
@@ -60,7 +60,7 @@ class MethodTransfer implements TransferInterface
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getQueryNames(): array
     {
@@ -68,7 +68,7 @@ class MethodTransfer implements TransferInterface
     }
 
     /**
-     * @param string[] $queryNames
+     * @param array<string> $queryNames
      *
      * @return void
      */
@@ -78,7 +78,7 @@ class MethodTransfer implements TransferInterface
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getRelationNames(): array
     {
@@ -86,7 +86,7 @@ class MethodTransfer implements TransferInterface
     }
 
     /**
-     * @param string[] $relationNames
+     * @param array<string> $relationNames
      *
      * @return void
      */
@@ -96,7 +96,7 @@ class MethodTransfer implements TransferInterface
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getDeclaredDependentModuleNames(): array
     {
@@ -104,7 +104,7 @@ class MethodTransfer implements TransferInterface
     }
 
     /**
-     * @param string[] $declaredDependentModuleNames
+     * @param array<string> $declaredDependentModuleNames
      *
      * @return void
      */

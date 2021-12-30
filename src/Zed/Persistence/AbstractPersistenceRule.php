@@ -12,7 +12,14 @@ use PHPMD\Node\ClassNode;
 
 abstract class AbstractPersistenceRule extends SprykerAbstractRule
 {
+    /**
+     * @var string
+     */
     public const PATTERN_REPOSITORY = '/\\\\*\\\\.+\\\\.+\\\\[A-Za-z0-9]+Repository$/';
+
+    /**
+     * @var string
+     */
     public const PATTERN_ENTITY_MANAGER = '/\\\\*\\\\.+\\\\.+\\\\[A-Za-z0-9]+EntityManager$/';
 
     /**

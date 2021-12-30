@@ -20,6 +20,9 @@ use PHPMD\Rule\ClassAware;
 
 class RepositoryPropelQueryJoinRule extends AbstractPersistenceRule implements ClassAware
 {
+    /**
+     * @var string
+     */
     public const RULE = 'All dependent modules must be declared in the DocBlock.';
 
     /**
@@ -65,7 +68,7 @@ class RepositoryPropelQueryJoinRule extends AbstractPersistenceRule implements C
 
     /**
      * @param \ArchitectureSniffer\PropelQuery\Method\Transfer\MethodTransfer $methodTransfer
-     * @param \ArchitectureSniffer\PropelQuery\Schema\Transfer\PropelSchemaTableTransfer[] $tableTransferCollection
+     * @param array<\ArchitectureSniffer\PropelQuery\Schema\Transfer\PropelSchemaTableTransfer> $tableTransferCollection
      * @param \ArchitectureSniffer\PropelQuery\ClassNode\Transfer\ClassNodeTransfer $classNodeTransfer
      *
      * @return void
@@ -83,7 +86,7 @@ class RepositoryPropelQueryJoinRule extends AbstractPersistenceRule implements C
         foreach ($relationNames as $relationTableName) {
             $relationTableTransfer = $this->findRelationTableTransfer(
                 $relationTableName,
-                $tableTransferCollection
+                $tableTransferCollection,
             );
 
             if ($relationTableTransfer === null) {
@@ -108,7 +111,7 @@ class RepositoryPropelQueryJoinRule extends AbstractPersistenceRule implements C
                 $methodTransfer->getMethodName(),
                 $relationTableName,
                 $moduleName,
-                $classNodeTransfer->getNode()
+                $classNodeTransfer->getNode(),
             );
         }
 
@@ -118,7 +121,7 @@ class RepositoryPropelQueryJoinRule extends AbstractPersistenceRule implements C
             $this->addExtraDeclaredModulesViolationMessage(
                 $methodTransfer->getMethodName(),
                 $extraDeclaredModules,
-                $classNodeTransfer->getNode()
+                $classNodeTransfer->getNode(),
             );
         }
     }
@@ -148,13 +151,13 @@ class RepositoryPropelQueryJoinRule extends AbstractPersistenceRule implements C
         $message = sprintf(
             'The Repository method `%s()` violates rule `%s`. ',
             $methodName,
-            static::RULE
+            static::RULE,
         );
 
         $solutionMessage = sprintf(
             'Please add `@module %s` for `%s` join.',
             $moduleName,
-            $relationTableName
+            $relationTableName,
         );
 
         $message .= $solutionMessage;
@@ -164,7 +167,7 @@ class RepositoryPropelQueryJoinRule extends AbstractPersistenceRule implements C
 
     /**
      * @param string $relationTableName
-     * @param \ArchitectureSniffer\PropelQuery\Schema\Transfer\PropelSchemaTableTransfer[] $tableTransfers
+     * @param array<\ArchitectureSniffer\PropelQuery\Schema\Transfer\PropelSchemaTableTransfer> $tableTransfers
      *
      * @return \ArchitectureSniffer\PropelQuery\Schema\Transfer\PropelSchemaTableTransfer|null
      */
@@ -230,7 +233,7 @@ class RepositoryPropelQueryJoinRule extends AbstractPersistenceRule implements C
 
     /**
      * @param string $methodName
-     * @param string[] $extraDeclaredModules
+     * @param array<string> $extraDeclaredModules
      * @param \PHPMD\Node\ClassNode $node
      *
      * @return void
@@ -240,12 +243,12 @@ class RepositoryPropelQueryJoinRule extends AbstractPersistenceRule implements C
         $message = sprintf(
             'The Repository method `%s()` violates rule `%s`. ',
             $methodName,
-            static::RULE
+            static::RULE,
         );
 
         $solutionMessage = sprintf(
             'Please remove next declared @module: %s .',
-            implode(', ', $extraDeclaredModules)
+            implode(', ', $extraDeclaredModules),
         );
 
         $message .= $solutionMessage;

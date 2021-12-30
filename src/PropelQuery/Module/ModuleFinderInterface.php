@@ -12,18 +12,18 @@ use ArchitectureSniffer\PropelQuery\ClassNode\Transfer\ClassNodeTransfer;
 interface ModuleFinderInterface
 {
     /**
-     * @param \ArchitectureSniffer\PropelQuery\Method\Transfer\MethodTransfer[] $methodTransferCollection
+     * @param array<\ArchitectureSniffer\PropelQuery\Method\Transfer\MethodTransfer> $methodTransferCollection
      * @param \ArchitectureSniffer\PropelQuery\ClassNode\Transfer\ClassNodeTransfer $classNodeTransfer
      *
-     * @return \ArchitectureSniffer\Module\Transfer\ModuleTransfer[]
+     * @return array<\ArchitectureSniffer\Module\Transfer\ModuleTransfer>
      */
     public function getModuleTransfers(array $methodTransferCollection, ClassNodeTransfer $classNodeTransfer): array;
 
     /**
-     * @param string[] $moduleNames
+     * @param array<string> $moduleNames
      * @param \ArchitectureSniffer\PropelQuery\ClassNode\Transfer\ClassNodeTransfer $classNodeTransfer
      *
-     * @return \ArchitectureSniffer\Module\Transfer\ModuleTransfer[]
+     * @return array<\ArchitectureSniffer\Module\Transfer\ModuleTransfer>
      */
     public function getModuleTransfersByModuleNames(array $moduleNames, ClassNodeTransfer $classNodeTransfer): array;
 

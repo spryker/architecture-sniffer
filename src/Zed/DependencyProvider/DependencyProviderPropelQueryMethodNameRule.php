@@ -14,7 +14,14 @@ use PHPMD\Rule\MethodAware;
 
 class DependencyProviderPropelQueryMethodNameRule extends AbstractDependencyProviderRule implements MethodAware
 {
+    /**
+     * @var string
+     */
     public const RULE = 'Add propel query methods must be named like add*PropelQuery() in dependency provider.';
+
+    /**
+     * @var string
+     */
     protected const PATTERN_PROPEL_QUERY_DEPENDENCY_PROVIDER_METHOD_NAME = '/^add([a-zA-Z]+)PropelQuery$/';
 
     /**

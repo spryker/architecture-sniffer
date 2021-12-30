@@ -51,14 +51,14 @@ class PropelSchemaTableFinder implements PropelSchemaTableFinderInterface
     }
 
     /**
-     * @param \ArchitectureSniffer\Module\Transfer\ModuleTransfer[] $moduleTransfers
+     * @param array<\ArchitectureSniffer\Module\Transfer\ModuleTransfer> $moduleTransfers
      * @param \ArchitectureSniffer\PropelQuery\ClassNode\Transfer\ClassNodeTransfer $classNodeTransfer
      *
-     * @return \ArchitectureSniffer\PropelQuery\Schema\Transfer\PropelSchemaTableTransfer[]
+     * @return array<\ArchitectureSniffer\PropelQuery\Schema\Transfer\PropelSchemaTableTransfer>
      */
     public function getTablesByModules(array $moduleTransfers, ClassNodeTransfer $classNodeTransfer): array
     {
-        /**@var \ArchitectureSniffer\PropelQuery\Schema\Transfer\PropelSchemaTableTransfer[] $tableTransfers */
+        /**@var array<\ArchitectureSniffer\PropelQuery\Schema\Transfer\PropelSchemaTableTransfer> $tableTransfers */
         $tableTransfers = [];
 
         foreach ($moduleTransfers as $moduleTransfer) {
@@ -98,7 +98,7 @@ class PropelSchemaTableFinder implements PropelSchemaTableFinderInterface
             $tableTransfers = $this->getTables(
                 $schema,
                 $moduleName,
-                $tableTransfers
+                $tableTransfers,
             );
         }
 
@@ -122,9 +122,9 @@ class PropelSchemaTableFinder implements PropelSchemaTableFinderInterface
     /**
      * @param array $propelSchema
      * @param string $moduleName
-     * @param \ArchitectureSniffer\PropelQuery\Schema\Transfer\PropelSchemaTableTransfer[] $propelSchemaTableTransferCollection
+     * @param array<\ArchitectureSniffer\PropelQuery\Schema\Transfer\PropelSchemaTableTransfer> $propelSchemaTableTransferCollection
      *
-     * @return \ArchitectureSniffer\PropelQuery\Schema\Transfer\PropelSchemaTableTransfer[]
+     * @return array<\ArchitectureSniffer\PropelQuery\Schema\Transfer\PropelSchemaTableTransfer>
      */
     protected function getTables(array $propelSchema, string $moduleName, array $propelSchemaTableTransferCollection): array
     {
@@ -164,9 +164,9 @@ class PropelSchemaTableFinder implements PropelSchemaTableFinderInterface
     /**
      * @param array $relationTables
      * @param \ArchitectureSniffer\PropelQuery\Schema\Transfer\PropelSchemaTableTransfer $parentTableTransfer
-     * @param \ArchitectureSniffer\PropelQuery\Schema\Transfer\PropelSchemaTableTransfer[] $tableTransfers
+     * @param array<\ArchitectureSniffer\PropelQuery\Schema\Transfer\PropelSchemaTableTransfer> $tableTransfers
      *
-     * @return \ArchitectureSniffer\PropelQuery\Schema\Transfer\PropelSchemaTableTransfer[]
+     * @return array<\ArchitectureSniffer\PropelQuery\Schema\Transfer\PropelSchemaTableTransfer>
      */
     protected function addRelations(array $relationTables, PropelSchemaTableTransfer $parentTableTransfer, array $tableTransfers): array
     {
@@ -184,9 +184,9 @@ class PropelSchemaTableFinder implements PropelSchemaTableFinderInterface
     /**
      * @param array $table
      * @param string $moduleName
-     * @param \ArchitectureSniffer\PropelQuery\Schema\Transfer\PropelSchemaTableTransfer[] $tableTransfers
+     * @param array<\ArchitectureSniffer\PropelQuery\Schema\Transfer\PropelSchemaTableTransfer> $tableTransfers
      *
-     * @return \ArchitectureSniffer\PropelQuery\Schema\Transfer\PropelSchemaTableTransfer[]
+     * @return array<\ArchitectureSniffer\PropelQuery\Schema\Transfer\PropelSchemaTableTransfer>
      */
     protected function getTableTransfer(array $table, string $moduleName, array $tableTransfers): array
     {
@@ -238,10 +238,10 @@ class PropelSchemaTableFinder implements PropelSchemaTableFinderInterface
     }
 
     /**
-     * @param \ArchitectureSniffer\PropelQuery\Schema\Transfer\PropelSchemaTableTransfer[] $tableTransfers
+     * @param array<\ArchitectureSniffer\PropelQuery\Schema\Transfer\PropelSchemaTableTransfer> $tableTransfers
      * @param \ArchitectureSniffer\PropelQuery\ClassNode\Transfer\ClassNodeTransfer $classNodeTransfer
      *
-     * @return \ArchitectureSniffer\PropelQuery\Schema\Transfer\PropelSchemaTableTransfer[]
+     * @return array<\ArchitectureSniffer\PropelQuery\Schema\Transfer\PropelSchemaTableTransfer>
      */
     protected function addMissedTables(array $tableTransfers, ClassNodeTransfer $classNodeTransfer): array
     {
@@ -270,9 +270,9 @@ class PropelSchemaTableFinder implements PropelSchemaTableFinderInterface
     /**
      * @param array $relationTable
      * @param \ArchitectureSniffer\PropelQuery\Schema\Transfer\PropelSchemaTableTransfer $parentTableTransfer
-     * @param \ArchitectureSniffer\PropelQuery\Schema\Transfer\PropelSchemaTableTransfer[] $tableTransfers
+     * @param array<\ArchitectureSniffer\PropelQuery\Schema\Transfer\PropelSchemaTableTransfer> $tableTransfers
      *
-     * @return \ArchitectureSniffer\PropelQuery\Schema\Transfer\PropelSchemaTableTransfer[]
+     * @return array<\ArchitectureSniffer\PropelQuery\Schema\Transfer\PropelSchemaTableTransfer>
      */
     protected function addRelation(array $relationTable, PropelSchemaTableTransfer $parentTableTransfer, array $tableTransfers): array
     {
@@ -284,7 +284,7 @@ class PropelSchemaTableFinder implements PropelSchemaTableFinderInterface
             $parentTableTransfer,
             $relationTableName,
             $relationPhpName,
-            $relationRefPhpName
+            $relationRefPhpName,
         );
 
         $relationTableTransfer = $this->findTableTransferByRelation($relationTable, $tableTransfers);
@@ -292,7 +292,7 @@ class PropelSchemaTableFinder implements PropelSchemaTableFinderInterface
             $relationTableTransfer,
             $parentTableTransfer->getTableName(),
             $relationRefPhpName,
-            $relationPhpName
+            $relationPhpName,
         );
 
         $tableTransfers[$relationTableTransfer->getTableName()] = $relationTableTransfer;
@@ -312,7 +312,7 @@ class PropelSchemaTableFinder implements PropelSchemaTableFinderInterface
     /**
      * @param \ArchitectureSniffer\Module\Transfer\ModuleTransfer $moduleTransfer
      *
-     * @return \ArchitectureSniffer\PropelQuery\Schema\Transfer\PropelSchemaTableTransfer[]
+     * @return array<\ArchitectureSniffer\PropelQuery\Schema\Transfer\PropelSchemaTableTransfer>
      */
     protected function getTablesByModule(ModuleTransfer $moduleTransfer): array
     {
@@ -326,7 +326,7 @@ class PropelSchemaTableFinder implements PropelSchemaTableFinderInterface
             $tableTransfers = $this->getTables(
                 $schema,
                 $moduleName,
-                $tableTransfers
+                $tableTransfers,
             );
         }
 
@@ -350,11 +350,11 @@ class PropelSchemaTableFinder implements PropelSchemaTableFinderInterface
 
         $corePropelSchemaDirectoryPattern = $pathTransfer->getCorePath() . implode(
             DIRECTORY_SEPARATOR,
-            ['*', 'src', '*', '*', '*', 'Persistence', 'Propel', 'Schema']
+            ['*', 'src', '*', '*', '*', 'Persistence', 'Propel', 'Schema'],
         );
         $projectPropelSchemaDirectoryPattern = $pathTransfer->getProjectPath() . implode(
             DIRECTORY_SEPARATOR,
-            ['*', 'Persistence', 'Propel', 'Schema']
+            ['*', 'Persistence', 'Propel', 'Schema'],
         );
 
         $finder = $this->createFinder();
@@ -369,7 +369,7 @@ class PropelSchemaTableFinder implements PropelSchemaTableFinderInterface
 
     /**
      * @param array $relationTable
-     * @param \ArchitectureSniffer\PropelQuery\Schema\Transfer\PropelSchemaTableTransfer[] $tableTransfers
+     * @param array<\ArchitectureSniffer\PropelQuery\Schema\Transfer\PropelSchemaTableTransfer> $tableTransfers
      *
      * @return \ArchitectureSniffer\PropelQuery\Schema\Transfer\PropelSchemaTableTransfer
      */

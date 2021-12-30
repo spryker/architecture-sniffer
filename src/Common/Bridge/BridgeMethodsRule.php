@@ -19,7 +19,6 @@ use ReflectionMethod;
 
 class BridgeMethodsRule extends SprykerAbstractRule implements ClassAware
 {
-
     use ArchitectureSnifferFactoryAwareTrait;
 
     /**
@@ -118,7 +117,7 @@ class BridgeMethodsRule extends SprykerAbstractRule implements ClassAware
             $message = sprintf(
                 'The bridge interface has incorrect method \'%s\' signature. Metod has missing or invalid return type. That violates the rule "%s"',
                 $invalidReturnTypeMethod->getName(),
-                static::RULE
+                static::RULE,
             );
             $this->addViolation($interfaceNode, [$message]);
         }
@@ -238,7 +237,6 @@ class BridgeMethodsRule extends SprykerAbstractRule implements ClassAware
         $invalidReturnTypeMethods = [];
 
         foreach ($interfaceNode->getMethods() as $interfaceMethod) {
-
             $interfaceMethodName = sprintf('%s::%s', $interfaceNode->getFullQualifiedName(), $interfaceMethod->getName());
             $interfaceMethodReflection = new ReflectionMethod($interfaceMethodName);
 
@@ -257,14 +255,13 @@ class BridgeMethodsRule extends SprykerAbstractRule implements ClassAware
     }
 
     /**
-     * @param \PHPMD\Node\MethodNode $interfaceNode
+     * @param \PHPMD\Node\MethodNode $interfaceMethod
      * @param \ReflectionClass $bridgedInterfaceReflection
      *
      * @return string|null
      */
     protected function getValidReturnTypeFromParentInterface(MethodNode $interfaceMethod, ReflectionClass $bridgedInterfaceReflection): ?string
     {
-
         if (!$bridgedInterfaceReflection->hasMethod($interfaceMethod->getName())) {
             return null;
         }
@@ -278,16 +275,18 @@ class BridgeMethodsRule extends SprykerAbstractRule implements ClassAware
         return $this->getPhpDocCommentReturnType($bridgedInterfaceReflection->getMethod($interfaceMethod->getName())->getDocComment());
     }
 
-
     /**
-     * @param string $interfaceMethodReturnType
+     * @param string|null $interfaceMethodReturnType
      * @param string|null $validReturnTypeFromParentInterface
      * @param string|null $returnTypeFromDocComment
      *
      * @return bool
      */
-    protected function compareReturnTypes(?string $interfaceMethodReturnType, ?string $validReturnTypeFromParentInterface, ?string $returnTypeFromDocComment): bool
-    {
+    protected function compareReturnTypes(
+        ?string $interfaceMethodReturnType,
+        ?string $validReturnTypeFromParentInterface,
+        ?string $returnTypeFromDocComment
+    ): bool {
         if (!$interfaceMethodReturnType) {
             return false;
         }
@@ -304,7 +303,7 @@ class BridgeMethodsRule extends SprykerAbstractRule implements ClassAware
     }
 
     /**
-     * @param string $comment
+     * @param string|null $docComment
      *
      * @return string|null
      */
@@ -319,25 +318,24 @@ class BridgeMethodsRule extends SprykerAbstractRule implements ClassAware
 
         if (count($returnTags)) {
             $returnTypeString = ltrim($returnTags[0], '\\');
-            $returnTypes =  explode('|', $returnTypeString);
+            $returnTypes = explode('|', $returnTypeString);
             $isAllowNull = in_array('null', $returnTypes);
 
             foreach ($returnTypes as $returnType) {
-                if($returnType === 'null') {
+                if ($returnType === 'null') {
                     continue;
                 }
 
-                if(strpos($returnType, '[]') || strpos($returnType, 'array') === 0 ) {
+                if (strpos($returnType, '[]') || strpos($returnType, 'array') === 0) {
                     $returnType = 'array';
                 }
 
-                return ($isAllowNull ? '?' : ''). ltrim($returnType, '\\');
+                return ($isAllowNull ? '?' : '') . ltrim($returnType, '\\');
             }
         }
 
         return null;
     }
-
 
     /**
      * @param \ReflectionMethod $firstMethod
@@ -401,7 +399,8 @@ class BridgeMethodsRule extends SprykerAbstractRule implements ClassAware
     }
 
     /**
-     * @param \ReflectionParameter[] $params
+     * @param array<\ReflectionParameter> $params
+     *
      * @return int
      */
     protected function countRequireParams(array $params): int
@@ -422,13 +421,13 @@ class BridgeMethodsRule extends SprykerAbstractRule implements ClassAware
      *
      * @return string|null
      */
-    protected function reflactionReturnTypeToString(\ReflectionMethod $reflactionMethod) : ?string
+    protected function reflactionReturnTypeToString(ReflectionMethod $reflactionMethod): ?string
     {
-        $returnType  = $reflactionMethod->getReturnType();
-        if(!$returnType) {
+        $returnType = $reflactionMethod->getReturnType();
+        if (!$returnType) {
             return null;
         }
 
-        return ($returnType->allowsNull() ? '?' : '') . (string) $returnType;
+        return ($returnType->allowsNull() ? '?' : '') . (string)$returnType;
     }
 }

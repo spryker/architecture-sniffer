@@ -238,7 +238,7 @@ class BridgeMethodsRule extends SprykerAbstractRule implements ClassAware
             $interfaceMethodName = sprintf('%s::%s', $interfaceNode->getFullQualifiedName(), $interfaceMethod->getName());
             $interfaceMethodReflection = new ReflectionMethod($interfaceMethodName);
 
-            $interfaceMethodReturnType = (string)$interfaceMethodReflection->getReturnType();
+            $interfaceMethodReturnType = $this->reflactionReturnTypeToString($interfaceMethodReflection);
             $validReturnTypeFromParentInterface = $this->getValidReturnTypeFromParentInterface($interfaceMethod, $bridgedInterfaceReflection);
             $returnTypeFromDocComment = $this->getPhpDocCommentReturnType($interfaceMethod->getComment());
 
@@ -301,6 +301,7 @@ class BridgeMethodsRule extends SprykerAbstractRule implements ClassAware
 
     /**
      * @param string $comment
+     *
      * @return string|null
      */
     protected function getPhpDocCommentReturnType(?string $docComment): ?string
@@ -313,7 +314,21 @@ class BridgeMethodsRule extends SprykerAbstractRule implements ClassAware
         $returnTags = $docblock->getTagsByName('return');
 
         if (count($returnTags)) {
-            return ltrim($returnTags[0], '\\');
+            $returnTypeString = ltrim($returnTags[0], '\\');
+            $returnTypes =  explode('|', $returnTypeString);
+            $isAllowNull = in_array('null', $returnTypes);
+
+            foreach ($returnTypes as $returnType) {
+                if($returnType === 'null') {
+                    continue;
+                }
+
+                if(strpos($returnType, '[]') || strpos($returnType, 'array') === 0 ) {
+                    $returnType = 'array';
+                }
+
+                return ($isAllowNull ? '?' : ''). ltrim($returnType, '\\');
+            }
         }
 
         return null;
@@ -396,5 +411,20 @@ class BridgeMethodsRule extends SprykerAbstractRule implements ClassAware
         }
 
         return $countParams;
+    }
+
+    /**
+     * @param \ReflectionMethod $reflactionMethod
+     *
+     * @return string|null
+     */
+    protected function reflactionReturnTypeToString(\ReflectionMethod $reflactionMethod) : ?string
+    {
+        $returnType  = $reflactionMethod->getReturnType();
+        if(!$returnType) {
+            return null;
+        }
+
+        return ($returnType->allowsNull() ? '?' : '') . (string) $returnType;
     }
 }

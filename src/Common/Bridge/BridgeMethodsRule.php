@@ -355,7 +355,10 @@ class BridgeMethodsRule extends SprykerAbstractRule implements ClassAware
         $countParameters = count($firstMethodParameters);
 
         for ($i = 0; $i < $countParameters; $i++) {
-            if ((string)$firstMethodParameters[$i] !== (string)$secondMethodParameters[$i]) {
+            if (
+                (string)$firstMethodParameters[$i]->getType() !== (string)$secondMethodParameters[$i]->getType() ||
+                $firstMethodParameters[$i]->isDefaultValueAvailable() !== $secondMethodParameters[$i]->isDefaultValueAvailable()
+            ) {
                 return false;
             }
         }

@@ -18,14 +18,14 @@ class SessionToDatabaseClientBridge implements SessionToDatabaseClientInterface
     {
     }
 
-    public function save(string $key, ExtendedDataObject $data, string $prefix = null, int $delay = null)
+    public function save(string $key, ExtendedDataObject $data, string $prefix = null, $options = null, int $delay = null )
     {
     }
 }
 
 interface SessionToDatabaseClientInterface
 {
-    public function save(string $key, ExtendedDataObject $data, string $prefix = null);
+    public function save(string $key, ExtendedDataObject $data, string $prefix = null, $options = null);
 }
 
 // Database module
@@ -36,7 +36,7 @@ use DataLayer\DataObject;
 
 interface DatabaseClientInterface
 {
-    public function save(string $key, DataObject $data, string $prefix = null);
+    public function save(string $key, DataObject $data, string $prefix = null, array $options = null);
 }
 
 // Data objects

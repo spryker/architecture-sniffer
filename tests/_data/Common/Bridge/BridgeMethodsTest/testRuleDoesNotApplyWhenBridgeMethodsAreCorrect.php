@@ -44,5 +44,5 @@ use StructuredData\DataObject;
 
 interface CacheClientInterface
 {
-    public function save(string $key, DataObject $data, string $prefix = null);
+    public function save(string $key, DataObject $data, $prefix = null, array $options = null);
 }

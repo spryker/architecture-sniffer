@@ -203,7 +203,7 @@ class BridgeMethodsRule extends SprykerAbstractRule implements ClassAware
             $interfaceMethodName = sprintf('%s::%s', $interfaceNode->getFullQualifiedName(), $interfaceMethod->getName());
             $interfaceMethodReflection = new ReflectionMethod($interfaceMethodName);
 
-            if ($this->compareTwoMethodsForBridgeInterface($interfaceMethodReflection, $bridgedInterfaceReflectionMethod)) {
+            if ($this->comporeBridgeAndParentMethodInterface($interfaceMethodReflection, $bridgedInterfaceReflectionMethod)) {
                 continue;
             }
 
@@ -214,24 +214,34 @@ class BridgeMethodsRule extends SprykerAbstractRule implements ClassAware
     }
 
     /**
-     * @param \ReflectionMethod $firstMethod
-     * @param \ReflectionMethod $secondMethod
+     * @param \ReflectionMethod $birdgeInterfaceMethod
+     * @param \ReflectionMethod $parentInterfaceMethod
      *
      * @return bool
      */
-    protected function compareTwoMethodsForBridgeInterface(ReflectionMethod $firstMethod, ReflectionMethod $secondMethod): bool
+    protected function comporeBridgeAndParentMethodInterface(ReflectionMethod $birdgeInterfaceMethod, ReflectionMethod $parentInterfaceMethod): bool
     {
-        $firstMethodParameters = $firstMethod->getParameters();
-        $secondMethodParameters = $secondMethod->getParameters();
+        $birdgeInterfaceMethodParameters = $birdgeInterfaceMethod->getParameters();
+        $parentInterfaceMethodParameters = $parentInterfaceMethod->getParameters();
 
-        if (count($firstMethodParameters) !== count($secondMethodParameters)) {
+        if ($this->countRequireParams($birdgeInterfaceMethodParameters) !== $this->countRequireParams($parentInterfaceMethodParameters)) {
             return false;
         }
 
-        $countParameters = count($firstMethodParameters);
+        $countParameters = count($birdgeInterfaceMethodParameters);
 
         for ($i = 0; $i < $countParameters; $i++) {
-            if ((string)$firstMethodParameters[$i] !== (string)$secondMethodParameters[$i]) {
+            if (
+                (string)$birdgeInterfaceMethodParameters[$i]->getType() && !(string)$parentInterfaceMethodParameters[$i]->getType() &&
+                $birdgeInterfaceMethodParameters[$i]->isDefaultValueAvailable() === $parentInterfaceMethodParameters[$i]->isDefaultValueAvailable()
+            ) {
+                return true;
+            }
+
+            if (
+                (string)$birdgeInterfaceMethodParameters[$i]->getType() !== (string)$parentInterfaceMethodParameters[$i]->getType() ||
+                $birdgeInterfaceMethodParameters[$i]->isDefaultValueAvailable() !== $parentInterfaceMethodParameters[$i]->isDefaultValueAvailable()
+            ) {
                 return false;
             }
         }
@@ -272,5 +282,23 @@ class BridgeMethodsRule extends SprykerAbstractRule implements ClassAware
         }
 
         return null;
+    }
+
+    /**
+     * @param array<\ReflectionParameter> $params
+     *
+     * @return int
+     */
+    protected function countRequireParams(array $params): int
+    {
+        $countParams = 0;
+
+        foreach ($params as $param) {
+            if (!$param->isDefaultValueAvailable()) {
+                $countParams++;
+            }
+        }
+
+        return $countParams;
     }
 }

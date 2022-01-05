@@ -18,14 +18,14 @@ class SessionToCacheClientBridge implements SessionToCacheClientInterface
     {
     }
 
-    public function save(string $key, DataObject $data, string $prefix = null): DataObject
+    public function save(string $key, DataObject $data, string $prefix = null)
     {
     }
 }
 
 interface SessionToCacheClientInterface
 {
-    public function save(string $key, DataObject $data, string $prefix = null): DataObject;
+    public function save(string $key, DataObject $data, string $prefix = null);
 }
 
 // Data objects

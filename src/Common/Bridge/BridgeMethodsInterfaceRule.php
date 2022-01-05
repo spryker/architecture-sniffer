@@ -137,7 +137,7 @@ class BridgeMethodsInterfaceRule extends SprykerAbstractRule implements ClassAwa
             if (count($errors)) {
                 $notMatchingMethods[] = [
                     'method' => $interfaceMethod,
-                    'error' => trim(implode($errors, ' ')),
+                    'error' => trim(implode(' ', $errors)),
                 ];
             }
         }

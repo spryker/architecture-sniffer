@@ -75,7 +75,7 @@ class BridgeMethodsInterfaceRule extends SprykerAbstractRule implements ClassAwa
         $bridgedInterfaceReflection = $this->getBridgedInterfaceReflection($node->getMethods());
         if ($bridgedInterfaceReflection === null) {
             $message = sprintf(
-                'The bridge is missing an interface. That violates the rule "%s"',
+                'The bridge constructor doc block is missing a parent interface. That violates the rule "%s"',
                 static::RULE,
             );
             $this->addViolation($interfaceNode, [$message]);
@@ -123,7 +123,7 @@ class BridgeMethodsInterfaceRule extends SprykerAbstractRule implements ClassAwa
 
             $errors = $this->compareBridgeAndParentMethodInterface($interfaceMethodReflection, $bridgedInterfaceReflectionMethod);
 
-            $interfaceMethodReturnType = $this->reflactionReturnTypeToString($interfaceMethodReflection);
+            $interfaceMethodReturnType = $this->reflectionReturnTypeToString($interfaceMethodReflection);
             $parentInterfaceReturnType = $this->getReturnTypeFromParentInterface($interfaceMethod, $bridgedInterfaceReflection);
 
             if (!$interfaceMethodReturnType) {
@@ -157,13 +157,19 @@ class BridgeMethodsInterfaceRule extends SprykerAbstractRule implements ClassAwa
         $birdgeInterfaceMethodParameters = $birdgeInterfaceMethod->getParameters();
         $parentInterfaceMethodParameters = $parentInterfaceMethod->getParameters();
 
-        if ($this->countRequireParams($birdgeInterfaceMethodParameters) !== $this->countRequireParams($parentInterfaceMethodParameters)) {
-            $errors[] = sprintf('%s params expexted but got %s.', $this->countRequireParams($parentInterfaceMethodParameters), $this->countRequireParams($birdgeInterfaceMethodParameters));
+        if ($this->countRequiredParams($birdgeInterfaceMethodParameters) !== $this->countRequiredParams($parentInterfaceMethodParameters)) {
+            $errors[] = sprintf('%s params expexted but got %s.', $this->countRequiredParams($parentInterfaceMethodParameters), $this->countRequiredParams($birdgeInterfaceMethodParameters));
         }
 
         $countParameters = count($birdgeInterfaceMethodParameters);
 
         for ($i = 0; $i < $countParameters; $i++) {
+            if (!$parentInterfaceMethodParameters[$i]) {
+                $errors[] = sprintf('Parameter %s does not exist in bridged method', $parentInterfaceMethodParameter->getName());
+
+                continue;
+            }
+
             $birdgeInterfaceMethodParameter = $birdgeInterfaceMethodParameters[$i];
             $parentInterfaceMethodParameter = $parentInterfaceMethodParameters[$i];
 
@@ -225,7 +231,7 @@ class BridgeMethodsInterfaceRule extends SprykerAbstractRule implements ClassAwa
      *
      * @return int
      */
-    protected function countRequireParams(array $params): int
+    protected function countRequiredParams(array $params): int
     {
         $countParams = 0;
 
@@ -243,7 +249,7 @@ class BridgeMethodsInterfaceRule extends SprykerAbstractRule implements ClassAwa
      *
      * @return string|null
      */
-    protected function reflactionReturnTypeToString(ReflectionMethod $reflactionMethod): ?string
+    protected function reflectionReturnTypeToString(ReflectionMethod $reflactionMethod): ?string
     {
         $returnType = $reflactionMethod->getReturnType();
         if (!$returnType) {

@@ -7,7 +7,6 @@
 
 namespace ArchitectureSniffer\Common\Bridge;
 
-use ArchitectureSniffer\ArchitectureSnifferFactoryAwareTrait;
 use ArchitectureSniffer\SprykerAbstractRule;
 use PHPMD\AbstractNode;
 use PHPMD\Node\ClassNode;
@@ -17,8 +16,6 @@ use PHPMD\Rule\ClassAware;
 
 class BridgeMethodsRule extends SprykerAbstractRule implements ClassAware
 {
-    use ArchitectureSnifferFactoryAwareTrait;
-
     /**
      * @var string
      */

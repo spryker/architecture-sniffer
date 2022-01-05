@@ -167,7 +167,7 @@ class BridgeMethodsInterfaceRule extends SprykerAbstractRule implements ClassAwa
             $birdgeInterfaceMethodParameter = $birdgeInterfaceMethodParameters[$i];
             $parentInterfaceMethodParameter = $parentInterfaceMethodParameters[$i];
 
-            if ($birdgeInterfaceMethodParameter->getType() &&  !$parentInterfaceMethodParameter->getType()) {
+            if ($birdgeInterfaceMethodParameter->getType() && !$parentInterfaceMethodParameter->getType()) {
                 continue;
             }
 

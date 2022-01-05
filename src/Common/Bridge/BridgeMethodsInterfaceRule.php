@@ -124,7 +124,7 @@ class BridgeMethodsInterfaceRule extends SprykerAbstractRule implements ClassAwa
 
             $errors = $this->compareBridgeAndParentMethodInterface($interfaceMethodReflection, $bridgedInterfaceReflectionMethod);
 
-            $interfaceMethodReturnType = $this->reflectionReturnTypeToString($interfaceMethodReflection);
+            $interfaceMethodReturnType = $this->getReflectionReturnType($interfaceMethodReflection);
             $parentInterfaceReturnType = $this->getReturnTypeFromParentInterface($interfaceMethod, $bridgedInterfaceReflection);
 
             if (!$interfaceMethodReturnType) {
@@ -251,7 +251,7 @@ class BridgeMethodsInterfaceRule extends SprykerAbstractRule implements ClassAwa
      *
      * @return string|null
      */
-    protected function reflectionReturnTypeToString(ReflectionMethod $reflactionMethod): ?string
+    protected function getReflectionReturnType(ReflectionMethod $reflactionMethod): ?string
     {
         $returnType = $reflactionMethod->getReturnType();
         if (!$returnType) {

@@ -19,6 +19,21 @@ class SessionToCacheClientBridge implements SessionToCacheClientInterface
     {
     }
 
+    public function exist(string $key): bool
+    {
+        return true;
+    }
+
+    public function find(string $key): ReturnDataObject
+    {
+        return new ReturnDataObject();
+    }
+
+    public function findByData(DataObject $data): ReturnDataObject
+    {
+        return new ReturnDataObject();
+    }
+
     public function save(string $key, DataObject $data, string $prefix = null): ReturnDataObject
     {
         return new ReturnDataObject();
@@ -27,6 +42,13 @@ class SessionToCacheClientBridge implements SessionToCacheClientInterface
 
 interface SessionToCacheClientInterface
 {
+    public function find(string $key): ReturnDataObject;
+
+    public function exist(string $key): bool;
+
+
+    public function findByData(DataObject $data): ReturnDataObject;
+
     public function save(string $key, DataObject $data, string $prefix = null): ReturnDataObject;
 }
 
@@ -51,5 +73,11 @@ use ArchitectureSnifferTest\Common\Bridge\StructuredData\ReturnDataObject;
 
 interface CacheClientInterface
 {
+    public function find($key);
+
+    public function exist($key): bool;
+
+    public function findByData(DataObject $data): ReturnDataObject;
+
     public function save(string $key, DataObject $data, string $prefix = null): ReturnDataObject;
 }

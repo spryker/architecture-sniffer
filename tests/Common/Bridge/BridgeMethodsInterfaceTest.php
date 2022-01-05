@@ -28,7 +28,7 @@ class BridgeMethodsInterfaceTest extends AbstractArchitectureSnifferRuleTest
     public function testRuleAppliesWhenBridgeInterfaceMethodsAreNotCorrect(): void
     {
         $bridgeMethodsInterfaceRule = new BridgeMethodsInterfaceRule();
-        $bridgeMethodsInterfaceRule->setReport($this->getReportMock(1));
+        $bridgeMethodsInterfaceRule->setReport($this->getReportMock(4));
         $bridgeMethodsInterfaceRule->apply($this->getClassNode());
     }
 }

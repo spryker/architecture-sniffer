@@ -7,8 +7,8 @@
 
 namespace ArchitectureSnifferTest\Common\Bridge\Zed\Session\Dependency\Client;
 
-use DataLayer\DataObject;
-use DataLayer\ReturnDataObject;
+use ArchitectureSnifferTest\Common\Bridge\DataLayer\DataObject;
+use ArchitectureSnifferTest\Common\Bridge\DataLayer\ReturnDataObject;
 
 class SessionToDatabaseClientBridge implements SessionToDatabaseClientInterface
 {
@@ -19,6 +19,21 @@ class SessionToDatabaseClientBridge implements SessionToDatabaseClientInterface
     {
     }
 
+    public function find($key)
+    {
+
+    }
+
+    public function exist($key)
+    {
+        return true;
+    }
+
+    public function findByData(DataObject  $data)
+    {
+
+    }
+
     public function save(string $key, DataObject $data, string $prefix = null, int $delay = null)
     {
     }
@@ -26,6 +41,13 @@ class SessionToDatabaseClientBridge implements SessionToDatabaseClientInterface
 
 interface SessionToDatabaseClientInterface
 {
+    public function find($key);
+
+    public function exist($key);
+
+    public function findByData(DataObject  $data);
+
+
     public function save(string $key, DataObject $data, string $prefix = null);
 }
 
@@ -39,6 +61,12 @@ use ArchitectureSnifferTest\Common\Bridge\DataLayer\ReturnDataObject;
 
 interface DatabaseClientInterface
 {
+    public function find(string $key);
+
+    public function exist(string $key): bool;
+
+    public function findByData(DataObject $data): ReturnDataObject;
+
     public function save(string $key, DataObject $data, string $prefix = null): ReturnDataObject;
 }
 

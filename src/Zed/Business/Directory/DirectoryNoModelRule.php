@@ -16,7 +16,7 @@ class DirectoryNoModelRule extends AbstractDirectoryRule implements ClassAware
     /**
      * @var string
      */
-    public const RULE = 'Business models must not be in a Model namespace.';
+    public const RULE = 'Business models must not be in a Model directory/namespace.';
 
     /**
      * @return string

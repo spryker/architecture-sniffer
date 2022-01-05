@@ -21,12 +21,12 @@ class FactoryMethodReturnInterfaceRule extends AbstractFactoryRule implements Me
     /**
      * @var string
      */
-    public const ALLOWED_RETURN_TYPES_PATTERN = '/@return\s(?!((.*)Interface|(.*)DataProvider|callable))(.*)/';
+    protected const ALLOWED_RETURN_TYPES_PATTERN = '/@return\s(?!((.*)Interface|(.*)DataProvider|callable))(.*)/';
 
     /**
      * @var int
      */
-    public const INVALID_RETURN_TYPE_MATCH = 3;
+    protected const INVALID_RETURN_TYPE_MATCH = 3;
 
     /**
      * @return string

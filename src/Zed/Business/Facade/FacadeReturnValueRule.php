@@ -29,12 +29,12 @@ class FacadeReturnValueRule extends AbstractFacadeRule implements MethodAware
     /**
      * @var string
      */
-    public const ALLOWED_RETURN_TYPES_PATTERN = '/@return\s(?!void|int|float|integer|string|array|\[\]|.*\[\]|bool|boolean|((.+)Transfer))(.*)/';
+    protected const ALLOWED_RETURN_TYPES_PATTERN = '/@return\s(?!void|int|integer|bool|boolean|float|string|array|\[\]|.*\[\]|((.+)Transfer))(.*)/';
 
     /**
      * @var int
      */
-    public const INVALID_RETURN_TYPE_MATCH = 3;
+    protected const INVALID_RETURN_TYPE_MATCH = 3;
 
     /**
      * @param \PHPMD\AbstractNode $node
@@ -60,7 +60,7 @@ class FacadeReturnValueRule extends AbstractFacadeRule implements MethodAware
         $comment = $node->getComment();
         if ($this->hasInvalidReturnType($comment)) {
             $message = sprintf(
-                'The %s is using an invalid return type "%s" which violates the rule "%s"',
+                'The method `%s` is using an invalid return type `%s` which violates the rule "%s"',
                 $node->getFullQualifiedName(),
                 $this->getInvalidReturnType($comment),
                 static::RULE,

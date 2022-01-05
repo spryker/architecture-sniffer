@@ -26,7 +26,7 @@ class FactoryNoLogicRule extends AbstractFactoryRule implements MethodAware
     /**
      * @var string
      */
-    public const SWITCH_STATEMENT = 'switch';
+    protected const SWITCH_STATEMENT = 'switch';
 
     /**
      * @var array

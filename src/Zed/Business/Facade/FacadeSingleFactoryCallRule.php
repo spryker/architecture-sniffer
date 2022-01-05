@@ -22,17 +22,17 @@ class FacadeSingleFactoryCallRule extends AbstractFacadeRule implements ClassAwa
     /**
      * @var string
      */
-    public const PSEUDO_VAR_THIS = '$this';
+    protected const PSEUDO_VAR_THIS = '$this';
 
     /**
      * @var string
      */
-    public const OBJECT_OPERATOR = '->';
+    protected const OBJECT_OPERATOR = '->';
 
     /**
      * @var string
      */
-    public const GET_FACTORY_METHOD = 'getFactory';
+    protected const GET_FACTORY_METHOD = 'getFactory';
 
     /**
      * @return string

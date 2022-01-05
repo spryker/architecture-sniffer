@@ -97,8 +97,8 @@ class ApiInterfaceRule extends SprykerAbstractRule implements InterfaceAware
             $method,
             [
                 sprintf(
-                    'The interface method %s does not contain an @api tag or contract text ' .
-                    'which violates rule: "%s"',
+                    'The interface method `%s()` does not contain an @api tag or contract text ' .
+                    'which violates rule "%s"',
                     $method->getFullQualifiedName(),
                     self::RULE,
                 ),

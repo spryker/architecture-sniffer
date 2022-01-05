@@ -59,7 +59,7 @@ class BridgePathRule extends AbstractRule implements ClassAware
         }
 
         $message = sprintf(
-            'The bridge is not lie in "Dependency" folder. That violates the rule "%s"',
+            'The bridge is not in "Dependency" namespace. That violates the rule "%s"',
             static::CLASS_RULE,
         );
         $this->addViolation($node, [$message]);
@@ -92,7 +92,7 @@ class BridgePathRule extends AbstractRule implements ClassAware
         }
 
         $message = sprintf(
-            'The bridge interface is not lie in "Dependency" folder. That violates the rule "%s"',
+            'The bridge interface is not in "Dependency" namespace. That violates the rule "%s"',
             static::INTERFACE_RULE,
         );
         $this->addViolation($interfaceNode, [$message]);

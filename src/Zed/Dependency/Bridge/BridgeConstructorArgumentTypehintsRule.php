@@ -78,7 +78,7 @@ class BridgeConstructorArgumentTypehintsRule extends AbstractBridgeRule implemen
         }
 
         $message = sprintf(
-            'The %s is violating the rule "%s"',
+            'The class `%s` is violating the rule "%s"',
             $node->getFullQualifiedName(),
             static::RULE,
         );

@@ -97,7 +97,7 @@ abstract class AbstractDependencyProviderRule extends AbstractRule
     protected function addViolationMessage(AbstractNode $node): void
     {
         $message = sprintf(
-            'The DependencyProvider method %s() violates rule "%s"',
+            'The DependencyProvider method `%s()` violates rule "%s"',
             $node->getName(),
             static::RULE,
         );

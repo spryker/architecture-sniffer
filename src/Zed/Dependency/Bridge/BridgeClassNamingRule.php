@@ -40,7 +40,7 @@ class BridgeClassNamingRule extends AbstractBridgeRule
         }
 
         $message = sprintf(
-            'The bridge class name `%s` is not matching the convention <ModuleName>To<ModuleName>Bridge',
+            'The bridge class name `%s` is not matching the convention `<ModuleName>To<ModuleName>Bridge`',
             $className,
         );
 

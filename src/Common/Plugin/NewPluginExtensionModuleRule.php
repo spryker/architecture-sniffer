@@ -34,8 +34,9 @@ class NewPluginExtensionModuleRule extends AbstractPluginRule implements ClassAw
 
         if (!$classNodeInterfaces->count()) {
             $message = sprintf(
-                'The Plugin `%s` doesn\'t have any interfaces.',
+                'The plugin class `%s` doesn\'t have any interfaces. This violates rule "%s"',
                 $node->getName(),
+                static::RULE,
             );
             $this->addViolation($node, [$message]);
 

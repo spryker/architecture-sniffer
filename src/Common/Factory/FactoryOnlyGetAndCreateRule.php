@@ -54,7 +54,7 @@ class FactoryOnlyGetAndCreateRule extends AbstractFactoryRule implements ClassAw
         }
 
         $message = sprintf(
-            'The factory method %s() violates rule "%s"',
+            'The factory method `%s()` violates rule "%s"',
             $method->getName(),
             static::RULE,
         );

@@ -87,7 +87,7 @@ class CommunicationControllerRule extends AbstractRule implements ClassAware
             $method,
             [
                 sprintf(
-                    'The controller method %s is not suffixed with "Action" which violates rule "' . static::RULE . '"',
+                    'The controller method `%s()` is not suffixed with "Action" which violates rule "' . static::RULE . '"',
                     $method->getFullQualifiedName(),
                 ),
             ],

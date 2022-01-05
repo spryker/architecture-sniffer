@@ -42,7 +42,7 @@ class ModuleConstantsPathRule extends AbstractRule implements ClassAware, Interf
         }
 
         $message = sprintf(
-            'The environment configuration is not lie in "Shared" layer. That violates the rule "%s"',
+            'The environment configuration is not in "Shared" layer. That violates the rule "%s"',
             static::RULE,
         );
 

@@ -62,7 +62,7 @@ class FactoryPropelQueryMethodNameRule extends AbstractFactoryRule implements Me
         $class = $node->getParentName();
 
         $message = sprintf(
-            '%s violates rule "%s"',
+            '`%s` violates rule "%s"',
             "{$class}::{$methodName}()",
             static::RULE,
         );

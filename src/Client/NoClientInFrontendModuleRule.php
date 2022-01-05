@@ -48,7 +48,7 @@ class NoClientInFrontendModuleRule extends SprykerAbstractRule implements ClassA
             $node,
             [
                 sprintf(
-                    'The %s class is in Client layer which violates rule "' . static::RULE . '"',
+                    'The class `%s` is in Client layer which violates rule "' . static::RULE . '"',
                     $node->getFullQualifiedName(),
                 ),
             ],

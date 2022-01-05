@@ -83,7 +83,7 @@ class FactoryCreateContainOneNewRule extends AbstractFactoryRule implements Meth
         $className = $method->getFullQualifiedName();
 
         $message = sprintf(
-            '%s in %s contains %s new statements which violates rule "%s"',
+            '`%s()` in `%s` contains %s new statements which violates rule "%s"',
             $methodName,
             $className,
             $count,

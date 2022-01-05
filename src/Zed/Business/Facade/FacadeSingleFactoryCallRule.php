@@ -81,7 +81,7 @@ class FacadeSingleFactoryCallRule extends AbstractFacadeRule implements ClassAwa
         }
 
         $message = sprintf(
-            'The method %s has %s factory calls and violates the rule "%s".',
+            'The method `%s()` has %d factory calls. This violates the rule "%s".',
             $method->getFullQualifiedName(),
             $factoryCalls,
             static::RULE,
@@ -93,9 +93,9 @@ class FacadeSingleFactoryCallRule extends AbstractFacadeRule implements ClassAwa
     /**
      * @param \PHPMD\Node\MethodNode $method
      *
-     * @return bool
+     * @return int
      */
-    protected function getFactoryCallsNumber(MethodNode $method)
+    protected function getFactoryCallsNumber(MethodNode $method): int
     {
         $factoryCallNumber = 0;
         $primaryPrefixes = $method->findChildrenOfType('MemberPrimaryPrefix');

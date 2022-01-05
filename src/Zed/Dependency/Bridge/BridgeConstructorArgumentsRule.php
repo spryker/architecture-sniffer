@@ -58,7 +58,7 @@ class BridgeConstructorArgumentsRule extends AbstractBridgeRule implements Metho
         }
 
         $message = sprintf(
-            'The %s is having %s internal dependencies which violates the rule "%s"',
+            'The class `%s` is having %d internal dependencies which violates the rule "%s"',
             $method->getFullQualifiedName(),
             $internalDependenciesCount,
             static::RULE,

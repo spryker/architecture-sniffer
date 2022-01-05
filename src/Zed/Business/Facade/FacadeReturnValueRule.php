@@ -60,7 +60,7 @@ class FacadeReturnValueRule extends AbstractFacadeRule implements MethodAware
         $comment = $node->getComment();
         if ($this->hasInvalidReturnType($comment)) {
             $message = sprintf(
-                'The method `%s` is using an invalid return type `%s` which violates the rule "%s"',
+                'The method `%s()` is using an invalid return type `%s` which violates the rule "%s"',
                 $node->getFullQualifiedName(),
                 $this->getInvalidReturnType($comment),
                 static::RULE,

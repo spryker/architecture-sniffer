@@ -168,6 +168,7 @@ class BridgeMethodsInterfaceRule extends SprykerAbstractRule implements ClassAwa
 
             if (!$parentInterfaceMethodParameters[$i]) {
                 $errors[] = sprintf('Parameter %s does not exist in bridged method', $birdgeInterfaceMethodParameter->getName());
+
                 continue;
             }
 

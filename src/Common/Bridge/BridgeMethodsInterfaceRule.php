@@ -94,57 +94,6 @@ class BridgeMethodsInterfaceRule extends SprykerAbstractRule implements ClassAwa
             );
             $this->addViolation($interfaceNode, [$message]);
         }
-
-        $invalidReturnTypeMethods = $this->findMissedOrInvalidReturnTypesMethodsForBridgeInterface($interfaceNode, $bridgedInterfaceReflection);
-
-        foreach ($invalidReturnTypeMethods as ['method' => $invalidReturnTypeMethod, 'error' => $errorMsg]) {
-            $message = sprintf(
-                'The bridge interface has incorrect method \'%s\' signature. %s That violates the rule "%s"',
-                $invalidReturnTypeMethod->getName(),
-                $errorMsg,
-                static::RULE,
-            );
-            $this->addViolation($interfaceNode, [$message]);
-        }
-    }
-
-    /**
-     * @param \PHPMD\Node\InterfaceNode $interfaceNode
-     * @param \ReflectionClass $bridgedInterfaceReflection
-     *
-     * @return array
-     */
-    protected function findMissedOrInvalidReturnTypesMethodsForBridgeInterface(InterfaceNode $interfaceNode, ReflectionClass $bridgedInterfaceReflection): array
-    {
-        $invalidReturnTypeMethods = [];
-
-        foreach ($interfaceNode->getMethods() as $interfaceMethod) {
-            $interfaceMethodName = sprintf('%s::%s', $interfaceNode->getFullQualifiedName(), $interfaceMethod->getName());
-            $interfaceMethodReflection = new ReflectionMethod($interfaceMethodName);
-
-             $interfaceMethodReturnType = $this->reflactionReturnTypeToString($interfaceMethodReflection);
-             $parentInterfaceReturnType = $this->getReturnTypeFromParentInterface($interfaceMethod, $bridgedInterfaceReflection);
-
-            if (!$interfaceMethodReturnType) {
-                $invalidReturnTypeMethods[] = [
-                    'method' => $interfaceMethod,
-                    'error' => 'Missed return type.',
-                ];
-
-                continue;
-            }
-
-            if ($interfaceMethodReturnType && $parentInterfaceReturnType && $interfaceMethodReturnType !== $parentInterfaceReturnType) {
-                $invalidReturnTypeMethods[] = [
-                    'method' => $interfaceMethod,
-                    'error' => 'Invalid return type.',
-                ];
-
-                continue;
-            }
-        }
-
-        return $invalidReturnTypeMethods;
     }
 
     /**
@@ -173,6 +122,17 @@ class BridgeMethodsInterfaceRule extends SprykerAbstractRule implements ClassAwa
             $interfaceMethodReflection = new ReflectionMethod($interfaceMethodName);
 
             $errors = $this->compareBridgeAndParentMethodInterface($interfaceMethodReflection, $bridgedInterfaceReflectionMethod);
+
+            $interfaceMethodReturnType = $this->reflactionReturnTypeToString($interfaceMethodReflection);
+            $parentInterfaceReturnType = $this->getReturnTypeFromParentInterface($interfaceMethod, $bridgedInterfaceReflection);
+
+            if (!$interfaceMethodReturnType) {
+                $errors[] = 'Missed return type.';
+            }
+
+            if ($interfaceMethodReturnType && $parentInterfaceReturnType && $interfaceMethodReturnType !== $parentInterfaceReturnType) {
+                $errors[] = 'Invalid return type.';
+            }
 
             if (count($errors)) {
                 $notMatchingMethods[] = [

@@ -122,8 +122,6 @@ class BridgeMethodsInterfaceRule extends SprykerAbstractRule implements ClassAwa
 
             $interfaceMethodReflection = new ReflectionMethod($interfaceMethodName);
 
-
-
             $errors = $this->compareBridgeAndParentMethodInterface($interfaceMethodReflection, $bridgedInterfaceReflectionMethod);
 
             $interfaceMethodReturnType = $this->reflectionReturnTypeToString($interfaceMethodReflection);

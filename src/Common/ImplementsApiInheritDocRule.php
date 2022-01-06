@@ -74,8 +74,8 @@ class ImplementsApiInheritDocRule extends SprykerAbstractRule implements ClassAw
             $methodNode,
             [
                 sprintf(
-                    'The public class method %s does not contain an {@inheritDoc} tag ' .
-                    'which violates rule: "%s"',
+                    'The public class method `%s()` does not contain an `{@inheritDoc}` tag ' .
+                    'which violates rule "%s"',
                     $methodNode->getFullQualifiedName(),
                     static::RULE,
                 ),

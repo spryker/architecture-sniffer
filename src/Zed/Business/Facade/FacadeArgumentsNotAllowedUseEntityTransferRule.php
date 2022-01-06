@@ -81,7 +81,7 @@ class FacadeArgumentsNotAllowedUseEntityTransferRule extends AbstractFacadeRule 
         }
 
         $message = sprintf(
-            'The Facade method `%s` is using an invalid argument `%s` type which violates the rule `%s`',
+            'The Facade method `%s()` is using an invalid argument `%s` type which violates the rule "%s"',
             $node->getFullQualifiedName(),
             $class->getName(),
             static::RULE,

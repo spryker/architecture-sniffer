@@ -55,7 +55,7 @@ class FacadeInterfaceRule extends AbstractFacadeRule implements ClassAware
 
         if ($implementedInterfaces->count() === 0 || !$this->hasFacadeInterface($node, $implementedInterfaces)) {
             $message = sprintf(
-                'The %s is missing a "%sInterface" which violates the rule "%s"',
+                'The class `%s` is missing a `%sInterface` which violates the rule "%s"',
                 $node->getImage(),
                 $node->getImage(),
                 static::RULE,

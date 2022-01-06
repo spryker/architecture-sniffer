@@ -62,7 +62,7 @@ class AllMethodsPublicInFacadeRule extends AbstractFacadeRule implements ClassAw
     {
         if (!$method->getNode()->isPublic()) {
             $message = sprintf(
-                'The method "%s" is not public which violates rule "%s"',
+                'The method `%s()` is not public which violates rule "%s"',
                 $method->getFullQualifiedName(),
                 static::RULE,
             );

@@ -102,7 +102,7 @@ class SpyEntityUsageRule extends AbstractPersistenceRule implements ClassAware
         }
 
         $message = sprintf(
-            'Entity `%s` initialized in `%s`. The class violates rule `%s`.',
+            'Entity `%s` initialized in `%s`. The class violates rule "%s".',
             $className,
             $classNode->getFullQualifiedName(),
             static::RULE,

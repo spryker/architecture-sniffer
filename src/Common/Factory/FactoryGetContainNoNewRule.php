@@ -64,7 +64,7 @@ class FactoryGetContainNoNewRule extends AbstractFactoryRule implements MethodAw
             $method,
             [
                 sprintf(
-                    'The factory method %s contains %d new statements which violates rule "' . static::RULE . '"',
+                    'The factory method `%s()` contains %d new statements which violates rule "' . static::RULE . '"',
                     $method->getFullQualifiedName(),
                     $count,
                 ),

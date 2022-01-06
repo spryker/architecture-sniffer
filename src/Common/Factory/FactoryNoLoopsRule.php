@@ -68,7 +68,7 @@ class FactoryNoLoopsRule extends AbstractFactoryRule implements ClassAware
             }
 
             $message = sprintf(
-                'The method %s contains a "%s" statement which violates rule "' . static::RULE . '"',
+                'The method `%s()` contains a `%s` statement which violates rule "' . static::RULE . '"',
                 $method->getFullQualifiedName(),
                 $statement->getImage(),
             );

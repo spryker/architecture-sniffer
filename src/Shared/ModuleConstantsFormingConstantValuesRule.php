@@ -57,7 +57,7 @@ class ModuleConstantsFormingConstantValuesRule extends AbstractRule implements I
             }
 
             $message = sprintf(
-                'The constant value is expected to be "%s" but is "%s". This violates the rule "%s"',
+                'The constant value is expected to be `%s` but is `%s`. This violates the rule "%s"',
                 $expectedConstantValue,
                 is_array($value) ? print_r($value, true) : $value,
                 static::RULE,

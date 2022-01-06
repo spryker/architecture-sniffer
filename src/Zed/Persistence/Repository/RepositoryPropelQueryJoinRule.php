@@ -149,7 +149,7 @@ class RepositoryPropelQueryJoinRule extends AbstractPersistenceRule implements C
     protected function addViolationMessage(string $methodName, string $relationTableName, string $moduleName, ClassNode $node): void
     {
         $message = sprintf(
-            'The Repository method `%s()` violates rule `%s`. ',
+            'The Repository method `%s()` violates rule "%s". ',
             $methodName,
             static::RULE,
         );
@@ -241,13 +241,13 @@ class RepositoryPropelQueryJoinRule extends AbstractPersistenceRule implements C
     protected function addExtraDeclaredModulesViolationMessage(string $methodName, array $extraDeclaredModules, ClassNode $node)
     {
         $message = sprintf(
-            'The Repository method `%s()` violates rule `%s`. ',
+            'The Repository method `%s()` violates rule "%s". ',
             $methodName,
             static::RULE,
         );
 
         $solutionMessage = sprintf(
-            'Please remove next declared @module: %s .',
+            'Please remove next declared `@module: %s`.',
             implode(', ', $extraDeclaredModules),
         );
 

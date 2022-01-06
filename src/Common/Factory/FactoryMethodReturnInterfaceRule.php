@@ -21,12 +21,12 @@ class FactoryMethodReturnInterfaceRule extends AbstractFactoryRule implements Me
     /**
      * @var string
      */
-    public const ALLOWED_RETURN_TYPES_PATTERN = '/@return\s(?!((.*)Interface|(.*)DataProvider|callable))(.*)/';
+    protected const ALLOWED_RETURN_TYPES_PATTERN = '/@return\s(?!((.*)Interface|(.*)DataProvider|callable))(.*)/';
 
     /**
      * @var int
      */
-    public const INVALID_RETURN_TYPE_MATCH = 3;
+    protected const INVALID_RETURN_TYPE_MATCH = 3;
 
     /**
      * @return string
@@ -68,7 +68,7 @@ class FactoryMethodReturnInterfaceRule extends AbstractFactoryRule implements Me
             $fullClassName = $node->getFullQualifiedName();
 
             $message = sprintf(
-                '%s (%s) returns a concrete class which violates the rule "%s"',
+                '`%s` (`%s`) returns a concrete class which violates the rule "%s"',
                 "{$class}::{$method}()",
                 $fullClassName,
                 static::RULE,

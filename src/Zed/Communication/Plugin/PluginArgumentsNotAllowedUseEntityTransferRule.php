@@ -86,7 +86,7 @@ class PluginArgumentsNotAllowedUseEntityTransferRule extends AbstractPluginRule 
         }
 
         $message = sprintf(
-            'The Plugin method `%s` is using an invalid argument `%s` type which violates the rule `%s`',
+            'The plugin class method `%s()` is using an invalid argument `%s` type which violates the rule "%s"',
             $node->getFullQualifiedName(),
             $class->getName(),
             static::RULE,

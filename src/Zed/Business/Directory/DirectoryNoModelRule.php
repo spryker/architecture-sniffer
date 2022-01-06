@@ -16,7 +16,7 @@ class DirectoryNoModelRule extends AbstractDirectoryRule implements ClassAware
     /**
      * @var string
      */
-    public const RULE = 'Business models must not be in a Model directory.';
+    public const RULE = 'Business models must not be in a Model directory/namespace.';
 
     /**
      * @return string
@@ -52,7 +52,7 @@ class DirectoryNoModelRule extends AbstractDirectoryRule implements ClassAware
         }
 
         $message = sprintf(
-            'The %s is inside a Model directory which violates rule "%s"',
+            'The class `%s` is inside a Model namespace which violates rule "%s"',
             $classNode->getFullQualifiedName(),
             static::RULE,
         );

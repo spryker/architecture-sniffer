@@ -26,7 +26,7 @@ class FactoryNoLogicRule extends AbstractFactoryRule implements MethodAware
     /**
      * @var string
      */
-    public const SWITCH_STATEMENT = 'switch';
+    protected const SWITCH_STATEMENT = 'switch';
 
     /**
      * @var array
@@ -109,7 +109,7 @@ class FactoryNoLogicRule extends AbstractFactoryRule implements MethodAware
     protected function createViolation(MethodNode $method, $statementName)
     {
         $message = sprintf(
-            'The method %s contains a "%s" statement which violates the rule "%s"',
+            'The method `%s()` contains a `%s` statement which violates the rule "%s"',
             $method->getFullQualifiedName(),
             $statementName,
             static::RULE,

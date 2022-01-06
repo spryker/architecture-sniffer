@@ -60,7 +60,7 @@ class FacadeRule extends AbstractFacadeRule implements ClassAware
             $class,
             [
                 sprintf(
-                    'The are properties in class %s which violates rule "' . static::RULE . '"',
+                    'There are properties in class `%s` which violates rule "' . static::RULE . '"',
                     $class->getFullQualifiedName(),
                 ),
             ],
@@ -82,7 +82,7 @@ class FacadeRule extends AbstractFacadeRule implements ClassAware
             $method,
             [
                 sprintf(
-                    'The method %s uses "new" to instantiate an object which violates rule "No instantiations with \'new\'"',
+                    'The method `%s()` uses `new` to instantiate an object which violates rule "No instantiations with \'new\'"',
                     $method->getFullQualifiedName(),
                 ),
             ],

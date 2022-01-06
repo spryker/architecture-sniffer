@@ -42,7 +42,7 @@ class ModuleConstantsNoMethodAllowedRule extends AbstractRule implements Interfa
                 $node,
                 [
                     sprintf(
-                        'Interface %s defines a method %s() which violates rule "%s"',
+                        'Interface `%s` defines a method `%s()` which violates rule "%s"',
                         $node->getFullQualifiedName(),
                         $method->getName(),
                         static::RULE,

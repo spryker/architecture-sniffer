@@ -50,7 +50,7 @@ class FactoryOnlyPublicMethodsRule extends AbstractFactoryRule implements Method
         $method = $node->getName();
 
         $message = sprintf(
-            'The factory method \'%s()\' is not public which violates the rule "%s"',
+            'The factory method `%s()` is not public which violates the rule "%s"',
             $method,
             static::RULE,
         );

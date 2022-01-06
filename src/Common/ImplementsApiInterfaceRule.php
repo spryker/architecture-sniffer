@@ -84,7 +84,7 @@ class ImplementsApiInterfaceRule extends SprykerAbstractRule implements ClassAwa
             $class,
             [
                 sprintf(
-                    'The class %s does not implement an interface %s which violates rule: "' . static::RULE . '"',
+                    'The class `%s` does not implement an interface `%s` which violates rule "' . static::RULE . '"',
                     $class->getFullQualifiedName(),
                     $expectedInterfaceName,
                 ),

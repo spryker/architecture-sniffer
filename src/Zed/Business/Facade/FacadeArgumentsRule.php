@@ -68,7 +68,7 @@ class FacadeArgumentsRule extends AbstractFacadeRule implements MethodAware
         }
 
         $message = sprintf(
-            'The %s is using an invalid argument type which violates the rule "%s"',
+            'The class `%s` is using an invalid argument type which violates the rule "%s"',
             $node->getFullQualifiedName(),
             static::RULE,
         );

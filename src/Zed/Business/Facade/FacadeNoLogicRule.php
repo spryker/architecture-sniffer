@@ -77,7 +77,7 @@ class FacadeNoLogicRule extends AbstractFacadeRule implements ClassAware
             }
 
             $message = sprintf(
-                'The method %s contains a "%s" statement which violates the rule "%s"',
+                'The method `%s()` contains a `%s` statement which violates the rule "%s"',
                 $method->getFullQualifiedName(),
                 $statement->getImage(),
                 static::RULE,

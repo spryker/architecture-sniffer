@@ -13,8 +13,6 @@ use PHPMD\Node\ClassNode;
 use PHPMD\Node\InterfaceNode;
 use PHPMD\Node\MethodNode;
 use PHPMD\Rule\ClassAware;
-use ReflectionClass;
-use ReflectionMethod;
 
 class BridgeMethodsRule extends SprykerAbstractRule implements ClassAware
 {
@@ -61,9 +59,7 @@ class BridgeMethodsRule extends SprykerAbstractRule implements ClassAware
         $firstInterface = $classNodeInterfaces[0];
 
         $interfaceNode = new InterfaceNode($firstInterface);
-
         $this->verifyClass($node, $interfaceNode);
-        $this->verifyInterface($node, $interfaceNode);
     }
 
     /**
@@ -87,37 +83,6 @@ class BridgeMethodsRule extends SprykerAbstractRule implements ClassAware
             );
 
             $this->addViolation($node, [$message]);
-        }
-    }
-
-    /**
-     * @param \PHPMD\Node\ClassNode $node
-     * @param \PHPMD\Node\InterfaceNode $interfaceNode
-     *
-     * @return void
-     */
-    protected function verifyInterface(ClassNode $node, InterfaceNode $interfaceNode): void
-    {
-        $bridgedInterfaceReflection = $this->getBridgedInterfaceReflection($node->getMethods());
-        if ($bridgedInterfaceReflection === null) {
-            $message = sprintf(
-                'The bridge is missing an interface. That violates the rule "%s"',
-                static::RULE,
-            );
-            $this->addViolation($interfaceNode, [$message]);
-
-            return;
-        }
-
-        $notMatchingMethods = $this->findNotMatchingMethodsForBridgeInterface($interfaceNode, $bridgedInterfaceReflection);
-
-        foreach ($notMatchingMethods as $notMatchingMethod) {
-            $message = sprintf(
-                'The bridge interface has incorrect method \'%s\' signature. That violates the rule "%s"',
-                $notMatchingMethod->getName(),
-                static::RULE,
-            );
-            $this->addViolation($interfaceNode, [$message]);
         }
     }
 
@@ -179,98 +144,5 @@ class BridgeMethodsRule extends SprykerAbstractRule implements ClassAware
         }
 
         return true;
-    }
-
-    /**
-     * @param \PHPMD\Node\InterfaceNode $interfaceNode
-     * @param \ReflectionClass $bridgedInterfaceReflection
-     *
-     * @return array|null
-     */
-    protected function findNotMatchingMethodsForBridgeInterface(InterfaceNode $interfaceNode, ReflectionClass $bridgedInterfaceReflection): ?array
-    {
-        $notMatchingMethods = [];
-
-        foreach ($interfaceNode->getMethods() as $interfaceMethod) {
-            if (!$bridgedInterfaceReflection->hasMethod($interfaceMethod->getName())) {
-                $notMatchingMethods[] = $interfaceMethod;
-
-                continue;
-            }
-
-            $bridgedInterfaceReflectionMethod = $bridgedInterfaceReflection->getMethod($interfaceMethod->getName());
-
-            $interfaceMethodName = sprintf('%s::%s', $interfaceNode->getFullQualifiedName(), $interfaceMethod->getName());
-            $interfaceMethodReflection = new ReflectionMethod($interfaceMethodName);
-
-            if ($this->compareTwoMethodsForBridgeInterface($interfaceMethodReflection, $bridgedInterfaceReflectionMethod)) {
-                continue;
-            }
-
-            $notMatchingMethods[] = $interfaceMethod;
-        }
-
-        return $notMatchingMethods;
-    }
-
-    /**
-     * @param \ReflectionMethod $firstMethod
-     * @param \ReflectionMethod $secondMethod
-     *
-     * @return bool
-     */
-    protected function compareTwoMethodsForBridgeInterface(ReflectionMethod $firstMethod, ReflectionMethod $secondMethod): bool
-    {
-        $firstMethodParameters = $firstMethod->getParameters();
-        $secondMethodParameters = $secondMethod->getParameters();
-
-        if (count($firstMethodParameters) !== count($secondMethodParameters)) {
-            return false;
-        }
-
-        $countParameters = count($firstMethodParameters);
-
-        for ($i = 0; $i < $countParameters; $i++) {
-            if ((string)$firstMethodParameters[$i] !== (string)$secondMethodParameters[$i]) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    /**
-     * @param array<\PHPMD\Node\MethodNode> $classMethods
-     *
-     * @return \ReflectionClass|null
-     */
-    protected function getBridgedInterfaceReflection(array $classMethods): ?ReflectionClass
-    {
-        foreach ($classMethods as $classMethod) {
-            if ($classMethod->getName() === '__construct') {
-                $constructorComment = $classMethod->getNode()->getComment();
-
-                if (!$constructorComment) {
-                    return null;
-                }
-
-                $firstParameter = $classMethod->getNode()->getParameters()[0];
-
-                if (!$firstParameter) {
-                    return null;
-                }
-
-                $pattern = '#@param[\s]+(?<interfaceName>.*)[\s]+' . preg_quote($firstParameter->getName()) . '#is';
-
-                if (preg_match($pattern, $constructorComment, $matches) === 0) {
-                    return null;
-                }
-
-                //todo: Spryker\Zed\Ratepay\Dependency\Facade\RatepayToSalesAggregatorBridge - need to fix
-                return new ReflectionClass($matches['interfaceName']);
-            }
-        }
-
-        return null;
     }
 }

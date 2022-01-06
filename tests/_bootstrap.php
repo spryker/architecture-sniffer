@@ -8,3 +8,5 @@ require_once '_data/Common/Plugin/NewPluginExtensionModuleTest/testRuleDoesNotAp
 require_once '_data/Common/Plugin/NewPluginExtensionModuleTest/testRuleAppliesWhenPluginImplementsNotExtensionModuleInterface.php';
 require_once '_data/Common/Bridge/BridgeMethodsTest/testRuleAppliesWhenBridgeMethodsAreNotCorrect.php';
 require_once '_data/Common/Bridge/BridgeMethodsTest/testRuleDoesNotApplyWhenBridgeMethodsAreCorrect.php';
+require_once '_data/Common/Bridge/BridgeMethodsInterfaceTest/testRuleAppliesWhenBridgeInterfaceMethodsAreNotCorrect.php';
+require_once '_data/Common/Bridge/BridgeMethodsInterfaceTest/testRuleDoesNotApplyWhenBridgeInterfaceMethodsAreCorrect.php';

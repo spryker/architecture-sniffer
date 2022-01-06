@@ -149,6 +149,13 @@
 
         <priority>2</priority>
     </rule>
+    <rule
+        name="BridgeMethodsInterfaceRule"
+        message="Bridges: {0}"
+        class="ArchitectureSniffer\Common\Bridge\BridgeMethodsInterfaceRule">
+
+        <priority>2</priority>
+    </rule>
     <!-- EOF COMMON BRIDGE RULES -->
 
     <!-- EOF COMMON COMMUNICATION RULES -->

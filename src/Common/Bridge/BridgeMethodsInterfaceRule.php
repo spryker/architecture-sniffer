@@ -87,7 +87,7 @@ class BridgeMethodsInterfaceRule extends SprykerAbstractRule implements ClassAwa
 
         foreach ($notMatchingMethods as ['method' => $notMatchingMethod, 'error' => $errorMsg]) {
             $message = sprintf(
-                'The bridge interface has incorrect method signature for \'%s()\'. %s That violates the rule "%s"',
+                'The bridge interface has incorrect method signature for `%s()`. %s That violates the rule "%s"',
                 $notMatchingMethod->getName(),
                 $errorMsg,
                 static::RULE,
@@ -168,7 +168,7 @@ class BridgeMethodsInterfaceRule extends SprykerAbstractRule implements ClassAwa
             $birdgeInterfaceMethodParameter = $birdgeInterfaceMethodParameters[$i];
 
             if (empty($parentInterfaceMethodParameters[$i])) {
-                $errors[] = sprintf('Parameter %s does not exist in bridged method', $birdgeInterfaceMethodParameter->getName());
+                $errors[] = sprintf('Parameter `%s` does not exist in bridged method', $birdgeInterfaceMethodParameter->getName());
 
                 continue;
             }

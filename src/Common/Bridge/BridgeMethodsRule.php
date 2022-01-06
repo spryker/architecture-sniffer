@@ -77,7 +77,7 @@ class BridgeMethodsRule extends SprykerAbstractRule implements ClassAware
 
         foreach ($notMatchingMethods as $notMatchingMethod) {
             $message = sprintf(
-                'The bridge has incorrect method \'%s\' signature. That violates the rule "%s"',
+                'The bridge has incorrect method signature for `%s()`. That violates the rule "%s"',
                 $notMatchingMethod->getName(),
                 static::RULE,
             );

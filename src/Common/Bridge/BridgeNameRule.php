@@ -17,12 +17,12 @@ class BridgeNameRule extends AbstractRule implements ClassAware
     /**
      * @var string
      */
-    protected const CLASS_RULE = 'A bridge name must have \'{source_module_name}To{target_module_name}{layer_name}Bridge\' structure.';
+    protected const CLASS_RULE = 'A bridge name must have `{SourceModuleName}To{TargetModuleName}{LayerName}Bridge` structure.';
 
     /**
      * @var string
      */
-    protected const INTERFACE_RULE = 'A bridge interface name must have \'{source_module_name}To{target_module_name}{layer_name}Interface\' structure.';
+    protected const INTERFACE_RULE = 'A bridge interface name must have `{SourceModuleName}To{TargetModuleName}{LayerName}Interface` structure.';
 
     /**
      * @return string
@@ -67,7 +67,7 @@ class BridgeNameRule extends AbstractRule implements ClassAware
         }
 
         $message = sprintf(
-            'The bridge name is not \'%sTo{target_module_name}%sBridge\'. That violates the rule "%s"',
+            'The bridge name is not `%sTo{TargetModuleName}%sBridge`. That violates the rule "%s"',
             $namespaceParts['moduleName'],
             $namespaceParts['layerName'],
             static::CLASS_RULE,
@@ -104,7 +104,7 @@ class BridgeNameRule extends AbstractRule implements ClassAware
 
         if (preg_match($expectedBridgeInterfaceNameRegexp, $interfaceNode->getName()) === 0) {
             $message = sprintf(
-                'The bridge interface name is not \'%sTo{target_module_name}%sInterface\'. That violates the rule "%s"',
+                'The bridge interface name is not `%sTo{TargetModuleName}%sInterface`. That violates the rule "%s"',
                 $namespaceParts['moduleName'],
                 $namespaceParts['layerName'],
                 static::INTERFACE_RULE,

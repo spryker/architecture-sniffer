@@ -34,6 +34,11 @@ class GetterReturnTypeRule extends AbstractRule implements ClassAware
     /**
      * @var string
      */
+    protected const EXCEPTIONAL_POSTFIX_STATUS = 'Status';
+
+    /**
+     * @var string
+     */
     protected const RULE_RETURN_TYPE_SPECIFIED = 'Getter `%s` must return something. Please add return type.';
 
     /**
@@ -64,7 +69,12 @@ class GetterReturnTypeRule extends AbstractRule implements ClassAware
      */
     protected function verifyMethod(MethodNode $methodNode): void
     {
-        if (strpos($methodNode->getName(), static::PREFIX_METHOD_NAME) !== 0) {
+        $methodName = $methodNode->getName();
+
+        if (
+            strpos($methodName, static::PREFIX_METHOD_NAME) !== 0
+            || strpos($methodName, static::EXCEPTIONAL_POSTFIX_STATUS) === strlen($methodName) - strlen(static::EXCEPTIONAL_POSTFIX_STATUS)
+        ) {
             return;
         }
 

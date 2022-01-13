@@ -18,12 +18,22 @@ class ExistsPostfixRule extends AbstractRule implements ClassAware
     /**
      * @var string
      */
+    protected const POSTFIX_PATTERN = '/Exists?([A-Z]|$)/';
+
+    /**
+     * @var string
+     */
     protected const POSTFIX_EXISTS = 'Exists';
 
     /**
      * @var string
      */
     protected const POSTFIX_EXIST = 'Exist';
+
+    /**
+     * @var string
+     */
+    protected const POSTFIX_EXISTING = 'Existing';
 
     /**
      * @var string
@@ -43,7 +53,7 @@ class ExistsPostfixRule extends AbstractRule implements ClassAware
     /**
      * @var string
      */
-    protected const RULE_FORBIDDEN_PREFIX_IS = 'Prefix `is` must not be used with postfix `Exists`. Method: %s.';
+    protected const RULE_FORBIDDEN_PREFIX_IS = 'Prefix `is` must not be used with postfix `Exist`. Method: %s.';
 
     /**
      * @param \PHPMD\AbstractNode $node
@@ -70,13 +80,14 @@ class ExistsPostfixRule extends AbstractRule implements ClassAware
     {
         $methodName = $methodNode->getName();
 
-        if (strpos($methodName, static::POSTFIX_EXIST) === false) {
+        if (
+            strpos($methodName, static::PREFIX_METHOD_NAME) !== 0
+            || !preg_match(static::POSTFIX_PATTERN, $methodName)
+        ) {
             return;
         }
 
-        if (strpos($methodName, static::PREFIX_METHOD_NAME) === 0) {
-            $this->addForbiddenPrefixViolation($methodNode);
-        }
+        $this->addForbiddenPrefixViolation($methodNode);
 
         if (strpos($methodName, static::POSTFIX_EXISTS) === false) {
             $this->addPostfixSpellingViolation($methodNode);

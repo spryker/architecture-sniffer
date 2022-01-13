@@ -25,6 +25,26 @@ class ExistsPostfixRuleTest extends AbstractArchitectureSnifferRuleTest
     /**
      * @return void
      */
+    public function testRuleDoesNotApplyWhenWordExistingUsed(): void
+    {
+        $bridgePathRule = new ExistsPostfixRule();
+        $bridgePathRule->setReport($this->getReportMock(0));
+        $bridgePathRule->apply($this->getClassNode());
+    }
+
+    /**
+     * @return void
+     */
+    public function testRuleDoesNotApplyWithoutForbiddenPrefix(): void
+    {
+        $bridgePathRule = new ExistsPostfixRule();
+        $bridgePathRule->setReport($this->getReportMock(0));
+        $bridgePathRule->apply($this->getClassNode());
+    }
+
+    /**
+     * @return void
+     */
     public function testRuleAppliesWhenForbiddenPrefixPresentAndPostfixIncorrect(): void
     {
         $bridgePathRule = new ExistsPostfixRule();

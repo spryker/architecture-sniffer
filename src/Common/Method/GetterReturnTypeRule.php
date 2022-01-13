@@ -71,7 +71,7 @@ class GetterReturnTypeRule extends AbstractRule implements ClassAware
         $returnType = $this->getReturnType($methodNode);
 
         if (
-            $returnType === null && !$this->isInheritDocBlockExist($methodNode)
+            $returnType === null && !$this->inheritDocBlockExists($methodNode)
             || $returnType === 'void'
         ) {
             $this->addMethodMustReturnViolation($methodNode);
@@ -89,7 +89,7 @@ class GetterReturnTypeRule extends AbstractRule implements ClassAware
      *
      * @return bool
      */
-    protected function isInheritDocBlockExist(MethodNode $methodNode): bool
+    protected function inheritDocBlockExists(MethodNode $methodNode): bool
     {
         $comment = $methodNode->getNode()->getComment();
 

@@ -47,7 +47,7 @@ class GetterReturnTypeRule extends AbstractRule implements ClassAware
     /**
      * @var string
      */
-    protected const RULE_RETURN_NOT_BOOL = 'Getter `%s` must not return bool.';
+    protected const RULE_RETURN_NOT_BOOL = 'Boolean methods do not use `get` prefix, use `is`/`has` instead or alike. Getter `%s` must not return bool.';
 
     /**
      * @param \PHPMD\AbstractNode $node

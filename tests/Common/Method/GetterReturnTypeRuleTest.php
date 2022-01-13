@@ -95,6 +95,26 @@ class GetterReturnTypeRuleTest extends AbstractArchitectureSnifferRuleTest
     /**
      * @return void
      */
+    public function testRuleDoesNotApplyWhenMethodIsDeprecated(): void
+    {
+        $bridgePathRule = new GetterReturnTypeRule();
+        $bridgePathRule->setReport($this->getReportMock(0));
+        $bridgePathRule->apply($this->getClassNode());
+    }
+
+    /**
+     * @return void
+     */
+    public function testRuleDoesNotApplyWhenClassIsDeprecated(): void
+    {
+        $bridgePathRule = new GetterReturnTypeRule();
+        $bridgePathRule->setReport($this->getReportMock(0));
+        $bridgePathRule->apply($this->getClassNode());
+    }
+
+    /**
+     * @return void
+     */
     public function testRuleAppliesWhenBoolReturnTypeSpecified(): void
     {
         $bridgePathRule = new GetterReturnTypeRule();

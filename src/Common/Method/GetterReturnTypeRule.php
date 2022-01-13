@@ -7,6 +7,7 @@
 
 namespace ArchitectureSniffer\Common\Method;
 
+use ArchitectureSniffer\Common\DeprecationTrait;
 use PDepend\Source\AST\ASTCallable;
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
@@ -16,6 +17,8 @@ use PHPMD\Rule\ClassAware;
 
 class GetterReturnTypeRule extends AbstractRule implements ClassAware
 {
+    use DeprecationTrait;
+
     /**
      * @var string
      */
@@ -53,7 +56,10 @@ class GetterReturnTypeRule extends AbstractRule implements ClassAware
      */
     public function apply(AbstractNode $node)
     {
-        if (!$node instanceof ClassNode) {
+        if (
+            !$node instanceof ClassNode
+            || $this->isClassDeprecated($node)
+        ) {
             return;
         }
 
@@ -73,6 +79,7 @@ class GetterReturnTypeRule extends AbstractRule implements ClassAware
 
         if (
             strpos($methodName, static::PREFIX_METHOD_NAME) !== 0
+            || $this->isMethodDeprecated($methodNode)
             || strpos($methodName, static::EXCEPTIONAL_POSTFIX_STATUS) === strlen($methodName) - strlen(static::EXCEPTIONAL_POSTFIX_STATUS)
         ) {
             return;

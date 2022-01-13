@@ -7,6 +7,7 @@
 
 namespace ArchitectureSniffer\Common\Method;
 
+use ArchitectureSniffer\Common\DeprecationTrait;
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
 use PHPMD\Node\ClassNode;
@@ -15,6 +16,8 @@ use PHPMD\Rule\ClassAware;
 
 class ExistsPostfixRule extends AbstractRule implements ClassAware
 {
+    use DeprecationTrait;
+
     /**
      * @var string
      */
@@ -62,7 +65,10 @@ class ExistsPostfixRule extends AbstractRule implements ClassAware
      */
     public function apply(AbstractNode $node)
     {
-        if (!$node instanceof ClassNode) {
+        if (
+            !$node instanceof ClassNode
+            || $this->isClassDeprecated($node)
+        ) {
             return;
         }
 
@@ -82,6 +88,7 @@ class ExistsPostfixRule extends AbstractRule implements ClassAware
 
         if (
             strpos($methodName, static::PREFIX_METHOD_NAME) !== 0
+            || $this->isMethodDeprecated($methodNode)
             || !preg_match(static::POSTFIX_PATTERN, $methodName)
         ) {
             return;

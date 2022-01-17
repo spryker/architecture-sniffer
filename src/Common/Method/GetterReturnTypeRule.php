@@ -32,7 +32,7 @@ class GetterReturnTypeRule extends AbstractRule implements ClassAware
     /**
      * @var string
      */
-    protected const PATTERN_API_DOC  = '/@api/i';
+    protected const PATTERN_API_DOC = '/@api/i';
 
     /**
      * @var string

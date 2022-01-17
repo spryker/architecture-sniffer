@@ -32,6 +32,11 @@ class GetterReturnTypeRule extends AbstractRule implements ClassAware
     /**
      * @var string
      */
+    protected const PATTERN_API_DOC  = '/@api/i';
+
+    /**
+     * @var string
+     */
     protected const PREFIX_METHOD_NAME = 'get';
 
     /**
@@ -79,6 +84,7 @@ class GetterReturnTypeRule extends AbstractRule implements ClassAware
 
         if (
             strpos($methodName, static::PREFIX_METHOD_NAME) !== 0
+            || !$this->apiTagExists($methodNode)
             || $this->isMethodDeprecated($methodNode)
             || strpos($methodName, static::EXCEPTIONAL_POSTFIX_STATUS) === strlen($methodName) - strlen(static::EXCEPTIONAL_POSTFIX_STATUS)
         ) {
@@ -88,7 +94,7 @@ class GetterReturnTypeRule extends AbstractRule implements ClassAware
         $returnType = $this->getReturnType($methodNode);
 
         if (
-            $returnType === null && !$this->inheritDocBlockExists($methodNode)
+            $returnType === null && !$this->inheritDocTagExists($methodNode)
             || $returnType === 'void'
         ) {
             $this->addMethodMustReturnViolation($methodNode);
@@ -106,7 +112,7 @@ class GetterReturnTypeRule extends AbstractRule implements ClassAware
      *
      * @return bool
      */
-    protected function inheritDocBlockExists(MethodNode $methodNode): bool
+    protected function inheritDocTagExists(MethodNode $methodNode): bool
     {
         $comment = $methodNode->getNode()->getComment();
 
@@ -115,6 +121,22 @@ class GetterReturnTypeRule extends AbstractRule implements ClassAware
         }
 
         return (bool)preg_match(static::PATTERN_INHERIT_DOC, $comment);
+    }
+
+    /**
+     * @param \PHPMD\Node\MethodNode $methodNode
+     *
+     * @return bool
+     */
+    protected function apiTagExists(MethodNode $methodNode): bool
+    {
+        $comment = $methodNode->getNode()->getComment();
+
+        if ($comment === null) {
+            return false;
+        }
+
+        return (bool)preg_match(static::PATTERN_API_DOC, $comment);
     }
 
     /**

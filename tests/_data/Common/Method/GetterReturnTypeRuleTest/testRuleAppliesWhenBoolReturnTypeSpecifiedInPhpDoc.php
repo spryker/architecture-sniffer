@@ -10,6 +10,8 @@ namespace ArchitectureSnifferTest\Common\GetReturnTypeTest;
 class Foo
 {
     /**
+     * @api
+     *
      * @return bool
      */
     public function getBool()

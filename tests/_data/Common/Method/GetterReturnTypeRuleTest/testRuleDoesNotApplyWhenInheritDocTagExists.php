@@ -10,6 +10,8 @@ namespace ArchitectureSnifferTest\Common\GetReturnTypeTest;
 class Foo
 {
     /**
+     * @api
+     *
      * {@inheritdoc}
      */
     public function getSomething()

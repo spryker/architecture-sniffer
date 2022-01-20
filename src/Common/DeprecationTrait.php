@@ -24,7 +24,13 @@ trait DeprecationTrait
      */
     protected function isMethodDeprecated(MethodNode $method)
     {
-        return (bool)preg_match($this->regexp, $method->getNode()->getDocComment());
+        $comment = $method->getNode()->getComment();
+
+        if ($comment === null) {
+            return false;
+        }
+
+        return (bool)preg_match($this->regexp, $comment);
     }
 
     /**
@@ -34,6 +40,12 @@ trait DeprecationTrait
      */
     protected function isClassDeprecated(ClassNode $classNode)
     {
-        return (bool)preg_match($this->regexp, $classNode->getNode()->getDocComment());
+        $comment = $classNode->getNode()->getComment();
+
+        if ($comment === null) {
+            return false;
+        }
+
+        return (bool)preg_match($this->regexp, $classNode->getNode()->getComment());
     }
 }

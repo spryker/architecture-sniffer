@@ -30,3 +30,9 @@ suites:
     modules:
       enabled:
         - Asserts
+  Method:
+    path: Method
+    class_name: CommonTester
+    modules:
+      enabled:
+        - Asserts

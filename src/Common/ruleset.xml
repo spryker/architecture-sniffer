@@ -26,6 +26,22 @@
         <priority>3</priority>
     </rule>
 
+    <rule
+            name="GetterReturnTypeRule"
+            message="{0}"
+            class="ArchitectureSniffer\Common\Method\GetterReturnTypeRule">
+
+        <priority>1</priority>
+    </rule>
+
+    <rule
+            name="ExistsPostfixRule"
+            message="{0}"
+            class="ArchitectureSniffer\Common\Method\ExistsPostfixRule">
+
+        <priority>1</priority>
+    </rule>
+
     <!-- COMMON FACTORY RULES -->
     <rule
             name="FactoryGetContainNoNewRule"

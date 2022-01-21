@@ -167,7 +167,7 @@ abstract class AbstractArchitectureSnifferRuleTest extends Unit
     }
 
     /**
-     * @param \Iterator|\PDepend\Source\AST\ASTArtifact[] $nodes
+     * @param \Iterator<\PDepend\Source\AST\ASTArtifact> $nodes
      * @param string|int|null $nameOrPosition
      *
      * @throws \ErrorException

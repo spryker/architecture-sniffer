@@ -12,17 +12,12 @@ use PHPMD\AbstractNode;
 use PHPMD\Node\ClassNode;
 use PHPMD\Rule\ClassAware;
 
-class ImplementsApiInterfaceRule extends SprykerAbstractRule implements ClassAware
+abstract class ImplementsApiInterfaceRule extends SprykerAbstractRule implements ClassAware
 {
     /**
      * @var string
      */
     public const RULE = 'Must implement an interface with same name and suffix \'Interface\'.';
-
-    /**
-     * @var string
-     */
-    protected $classRegex = '';
 
     /**
      * @return string
@@ -91,4 +86,11 @@ class ImplementsApiInterfaceRule extends SprykerAbstractRule implements ClassAwa
             ],
         );
     }
+
+    /**
+     * @phpstan-return non-empty-string
+     *
+     * @return string
+     */
+    abstract protected function getClassRegex(): string;
 }

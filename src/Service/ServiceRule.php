@@ -14,11 +14,6 @@ use PHPMD\Rule\ClassAware;
 class ServiceRule extends ImplementsApiInterfaceRule implements ClassAware
 {
     /**
-     * @var string
-     */
-    protected $classRegex = '(\\\\Service\\\\.+Service$)';
-
-    /**
      * @param \PHPMD\AbstractNode $node
      *
      * @return bool
@@ -26,5 +21,15 @@ class ServiceRule extends ImplementsApiInterfaceRule implements ClassAware
     protected function isApplicable(AbstractNode $node): bool
     {
         return $node->getName() !== 'AbstractService' && parent::isApplicable($node);
+    }
+
+    /**
+     * @phpstan-return non-empty-string
+     *
+     * @return string
+     */
+    protected function getClassRegex(): string
+    {
+        return '(\\\\Client\\\\[A-Za-z]+\\\\[A-Za-z]+Client$)';
     }
 }

@@ -7,12 +7,15 @@
 
 namespace ArchitectureSniffer\Zed\Persistence;
 
+use ArchitectureSniffer\Common\DeprecationTrait;
 use PHPMD\AbstractNode;
 use PHPMD\Node\ClassNode;
 use PHPMD\Rule\ClassAware;
 
 class SpyEntityUsageRule extends AbstractPersistenceRule implements ClassAware
 {
+    use DeprecationTrait;
+
     /**
      * @var string
      */
@@ -35,6 +38,10 @@ class SpyEntityUsageRule extends AbstractPersistenceRule implements ClassAware
         }
 
         if ($this->isExcludedModule($node)) {
+            return;
+        }
+
+        if ($this->isClassDeprecated($node)) {
             return;
         }
 

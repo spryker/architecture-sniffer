@@ -7,6 +7,7 @@
 
 namespace ArchitectureSniffer\Zed\Business\Facade;
 
+use ArchitectureSniffer\Common\DeprecationTrait;
 use PHPMD\AbstractNode;
 use PHPMD\Node\ClassNode;
 use PHPMD\Node\MethodNode;
@@ -14,6 +15,8 @@ use PHPMD\Rule\ClassAware;
 
 class FacadeNoLogicRule extends AbstractFacadeRule implements ClassAware
 {
+    use DeprecationTrait;
+
     /**
      * @var string
      */
@@ -60,6 +63,10 @@ class FacadeNoLogicRule extends AbstractFacadeRule implements ClassAware
     protected function applyRule(ClassNode $node)
     {
         foreach ($node->getMethods() as $method) {
+            if ($this->isMethodDeprecated($method)) {
+                return;
+            }
+
             $this->checkStatements($method);
         }
     }

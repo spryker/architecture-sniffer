@@ -7,6 +7,7 @@
 
 namespace ArchitectureSniffer\Zed\Communication\Plugin;
 
+use ArchitectureSniffer\Common\DeprecationTrait;
 use ArchitectureSniffer\Common\Plugin\AbstractPluginRule;
 use PDepend\Source\AST\AbstractASTClassOrInterface;
 use PDepend\Source\AST\ASTParameter;
@@ -16,6 +17,8 @@ use PHPMD\Rule\ClassAware;
 
 class PluginArgumentsNotAllowedUseEntityTransferRule extends AbstractPluginRule implements ClassAware
 {
+    use DeprecationTrait;
+
     /**
      * @var string
      */
@@ -46,7 +49,7 @@ class PluginArgumentsNotAllowedUseEntityTransferRule extends AbstractPluginRule 
      */
     public function apply(AbstractNode $node): void
     {
-        if (!$this->isPlugin($node)) {
+        if (!$this->isPlugin($node) || $this->isClassDeprecated($node)) {
             return;
         }
 

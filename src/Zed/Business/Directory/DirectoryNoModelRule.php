@@ -7,12 +7,15 @@
 
 namespace ArchitectureSniffer\Zed\Business\Directory;
 
+use ArchitectureSniffer\Common\DeprecationTrait;
 use PHPMD\AbstractNode;
 use PHPMD\Node\ClassNode;
 use PHPMD\Rule\ClassAware;
 
 class DirectoryNoModelRule extends AbstractDirectoryRule implements ClassAware
 {
+    use DeprecationTrait;
+
     /**
      * @var string
      */
@@ -47,7 +50,9 @@ class DirectoryNoModelRule extends AbstractDirectoryRule implements ClassAware
      */
     protected function applyRule(ClassNode $classNode)
     {
-        if (!preg_match('/Business\\\\Model\\\\/', $classNode->getFullQualifiedName())) {
+        if (
+            $this->isClassDeprecated($classNode)
+            || !preg_match('/Business\\\\Model\\\\/', $classNode->getFullQualifiedName())) {
             return;
         }
 

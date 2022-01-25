@@ -37,6 +37,10 @@ class AllMethodsPublicInFacadeRule extends AbstractFacadeRule implements ClassAw
      */
     public function apply(AbstractNode $node)
     {
+        if (!$node instanceof ClassNode) {
+            return;
+        }
+
         if (!$this->isFacade($node) || $this->isAbstractFacade($node)) {
             return;
         }

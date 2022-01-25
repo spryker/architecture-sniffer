@@ -5,11 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spyryker\Zed\DataImport\Persistence\EntityManager;
+namespace Spyryker\Zed\Module\Persistence\TestClass;
 
 use Orm\Zed\Persistence\SpyTestEntity;
 
-class TestEntityManager
+/**
+ * @deprecated
+ */
+class TestClass
 {
     /**
      * @return void

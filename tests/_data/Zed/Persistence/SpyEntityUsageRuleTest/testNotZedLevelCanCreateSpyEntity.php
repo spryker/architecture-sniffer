@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spyryker\Yves\Module\Persistence\EntityManager;
+namespace Spyryker\Yves\Module\Persistence\TestClass;
 
 use Orm\Zed\Persistence\SpyTestEntity;
 
-class TestEntityManager
+class TestClass
 {
     /**
      * @return void

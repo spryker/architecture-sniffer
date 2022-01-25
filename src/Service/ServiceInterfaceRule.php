@@ -13,7 +13,12 @@ use PHPMD\Rule\InterfaceAware;
 class ServiceInterfaceRule extends ApiInterfaceRule implements InterfaceAware
 {
     /**
-     * @var string
+     * @phpstan-return non-empty-string
+     *
+     * @return string
      */
-    protected $classRegex = '(\\\\Service\\\\.+ServiceInterface$)';
+    protected function getClassRegex(): string
+    {
+        return '(\\\\Service\\\\.+ServiceInterface$)';
+    }
 }

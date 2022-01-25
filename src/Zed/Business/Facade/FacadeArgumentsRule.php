@@ -51,7 +51,9 @@ class FacadeArgumentsRule extends AbstractFacadeRule implements MethodAware
      */
     protected function applyRule(MethodNode $method)
     {
-        if ($this->isMethodDeprecated($method))
+        if ($this->isMethodDeprecated($method)) {
+            return;
+        }
 
         $params = $method->getParameters();
         foreach ($params as $param) {
@@ -68,7 +70,7 @@ class FacadeArgumentsRule extends AbstractFacadeRule implements MethodAware
     protected function checkParameter(ASTParameter $param, AbstractNode $node)
     {
         $class = $param->getClass();
-        if (empty($class) || $class->getNamespaceName() === 'Generated\Shared\Transfer') {
+        if ($class === null || $class->getNamespaceName() === 'Generated\Shared\Transfer') {
             return;
         }
 

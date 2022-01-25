@@ -56,7 +56,6 @@ class AllMethodsPublicInFacadeRule extends AbstractFacadeRule implements ClassAw
                 continue;
             }
 
-
             $this->checkVisibility($method);
         }
     }

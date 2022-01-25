@@ -9,6 +9,7 @@ namespace ArchitectureSniffer\Zed\Business\Facade;
 
 use PHPMD\AbstractRule;
 use PHPMD\Node\AbstractNode;
+use PHPMD\Node\ClassNode;
 use PHPMD\Node\MethodNode;
 
 abstract class AbstractFacadeRule extends AbstractRule
@@ -39,7 +40,7 @@ abstract class AbstractFacadeRule extends AbstractRule
      *
      * @return bool
      */
-    protected function isAbstractFacade(AbstractNode $node): bool
+    protected function isAbstractFacade(ClassNode $node): bool
     {
         return $node->getName() === 'AbstractFacade';
     }

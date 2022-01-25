@@ -13,7 +13,12 @@ use PHPMD\Rule\InterfaceAware;
 class ClientInterfaceRule extends ApiInterfaceRule implements InterfaceAware
 {
     /**
-     * @var string
+     * @phpstan-return non-empty-string
+     *
+     * @return string
      */
-    protected $classRegex = '(\\\\Client\\\\[A-Za-z]+\\\\[A-Za-z]+ClientInterface$)';
+    protected function getClassRegex(): string
+    {
+        return '(\\\\Client\\\\[A-Za-z]+\\\\[A-Za-z]+ClientInterface$)';
+    }
 }

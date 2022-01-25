@@ -25,6 +25,16 @@ class FacadeArgumentsNotAllowedUseEntityTransferRuleTest extends AbstractArchite
     /**
      * @return void
      */
+    public function testFacadeDeprecatedMethodHasEntityTransferArgument(): void
+    {
+        $pluginSuffixRule = new FacadeArgumentsNotAllowedUseEntityTransferRule();
+        $pluginSuffixRule->setReport($this->getReportMock(0));
+        $pluginSuffixRule->apply($this->getMethodNode());
+    }
+
+    /**
+     * @return void
+     */
     public function testFacadeMethodDoesNotHaveEntityTransferArgument(): void
     {
         $pluginSuffixRule = new FacadeArgumentsNotAllowedUseEntityTransferRule();

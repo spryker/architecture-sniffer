@@ -84,7 +84,7 @@ class PluginArgumentsNotAllowedUseEntityTransferRule extends AbstractPluginRule 
     {
         $class = $param->getClass();
 
-        if (empty($class) || !$this->isArgumentEntityTransfer($class)) {
+        if ($class === null || !$this->isArgumentEntityTransfer($class)) {
             return;
         }
 

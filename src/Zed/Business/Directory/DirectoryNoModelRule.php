@@ -52,7 +52,8 @@ class DirectoryNoModelRule extends AbstractDirectoryRule implements ClassAware
     {
         if (
             $this->isClassDeprecated($classNode)
-            || !preg_match('/Business\\\\Model\\\\/', $classNode->getFullQualifiedName())) {
+            || !preg_match('/Business\\\\Model\\\\/', $classNode->getFullQualifiedName())
+        ) {
             return;
         }
 

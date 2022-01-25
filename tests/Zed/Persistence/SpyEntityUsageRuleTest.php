@@ -25,6 +25,46 @@ class SpyEntityUsageRuleTest extends AbstractArchitectureSnifferRuleTest
     /**
      * @return void
      */
+    public function testEntityManagerCanCreateSpyEntity(): void
+    {
+        $pluginSuffixRule = new SpyEntityUsageRule();
+        $pluginSuffixRule->setReport($this->getReportMock(0));
+        $pluginSuffixRule->apply($this->getClassNode());
+    }
+
+    /**
+     * @return void
+     */
+    public function testExcludedModuleCanCreateSpyEntity(): void
+    {
+        $pluginSuffixRule = new SpyEntityUsageRule();
+        $pluginSuffixRule->setReport($this->getReportMock(0));
+        $pluginSuffixRule->apply($this->getClassNode());
+    }
+
+    /**
+     * @return void
+     */
+    public function testNotZedLevelCanCreateSpyEntity(): void
+    {
+        $pluginSuffixRule = new SpyEntityUsageRule();
+        $pluginSuffixRule->setReport($this->getReportMock(0));
+        $pluginSuffixRule->apply($this->getClassNode());
+    }
+
+    /**
+     * @return void
+     */
+    public function testDeprecatedClassCanCreateSpyEntity(): void
+    {
+        $pluginSuffixRule = new SpyEntityUsageRule();
+        $pluginSuffixRule->setReport($this->getReportMock(0));
+        $pluginSuffixRule->apply($this->getClassNode());
+    }
+
+    /**
+     * @return void
+     */
     public function testFacadeCanCreateSpyEntityInDeprecatedMethod(): void
     {
         $pluginSuffixRule = new SpyEntityUsageRule();

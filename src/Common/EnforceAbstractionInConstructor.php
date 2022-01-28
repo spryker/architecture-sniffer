@@ -59,7 +59,7 @@ class EnforceAbstractionInConstructor extends AbstractRule implements ClassAware
     protected function checkParameter(ASTParameter $param, AbstractNode $node)
     {
         $class = $param->getClass();
-        if ($class === null || $class->isAbstract()) {
+        if (!$class || $class->isAbstract()) {
             return;
         }
 

@@ -83,7 +83,7 @@ class FacadeArgumentsNotAllowedUseEntityTransferRule extends AbstractFacadeRule 
     {
         $class = $param->getClass();
 
-        if ($class === null || !$this->isArgumentEntityTransfer($class)) {
+        if (!$class || !$this->isArgumentEntityTransfer($class)) {
             return;
         }
 

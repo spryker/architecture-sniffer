@@ -70,7 +70,7 @@ class FacadeArgumentsRule extends AbstractFacadeRule implements MethodAware
     protected function checkParameter(ASTParameter $param, AbstractNode $node)
     {
         $class = $param->getClass();
-        if ($class === null || $class->getNamespaceName() === 'Generated\Shared\Transfer') {
+        if (!$class || $class->getNamespaceName() === 'Generated\Shared\Transfer') {
             return;
         }
 

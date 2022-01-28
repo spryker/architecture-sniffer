@@ -44,7 +44,7 @@ class ApiInterfaceRule extends SprykerAbstractRule implements InterfaceAware
      */
     public function apply(AbstractNode $node)
     {
-        if (empty($this->classRegex) || preg_match($this->classRegex, $node->getFullQualifiedName()) === 0) {
+        if (!$this->classRegex || preg_match($this->classRegex, $node->getFullQualifiedName()) === 0) {
             return;
         }
 

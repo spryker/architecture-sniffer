@@ -57,7 +57,7 @@ class ImplementsApiInterfaceRule extends SprykerAbstractRule implements ClassAwa
             return false;
         }
 
-        if (empty($this->classRegex) || preg_match($this->classRegex, $node->getFullQualifiedName()) === 0) {
+        if (!$this->classRegex || preg_match($this->classRegex, $node->getFullQualifiedName()) === 0) {
             return false;
         }
 

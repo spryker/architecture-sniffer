@@ -7,12 +7,15 @@
 
 namespace ArchitectureSniffer\Zed\Business\Facade;
 
+use ArchitectureSniffer\Common\DeprecationTrait;
 use PHPMD\AbstractNode;
 use PHPMD\Node\MethodNode;
 use PHPMD\Rule\MethodAware;
 
 class FacadeReturnValueRule extends AbstractFacadeRule implements MethodAware
 {
+    use DeprecationTrait;
+
     /**
      * @var string
      */
@@ -57,6 +60,10 @@ class FacadeReturnValueRule extends AbstractFacadeRule implements MethodAware
      */
     protected function applyRule(MethodNode $node)
     {
+        if ($this->isMethodDeprecated($node)) {
+            return;
+        }
+
         $comment = $node->getComment();
         if ($this->hasInvalidReturnType($comment)) {
             $message = sprintf(

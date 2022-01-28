@@ -12,17 +12,12 @@ use PHPMD\AbstractNode;
 use PHPMD\Node\MethodNode;
 use PHPMD\Rule\InterfaceAware;
 
-class ApiInterfaceRule extends SprykerAbstractRule implements InterfaceAware
+abstract class ApiInterfaceRule extends SprykerAbstractRule implements InterfaceAware
 {
     /**
      * @var string
      */
     public const RULE = 'Every method must also contain the @api tag in docblock and a contract text above.';
-
-    /**
-     * @var string
-     */
-    protected $classRegex = '';
 
     /**
      * @var array
@@ -44,7 +39,7 @@ class ApiInterfaceRule extends SprykerAbstractRule implements InterfaceAware
      */
     public function apply(AbstractNode $node)
     {
-        if (!$this->classRegex || preg_match($this->classRegex, $node->getFullQualifiedName()) === 0) {
+        if (preg_match($this->getClassRegex(), $node->getFullQualifiedName()) === 0) {
             return;
         }
 
@@ -105,4 +100,11 @@ class ApiInterfaceRule extends SprykerAbstractRule implements InterfaceAware
             ],
         );
     }
+
+    /**
+     * @phpstan-return non-empty-string
+     *
+     * @return string
+     */
+    abstract protected function getClassRegex(): string;
 }

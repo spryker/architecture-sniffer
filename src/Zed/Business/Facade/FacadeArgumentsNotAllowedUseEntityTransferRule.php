@@ -7,6 +7,7 @@
 
 namespace ArchitectureSniffer\Zed\Business\Facade;
 
+use ArchitectureSniffer\Common\DeprecationTrait;
 use PDepend\Source\AST\AbstractASTClassOrInterface;
 use PDepend\Source\AST\ASTParameter;
 use PHPMD\AbstractNode;
@@ -15,6 +16,8 @@ use PHPMD\Rule\MethodAware;
 
 class FacadeArgumentsNotAllowedUseEntityTransferRule extends AbstractFacadeRule implements MethodAware
 {
+    use DeprecationTrait;
+
     /**
      * @var string
      */
@@ -59,6 +62,10 @@ class FacadeArgumentsNotAllowedUseEntityTransferRule extends AbstractFacadeRule 
      */
     protected function applyRule(MethodNode $method): void
     {
+        if ($this->isMethodDeprecated($method)) {
+            return;
+        }
+
         $params = $method->getParameters();
 
         foreach ($params as $param) {

@@ -7,6 +7,7 @@
 
 namespace ArchitectureSniffer\Zed\Business\Facade;
 
+use ArchitectureSniffer\Common\DeprecationTrait;
 use PHPMD\AbstractNode;
 use PHPMD\Node\ClassNode;
 use PHPMD\Node\MethodNode;
@@ -14,6 +15,8 @@ use PHPMD\Rule\ClassAware;
 
 class AllMethodsPublicInFacadeRule extends AbstractFacadeRule implements ClassAware
 {
+    use DeprecationTrait;
+
     /**
      * @var string
      */
@@ -34,6 +37,10 @@ class AllMethodsPublicInFacadeRule extends AbstractFacadeRule implements ClassAw
      */
     public function apply(AbstractNode $node)
     {
+        if (!$node instanceof ClassNode) {
+            return;
+        }
+
         if (!$this->isFacade($node) || $this->isAbstractFacade($node)) {
             return;
         }
@@ -49,6 +56,10 @@ class AllMethodsPublicInFacadeRule extends AbstractFacadeRule implements ClassAw
     protected function applyRule(ClassNode $node)
     {
         foreach ($node->getMethods() as $method) {
+            if ($this->isMethodDeprecated($method)) {
+                continue;
+            }
+
             $this->checkVisibility($method);
         }
     }

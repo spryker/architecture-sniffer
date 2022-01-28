@@ -14,6 +14,8 @@ use PHPMD\Rule\ClassAware;
 
 class LayerAccessRule extends AbstractRule implements ClassAware
 {
+    use DeprecationTrait;
+
     /**
      * @return string
      */
@@ -105,6 +107,10 @@ class LayerAccessRule extends AbstractRule implements ClassAware
      */
     public function apply(AbstractNode $node)
     {
+        if ($this->isClassDeprecated($node)) {
+            return;
+        }
+
         $patterns = $this->collectPatterns($node);
 
         $this->applyPatterns($node, $patterns);

@@ -13,7 +13,12 @@ use PHPMD\Rule\ClassAware;
 class ClientRule extends ImplementsApiInterfaceRule implements ClassAware
 {
     /**
-     * @var string
+     * @phpstan-return non-empty-string
+     *
+     * @return string
      */
-    protected $classRegex = '(\\\\Client\\\\[A-Za-z]+\\\\[A-Za-z]+Client$)';
+    protected function getClassRegex(): string
+    {
+        return '(\\\\Client\\\\[A-Za-z]+\\\\[A-Za-z]+Client$)';
+    }
 }

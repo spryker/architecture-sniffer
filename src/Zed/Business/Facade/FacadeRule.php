@@ -7,6 +7,7 @@
 
 namespace ArchitectureSniffer\Zed\Business\Facade;
 
+use ArchitectureSniffer\Common\DeprecationTrait;
 use PHPMD\AbstractNode;
 use PHPMD\Node\ClassNode;
 use PHPMD\Node\MethodNode;
@@ -14,6 +15,8 @@ use PHPMD\Rule\ClassAware;
 
 class FacadeRule extends AbstractFacadeRule implements ClassAware
 {
+    use DeprecationTrait;
+
     /**
      * @var string
      */
@@ -41,6 +44,10 @@ class FacadeRule extends AbstractFacadeRule implements ClassAware
         $this->applyStatelessThereAreNoProperties($node);
 
         foreach ($node->getMethods() as $method) {
+            if ($this->isMethodDeprecated($method)) {
+                continue;
+            }
+
             $this->applyNoInstantiationsWithNew($method);
         }
     }

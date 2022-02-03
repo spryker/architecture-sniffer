@@ -23,7 +23,7 @@ class FactoryCreateContainOneNewRule extends AbstractFactoryRule implements Meth
     /**
      * @var string
      */
-    public const RULE = 'A create*() method in factories must contain exactly 1 `new` statement for instantiation.';
+    public const RULE = 'A `create*()` method in factories must contain exactly 1 `new` statement for instantiation.';
 
     /**
      * @return string
@@ -83,7 +83,7 @@ class FactoryCreateContainOneNewRule extends AbstractFactoryRule implements Meth
         $className = $method->getFullQualifiedName();
 
         $message = sprintf(
-            '`%s()` in `%s` contains %s new statements which violates rule "%s"',
+            '`%s` in `%s` contains %s new statements which violates rule "%s"',
             $methodName,
             $className,
             $count,

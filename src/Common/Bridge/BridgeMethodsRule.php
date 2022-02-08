@@ -42,13 +42,9 @@ class BridgeMethodsRule extends SprykerAbstractRule implements ClassAware
      */
     public function apply(AbstractNode $node)
     {
-        $pregMatch = preg_match('([A-Za-z0-9]+Bridge$)', $node->getName());
-
-        $pregMatch1 = preg_match('#.*\\\\Dependency(\\\\.*)?#', $node->getNamespaceName());
-
         if (
-            $pregMatch === 0 ||
-            $pregMatch1 === 0 ||
+            preg_match('([A-Za-z0-9]+Bridge$)', $node->getName()) === 0 ||
+            preg_match('#.*\\\\Dependency(\\\\.*)?#', $node->getNamespaceName()) === 0 ||
             !$node instanceof ClassNode
         ) {
             return;

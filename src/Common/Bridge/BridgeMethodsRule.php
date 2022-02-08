@@ -154,7 +154,7 @@ class BridgeMethodsRule extends SprykerAbstractRule implements ClassAware
                     $this->addViolation(
                         $classMethod,
                         [sprintf(
-                            'Type hint should be defined for param `%s` in method `%s`.',
+                            'Type should be defined for param `%s` in method `%s`.',
                             $parameter->getName(),
                             $classMethod->getFullQualifiedName(),
                         )],

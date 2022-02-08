@@ -7,6 +7,8 @@
 
 namespace ArchitectureSniffer\Common\Bridge;
 
+use ArchitectureSniffer\Common\PhpDocTrait;
+use ArchitectureSniffer\Common\PhpTypesTrait;
 use ArchitectureSniffer\SprykerAbstractRule;
 use PHPMD\AbstractNode;
 use PHPMD\Node\ClassNode;
@@ -18,6 +20,9 @@ use ReflectionMethod;
 
 class BridgeMethodsInterfaceRule extends SprykerAbstractRule implements ClassAware
 {
+    use PhpDocTrait;
+    use PhpTypesTrait;
+
     /**
      * @var string
      */
@@ -127,7 +132,7 @@ class BridgeMethodsInterfaceRule extends SprykerAbstractRule implements ClassAwa
             $interfaceMethodReturnType = $this->getReflectionReturnType($interfaceMethodReflection);
             $parentInterfaceReturnType = $this->getReturnTypeFromParentInterface($interfaceMethod, $bridgedInterfaceReflection);
 
-            if (!$interfaceMethodReturnType) {
+            if (!$interfaceMethodReturnType && !$this->isReturnTypeInPhp7NotAllowed($interfaceMethod)) {
                 $errors[] = 'Missed return type.';
             }
 
@@ -147,46 +152,62 @@ class BridgeMethodsInterfaceRule extends SprykerAbstractRule implements ClassAwa
     }
 
     /**
-     * @param \ReflectionMethod $birdgeInterfaceMethod
+     * @param \PHPMD\Node\MethodNode $methodNode
+     *
+     * @return bool
+     */
+    protected function isReturnTypeInPhp7NotAllowed(MethodNode $methodNode): bool
+    {
+        $returnType = $this->getReturnTypeByPhpDoc($methodNode->getNode()->getComment());
+
+        if ($returnType === null) {
+            return false;
+        }
+
+        return $this->isTypeInPhp7NotAllowed($returnType);
+    }
+
+    /**
+     * @param \ReflectionMethod $bridgeInterfaceMethod
      * @param \ReflectionMethod $parentInterfaceMethod
      *
      * @return array
      */
-    protected function compareBridgeAndParentMethodInterface(ReflectionMethod $birdgeInterfaceMethod, ReflectionMethod $parentInterfaceMethod): array
+    protected function compareBridgeAndParentMethodInterface(ReflectionMethod $bridgeInterfaceMethod, ReflectionMethod $parentInterfaceMethod): array
     {
         $errors = [];
-        $birdgeInterfaceMethodParameters = $birdgeInterfaceMethod->getParameters();
+        $bridgeInterfaceMethodParameters = $bridgeInterfaceMethod->getParameters();
         $parentInterfaceMethodParameters = $parentInterfaceMethod->getParameters();
 
-        if ($this->countRequiredParams($birdgeInterfaceMethodParameters) !== $this->countRequiredParams($parentInterfaceMethodParameters)) {
-            $errors[] = sprintf('%s params expexted but got %s.', $this->countRequiredParams($parentInterfaceMethodParameters), $this->countRequiredParams($birdgeInterfaceMethodParameters));
+        if ($this->countRequiredParams($bridgeInterfaceMethodParameters) !== $this->countRequiredParams($parentInterfaceMethodParameters)) {
+            $errors[] = sprintf('%s params expected but got %s.', $this->countRequiredParams($parentInterfaceMethodParameters), $this->countRequiredParams($bridgeInterfaceMethodParameters));
         }
 
-        $countParameters = count($birdgeInterfaceMethodParameters);
+        $countParameters = count($bridgeInterfaceMethodParameters);
 
         for ($i = 0; $i < $countParameters; $i++) {
-            $birdgeInterfaceMethodParameter = $birdgeInterfaceMethodParameters[$i];
+            $bridgeInterfaceMethodParameter = $bridgeInterfaceMethodParameters[$i];
 
             if (empty($parentInterfaceMethodParameters[$i])) {
-                $errors[] = sprintf('Parameter `%s` does not exist in bridged method', $birdgeInterfaceMethodParameter->getName());
+                $errors[] = sprintf('Parameter `%s` does not exist in bridged method', $bridgeInterfaceMethodParameter->getName());
 
                 continue;
             }
 
             $parentInterfaceMethodParameter = $parentInterfaceMethodParameters[$i];
 
-            if ($birdgeInterfaceMethodParameter->getType() && !$parentInterfaceMethodParameter->getType()) {
+            if ($bridgeInterfaceMethodParameter->getType() && !$parentInterfaceMethodParameter->getType()) {
                 continue;
             }
 
             if (
-                (string)$birdgeInterfaceMethodParameter->getType() !== (string)$parentInterfaceMethodParameter->getType() ||
-                $birdgeInterfaceMethodParameter->isDefaultValueAvailable() !== $parentInterfaceMethodParameter->isDefaultValueAvailable()
+                (string)$bridgeInterfaceMethodParameter->getType() !== (string)$parentInterfaceMethodParameter->getType() ||
+                $bridgeInterfaceMethodParameter->isDefaultValueAvailable() !== $parentInterfaceMethodParameter->isDefaultValueAvailable()
             ) {
                 $errors[] = sprintf(
                     'Got `%s` but expected to be `%s`.',
-                    trim((string)$birdgeInterfaceMethodParameter->getType() . ' $' . (string)$birdgeInterfaceMethodParameter->getName()),
-                    trim((string)$parentInterfaceMethodParameter->getType() . ' $' . (string)$parentInterfaceMethodParameter->getName()),
+                    trim($bridgeInterfaceMethodParameter->getType() . ' $' . $bridgeInterfaceMethodParameter->getName()),
+                    trim($parentInterfaceMethodParameter->getType() . ' $' . $parentInterfaceMethodParameter->getName()),
                 );
             }
         }
@@ -247,18 +268,18 @@ class BridgeMethodsInterfaceRule extends SprykerAbstractRule implements ClassAwa
     }
 
     /**
-     * @param \ReflectionMethod $reflactionMethod
+     * @param \ReflectionMethod $reflectionMethod
      *
      * @return string|null
      */
-    protected function getReflectionReturnType(ReflectionMethod $reflactionMethod): ?string
+    protected function getReflectionReturnType(ReflectionMethod $reflectionMethod): ?string
     {
-        $returnType = $reflactionMethod->getReturnType();
+        $returnType = $reflectionMethod->getReturnType();
         if (!$returnType) {
             return null;
         }
 
-        return ($returnType->allowsNull() ? '?' : '') . (string)$returnType;
+        return ($returnType->allowsNull() ? '?' : '') . $returnType;
     }
 
     /**
@@ -278,7 +299,7 @@ class BridgeMethodsInterfaceRule extends SprykerAbstractRule implements ClassAwa
                 ->getMethod($interfaceMethod->getName())
                 ->getReturnType();
 
-            return ($returnType->allowsNull() ? '?' : '') . (string)$returnType;
+            return ($returnType->allowsNull() ? '?' : '') . $returnType;
         }
 
         return null;

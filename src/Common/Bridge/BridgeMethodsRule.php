@@ -7,15 +7,21 @@
 
 namespace ArchitectureSniffer\Common\Bridge;
 
+use ArchitectureSniffer\Common\PhpDocTrait;
+use ArchitectureSniffer\Common\PhpTypesTrait;
 use ArchitectureSniffer\SprykerAbstractRule;
 use PHPMD\AbstractNode;
 use PHPMD\Node\ClassNode;
 use PHPMD\Node\InterfaceNode;
 use PHPMD\Node\MethodNode;
 use PHPMD\Rule\ClassAware;
+use ReflectionMethod;
 
 class BridgeMethodsRule extends SprykerAbstractRule implements ClassAware
 {
+    use PhpDocTrait;
+    use PhpTypesTrait;
+
     /**
      * @var string
      */
@@ -36,9 +42,13 @@ class BridgeMethodsRule extends SprykerAbstractRule implements ClassAware
      */
     public function apply(AbstractNode $node)
     {
+        $pregMatch = preg_match('([A-Za-z0-9]+Bridge$)', $node->getName());
+
+        $pregMatch1 = preg_match('#.*\\\\Dependency(\\\\.*)?#', $node->getNamespaceName());
+
         if (
-            preg_match('([A-Za-z0-9]+Bridge$)', $node->getName()) === 0 ||
-            preg_match('#.*\\\\Dependency\\\\.*#', $node->getNamespaceName()) === 0 ||
+            $pregMatch === 0 ||
+            $pregMatch1 === 0 ||
             !$node instanceof ClassNode
         ) {
             return;
@@ -84,6 +94,8 @@ class BridgeMethodsRule extends SprykerAbstractRule implements ClassAware
 
             $this->addViolation($node, [$message]);
         }
+
+        $this->verifyParamsStrictness($classMethods);
     }
 
     /**
@@ -119,6 +131,41 @@ class BridgeMethodsRule extends SprykerAbstractRule implements ClassAware
         }
 
         return $notMatchingMethods;
+    }
+
+    /**
+     * @param array<\PHPMD\Node\MethodNode> $classMethods
+     *
+     * @return void
+     */
+    protected function verifyParamsStrictness(array $classMethods): void
+    {
+        foreach ($classMethods as $classMethod) {
+            if ($classMethod->getName() === '__construct') {
+                continue;
+            }
+
+            $reflectionMethod = new ReflectionMethod(explode('::', $classMethod->getFullQualifiedName())[0], $classMethod->getName());
+
+            foreach ($reflectionMethod->getParameters() as $parameter) {
+                if ($parameter->hasType()) {
+                    continue;
+                }
+
+                $paramTypeByPhpDoc = $this->getParamTypeByPhpDoc($classMethod->getNode()->getComment(), $parameter->getName());
+
+                if ($paramTypeByPhpDoc !== null && !$this->isTypeInPhp7NotAllowed($paramTypeByPhpDoc)) {
+                    $this->addViolation(
+                        $classMethod,
+                        [sprintf(
+                            'Type hint should be defined for param `%s` in method `%s`.',
+                            $parameter->getName(),
+                            $classMethod->getFullQualifiedName(),
+                        )],
+                    );
+                }
+            }
+        }
     }
 
     /**

@@ -31,4 +31,14 @@ class BridgeMethodsTest extends AbstractArchitectureSnifferRuleTest
         $bridgeMethodsRule->setReport($this->getReportMock(1));
         $bridgeMethodsRule->apply($this->getClassNode());
     }
+
+    /**
+     * @return void
+     */
+    public function testRuleAppliesWhenBridgeMethodsParamsShouldHaveTypeHint(): void
+    {
+        $bridgeMethodsRule = new BridgeMethodsRule();
+        $bridgeMethodsRule->setReport($this->getReportMock(1));
+        $bridgeMethodsRule->apply($this->getClassNode());
+    }
 }

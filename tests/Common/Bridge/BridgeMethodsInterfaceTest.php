@@ -25,10 +25,30 @@ class BridgeMethodsInterfaceTest extends AbstractArchitectureSnifferRuleTest
     /**
      * @return void
      */
+    public function testRuleDoesNotApplyWhenReturnTypeIsNotSupportedInPhp7(): void
+    {
+        $bridgeMethodsInterfaceRule = new BridgeMethodsInterfaceRule();
+        $bridgeMethodsInterfaceRule->setReport($this->getReportMock(0));
+        $bridgeMethodsInterfaceRule->apply($this->getClassNode());
+    }
+
+    /**
+     * @return void
+     */
     public function testRuleAppliesWhenBridgeInterfaceMethodsAreNotCorrect(): void
     {
         $bridgeMethodsInterfaceRule = new BridgeMethodsInterfaceRule();
         $bridgeMethodsInterfaceRule->setReport($this->getReportMock(4));
+        $bridgeMethodsInterfaceRule->apply($this->getClassNode());
+    }
+
+    /**
+     * @return void
+     */
+    public function testRuleAppliesWhenReturnTypeIsAbsent(): void
+    {
+        $bridgeMethodsInterfaceRule = new BridgeMethodsInterfaceRule();
+        $bridgeMethodsInterfaceRule->setReport($this->getReportMock(2));
         $bridgeMethodsInterfaceRule->apply($this->getClassNode());
     }
 }

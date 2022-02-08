@@ -8,6 +8,7 @@
 namespace ArchitectureSniffer\Common\Method;
 
 use ArchitectureSniffer\Common\DeprecationTrait;
+use ArchitectureSniffer\Common\PhpDocTrait;
 use PDepend\Source\AST\ASTCallable;
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
@@ -18,21 +19,7 @@ use PHPMD\Rule\ClassAware;
 class GetterReturnTypeRule extends AbstractRule implements ClassAware
 {
     use DeprecationTrait;
-
-    /**
-     * @var string
-     */
-    protected const PATTER_RETURN = '/@return\s+([^\s]+)/';
-
-    /**
-     * @var string
-     */
-    protected const PATTERN_INHERIT_DOC = '/@inheritDoc/i';
-
-    /**
-     * @var string
-     */
-    protected const PATTERN_API_DOC = '/@api/i';
+    use PhpDocTrait;
 
     /**
      * @var string
@@ -84,7 +71,7 @@ class GetterReturnTypeRule extends AbstractRule implements ClassAware
 
         if (
             strpos($methodName, static::PREFIX_METHOD_NAME) !== 0
-            || !$this->apiTagExists($methodNode)
+            || !$this->apiTagExists($methodNode->getNode()->getComment())
             || $this->isMethodDeprecated($methodNode)
             || strpos($methodName, static::EXCEPTIONAL_POSTFIX_STATUS) === strlen($methodName) - strlen(static::EXCEPTIONAL_POSTFIX_STATUS)
         ) {
@@ -94,7 +81,7 @@ class GetterReturnTypeRule extends AbstractRule implements ClassAware
         $returnType = $this->getReturnType($methodNode);
 
         if (
-            $returnType === null && !$this->inheritDocTagExists($methodNode)
+            $returnType === null && !$this->inheritDocTagExists($methodNode->getNode()->getComment())
             || $returnType === 'void'
         ) {
             $this->addMethodMustReturnViolation($methodNode);
@@ -105,38 +92,6 @@ class GetterReturnTypeRule extends AbstractRule implements ClassAware
         if ($returnType === 'bool') {
             $this->addMethodReturnBoolViolation($methodNode);
         }
-    }
-
-    /**
-     * @param \PHPMD\Node\MethodNode $methodNode
-     *
-     * @return bool
-     */
-    protected function inheritDocTagExists(MethodNode $methodNode): bool
-    {
-        $comment = $methodNode->getNode()->getComment();
-
-        if ($comment === null) {
-            return false;
-        }
-
-        return (bool)preg_match(static::PATTERN_INHERIT_DOC, $comment);
-    }
-
-    /**
-     * @param \PHPMD\Node\MethodNode $methodNode
-     *
-     * @return bool
-     */
-    protected function apiTagExists(MethodNode $methodNode): bool
-    {
-        $comment = $methodNode->getNode()->getComment();
-
-        if ($comment === null) {
-            return false;
-        }
-
-        return (bool)preg_match(static::PATTERN_API_DOC, $comment);
     }
 
     /**
@@ -166,20 +121,6 @@ class GetterReturnTypeRule extends AbstractRule implements ClassAware
         }
 
         return $this->getReturnTypeByPhpDoc($phpDoc);
-    }
-
-    /**
-     * @param string $phpDoc
-     *
-     * @return string|null
-     */
-    protected function getReturnTypeByPhpDoc(string $phpDoc): ?string
-    {
-        $matches = [];
-
-        preg_match_all(static::PATTER_RETURN, $phpDoc, $matches);
-
-        return $matches[1][0] ?? null;
     }
 
     /**

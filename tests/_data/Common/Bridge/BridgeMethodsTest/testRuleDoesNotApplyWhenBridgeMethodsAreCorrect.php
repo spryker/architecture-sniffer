@@ -21,6 +21,10 @@ class SessionToCacheClientBridge implements SessionToCacheClientInterface
     public function save(string $key, DataObject $data, string $prefix = null)
     {
     }
+
+    protected function someProtectedFunction()
+    {
+    }
 }
 
 interface SessionToCacheClientInterface

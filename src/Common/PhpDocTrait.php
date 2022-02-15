@@ -54,23 +54,4 @@ trait PhpDocTrait
 
         return stripos($phpDoc, '@api') !== false;
     }
-
-    /**
-     * @param string|null $phpDoc
-     * @param string $paramName
-     *
-     * @return string|null
-     */
-    protected function getParamTypeByPhpDoc(?string $phpDoc, string $paramName): ?string
-    {
-        if ($phpDoc === null) {
-            return null;
-        }
-
-        $matches = [];
-
-        preg_match_all(sprintf('/@param ([^\s]+) \$%s/', $paramName), $phpDoc, $matches);
-
-        return $matches[1][0] ?? null;
-    }
 }

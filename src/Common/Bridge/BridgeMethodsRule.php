@@ -15,7 +15,6 @@ use PHPMD\Node\ClassNode;
 use PHPMD\Node\InterfaceNode;
 use PHPMD\Node\MethodNode;
 use PHPMD\Rule\ClassAware;
-use ReflectionMethod;
 
 class BridgeMethodsRule extends SprykerAbstractRule implements ClassAware
 {
@@ -90,8 +89,6 @@ class BridgeMethodsRule extends SprykerAbstractRule implements ClassAware
 
             $this->addViolation($node, [$message]);
         }
-
-        $this->verifyParamsStrictness($classMethods);
     }
 
     /**
@@ -127,41 +124,6 @@ class BridgeMethodsRule extends SprykerAbstractRule implements ClassAware
         }
 
         return $notMatchingMethods;
-    }
-
-    /**
-     * @param array<\PHPMD\Node\MethodNode> $classMethods
-     *
-     * @return void
-     */
-    protected function verifyParamsStrictness(array $classMethods): void
-    {
-        foreach ($classMethods as $classMethod) {
-            if ($classMethod->getName() === '__construct') {
-                continue;
-            }
-
-            $reflectionMethod = new ReflectionMethod(explode('::', $classMethod->getFullQualifiedName())[0], $classMethod->getName());
-
-            foreach ($reflectionMethod->getParameters() as $parameter) {
-                if ($parameter->hasType()) {
-                    continue;
-                }
-
-                $paramTypeByPhpDoc = $this->getParamTypeByPhpDoc($classMethod->getNode()->getComment(), $parameter->getName());
-
-                if ($paramTypeByPhpDoc !== null && !$this->isTypeInPhp7NotAllowed($paramTypeByPhpDoc)) {
-                    $this->addViolation(
-                        $classMethod,
-                        [sprintf(
-                            'Type should be defined for param `%s` in method `%s`.',
-                            $parameter->getName(),
-                            $classMethod->getFullQualifiedName(),
-                        )],
-                    );
-                }
-            }
-        }
     }
 
     /**

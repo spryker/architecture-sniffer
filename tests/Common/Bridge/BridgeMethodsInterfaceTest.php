@@ -8,7 +8,6 @@
 namespace ArchitectureSnifferTest\Common\Bridge;
 
 use ArchitectureSniffer\Common\Bridge\BridgeMethodsInterfaceRule;
-use ArchitectureSniffer\Common\Bridge\BridgeMethodsRule;
 use ArchitectureSnifferTest\AbstractArchitectureSnifferRuleTest;
 
 class BridgeMethodsInterfaceTest extends AbstractArchitectureSnifferRuleTest

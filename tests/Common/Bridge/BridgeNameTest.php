@@ -7,7 +7,6 @@
 
 namespace ArchitectureSnifferTest\Common\Bridge;
 
-use ArchitectureSniffer\Common\Bridge\BridgeMethodsRule;
 use ArchitectureSniffer\Common\Bridge\BridgeNameRule;
 use ArchitectureSnifferTest\AbstractArchitectureSnifferRuleTest;
 

@@ -43,4 +43,12 @@ class ModuleConstantsTest extends AbstractArchitectureSnifferRuleTest
         $moduleConstantsFormingConstantValuesRule->setReport($this->getReportMock(0));
         $moduleConstantsFormingConstantValuesRule->apply($this->getInterfaceNode());
     }
+
+    /**
+     * @return void
+     */
+    public function testGetDescriptionReturnsString(): void
+    {
+        $this->assertIsString((new ModuleConstantsFormingConstantValuesRule())->getDescription());
+    }
 }

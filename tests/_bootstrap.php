@@ -8,7 +8,6 @@ require_once '_data/Common/Plugin/NewPluginExtensionModuleTest/testRuleDoesNotAp
 require_once '_data/Common/Plugin/NewPluginExtensionModuleTest/testRuleAppliesWhenPluginImplementsNotExtensionModuleInterface.php';
 require_once '_data/Common/Bridge/BridgeMethodsTest/testRuleAppliesWhenBridgeMethodsAreNotCorrect.php';
 require_once '_data/Common/Bridge/BridgeMethodsTest/testRuleDoesNotApplyWhenBridgeMethodsAreCorrect.php';
-require_once '_data/Common/Bridge/BridgeMethodsTest/testRuleAppliesWhenBridgeMethodsParamsShouldHaveTypeHint.php';
 require_once '_data/Common/Bridge/BridgeMethodsInterfaceTest/testRuleAppliesWhenReturnTypeIsAbsent.php';
 require_once '_data/Common/Bridge/BridgeMethodsInterfaceTest/testRuleDoesNotApplyWhenReturnTypeIsNotSupportedInPhp7.php';
 require_once '_data/Common/Bridge/BridgeMethodsInterfaceTest/testRuleAppliesWhenBridgeInterfaceMethodsAreNotCorrect.php';

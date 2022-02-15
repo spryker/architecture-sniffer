@@ -7,6 +7,7 @@
 
 namespace ArchitectureSnifferTest\Common\Bridge;
 
+use ArchitectureSniffer\Common\Bridge\BridgeMethodsRule;
 use ArchitectureSniffer\Common\Bridge\BridgePathRule;
 use ArchitectureSnifferTest\AbstractArchitectureSnifferRuleTest;
 
@@ -30,5 +31,13 @@ class BridgePathTest extends AbstractArchitectureSnifferRuleTest
         $bridgePathRule = new BridgePathRule();
         $bridgePathRule->setReport($this->getReportMock(2));
         $bridgePathRule->apply($this->getClassNode());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetDescriptionReturnsString(): void
+    {
+        $this->assertIsString((new BridgePathRule())->getDescription());
     }
 }

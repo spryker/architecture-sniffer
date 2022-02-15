@@ -8,6 +8,7 @@
 namespace ArchitectureSnifferTest\Common\Bridge;
 
 use ArchitectureSniffer\Common\Bridge\BridgeMethodsInterfaceRule;
+use ArchitectureSniffer\Common\Bridge\BridgeMethodsRule;
 use ArchitectureSnifferTest\AbstractArchitectureSnifferRuleTest;
 
 class BridgeMethodsInterfaceTest extends AbstractArchitectureSnifferRuleTest
@@ -50,5 +51,13 @@ class BridgeMethodsInterfaceTest extends AbstractArchitectureSnifferRuleTest
         $bridgeMethodsInterfaceRule = new BridgeMethodsInterfaceRule();
         $bridgeMethodsInterfaceRule->setReport($this->getReportMock(2));
         $bridgeMethodsInterfaceRule->apply($this->getClassNode());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetDescriptionReturnsString(): void
+    {
+        $this->assertIsString((new BridgeMethodsInterfaceRule())->getDescription());
     }
 }

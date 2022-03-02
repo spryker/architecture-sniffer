@@ -45,7 +45,27 @@ class FactoryCreateContainOneNewRuleTest extends AbstractArchitectureSnifferRule
     /**
      * @return void
      */
+    public function testRuleDoesNotApplyWhenMethodNameContainsCollectorQuery(): void
+    {
+        $pluginSuffixRule = new FactoryCreateContainOneNewRule();
+        $pluginSuffixRule->setReport($this->getReportMock(0));
+        $pluginSuffixRule->apply($this->getMethodNode());
+    }
+
+    /**
+     * @return void
+     */
     public function testRuleAppliesWhenCreateDoesNotContainNewStatement(): void
+    {
+        $pluginSuffixRule = new FactoryCreateContainOneNewRule();
+        $pluginSuffixRule->setReport($this->getReportMock(1));
+        $pluginSuffixRule->apply($this->getMethodNode());
+    }
+
+    /**
+     * @return void
+     */
+    public function testRuleAppliesWhenMethodNameContainsCollectorQueryButWithoutNewStatement(): void
     {
         $pluginSuffixRule = new FactoryCreateContainOneNewRule();
         $pluginSuffixRule->setReport($this->getReportMock(1));

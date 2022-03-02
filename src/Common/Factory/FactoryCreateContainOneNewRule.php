@@ -77,7 +77,7 @@ class FactoryCreateContainOneNewRule extends AbstractFactoryRule implements Meth
             return;
         }
 
-        $isQueryCreationMethod = $this->isMethodNameEndsWithQuery($method->getName());
+        $isQueryCreationMethod = $this->isCreationPropelQueryMethod($method->getName());
 
         $count = count($method->findChildrenOfType('AllocationExpression'));
 
@@ -234,8 +234,29 @@ class FactoryCreateContainOneNewRule extends AbstractFactoryRule implements Meth
      *
      * @return bool
      */
+    protected function isCreationPropelQueryMethod(string $methodName): bool
+    {
+        return $this->isMethodNameEndsWithQuery($methodName)
+            && !$this->isMethodNameContainsCollector($methodName);
+    }
+
+    /**
+     * @param string $methodName
+     *
+     * @return bool
+     */
     protected function isMethodNameEndsWithQuery(string $methodName): bool
     {
         return substr($methodName, -5) === 'Query';
+    }
+
+    /**
+     * @param string $methodName
+     *
+     * @return bool
+     */
+    protected function isMethodNameContainsCollector(string $methodName): bool
+    {
+        return stripos($methodName, 'Collector') !== false;
     }
 }

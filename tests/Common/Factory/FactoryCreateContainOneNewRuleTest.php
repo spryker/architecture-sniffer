@@ -71,4 +71,12 @@ class FactoryCreateContainOneNewRuleTest extends AbstractArchitectureSnifferRule
         $pluginSuffixRule->setReport($this->getReportMock(1));
         $pluginSuffixRule->apply($this->getMethodNode());
     }
+
+    /**
+     * @return void
+     */
+    public function testGetDescription(): void
+    {
+        $this->assertIsString((new FactoryCreateContainOneNewRule())->getDescription());
+    }
 }

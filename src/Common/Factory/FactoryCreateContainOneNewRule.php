@@ -7,6 +7,7 @@
 
 namespace ArchitectureSniffer\Common\Factory;
 
+use ArchitectureSniffer\Common\PhpDocTrait;
 use PDepend\Source\AST\ASTClassOrInterfaceReference;
 use PDepend\Source\AST\ASTMethodPostfix;
 use PDepend\Source\AST\ASTParentReference;
@@ -20,10 +21,19 @@ use PHPMD\Rule\MethodAware;
  */
 class FactoryCreateContainOneNewRule extends AbstractFactoryRule implements MethodAware
 {
+    use PhpDocTrait;
+
     /**
      * @var string
      */
-    public const RULE = 'A `create*()` method in factories must contain exactly 1 `new` statement for instantiation.';
+    protected const RULE = 'A `create*()` method in factories must contain exactly 1 `new` statement for instantiation.';
+
+    /**
+     * @see Package `propel/propel`.
+     *
+     * @var string
+     */
+    protected const CLASS_BASE_QUERY = '\Propel\Runtime\ActiveQuery\ModelCriteria';
 
     /**
      * @return string
@@ -77,7 +87,7 @@ class FactoryCreateContainOneNewRule extends AbstractFactoryRule implements Meth
             return;
         }
 
-        $isQueryCreationMethod = $this->isCreationPropelQueryMethod($method->getName());
+        $isQueryCreationMethod = $this->isCreationPropelQueryMethod($method);
 
         $count = count($method->findChildrenOfType('AllocationExpression'));
 
@@ -230,14 +240,14 @@ class FactoryCreateContainOneNewRule extends AbstractFactoryRule implements Meth
     }
 
     /**
-     * @param string $methodName
+     * @param \PHPMD\Node\MethodNode $methodNode
      *
      * @return bool
      */
-    protected function isCreationPropelQueryMethod(string $methodName): bool
+    protected function isCreationPropelQueryMethod(MethodNode $methodNode): bool
     {
-        return $this->isMethodNameEndsWithQuery($methodName)
-            && !$this->isMethodNameContainsCollector($methodName);
+        return $this->isMethodNameEndsWithQuery($methodNode->getName())
+            && $this->isMethodReturnsSpyQuery($methodNode);
     }
 
     /**
@@ -251,12 +261,18 @@ class FactoryCreateContainOneNewRule extends AbstractFactoryRule implements Meth
     }
 
     /**
-     * @param string $methodName
+     * @param \PHPMD\Node\MethodNode $methodNode
      *
      * @return bool
      */
-    protected function isMethodNameContainsCollector(string $methodName): bool
+    protected function isMethodReturnsSpyQuery(MethodNode $methodNode): bool
     {
-        return stripos($methodName, 'Collector') !== false;
+        $returnType = $this->getReturnTypeByPhpDoc($methodNode->getNode()->getComment());
+
+        if (!$returnType) {
+            return false;
+        }
+
+        return is_a($returnType, static::CLASS_BASE_QUERY, true);
     }
 }

@@ -269,7 +269,7 @@ class FactoryCreateContainOneNewRule extends AbstractFactoryRule implements Meth
     {
         $returnType = $this->getReturnTypeByPhpDoc($methodNode->getNode()->getComment());
 
-        if (!$returnType) {
+        if (!$returnType || !class_exists($returnType)) {
             return false;
         }
 

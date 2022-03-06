@@ -273,6 +273,28 @@ class FactoryCreateContainOneNewRule extends AbstractFactoryRule implements Meth
             return false;
         }
 
-        return is_a($returnType, static::CLASS_BASE_QUERY, true);
+        return $this->isBaseQuery($returnType);
+    }
+
+    /**
+     * @param string $className
+     *
+     * @return bool
+     */
+    public function isBaseQuery(string $className): bool
+    {
+        if ($className === static::CLASS_BASE_QUERY) {
+            return true;
+        }
+
+        $reflectionClass = new \ReflectionClass($className);
+
+        $parentClass = $reflectionClass->getParentClass();
+
+        if ($parentClass === false) {
+            return false;
+        }
+
+        return $this->isBaseQuery($parentClass);
     }
 }

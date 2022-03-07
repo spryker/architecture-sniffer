@@ -30,9 +30,12 @@ class ExternalMethodExtensionReturnTypeRule extends AbstractRule implements Clas
      */
     public function apply(AbstractNode $node): void
     {
+        $a = 0;
+
         if (
             !$node instanceof ClassNode
             || $this->isClassDeprecated($node)
+            || !class_exists($node->getFullQualifiedName())
         ) {
             return;
         }
@@ -42,7 +45,7 @@ class ExternalMethodExtensionReturnTypeRule extends AbstractRule implements Clas
                 continue;
             }
 
-            $className = explode('::', $methodNode->getFullQualifiedName())[0];
+            $className = $node->getFullQualifiedName();
 
             $reflectionMethod = new ReflectionMethod(
                 $className,

@@ -7,12 +7,12 @@
 
 namespace Spryker\Zed\Module\Business\TestRuleAppliesWhenCreateContainsWrongWayOfQueryCreation;
 
-use Propel\Runtime\ActiveQuery\SpySomethingQuery;
+use Orm\Zed\Something\Persistence\SpySomethingQuery;
 
 class WrongWayPropelQueryBusinessFactory
 {
     /**
-     * @return \Propel\Runtime\ActiveQuery\SpySomethingQuery
+     * @return \Orm\Zed\Something\Persistence\SpySomethingQuery
      */
     public function createWrongWayPropelQuery()
     {
@@ -20,12 +20,8 @@ class WrongWayPropelQueryBusinessFactory
     }
 }
 
-namespace Propel\Runtime\ActiveQuery;
+namespace Orm\Zed\Something\Persistence;
 
-class ModelCriteria
-{
-}
-
-class SpySomethingQuery extends ModelCriteria
+class SpySomethingQuery
 {
 }

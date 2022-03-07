@@ -273,7 +273,7 @@ class FactoryCreateContainOneNewRule extends AbstractFactoryRule implements Meth
             return false;
         }
 
-        return $this->isBaseQuery($returnType);
+        return $this->isOrmClass($returnType);
     }
 
     /**
@@ -281,18 +281,8 @@ class FactoryCreateContainOneNewRule extends AbstractFactoryRule implements Meth
      *
      * @return bool
      */
-    public function isBaseQuery(string $className): bool
+    public function isOrmClass(string $className): bool
     {
-        if ($className === static::CLASS_BASE_QUERY) {
-            return true;
-        }
-
-        $parentClass = get_parent_class($className);
-
-        if ($parentClass === false) {
-            return false;
-        }
-
-        return $this->isBaseQuery($parentClass);
+        return strpos($className, '\Orm') === 0;
     }
 }

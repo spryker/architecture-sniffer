@@ -29,13 +29,6 @@ class FactoryCreateContainOneNewRule extends AbstractFactoryRule implements Meth
     protected const RULE = 'A `create*()` method in factories must contain exactly 1 `new` statement for instantiation.';
 
     /**
-     * @see Package `propel/propel`.
-     *
-     * @var string
-     */
-    protected const CLASS_BASE_QUERY = 'Propel\Runtime\ActiveQuery\ModelCriteria';
-
-    /**
      * @return string
      */
     public function getDescription()
@@ -269,7 +262,7 @@ class FactoryCreateContainOneNewRule extends AbstractFactoryRule implements Meth
     {
         $returnType = $this->getReturnTypeByPhpDoc($methodNode->getNode()->getComment());
 
-        if (!$returnType || !class_exists($returnType)) {
+        if (!$returnType) {
             return false;
         }
 

@@ -33,7 +33,7 @@ class FactoryCreateContainOneNewRule extends AbstractFactoryRule implements Meth
      *
      * @var string
      */
-    protected const CLASS_BASE_QUERY = '\Propel\Runtime\ActiveQuery\ModelCriteria';
+    protected const CLASS_BASE_QUERY = 'Propel\Runtime\ActiveQuery\ModelCriteria';
 
     /**
      * @return string

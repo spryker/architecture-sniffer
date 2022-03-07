@@ -42,6 +42,14 @@
         <priority>1</priority>
     </rule>
 
+    <rule
+            name="ExternalMethodExtensionReturnTypeRule"
+            message="{0}"
+            class="ArchitectureSniffer\Common\Method\ExternalMethodExtensionReturnTypeRule">
+
+        <priority>1</priority>
+    </rule>
+
     <!-- COMMON FACTORY RULES -->
     <rule
             name="FactoryGetContainNoNewRule"

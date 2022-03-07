@@ -15,7 +15,6 @@ use PDepend\Source\AST\ASTSelfReference;
 use PHPMD\AbstractNode;
 use PHPMD\Node\MethodNode;
 use PHPMD\Rule\MethodAware;
-use ReflectionClass;
 
 /**
  * Every Factory method named create* should only have a single "new ..." instantiation.
@@ -288,9 +287,7 @@ class FactoryCreateContainOneNewRule extends AbstractFactoryRule implements Meth
             return true;
         }
 
-        $reflectionClass = new ReflectionClass($className);
-
-        $parentClass = $reflectionClass->getParentClass();
+        $parentClass = get_parent_class($className);
 
         if ($parentClass === false) {
             return false;

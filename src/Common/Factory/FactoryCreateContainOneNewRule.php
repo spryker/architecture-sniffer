@@ -26,6 +26,11 @@ class FactoryCreateContainOneNewRule extends AbstractFactoryRule implements Meth
     /**
      * @var string
      */
+    protected const PATTERN_QUERY_CLASS_NAME = '#Orm\\\\Zed\\\\[A-Za-z]+\\\\Persistence\\\\Spy[A-Za-z]+Query#';
+
+    /**
+     * @var string
+     */
     protected const RULE = 'A `create*()` method in factories must contain exactly 1 `new` statement for instantiation.';
 
     /**
@@ -266,7 +271,7 @@ class FactoryCreateContainOneNewRule extends AbstractFactoryRule implements Meth
             return false;
         }
 
-        return $this->isOrmClass($returnType);
+        return $this->isQueryClass($returnType);
     }
 
     /**
@@ -274,8 +279,8 @@ class FactoryCreateContainOneNewRule extends AbstractFactoryRule implements Meth
      *
      * @return bool
      */
-    public function isOrmClass(string $className): bool
+    public function isQueryClass(string $className): bool
     {
-        return strpos($className, '\Orm') === 0;
+        return preg_match(static::PATTERN_QUERY_CLASS_NAME, $className);
     }
 }

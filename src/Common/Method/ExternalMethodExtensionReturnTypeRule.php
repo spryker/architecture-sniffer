@@ -30,8 +30,6 @@ class ExternalMethodExtensionReturnTypeRule extends AbstractRule implements Clas
      */
     public function apply(AbstractNode $node): void
     {
-        $a = 0;
-
         if (
             !$node instanceof ClassNode
             || $this->isClassDeprecated($node)
@@ -76,7 +74,7 @@ class ExternalMethodExtensionReturnTypeRule extends AbstractRule implements Clas
             }
 
             $message = sprintf(
-                'Method %s must have return type.',
+                'Method `%s` must have return type.',
                 $methodNode->getFullQualifiedName(),
             );
 

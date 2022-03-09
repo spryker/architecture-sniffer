@@ -166,6 +166,13 @@
         <priority>2</priority>
     </rule>
     <rule
+        name="BridgeFacadeMethodsRule"
+        message="Bridges: {0}"
+        class="ArchitectureSniffer\Common\Bridge\BridgeFacadeMethodsRule">
+
+        <priority>2</priority>
+    </rule>
+    <rule
         name="BridgeMethodsInterfaceRule"
         message="Bridges: {0}"
         class="ArchitectureSniffer\Common\Bridge\BridgeMethodsInterfaceRule">

@@ -7,6 +7,7 @@
 
 namespace ArchitectureSniffer\Common\Factory;
 
+use ArchitectureSniffer\Common\PhpDocTrait;
 use PDepend\Source\AST\ASTClassOrInterfaceReference;
 use PDepend\Source\AST\ASTMethodPostfix;
 use PDepend\Source\AST\ASTParentReference;
@@ -20,10 +21,17 @@ use PHPMD\Rule\MethodAware;
  */
 class FactoryCreateContainOneNewRule extends AbstractFactoryRule implements MethodAware
 {
+    use PhpDocTrait;
+
     /**
      * @var string
      */
-    public const RULE = 'A `create*()` method in factories must contain exactly 1 `new` statement for instantiation.';
+    protected const PATTERN_QUERY_CLASS_NAME = '#Orm\\\\Zed\\\\[A-Za-z]+\\\\Persistence\\\\[A-Za-z]+Query#';
+
+    /**
+     * @var string
+     */
+    protected const RULE = 'A `create*()` method in factories must contain exactly 1 `new` statement for instantiation.';
 
     /**
      * @return string
@@ -56,20 +64,43 @@ class FactoryCreateContainOneNewRule extends AbstractFactoryRule implements Meth
      *
      * @return void
      */
+    protected function addCreationPropelQueryViolation(MethodNode $method): void
+    {
+        $message = sprintf(
+            'A `create*Query()` method must look like `return Spy*Query::create();`. `%s` violates this rule.',
+            $method->getFullQualifiedName(),
+        );
+
+        $this->addViolation($method, [$message]);
+    }
+
+    /**
+     * @param \PHPMD\Node\MethodNode $method
+     *
+     * @return void
+     */
     protected function applyRule(MethodNode $method)
     {
-        if (substr($method->getName(), 0, 6) !== 'create') {
+        if (!$this->isMethodNameStartsWithCreate($method->getName())) {
             return;
         }
 
+        $isQueryCreationMethod = $this->isCreationPropelQueryMethod($method);
+
         $count = count($method->findChildrenOfType('AllocationExpression'));
+
         if ($count === 1) {
+            if ($isQueryCreationMethod) {
+                $this->addCreationPropelQueryViolation($method);
+            }
+
             return;
         }
 
         if ($this->isParentCall($method)) {
             return;
         }
+
         if ($this->isIndirectFactoryMethod($method)) {
             return;
         }
@@ -81,6 +112,12 @@ class FactoryCreateContainOneNewRule extends AbstractFactoryRule implements Meth
 
         $methodName = $method->getParentName() . '::' . $method->getName() . '()';
         $className = $method->getFullQualifiedName();
+
+        if ($isQueryCreationMethod) {
+            $this->addCreationPropelQueryViolation($method);
+
+            return;
+        }
 
         $message = sprintf(
             '`%s` in `%s` contains %s new statements which violates rule "%s"',
@@ -198,5 +235,52 @@ class FactoryCreateContainOneNewRule extends AbstractFactoryRule implements Meth
     protected function isMethodNameStartsWithCreate(string $methodName): bool
     {
         return substr($methodName, 0, 6) === 'create';
+    }
+
+    /**
+     * @param \PHPMD\Node\MethodNode $methodNode
+     *
+     * @return bool
+     */
+    protected function isCreationPropelQueryMethod(MethodNode $methodNode): bool
+    {
+        return $this->isMethodNameEndsWithQuery($methodNode->getName())
+            && $this->isMethodReturnsSpyQuery($methodNode);
+    }
+
+    /**
+     * @param string $methodName
+     *
+     * @return bool
+     */
+    protected function isMethodNameEndsWithQuery(string $methodName): bool
+    {
+        return substr($methodName, -5) === 'Query';
+    }
+
+    /**
+     * @param \PHPMD\Node\MethodNode $methodNode
+     *
+     * @return bool
+     */
+    protected function isMethodReturnsSpyQuery(MethodNode $methodNode): bool
+    {
+        $returnType = $this->getReturnTypeByPhpDoc($methodNode->getNode()->getComment());
+
+        if (!$returnType) {
+            return false;
+        }
+
+        return $this->isQueryClass($returnType);
+    }
+
+    /**
+     * @param string $className
+     *
+     * @return bool
+     */
+    protected function isQueryClass(string $className): bool
+    {
+        return preg_match(static::PATTERN_QUERY_CLASS_NAME, $className);
     }
 }

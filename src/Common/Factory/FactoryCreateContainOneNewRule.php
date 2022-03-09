@@ -26,7 +26,7 @@ class FactoryCreateContainOneNewRule extends AbstractFactoryRule implements Meth
     /**
      * @var string
      */
-    protected const PATTERN_QUERY_CLASS_NAME = '#Orm\\\\Zed\\\\[A-Za-z]+\\\\Persistence\\\\Spy[A-Za-z]+Query#';
+    protected const PATTERN_QUERY_CLASS_NAME = '#Orm\\\\Zed\\\\[A-Za-z]+\\\\Persistence\\\\[A-Za-z]+Query#';
 
     /**
      * @var string
@@ -279,7 +279,7 @@ class FactoryCreateContainOneNewRule extends AbstractFactoryRule implements Meth
      *
      * @return bool
      */
-    public function isQueryClass(string $className): bool
+    protected function isQueryClass(string $className): bool
     {
         return preg_match(static::PATTERN_QUERY_CLASS_NAME, $className);
     }

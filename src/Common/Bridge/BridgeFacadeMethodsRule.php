@@ -137,5 +137,7 @@ class BridgeFacadeMethodsRule extends SprykerAbstractRule implements ClassAware
                 return $this->getModuleName($matches['interfaceName']);
             }
         }
+
+        return '';
     }
 }

@@ -13,3 +13,4 @@ require_once '_data/Common/Bridge/BridgeMethodsInterfaceTest/testRuleAppliesWhen
 require_once '_data/Common/Bridge/BridgeMethodsInterfaceTest/testRuleDoesNotApplyWhenReturnTypeIsNotSupportedInPhp7.php';
 require_once '_data/Common/Bridge/BridgeMethodsInterfaceTest/testRuleAppliesWhenBridgeInterfaceMethodsAreNotCorrect.php';
 require_once '_data/Common/Bridge/BridgeMethodsInterfaceTest/testRuleDoesNotApplyWhenBridgeInterfaceMethodsAreCorrect.php';
+require_once '_data/Common/Factory/FactoryCreateContainOneNewRuleTest/testRuleAppliesWhenCreateContainsWrongWayOfQueryCreation.php';

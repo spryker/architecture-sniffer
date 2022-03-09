@@ -67,16 +67,14 @@ class BridgeFacadeMethodsRule extends SprykerAbstractRule implements ClassAware
      */
     protected function verifyDeleteMethod(MethodNode $method, ?ReflectionType $methodReturnType, string $dependencyModuleName): void
     {
-        $violations = [];
-
         $parameters = $method->getNode()->getParameters();
 
         if (preg_match('/^delete\w+Collection$/', $method->getName()) === 0) {
-            $violations[] = sprintf(
+            $this->addViolation($method, [sprintf(
                 'Method %s must have delete%sCollection name.',
                 $method->getName(),
                 $dependencyModuleName,
-            );
+            )]);
         }
 
         if (
@@ -84,26 +82,22 @@ class BridgeFacadeMethodsRule extends SprykerAbstractRule implements ClassAware
             !$parameters[0]->getClass() ||
             sprintf('%sCollectionDeleteCriteriaTransfer', $dependencyModuleName) !== $parameters[0]->getClass()->getName()
         ) {
-            $violations[] = sprintf(
+            $this->addViolation($method, [sprintf(
                 '`%s` method parameter must have only %sDeleteCriteriaTransfer parameter.',
                 $method->getName(),
                 $dependencyModuleName,
-            );
+            )]);
         }
 
         if (
             !$methodReturnType ||
             sprintf('%s\%sCollectionResponseTransfer', 'Generated\Shared\Transfer', $dependencyModuleName) !== $methodReturnType->getName()
         ) {
-            $violations[] = sprintf(
+            $this->addViolation($method, [sprintf(
                 'Return type for %s method must have %sCollectionResponseTransfer name.',
                 $method->getName(),
                 $dependencyModuleName,
-            );
-        }
-
-        if ($violations) {
-            $this->addViolation($method, $violations);
+            )]);
         }
     }
 

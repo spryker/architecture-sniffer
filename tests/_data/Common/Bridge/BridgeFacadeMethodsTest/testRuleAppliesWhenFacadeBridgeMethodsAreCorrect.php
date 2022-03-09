@@ -44,8 +44,6 @@ class TestCollectionResponseTransfer
 
 }
 
-namespace Generated\Shared\Transfer;
-
 class TestCollectionDeleteCriteriaTransfer
 {
 

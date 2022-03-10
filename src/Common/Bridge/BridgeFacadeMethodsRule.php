@@ -54,6 +54,14 @@ class BridgeFacadeMethodsRule extends SprykerAbstractRule implements ClassAware
 
             if (preg_match('/^(delete|remove)/', $method->getName())) {
                 $this->verifyDeleteMethod($method, $methodReturnType, $dependencyModuleName);
+
+                continue;
+            }
+
+            if (preg_match('/^(create|add|save)/', $method->getName())) {
+                $this->verifyCreateMethod($method, $methodReturnType, $dependencyModuleName);
+
+                continue;
             }
         }
     }
@@ -73,14 +81,46 @@ class BridgeFacadeMethodsRule extends SprykerAbstractRule implements ClassAware
             $method->getParameterCount() !== 1 ||
             !$parameters[0]->getClass() ||
             !$methodReturnType ||
-            preg_match('/^delete\w+Collection$/', $method->getName()) === 0 ||
-            preg_match('/^\w+CollectionDeleteCriteriaTransfer$/', $parameters[0]->getClass()->getName()) === 0 ||
-            preg_match('/^Generated\\\\Shared\\\\Transfer\\\\\w+CollectionResponseTransfer$/', $methodReturnType->getName()) === 0
+            preg_match('/^delete(?<domainEntity>\w+)Collection$/', $method->getName(), $methodNameMatches) === 0 ||
+            preg_match('/^(?<domainEntity>\w+)CollectionDeleteCriteriaTransfer$/', $parameters[0]->getClass()->getName(), $methodParameterMatches) === 0 ||
+            preg_match('/^Generated\\\\Shared\\\\Transfer\\\\(?<domainEntity>\w+)CollectionResponseTransfer$/', $methodReturnType->getName(), $methodReturnTypeMatches) === 0 ||
+            count(array_unique([$methodNameMatches['domainEntity'], $methodParameterMatches['domainEntity'], $methodReturnTypeMatches['domainEntity']])) !== 1
         ) {
             $this->addViolation($method, [sprintf(
-                'Method %s must have `public function delete<DomainEntity>Collection(<DomainEntity>CollectionDeleteCriteriaTransfer): <DomainEntity>CollectionResponseTransfer;` signature. https://spryker.atlassian.net/wiki/spaces/CORE/pages/478052552/Application+Namespace+Conventions#ApplicationNamespaceConventions-Facade',
+                'Method %s() must have `public function delete<DomainEntity>Collection(<DomainEntity>CollectionDeleteCriteriaTransfer): <DomainEntity>CollectionResponseTransfer;` signature.',
                 $method->getName()
             )]);
+
+            return;
+        }
+    }
+
+    /**
+     * @param \PHPMD\Node\MethodNode $method
+     * @param \ReflectionType|null $methodReturnType
+     * @param string $dependencyModuleName
+     *
+     * @return void
+     */
+    protected function verifyCreateMethod(MethodNode $method, ?ReflectionType $methodReturnType, string $dependencyModuleName): void
+    {
+        $parameters = $method->getNode()->getParameters();
+
+        if (
+            $method->getParameterCount() !== 1 ||
+            !$parameters[0]->getClass() ||
+            !$methodReturnType ||
+            preg_match('/^create(?<domainEntity>\w+)Collection$/', $method->getName(), $methodNameMatches) === 0 ||
+            preg_match('/^(?<domainEntity>\w+)CollectionRequestTransfer$/', $parameters[0]->getClass()->getName(), $methodParameterMatches) === 0 ||
+            preg_match('/^Generated\\\\Shared\\\\Transfer\\\\(?<domainEntity>\w+)CollectionResponseTransfer$/', $methodReturnType->getName(), $methodReturnTypeMatches) === 0 ||
+            count(array_unique([$methodNameMatches['domainEntity'], $methodParameterMatches['domainEntity'], $methodReturnTypeMatches['domainEntity']])) !== 1
+        ) {
+            $this->addViolation($method, [sprintf(
+                'Method %s() must have `public function create<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer;` signature.',
+                $method->getName()
+            )]);
+
+            return;
         }
     }
 

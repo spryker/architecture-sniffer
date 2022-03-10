@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\Session\Dependency\Facade;
 
 use Generated\Shared\Transfer\TestCollectionDeleteCriteriaTransfer;
+use Generated\Shared\Transfer\TestCollectionRequestTransfer;
 use Generated\Shared\Transfer\TestCollectionResponseTransfer;
 use Spryker\Zed\Test\Facade\SessionToTestFacadeInterface;
 
@@ -23,6 +24,10 @@ class SessionToTestFacadeBridge implements SessionToTestFacadeInterface
     public function deleteTestCollection(TestCollectionDeleteCriteriaTransfer $testCollectionDeleteCriteriaTransfer): TestCollectionResponseTransfer
     {
     }
+
+    public function createTestCollection(TestCollectionRequestTransfer $testCollectionRequestTransfer): TestCollectionResponseTransfer
+    {
+    }
 }
 
 // Database module
@@ -30,16 +35,23 @@ class SessionToTestFacadeBridge implements SessionToTestFacadeInterface
 namespace Spryker\Zed\Test\Facade;
 
 use Generated\Shared\Transfer\TestCollectionDeleteCriteriaTransfer;
+use Generated\Shared\Transfer\TestCollectionRequestTransfer;
 use Generated\Shared\Transfer\TestCollectionResponseTransfer;
 
 interface SessionToTestFacadeInterface
 {
     public function deleteTestCollection(TestCollectionDeleteCriteriaTransfer $testCollectionDeleteCriteriaTransfer): TestCollectionResponseTransfer;
+    public function createTestCollection(TestCollectionRequestTransfer $testCollectionRequestTransfer): TestCollectionResponseTransfer;
 }
 
 namespace Generated\Shared\Transfer;
 
 class TestCollectionResponseTransfer
+{
+
+}
+
+class TestCollectionRequestTransfer
 {
 
 }

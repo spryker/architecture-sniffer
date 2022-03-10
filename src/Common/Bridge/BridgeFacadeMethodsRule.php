@@ -90,8 +90,6 @@ class BridgeFacadeMethodsRule extends SprykerAbstractRule implements ClassAware
                 'Method %s() must have `public function delete<DomainEntity>Collection(<DomainEntity>CollectionDeleteCriteriaTransfer): <DomainEntity>CollectionResponseTransfer;` signature.',
                 $method->getName(),
             )]);
-
-            return;
         }
     }
 
@@ -119,8 +117,6 @@ class BridgeFacadeMethodsRule extends SprykerAbstractRule implements ClassAware
                 'Method %s() must have `public function create<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer;` signature.',
                 $method->getName(),
             )]);
-
-            return;
         }
     }
 

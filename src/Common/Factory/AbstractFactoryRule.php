@@ -7,12 +7,15 @@
 
 namespace ArchitectureSniffer\Common\Factory;
 
+use ArchitectureSniffer\Common\DeprecationTrait;
 use ArchitectureSniffer\SprykerAbstractRule;
 use PHPMD\Node\AbstractNode;
 use PHPMD\Node\MethodNode;
 
 abstract class AbstractFactoryRule extends SprykerAbstractRule
 {
+    use DeprecationTrait;
+
     /**
      * @var string
      */
@@ -49,19 +52,5 @@ abstract class AbstractFactoryRule extends SprykerAbstractRule
         }
 
         return $node->getFullQualifiedName();
-    }
-
-    /**
-     * @param \PHPMD\Node\MethodNode $node
-     *
-     * @return bool
-     */
-    protected function isMethodDeprecated(MethodNode $node): bool
-    {
-        if (preg_match('#\@deprecated#', $node->getNode()->getDocComment()) !== 0) {
-            return true;
-        }
-
-        return false;
     }
 }

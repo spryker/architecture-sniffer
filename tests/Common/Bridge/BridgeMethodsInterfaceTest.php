@@ -51,4 +51,12 @@ class BridgeMethodsInterfaceTest extends AbstractArchitectureSnifferRuleTest
         $bridgeMethodsInterfaceRule->setReport($this->getReportMock(2));
         $bridgeMethodsInterfaceRule->apply($this->getClassNode());
     }
+
+    /**
+     * @return void
+     */
+    public function testGetDescription(): void
+    {
+        $this->assertIsString((new BridgeMethodsInterfaceRule())->getDescription());
+    }
 }

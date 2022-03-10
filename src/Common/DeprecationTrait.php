@@ -7,6 +7,7 @@
 
 namespace ArchitectureSniffer\Common;
 
+use PHPMD\AbstractNode;
 use PHPMD\Node\ClassNode;
 use PHPMD\Node\MethodNode;
 
@@ -15,7 +16,7 @@ trait DeprecationTrait
     /**
      * @var string
      */
-    protected $regexp = '/@deprecated/i';
+    protected $deprecatedDockBlock = '@deprecated';
 
     /**
      * @param \PHPMD\Node\MethodNode $method
@@ -24,13 +25,7 @@ trait DeprecationTrait
      */
     protected function isMethodDeprecated(MethodNode $method)
     {
-        $comment = $method->getNode()->getComment();
-
-        if ($comment === null) {
-            return false;
-        }
-
-        return (bool)preg_match($this->regexp, $comment);
+        return $this->isNodeDeprecated($method);
     }
 
     /**
@@ -40,12 +35,22 @@ trait DeprecationTrait
      */
     protected function isClassDeprecated(ClassNode $classNode)
     {
-        $comment = $classNode->getNode()->getComment();
+        return $this->isNodeDeprecated($classNode);
+    }
+
+    /**
+     * @param $node
+     *
+     * @return bool
+     */
+    protected function isNodeDeprecated(AbstractNode $node): bool
+    {
+        $comment = $node->getNode()->getComment();
 
         if ($comment === null) {
             return false;
         }
 
-        return (bool)preg_match($this->regexp, $classNode->getNode()->getComment());
+        return stripos($comment, $this->deprecatedDockBlock) !== false;
     }
 }

@@ -71,4 +71,12 @@ class AllMethodsPublicInFacadeRuleTest extends AbstractArchitectureSnifferRuleTe
         $pluginSuffixRule->setReport($this->getReportMock(1));
         $pluginSuffixRule->apply($this->getClassNode());
     }
+
+    /**
+     * @return void
+     */
+    public function testGetDescription(): void
+    {
+        $this->assertIsString((new AllMethodsPublicInFacadeRule())->getDescription());
+    }
 }

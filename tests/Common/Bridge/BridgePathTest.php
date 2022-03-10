@@ -31,4 +31,12 @@ class BridgePathTest extends AbstractArchitectureSnifferRuleTest
         $bridgePathRule->setReport($this->getReportMock(2));
         $bridgePathRule->apply($this->getClassNode());
     }
+
+    /**
+     * @return void
+     */
+    public function testGetDescription(): void
+    {
+        $this->assertIsString((new BridgePathRule())->getDescription());
+    }
 }

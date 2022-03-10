@@ -20,6 +20,7 @@ trait PhpTypesTrait
 
         return strpos($type, '|') !== false
             || $type === 'mixed'
-            || $type === 'false';
+            || $type === 'false'
+            || $type === 'static';
     }
 }

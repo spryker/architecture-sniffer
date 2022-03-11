@@ -28,6 +28,10 @@ class SessionToTestFacadeBridge implements SessionToTestFacadeInterface
     public function createTestCollection(TestCollectionRequestTransfer $testCollectionRequestTransfer): TestCollectionResponseTransfer
     {
     }
+
+    public function updateTestCollection(TestCollectionRequestTransfer $testCollectionRequestTransfer): TestCollectionResponseTransfer
+    {
+    }
 }
 
 // Database module
@@ -42,6 +46,7 @@ interface SessionToTestFacadeInterface
 {
     public function deleteTestCollection(TestCollectionDeleteCriteriaTransfer $testCollectionDeleteCriteriaTransfer): TestCollectionResponseTransfer;
     public function createTestCollection(TestCollectionRequestTransfer $testCollectionRequestTransfer): TestCollectionResponseTransfer;
+    public function updateTestCollection(TestCollectionRequestTransfer $testCollectionRequestTransfer): TestCollectionResponseTransfer;
 }
 
 namespace Generated\Shared\Transfer;

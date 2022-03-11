@@ -20,7 +20,7 @@ class BridgeFacadeMethodsRule extends SprykerAbstractRule implements ClassAware
     /**
      * @var string
      */
-    protected const RULE = 'The bridge facade method must follow CRUD signature';
+    protected const RULE = 'The bridge facade method must follow CRUD signature based on the naming convention.';
 
     /**
      * @return string
@@ -44,7 +44,6 @@ class BridgeFacadeMethodsRule extends SprykerAbstractRule implements ClassAware
         ) {
             return;
         }
-        $dependencyModuleName = $this->getDependencyModuleName($node);
         $bridgeName = $node->getFullQualifiedName();
 
         foreach ($node->getMethods() as $method) {
@@ -53,13 +52,28 @@ class BridgeFacadeMethodsRule extends SprykerAbstractRule implements ClassAware
             $methodReturnType = $interfaceMethodReflection->getReturnType();
 
             if (preg_match('/^(delete|remove)/', $method->getName())) {
-                $this->verifyDeleteMethod($method, $methodReturnType, $dependencyModuleName);
+                $this->verifyDeleteMethod($method, $methodReturnType);
 
                 continue;
             }
 
-            if (preg_match('/^(create|add|save)/', $method->getName())) {
-                $this->verifyCreateMethod($method, $methodReturnType, $dependencyModuleName);
+            if (preg_match('/^(create|add)/', $method->getName())) {
+                $this->verifyCreateMethod($method, $methodReturnType);
+
+                continue;
+            }
+
+            if (preg_match('/^(update|change)/', $method->getName())) {
+                $this->verifyUpdateMethod($method, $methodReturnType);
+
+                continue;
+            }
+
+            if (strpos($method->getName(), 'save') === 0) {
+                $this->addViolation($method, [sprintf(
+                    'Method %s() must have `public function update(create)<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer;` signature.',
+                    $method->getName(),
+                )]);
 
                 continue;
             }
@@ -69,11 +83,36 @@ class BridgeFacadeMethodsRule extends SprykerAbstractRule implements ClassAware
     /**
      * @param \PHPMD\Node\MethodNode $method
      * @param \ReflectionType|null $methodReturnType
-     * @param string $dependencyModuleName
      *
      * @return void
      */
-    protected function verifyDeleteMethod(MethodNode $method, ?ReflectionType $methodReturnType, string $dependencyModuleName): void
+    protected function verifyUpdateMethod(MethodNode $method, ?ReflectionType $methodReturnType): void
+    {
+        $parameters = $method->getNode()->getParameters();
+
+        if (
+            $method->getParameterCount() !== 1 ||
+            !$parameters[0]->getClass() ||
+            !$methodReturnType ||
+            preg_match('/^update(?<domainEntity>\w+)Collection$/', $method->getName(), $methodNameMatches) === 0 ||
+            preg_match('/^(?<domainEntity>\w+)CollectionRequestTransfer$/', $parameters[0]->getClass()->getName(), $methodParameterMatches) === 0 ||
+            preg_match('/^Generated\\\\Shared\\\\Transfer\\\\(?<domainEntity>\w+)CollectionResponseTransfer$/', $methodReturnType->getName(), $methodReturnTypeMatches) === 0 ||
+            count(array_unique([$methodNameMatches['domainEntity'], $methodParameterMatches['domainEntity'], $methodReturnTypeMatches['domainEntity']])) !== 1
+        ) {
+            $this->addViolation($method, [sprintf(
+                'Method %s() must have `public function update<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer;` signature.',
+                $method->getName(),
+            )]);
+        }
+    }
+
+    /**
+     * @param \PHPMD\Node\MethodNode $method
+     * @param \ReflectionType|null $methodReturnType
+     *
+     * @return void
+     */
+    protected function verifyDeleteMethod(MethodNode $method, ?ReflectionType $methodReturnType): void
     {
         $parameters = $method->getNode()->getParameters();
 
@@ -96,11 +135,10 @@ class BridgeFacadeMethodsRule extends SprykerAbstractRule implements ClassAware
     /**
      * @param \PHPMD\Node\MethodNode $method
      * @param \ReflectionType|null $methodReturnType
-     * @param string $dependencyModuleName
      *
      * @return void
      */
-    protected function verifyCreateMethod(MethodNode $method, ?ReflectionType $methodReturnType, string $dependencyModuleName): void
+    protected function verifyCreateMethod(MethodNode $method, ?ReflectionType $methodReturnType): void
     {
         $parameters = $method->getNode()->getParameters();
 
@@ -118,39 +156,5 @@ class BridgeFacadeMethodsRule extends SprykerAbstractRule implements ClassAware
                 $method->getName(),
             )]);
         }
-    }
-
-    /**
-     * @param \PHPMD\Node\ClassNode $node
-     *
-     * @return string
-     */
-    protected function getDependencyModuleName(ClassNode $node): string
-    {
-        foreach ($node->getMethods() as $method) {
-            if ($method->getName() === '__construct') {
-                $constructorComment = $method->getNode()->getComment();
-
-                if (!$constructorComment) {
-                    return '';
-                }
-
-                $firstParameter = $method->getNode()->getParameters()[0];
-
-                if (!$firstParameter) {
-                    return '';
-                }
-
-                $pattern = '#@param[\s]+(?<interfaceName>.*)[\s]+' . preg_quote($firstParameter->getName()) . '#is';
-
-                if (preg_match($pattern, $constructorComment, $matches) === 0) {
-                    return '';
-                }
-
-                return $this->getModuleName($matches['interfaceName']);
-            }
-        }
-
-        return '';
     }
 }

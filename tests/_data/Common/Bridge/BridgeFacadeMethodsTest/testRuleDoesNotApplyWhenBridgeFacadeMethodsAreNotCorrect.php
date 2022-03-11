@@ -57,6 +57,22 @@ class SessionTestToTestFacadeBridge implements SessionTestToTestFacadeInterface
     public function saveTestCollection(TestCollectionRequestTransfer $testCollectionRequestTransfer): TestCollectionResponseTransfer
     {
     }
+
+    public function updateCollection(TestCollectionRequestTransfer $testCollectionRequestTransfer): TestCollectionResponseTransfer
+    {
+    }
+
+    public function changeTestCollection(TestListRequestTransfer $testCollectionRequestTransfer): TestCollectionResponseTransfer
+    {
+    }
+
+    public function updateTestReturnCollection(TestCollectionRequestTransfer $testCollectionRequestTransfer): TestListResponseTransfer
+    {
+    }
+
+    public function updateTestModuleCollection(TestListRequestTransfer $testListRequestTransfer): TestCollectionResponseTransfer
+    {
+    }
 }
 
 // Database module
@@ -82,6 +98,11 @@ interface SessionTestToTestFacadeInterface
     public function createTestReturnCollection(TestCollectionRequestTransfer $testCollectionRequestTransfer): TestListResponseTransfer;
     public function createTestModuleCollection(TestListRequestTransfer $testListRequestTransfer): TestCollectionResponseTransfer;
     public function saveTestCollection(TestCollectionRequestTransfer $testCollectionRequestTransfer): TestCollectionResponseTransfer;
+
+    public function updateCollection(TestCollectionRequestTransfer $testCollectionRequestTransfer): TestCollectionResponseTransfer;
+    public function changeTestCollection(TestListRequestTransfer $testCollectionRequestTransfer): TestCollectionResponseTransfer;
+    public function updateTestReturnCollection(TestCollectionRequestTransfer $testCollectionRequestTransfer): TestListResponseTransfer;
+    public function updateTestModuleCollection(TestListRequestTransfer $testListRequestTransfer): TestCollectionResponseTransfer;
 }
 
 

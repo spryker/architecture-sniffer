@@ -18,7 +18,7 @@ class BridgeFacadeMethodsTest extends AbstractArchitectureSnifferRuleTest
     public function testRuleDoesNotApplyWhenBridgeFacadeMethodsAreNotCorrect(): void
     {
         $bridgeMethodsRule = new BridgeFacadeMethodsRule();
-        $bridgeMethodsRule->setReport($this->getReportMock(12));
+        $bridgeMethodsRule->setReport($this->getReportMock(17));
         $bridgeMethodsRule->apply($this->getClassNode());
     }
 

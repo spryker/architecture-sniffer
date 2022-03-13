@@ -51,6 +51,12 @@ class BridgeFacadeMethodsRule extends SprykerAbstractRule implements ClassAware
             $interfaceMethodReflection = new ReflectionMethod($interfaceMethodName);
             $methodReturnType = $interfaceMethodReflection->getReturnType();
 
+            if (preg_match('/^(get|read|find)/', $method->getName())) {
+                $this->verifyGetMethod($method, $methodReturnType);
+
+                continue;
+            }
+
             if (preg_match('/^(delete|remove)/', $method->getName())) {
                 $this->verifyDeleteMethod($method, $methodReturnType);
 
@@ -77,6 +83,32 @@ class BridgeFacadeMethodsRule extends SprykerAbstractRule implements ClassAware
 
                 continue;
             }
+        }
+    }
+
+    /**
+     * @param \PHPMD\Node\MethodNode $method
+     * @param \ReflectionType|null $methodReturnType
+     *
+     * @return void
+     */
+    protected function verifyGetMethod(MethodNode $method, ?ReflectionType $methodReturnType): void
+    {
+        $parameters = $method->getNode()->getParameters();
+
+        if (
+            $method->getParameterCount() !== 1 ||
+            !$parameters[0]->getClass() ||
+            !$methodReturnType ||
+            preg_match('/^get(?<domainEntity>\w+)Collection$/', $method->getName(), $methodNameMatches) === 0 ||
+            preg_match('/^(?<domainEntity>\w+)CriteriaTransfer$/', $parameters[0]->getClass()->getName(), $methodParameterMatches) === 0 ||
+            preg_match('/^Generated\\\\Shared\\\\Transfer\\\\(?<domainEntity>\w+)CollectionTransfer$/', $methodReturnType->getName(), $methodReturnTypeMatches) === 0 ||
+            count(array_unique([$methodNameMatches['domainEntity'], $methodParameterMatches['domainEntity'], $methodReturnTypeMatches['domainEntity']])) !== 1
+        ) {
+            $this->addViolation($method, [sprintf(
+                'Method %s() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.',
+                $method->getName(),
+            )]);
         }
     }
 

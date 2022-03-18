@@ -77,7 +77,7 @@ class BridgeFacadeMethodsRule extends SprykerAbstractRule implements ClassAware
 
             if (strpos($method->getName(), 'save') === 0) {
                 $this->addViolation($method, [sprintf(
-                    'Method `%s()` must have `public function update(create)<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer;` signature.',
+                    'Method `%s()` must have `public function [update|create]<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer` signature.',
                     $method->getName(),
                 )]);
 
@@ -106,7 +106,7 @@ class BridgeFacadeMethodsRule extends SprykerAbstractRule implements ClassAware
             count(array_unique([$methodNameMatches['domainEntity'], $methodParameterMatches['domainEntity'], $methodReturnTypeMatches['domainEntity']])) !== 1
         ) {
             $this->addViolation($method, [sprintf(
-                'Method `%s()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.',
+                'Method `%s()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.',
                 $method->getName(),
             )]);
         }
@@ -132,7 +132,7 @@ class BridgeFacadeMethodsRule extends SprykerAbstractRule implements ClassAware
             count(array_unique([$methodNameMatches['domainEntity'], $methodParameterMatches['domainEntity'], $methodReturnTypeMatches['domainEntity']])) !== 1
         ) {
             $this->addViolation($method, [sprintf(
-                'Method `%s()` must have `public function update<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer;` signature.',
+                'Method `%s()` must have `public function update<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer` signature.',
                 $method->getName(),
             )]);
         }
@@ -158,7 +158,7 @@ class BridgeFacadeMethodsRule extends SprykerAbstractRule implements ClassAware
             count(array_unique([$methodNameMatches['domainEntity'], $methodParameterMatches['domainEntity'], $methodReturnTypeMatches['domainEntity']])) !== 1
         ) {
             $this->addViolation($method, [sprintf(
-                'Method `%s()` must have `public function delete<DomainEntity>Collection(<DomainEntity>CollectionDeleteCriteriaTransfer): <DomainEntity>CollectionResponseTransfer;` signature.',
+                'Method `%s()` must have `public function delete<DomainEntity>Collection(<DomainEntity>CollectionDeleteCriteriaTransfer): <DomainEntity>CollectionResponseTransfer` signature.',
                 $method->getName(),
             )]);
         }
@@ -184,7 +184,7 @@ class BridgeFacadeMethodsRule extends SprykerAbstractRule implements ClassAware
             count(array_unique([$methodNameMatches['domainEntity'], $methodParameterMatches['domainEntity'], $methodReturnTypeMatches['domainEntity']])) !== 1
         ) {
             $this->addViolation($method, [sprintf(
-                'Method `%s()` must have `public function create<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer;` signature.',
+                'Method `%s()` must have `public function create<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer` signature.',
                 $method->getName(),
             )]);
         }

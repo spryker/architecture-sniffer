@@ -8,7 +8,6 @@
 namespace ArchitectureSniffer\Common\Method;
 
 use ArchitectureSniffer\Common\DeprecationTrait;
-use PDepend\Source\AST\ASTParameter;
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
 use PHPMD\Node\ASTNode;

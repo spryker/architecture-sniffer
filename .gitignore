@@ -4,6 +4,7 @@
 composer.phar
 composer.lock
 phpunit.phar
+.phpunit.result.cache
 
 tests/Common/_support/
 tests/Zed/_support/

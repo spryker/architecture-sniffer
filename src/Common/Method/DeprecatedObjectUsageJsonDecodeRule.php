@@ -34,7 +34,7 @@ class DeprecatedObjectUsageJsonDecodeRule extends AbstractRule implements ClassA
     /**
      * @var string
      */
-    protected const RULE_DEPRECATED_USAGE_FOUND = 'Param #2 `$assoc` of `decodeJson` must be `true` as return of type `object` is not accepted. Method: %s.';
+    protected const RULE_DEPRECATED_USAGE_FOUND = 'Param #2 `$assoc` of `decodeJson` must be `true` as return value of type `object` is deprecetaed. Method: %s.';
 
     /**
      * @param \PHPMD\AbstractNode $node

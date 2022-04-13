@@ -7,6 +7,7 @@
 
 namespace ArchitectureSniffer\Common\Method;
 
+use ArchitectureSniffer\Common\ClassNameTrait;
 use ArchitectureSniffer\Common\DeprecationTrait;
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
@@ -17,6 +18,7 @@ use PHPMD\Rule\ClassAware;
 
 class DeprecatedObjectUsageJsonDecodeRule extends AbstractRule implements ClassAware
 {
+    use ClassNameTrait;
     use DeprecationTrait;
 
     /**
@@ -44,6 +46,7 @@ class DeprecatedObjectUsageJsonDecodeRule extends AbstractRule implements ClassA
         if (
             !$node instanceof ClassNode
             || $this->isClassDeprecated($node)
+            || $this->isBridgeClass($node)
         ) {
             return;
         }

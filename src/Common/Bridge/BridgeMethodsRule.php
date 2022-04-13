@@ -7,6 +7,7 @@
 
 namespace ArchitectureSniffer\Common\Bridge;
 
+use ArchitectureSniffer\Common\ClassNameTrait;
 use ArchitectureSniffer\Common\PhpDocTrait;
 use ArchitectureSniffer\Common\PhpTypesTrait;
 use ArchitectureSniffer\SprykerAbstractRule;
@@ -19,6 +20,7 @@ use ReflectionMethod;
 
 class BridgeMethodsRule extends SprykerAbstractRule implements ClassAware
 {
+    use ClassNameTrait;
     use PhpDocTrait;
     use PhpTypesTrait;
 
@@ -43,9 +45,8 @@ class BridgeMethodsRule extends SprykerAbstractRule implements ClassAware
     public function apply(AbstractNode $node)
     {
         if (
-            preg_match('([A-Za-z0-9]+Bridge$)', $node->getName()) === 0 ||
-            preg_match('#.*\\\\Dependency\\\\.*#', $node->getNamespaceName()) === 0 ||
-            !$node instanceof ClassNode
+            !$node instanceof ClassNode ||
+            !$this->isBridgeClass($node)
         ) {
             return;
         }

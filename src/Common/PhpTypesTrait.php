@@ -39,9 +39,9 @@ trait PhpTypesTrait
      *
      * @return bool
      */
-    protected function isReturnTypeIsThis(string $type): bool
+    protected function isFluentInterface(string $type): bool
     {
-        $type = $type = $this->stripNullReturnTypeHint($type);
+        $type = $this->stripNullReturnTypeHint($type);
 
         return strpos($type, '|') !== false
             || $type === '$this';

@@ -69,7 +69,7 @@ class ExternalMethodExtensionReturnTypeRule extends AbstractRule implements Clas
             if (
                 $returnType == null
                 || $this->isTypeInPhp7NotAllowed($returnType)
-                || $this->isReturnTypeIsThis($returnType)
+                || $this->isFluentInterface($returnType)
             ) {
                 continue;
             }

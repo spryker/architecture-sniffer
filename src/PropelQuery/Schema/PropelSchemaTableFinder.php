@@ -337,7 +337,7 @@ class PropelSchemaTableFinder implements PropelSchemaTableFinderInterface
      * @param \ArchitectureSniffer\PropelQuery\Schema\Transfer\PropelSchemaTableTransfer $tableTransfer
      * @param \ArchitectureSniffer\Path\Transfer\PathTransfer $pathTransfer
      *
-     * @return \Countable|array<\Symfony\Component\Finder\SplFileInfo>
+     * @return \Countable<\Symfony\Component\Finder\SplFileInfo>
      */
     protected function findSchemaFiles(PropelSchemaTableTransfer $tableTransfer, PathTransfer $pathTransfer): Countable
     {

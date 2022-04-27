@@ -77,7 +77,7 @@ class FacadeInterfaceRule extends AbstractFacadeRule implements ClassAware
 
     /**
      * @param \PHPMD\Node\ClassNode $node
-     * @param \PDepend\Source\AST\ASTArtifactList|array<\PDepend\Source\AST\ASTInterface> $implementedInterfaces
+     * @param \PDepend\Source\AST\ASTArtifactList<\PDepend\Source\AST\ASTInterface> $implementedInterfaces
      *
      * @return bool
      */

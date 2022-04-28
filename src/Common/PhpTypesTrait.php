@@ -12,15 +12,38 @@ trait PhpTypesTrait
     /**
      * @param string $type
      *
+     * @return string
+     */
+    protected function stripNullReturnTypeHint(string $type): string
+    {
+        return str_replace('|null', '', $type);
+    }
+
+    /**
+     * @param string $type
+     *
      * @return bool
      */
     protected function isTypeInPhp7NotAllowed(string $type): bool
     {
-        $type = str_replace('|null', '', $type);
+        $type = $this->stripNullReturnTypeHint($type);
 
         return strpos($type, '|') !== false
             || $type === 'mixed'
             || $type === 'false'
             || $type === 'static';
+    }
+
+    /**
+     * @param string $type
+     *
+     * @return bool
+     */
+    protected function isFluentInterface(string $type): bool
+    {
+        $type = $this->stripNullReturnTypeHint($type);
+
+        return strpos($type, '|') !== false
+            || $type === '$this';
     }
 }

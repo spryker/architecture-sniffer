@@ -10,7 +10,7 @@
         "laminas/laminas-filter": "^2.5.1",
         "phpdocumentor/reflection-docblock": "^5.3.0",
         "phpmd/phpmd": "^2.10.0",
-        "symfony/finder": "^4.0.0 || ^5.0.0"
+        "symfony/finder": "^4.0.0 || ^5.0.0 || ^6.0.0"
     },
     "require-dev": {
         "codeception/codeception": "^4.1",

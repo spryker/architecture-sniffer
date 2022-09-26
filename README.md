@@ -2,7 +2,7 @@
 [![CI](https://github.com/spryker/architecture-sniffer/workflows/CI/badge.svg?branch=master)](https://github.com/spryker/architecture-sniffer/actions/workflows/ci.yml)
 [![Coverage](https://codecov.io/gh/spryker/architecture-sniffer/branch/master/graph/badge.svg?token=4AKCKMRg3G)](https://codecov.io/gh/spryker/architecture-sniffer)
 [![Latest Stable Version](https://poser.pugx.org/spryker/architecture-sniffer/v/stable.svg)](https://packagist.org/packages/spryker/architecture-sniffer)
-[![Minimum PHP Version](http://img.shields.io/badge/php-%3E%3D%208.0-8892BF.svg)](https://php.net/)
+[![Minimum PHP Version](http://img.shields.io/badge/php-%3E%3D%207.4-8892BF.svg)](https://php.net/)
 [![License](https://poser.pugx.org/spryker/architecture-sniffer/license.svg)](https://packagist.org/packages/spryker/architecture-sniffer)
 [![Total Downloads](https://poser.pugx.org/spryker/architecture-sniffer/d/total.svg)](https://packagist.org/packages/spryker/architecture-sniffer)
 

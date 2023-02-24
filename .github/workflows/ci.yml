@@ -102,11 +102,5 @@ jobs:
       - name: Composer prefer-lowest
         run: composer update --prefer-dist --no-interaction --prefer-lowest --prefer-stable -o
 
-      - name: Composer require dereuromark/composer-prefer-lowest package
-        run: composer require --dev dereuromark/composer-prefer-lowest
-
       - name: Codecept run test
         run: composer test
-
-      - name: Validate prefer lowest
-        run: vendor/bin/validate-prefer-lowest

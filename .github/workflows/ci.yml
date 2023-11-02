@@ -9,12 +9,12 @@ on:
 
 jobs:
   validation:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
     strategy:
       fail-fast: false
       matrix:
         php-version: [
-            '7.4',
+            '8.0',
             '8.2'
         ]
 
@@ -51,7 +51,7 @@ jobs:
 
       - name: Codeception tests
         run: |
-          if [[ ${{ matrix.php-version }} == '7.3' ]]; then
+          if [[ ${{ matrix.php-version }} == '8.0' ]]; then
             vendor/bin/codecept build
             XDEBUG_MODE=coverage vendor/bin/codecept run --coverage-xml
           else
@@ -59,7 +59,7 @@ jobs:
           fi
 
       - name: Code Coverage Report
-        if: success() && matrix.php-version == '7.3'
+        if: success() && matrix.php-version == '8.0'
         uses: codecov/codecov-action@v1
 
       - name: PHPStan checks
@@ -69,12 +69,12 @@ jobs:
         run: composer cs-check
 
   prefer-lowest:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
     strategy:
       fail-fast: false
       matrix:
         php-version: [
-            '7.4'
+            '8.0'
         ]
 
     steps:

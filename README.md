@@ -92,7 +92,7 @@ Don't forget to test your changes:
 ```
 php phpunit.phar
 ```
-
+ 
 ### Running code-sniffer on this project
 Make sure this repository is Spryker coding standard conform:
 ```

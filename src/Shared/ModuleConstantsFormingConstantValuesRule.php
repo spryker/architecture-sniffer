@@ -7,6 +7,7 @@
 
 namespace ArchitectureSniffer\Shared;
 
+use PDepend\Source\AST\ASTNode;
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
 use PHPMD\Rule\InterfaceAware;
@@ -44,7 +45,9 @@ class ModuleConstantsFormingConstantValuesRule extends AbstractRule implements I
 
         foreach ($node->findChildrenOfType('ConstantDeclarator') as $constant) {
             /** @var \PDepend\Source\AST\ASTValue|\PHPMD\AbstractNode $constant */
-            $value = $constant->getValue()->getValue()->getImage();
+            $constantValue = $constant->getValue()->getValue();
+
+            $value = $constantValue instanceof ASTNode ? $constantValue->getImage() : $constantValue;
 
             $expectedConstantValue = sprintf(
                 "'%s:%s'",

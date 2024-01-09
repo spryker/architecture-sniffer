@@ -7,6 +7,7 @@
 
 namespace ArchitectureSniffer\Common\Bridge;
 
+use ArchitectureSniffer\Common\ClassNameTrait;
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
 use PHPMD\Node\InterfaceNode;
@@ -14,6 +15,8 @@ use PHPMD\Rule\ClassAware;
 
 class BridgeNameRule extends AbstractRule implements ClassAware
 {
+    use ClassNameTrait;
+
     /**
      * @var string
      */
@@ -39,10 +42,7 @@ class BridgeNameRule extends AbstractRule implements ClassAware
      */
     public function apply(AbstractNode $node)
     {
-        if (
-            preg_match('([A-Za-z0-9]+Bridge$)', $node->getName()) === 0 ||
-            preg_match('#.*\\\\Dependency\\\\.*#', $node->getNamespaceName()) === 0
-        ) {
+        if (!$this->isBridgeClass($node)) {
             return;
         }
 

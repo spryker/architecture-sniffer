@@ -58,6 +58,7 @@
         "stan": "phpstan analyze",
         "test": "codecept build && codecept run"
     },
+    "bin": ["bin/package-aggregator"],
     "include-path": [
         "src/"
     ]

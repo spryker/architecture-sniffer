@@ -115,6 +115,22 @@
         <priority>3</priority>
     </rule>
 
+    <rule
+        name="AvoidElseStatementRule"
+        message="{0}"
+        class="ArchitectureSniffer\Common\AvoidElseStatementRule">
+
+        <priority>1</priority>
+    </rule>
+
+    <rule
+        name="LiteralToConstantRule"
+        message="{0}"
+        class="ArchitectureSniffer\Common\LiteralToConstantRule">
+
+        <priority>1</priority>
+    </rule>
+
     <!-- COMMON COMMUNICATION RULES -->
     <rule
         name="CommunicationControllerRule"

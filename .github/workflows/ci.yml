@@ -51,15 +51,11 @@ jobs:
 
       - name: Codeception tests
         run: |
-          if [[ ${{ matrix.php-version }} == '8.1' ]]; then
-            vendor/bin/codecept build
-            XDEBUG_MODE=coverage vendor/bin/codecept run --coverage-xml
-          else
-            composer test
-          fi
+          vendor/bin/codecept build
+          XDEBUG_MODE=coverage vendor/bin/codecept run --coverage-xml
 
       - name: Code Coverage Report
-        if: success() && matrix.php-version == '8.1'
+        if: success()
         uses: codecov/codecov-action@v1
 
       - name: PHPStan checks

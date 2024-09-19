@@ -19,7 +19,7 @@ class ModuleTag extends BaseTag implements StaticMethod
     /**
      * @var string
      */
-    protected $name = 'module';
+    protected string $name = 'module';
 
     /**
      * @param \phpDocumentor\Reflection\DocBlock\Description|null $description

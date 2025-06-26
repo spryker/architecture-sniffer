@@ -239,7 +239,7 @@ abstract class AbstractArchitectureSnifferRuleTest extends Unit
         }
 
         $report = $this->getMockBuilder(Report::class)
-            ->setMethods(['addRuleViolation'])
+            ->onlyMethods(['addRuleViolation'])
             ->getMock();
 
         $report->expects($expects)

@@ -30,6 +30,18 @@ abstract class AbstractArchitectureSnifferRuleTest extends Unit
     protected $testFile;
 
     /**
+     * @return string
+     */
+    public function getFileName(): string
+    {
+        if ($this->testFile !== null) {
+            return $this->testFile;
+        }
+
+        return $this->getName() . '.php';
+    }
+
+    /**
      * @return void
      */
     protected function tearDown(): void
@@ -144,18 +156,6 @@ abstract class AbstractArchitectureSnifferRuleTest extends Unit
         array_shift($classNameFragments);
 
         return implode(DIRECTORY_SEPARATOR, $classNameFragments) . DIRECTORY_SEPARATOR;
-    }
-
-    /**
-     * @return string
-     */
-    protected function getFileName(): string
-    {
-        if ($this->testFile !== null) {
-            return $this->testFile;
-        }
-
-        return $this->getName() . '.php';
     }
 
     /**

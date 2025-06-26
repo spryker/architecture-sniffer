@@ -30,18 +30,6 @@ abstract class AbstractArchitectureSnifferRuleTest extends Unit
     protected $testFile;
 
     /**
-     * @return string
-     */
-    public function getFileName(): string
-    {
-        if ($this->testFile !== null) {
-            return $this->testFile;
-        }
-
-        return $this->getName() . '.php';
-    }
-
-    /**
      * @return void
      */
     protected function tearDown(): void

@@ -5,6 +5,7 @@ include:
   - tests/Common
   - tests/Shared
   - tests/Zed
+  - tests/_data
 
 paths:
   tests: tests

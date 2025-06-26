@@ -21,7 +21,6 @@ use PHPMD\Node\InterfaceNode;
 use PHPMD\Node\MethodNode;
 use PHPMD\Node\TraitNode;
 use PHPMD\Report;
-use ReflectionClass;
 
 abstract class AbstractArchitectureSnifferRuleTest extends Unit
 {
@@ -39,7 +38,7 @@ abstract class AbstractArchitectureSnifferRuleTest extends Unit
             return $this->testFile;
         }
 
-        return (new ReflectionClass($this))->getFileName();
+        return $this->getMetadata()->getName() . '.php';
     }
 
     /**

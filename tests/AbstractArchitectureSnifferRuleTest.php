@@ -30,6 +30,18 @@ abstract class AbstractArchitectureSnifferRuleTest extends Unit
     protected $testFile;
 
     /**
+     * @return string
+     */
+    public function getFileName(): string
+    {
+        if ($this->testFile !== null) {
+            return $this->testFile;
+        }
+
+        return $this->getMetadata()->getName() . '.php';
+    }
+
+    /**
      * @return void
      */
     protected function tearDown(): void
@@ -147,18 +159,6 @@ abstract class AbstractArchitectureSnifferRuleTest extends Unit
     }
 
     /**
-     * @return string
-     */
-    protected function getFileName(): string
-    {
-        if ($this->testFile !== null) {
-            return $this->testFile;
-        }
-
-        return $this->getName() . '.php';
-    }
-
-    /**
      * @return \PDepend\Source\AST\ASTArtifact
      */
     private function parseTestCaseSource(): ASTArtifact
@@ -239,7 +239,7 @@ abstract class AbstractArchitectureSnifferRuleTest extends Unit
         }
 
         $report = $this->getMockBuilder(Report::class)
-            ->setMethods(['addRuleViolation'])
+            ->onlyMethods(['addRuleViolation'])
             ->getMock();
 
         $report->expects($expects)

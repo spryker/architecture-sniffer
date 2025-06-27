@@ -4,7 +4,7 @@ paths:
   tests: .
   data: ../_data
   support: _support
-  log: ../_output
+  output: ../_output
 
 coverage:
   enabled: true
@@ -15,6 +15,7 @@ suites:
   Plugin:
     path: Plugin
     class_name: CommonTester
+    bootstrap: ../../_bootstrap.php
     modules:
       enabled:
         - Asserts

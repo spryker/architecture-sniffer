@@ -5,7 +5,7 @@
     "homepage": "https://spryker.com",
     "license": "MIT",
     "require": {
-        "php": ">=8.1",
+        "php": ">=8.2",
         "laminas/laminas-config": "^2.5.1 || ^3.1.0",
         "laminas/laminas-filter": "^2.5.1",
         "phpdocumentor/reflection-docblock": "^5.3.0",
@@ -15,7 +15,7 @@
     "require-dev": {
         "codeception/codeception": "^5.0.8",
         "codeception/module-asserts": "^3.0.0",
-        "phpstan/phpstan": "1.10.60",
+        "phpstan/phpstan": "^1.11",
         "spryker/code-sniffer": "*",
         "symfony/var-dumper": "^5.4.24"
     },
@@ -55,7 +55,7 @@
     "scripts": {
         "cs-check": "phpcs --colors -p -s --extensions=php --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml --ignore=/tests/_data/,/_support/ src/ tests/",
         "cs-fix": "phpcbf --colors -p --extensions=php --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml --ignore=/tests/_data/,/_support/ src/ tests/",
-        "stan": "phpstan analyze",
+        "stan": "phpstan analyze --memory-limit=1G",
         "test": "codecept build && codecept run"
     },
     "include-path": [

@@ -15,7 +15,7 @@
     "require-dev": {
         "codeception/codeception": "^5.0.8",
         "codeception/module-asserts": "^3.0.0",
-        "phpstan/phpstan": "^1.11",
+        "phpstan/phpstan": "^2.1.0",
         "spryker/code-sniffer": "*",
         "symfony/var-dumper": "^5.4.24"
     },

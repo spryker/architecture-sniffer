@@ -9,19 +9,19 @@ namespace ArchitectureSniffer\Node\Reader;
 
 use PHPMD\AbstractNode;
 use PHPStan\BetterReflection\Reflection\ReflectionClass;
-use PHPStan\BetterReflection\Reflector\ClassReflector;
+use PHPStan\BetterReflection\Reflector\DefaultReflector;
 
 class NodeReader implements NodeReaderInterface
 {
     /**
-     * @var \PHPStan\BetterReflection\Reflector\ClassReflector
+     * @var \PHPStan\BetterReflection\Reflector\DefaultReflector
      */
     protected $classReflector;
 
     /**
-     * @param \PHPStan\BetterReflection\Reflector\ClassReflector $classReflector
+     * @param \PHPStan\BetterReflection\Reflector\DefaultReflector $classReflector
      */
-    public function __construct(ClassReflector $classReflector)
+    public function __construct(DefaultReflector $classReflector)
     {
         $this->classReflector = $classReflector;
     }
@@ -66,6 +66,6 @@ class NodeReader implements NodeReaderInterface
     {
         $nodeClassName = $this->getClassName($node); //todo: check for class
 
-        return $this->classReflector->reflect($nodeClassName);
+        return $this->classReflector->reflectClass($nodeClassName);
     }
 }

@@ -10,7 +10,7 @@ namespace ArchitectureSniffer\PropelQuery\Module;
 use ArchitectureSniffer\Module\ModuleFinderInterface as ArchitectureSnifferModuleFinderInterface;
 use ArchitectureSniffer\Path\PathBuilderInterface;
 use ArchitectureSniffer\PropelQuery\ClassNode\Transfer\ClassNodeTransfer;
-use PHPStan\BetterReflection\Reflector\ClassReflector;
+use PHPStan\BetterReflection\Reflector\DefaultReflector;
 
 class ModuleFinder implements ModuleFinderInterface
 {
@@ -20,7 +20,7 @@ class ModuleFinder implements ModuleFinderInterface
     protected $moduleFinder;
 
     /**
-     * @var \PHPStan\BetterReflection\Reflector\ClassReflector
+     * @var \PHPStan\BetterReflection\Reflector\DefaultReflector
      */
     protected $classReflector;
 
@@ -31,12 +31,12 @@ class ModuleFinder implements ModuleFinderInterface
 
     /**
      * @param \ArchitectureSniffer\Module\ModuleFinderInterface $moduleFinder
-     * @param \PHPStan\BetterReflection\Reflector\ClassReflector $classReflector
+     * @param \PHPStan\BetterReflection\Reflector\DefaultReflector $classReflector
      * @param \ArchitectureSniffer\Path\PathBuilderInterface $pathBuilder
      */
     public function __construct(
         ArchitectureSnifferModuleFinderInterface $moduleFinder,
-        ClassReflector $classReflector,
+        DefaultReflector $classReflector,
         PathBuilderInterface $pathBuilder
     ) {
         $this->moduleFinder = $moduleFinder;

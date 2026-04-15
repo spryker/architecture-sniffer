@@ -37,3 +37,9 @@ suites:
     modules:
       enabled:
         - Asserts
+  Relationship:
+    path: Relationship
+    class_name: CommonTester
+    modules:
+      enabled:
+        - Asserts

@@ -191,4 +191,14 @@
 
     <!-- EOF COMMON COMMUNICATION RULES -->
 
+    <!-- COMMON RELATIONSHIP RULES -->
+    <rule
+            name="DirectRelationshipResolverInterfaceUsageRule"
+            message="{0}"
+            class="ArchitectureSniffer\Common\Relationship\DirectRelationshipResolverInterfaceUsageRule">
+
+        <priority>1</priority>
+    </rule>
+    <!-- EOF COMMON RELATIONSHIP RULES -->
+
 </ruleset>

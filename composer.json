@@ -53,8 +53,8 @@
         }
     },
     "scripts": {
-        "cs-check": "phpcs --colors -p -s --extensions=php --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml --ignore=/tests/_data/,/_support/ src/ tests/",
-        "cs-fix": "phpcbf --colors -p --extensions=php --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml --ignore=/tests/_data/,/_support/ src/ tests/",
+        "cs-check": "phpcs src/ tests/",
+        "cs-fix": "phpcbf src/ tests/",
         "stan": "phpstan analyze --memory-limit=1G",
         "test": "codecept build && codecept run"
     },

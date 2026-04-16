@@ -12,9 +12,6 @@ use ArchitectureSnifferTest\AbstractArchitectureSnifferRuleTest;
 
 class DirectRelationshipResolverInterfaceUsageRuleTest extends AbstractArchitectureSnifferRuleTest
 {
-    /**
-     * @return void
-     */
     public function testRuleAppliesWhenExternalClassImplementsRelationshipResolverInterface(): void
     {
         $rule = new DirectRelationshipResolverInterfaceUsageRule();
@@ -22,9 +19,6 @@ class DirectRelationshipResolverInterfaceUsageRuleTest extends AbstractArchitect
         $rule->apply($this->getClassNode());
     }
 
-    /**
-     * @return void
-     */
     public function testRuleDoesNotApplyWhenClassIsInsideApiPlatformNamespace(): void
     {
         $rule = new DirectRelationshipResolverInterfaceUsageRule();
@@ -32,9 +26,6 @@ class DirectRelationshipResolverInterfaceUsageRuleTest extends AbstractArchitect
         $rule->apply($this->getClassNode());
     }
 
-    /**
-     * @return void
-     */
     public function testRuleDoesNotApplyWhenClassImplementsUnrelatedInterface(): void
     {
         $rule = new DirectRelationshipResolverInterfaceUsageRule();
@@ -42,9 +33,6 @@ class DirectRelationshipResolverInterfaceUsageRuleTest extends AbstractArchitect
         $rule->apply($this->getClassNode());
     }
 
-    /**
-     * @return void
-     */
     public function testRuleDoesNotApplyWhenClassImplementsNoInterfaces(): void
     {
         $rule = new DirectRelationshipResolverInterfaceUsageRule();
@@ -52,9 +40,6 @@ class DirectRelationshipResolverInterfaceUsageRuleTest extends AbstractArchitect
         $rule->apply($this->getClassNode());
     }
 
-    /**
-     * @return void
-     */
     public function testGetDescription(): void
     {
         $this->assertIsString((new DirectRelationshipResolverInterfaceUsageRule())->getDescription());

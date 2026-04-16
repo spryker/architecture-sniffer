@@ -13,35 +13,18 @@ use PHPMD\Rule\ClassAware;
 
 class DirectRelationshipResolverInterfaceUsageRule extends AbstractRule implements ClassAware
 {
-    /**
-     * @var string
-     */
-    public const RULE = 'No direct use of the RelationshipResolverInterface use the AbstractRelationshipResolver instead';
+    public const string RULE = 'No direct use of the RelationshipResolverInterface use the AbstractRelationshipResolver instead';
 
-    /**
-     * @var string
-     */
-    protected const RELATIONSHIP_RESOLVER_INTERFACE = 'Spryker\\ApiPlatform\\Relationship\\RelationshipResolverInterface';
+    protected const string RELATIONSHIP_RESOLVER_INTERFACE = 'Spryker\\ApiPlatform\\Relationship\\RelationshipResolverInterface';
 
-    /**
-     * @var string
-     */
-    protected const EXEMPT_NAMESPACE_PREFIX = 'Spryker\\ApiPlatform\\';
+    protected const string EXEMPT_NAMESPACE_PREFIX = 'Spryker\\ApiPlatform\\';
 
-    /**
-     * @return string
-     */
-    public function getDescription()
+    public function getDescription(): string
     {
         return static::RULE;
     }
 
-    /**
-     * @param \PHPMD\AbstractNode $node
-     *
-     * @return void
-     */
-    public function apply(AbstractNode $node)
+    public function apply(AbstractNode $node): void
     {
         if ($this->isExempt($node)) {
             return;

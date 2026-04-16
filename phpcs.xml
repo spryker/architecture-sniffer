@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<ruleset name="ArchitectureSniffer">
+    <description>Architecture Sniffer coding standard</description>
+
+    <rule ref="vendor/spryker/code-sniffer/Spryker/ruleset.xml">
+        <exclude name="Spryker.Commenting.DocBlock"/>
+    </rule>
+
+    <exclude-pattern>/tests/_data/</exclude-pattern>
+    <exclude-pattern>/_support/</exclude-pattern>
+
+    <arg name="extensions" value="php"/>
+    <arg name="colors"/>
+    <arg value="ps"/>
+</ruleset>

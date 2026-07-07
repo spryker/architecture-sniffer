@@ -33,6 +33,9 @@ use phpDocumentor\Reflection\DocBlockFactory;
 use phpDocumentor\Reflection\DocBlockFactoryInterface;
 use PHPStan\BetterReflection\BetterReflection;
 use PHPStan\BetterReflection\Reflector\DefaultReflector;
+use PHPStan\BetterReflection\SourceLocator\Type\AggregateSourceLocator;
+use PHPStan\BetterReflection\SourceLocator\Type\AutoloadSourceLocator;
+use PHPStan\BetterReflection\SourceLocator\Type\PhpInternalSourceLocator;
 
 class PropelQueryFactory
 {
@@ -92,11 +95,23 @@ class PropelQueryFactory
     }
 
     /**
+     * The default reflector stubs already-loaded classes from runtime reflection
+     * (PhpInternalSourceLocator first), which fatals on application classes whose
+     * parameter defaults reference trait constants ("Cannot access trait constant
+     * ... directly"). Application classes are therefore parsed from their source
+     * files first; runtime stubbing stays as the fallback for PHP-internal classes.
+     *
      * @return \PHPStan\BetterReflection\Reflector\DefaultReflector
      */
     public function createClassReflector(): DefaultReflector
     {
-        return (new BetterReflection())->reflector();
+        $betterReflection = new BetterReflection();
+        $astLocator = $betterReflection->astLocator();
+
+        return new DefaultReflector(new AggregateSourceLocator([
+            new AutoloadSourceLocator($astLocator),
+            new PhpInternalSourceLocator($astLocator, $betterReflection->sourceStubber()),
+        ]));
     }
 
     /**

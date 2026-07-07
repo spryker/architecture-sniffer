@@ -25,7 +25,7 @@ class PathBuilder implements PathBuilderInterface
     /**
      * @var string
      */
-    protected const PATTERN_IN_TREE_CORE_PATH = '#^(.*[/\\\\]src[/\\\\](?:Spryker|SprykerShop|SprykerFeature|SprykerEco))[/\\\\][^/\\\\]+[/\\\\]src[/\\\\]#';
+    protected const string PATTERN_IN_TREE_CORE_PATH = '#^(.*[/\\\\]src[/\\\\](?:Spryker|SprykerShop|SprykerFeature|SprykerEco))[/\\\\][^/\\\\]+[/\\\\]src[/\\\\]#';
 
     /**
      * @param string $filePath
@@ -115,10 +115,8 @@ class PathBuilder implements PathBuilderInterface
     /**
      * Detects the in-tree core layout (`<root>/src/<Org>/<Module>/src/<Org>/<Application>/<Module>/...`,
      * e.g. the suite repository) where core modules live next to the analysed file instead of
-     * `vendor/spryker/<module>` or `Bundles/<Module>`. Returns the org directory containing the
-     * PascalCase module directories, or null for the classic layouts.
-     *
-     * @param string $filePath
+     * `vendor/spryker/<module>`. Returns the org directory containing the PascalCase module
+     * directories, or null for the classic layout.
      *
      * @return string|null
      */
@@ -131,12 +129,6 @@ class PathBuilder implements PathBuilderInterface
         return $matches[1] . DIRECTORY_SEPARATOR;
     }
 
-    /**
-     * @param string $moduleName
-     * @param \ArchitectureSniffer\Path\Transfer\PathTransfer $pathTransfer
-     *
-     * @return string
-     */
     public function getCoreModulePathByModuleName(string $moduleName, PathTransfer $pathTransfer): string
     {
         $coreModulePattern = implode(DIRECTORY_SEPARATOR, [
@@ -163,17 +155,9 @@ class PathBuilder implements PathBuilderInterface
             }
         }
 
-        $moduleDirectoryName = strpos($pathTransfer->getCorePath(), 'Bundles') ? $moduleName : $this->formatCamelCaseToSnakeCase($moduleName);
-
-        return $pathTransfer->getCorePath() . sprintf($coreModulePattern, $moduleDirectoryName, $moduleName) . DIRECTORY_SEPARATOR;
+        return $pathTransfer->getCorePath() . sprintf($coreModulePattern, $this->formatCamelCaseToSnakeCase($moduleName), $moduleName) . DIRECTORY_SEPARATOR;
     }
 
-    /**
-     * @param string $moduleName
-     * @param \ArchitectureSniffer\Path\Transfer\PathTransfer $pathTransfer
-     *
-     * @return string
-     */
     public function getProjectModulePathByModuleName(string $moduleName, PathTransfer $pathTransfer): string
     {
         $classicModulePath = $pathTransfer->getProjectPath() . $moduleName . DIRECTORY_SEPARATOR;
@@ -194,9 +178,6 @@ class PathBuilder implements PathBuilderInterface
     /**
      * Module-split project layout: `<root>/src/Pyz/<Module>/src/Pyz/Zed/<Module>/...`
      * (the classic layout is `<root>/src/Pyz/Zed/<Module>/...`).
-     *
-     * @param string $moduleName
-     * @param \ArchitectureSniffer\Path\Transfer\PathTransfer $pathTransfer
      *
      * @return string|null
      */
@@ -229,11 +210,6 @@ class PathBuilder implements PathBuilderInterface
         return $modulePath . DIRECTORY_SEPARATOR . static::PATTERN_PATH_MODULE_SCHEMA_FOLDER . DIRECTORY_SEPARATOR;
     }
 
-    /**
-     * @param string $directoryPath
-     *
-     * @return bool
-     */
     protected function directoryExistsWithExactCase(string $directoryPath): bool
     {
         $directoryPath = rtrim($directoryPath, DIRECTORY_SEPARATOR);

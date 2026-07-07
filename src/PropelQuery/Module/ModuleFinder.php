@@ -182,8 +182,6 @@ class ModuleFinder implements ModuleFinderInterface
      * so the `@return` tag is read from the raw doc comment, falling back to the
      * declared native return type.
      *
-     * @param \PHPStan\BetterReflection\Reflection\ReflectionMethod $reflectionMethod
-     *
      * @return string|null
      */
     protected function getReturnTypeName(ReflectionMethod $reflectionMethod): ?string

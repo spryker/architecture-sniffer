@@ -16,41 +16,41 @@ class PathBuilderTest extends Unit
 
     public function testGivenInTreeLayoutFilePathWhenGetCorePathIsCalledThenOrgDirectoryIsReturned(): void
     {
-        // Given
+        // Arrange
         $pathBuilder = new PathBuilder();
         $filePath = $this->getFixturePath('in-tree/src/Spryker/Customer/src/Spryker/Zed/Customer/Persistence/CustomerRepository.php');
 
-        // When
+        // Act
         $corePath = $pathBuilder->getCorePath($filePath);
 
-        // Then
+        // Assert
         $this->assertSame($this->getFixturePath('in-tree/src/Spryker') . DIRECTORY_SEPARATOR, $corePath);
     }
 
     public function testGivenVendorLayoutFilePathWhenGetCorePathIsCalledThenVendorSprykerDirectoryIsReturned(): void
     {
-        // Given
+        // Arrange
         $pathBuilder = new PathBuilder();
         $filePath = $this->getFixturePath('vendor-layout/vendor/spryker/comment/src/Spryker/Zed/Comment/Persistence/CommentRepository.php');
 
-        // When
+        // Act
         $corePath = $pathBuilder->getCorePath($filePath);
 
-        // Then
+        // Assert
         $this->assertSame($this->getFixturePath('vendor-layout/vendor/spryker') . DIRECTORY_SEPARATOR, $corePath);
     }
 
     public function testGivenInTreeLayoutWhenGetCoreModulePathIsCalledThenPascalCaseModuleDirectoryIsReturned(): void
     {
-        // Given
+        // Arrange
         $pathBuilder = new PathBuilder();
         $filePath = $this->getFixturePath('in-tree/src/Spryker/Customer/src/Spryker/Zed/Customer/Persistence/CustomerRepository.php');
         $pathTransfer = $pathBuilder->getPath($filePath);
 
-        // When
+        // Act
         $coreModulePath = $pathBuilder->getCoreModulePathByModuleName('Customer', $pathTransfer);
 
-        // Then
+        // Assert
         $this->assertSame(
             realpath($this->getFixturePath('in-tree/src/Spryker/Customer/src/Spryker/Zed/Customer')),
             realpath($coreModulePath),
@@ -59,15 +59,15 @@ class PathBuilderTest extends Unit
 
     public function testGivenVendorLayoutWhenGetCoreModulePathIsCalledThenSnakeCaseModuleDirectoryIsReturned(): void
     {
-        // Given
+        // Arrange
         $pathBuilder = new PathBuilder();
         $filePath = $this->getFixturePath('vendor-layout/vendor/spryker/comment/src/Spryker/Zed/Comment/Persistence/CommentRepository.php');
         $pathTransfer = $pathBuilder->getPath($filePath);
 
-        // When
+        // Act
         $coreModulePath = $pathBuilder->getCoreModulePathByModuleName('Customer', $pathTransfer);
 
-        // Then
+        // Assert
         $this->assertSame(
             realpath($this->getFixturePath('vendor-layout/vendor/spryker/customer/src/Spryker/Zed/Customer')),
             realpath($coreModulePath),
@@ -76,15 +76,15 @@ class PathBuilderTest extends Unit
 
     public function testGivenClassicProjectLayoutWhenGetProjectModulePathIsCalledThenClassicModuleDirectoryIsReturned(): void
     {
-        // Given
+        // Arrange
         $pathBuilder = new PathBuilder();
         $filePath = $this->getFixturePath('project-classic/src/Pyz/Zed/Comment/Persistence/CommentRepository.php');
         $pathTransfer = $pathBuilder->getPath($filePath);
 
-        // When
+        // Act
         $projectModulePath = $pathBuilder->getProjectModulePathByModuleName('Customer', $pathTransfer);
 
-        // Then
+        // Assert
         $this->assertSame(
             realpath($this->getFixturePath('project-classic/src/Pyz/Zed/Customer')),
             realpath($projectModulePath),
@@ -93,15 +93,15 @@ class PathBuilderTest extends Unit
 
     public function testGivenSplitProjectLayoutWhenGetProjectModulePathIsCalledThenSplitModuleDirectoryIsReturned(): void
     {
-        // Given
+        // Arrange
         $pathBuilder = new PathBuilder();
         $filePath = $this->getFixturePath('project-split/src/Pyz/Comment/src/Pyz/Zed/Comment/Persistence/CommentRepository.php');
         $pathTransfer = $pathBuilder->getPath($filePath);
 
-        // When
+        // Act
         $projectModulePath = $pathBuilder->getProjectModulePathByModuleName('Customer', $pathTransfer);
 
-        // Then
+        // Assert
         $this->assertSame(
             realpath($this->getFixturePath('project-split/src/Pyz/Customer/src/Pyz/Zed/Customer')),
             realpath($projectModulePath),

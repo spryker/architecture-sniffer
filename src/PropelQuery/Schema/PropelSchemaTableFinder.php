@@ -14,6 +14,7 @@ use ArchitectureSniffer\PropelQuery\ClassNode\Transfer\ClassNodeTransfer;
 use ArchitectureSniffer\PropelQuery\Module\ModuleFinderInterface;
 use ArchitectureSniffer\PropelQuery\Schema\Transfer\PropelSchemaTableRelationTransfer;
 use ArchitectureSniffer\PropelQuery\Schema\Transfer\PropelSchemaTableTransfer;
+use ArrayIterator;
 use Countable;
 use Laminas\Config\Reader\ReaderInterface;
 use Symfony\Component\Finder\Finder;
@@ -102,7 +103,7 @@ class PropelSchemaTableFinder implements PropelSchemaTableFinderInterface
             );
         }
 
-        return $tableTransfers[$tableTransfer->getTableName()];
+        return $tableTransfers[$tableTransfer->getTableName()] ?? null;
     }
 
     /**
@@ -356,13 +357,27 @@ class PropelSchemaTableFinder implements PropelSchemaTableFinderInterface
             DIRECTORY_SEPARATOR,
             ['*', 'Persistence', 'Propel', 'Schema'],
         );
+        // Module-split project layout: <root>/src/Pyz/<Module>/src/Pyz/Zed/<Module>/...
+        $splitProjectPropelSchemaDirectoryPattern = dirname($pathTransfer->getProjectPath()) . DIRECTORY_SEPARATOR . implode(
+            DIRECTORY_SEPARATOR,
+            ['*', 'src', 'Pyz', 'Zed', '*', 'Persistence', 'Propel', 'Schema'],
+        );
+
+        // Finder::in() throws when a pattern matches no directory, so only
+        // patterns that resolve on this layout are passed on.
+        $schemaDirectories = array_merge(
+            glob($corePropelSchemaDirectoryPattern) ?: [],
+            glob($projectPropelSchemaDirectoryPattern) ?: [],
+            glob($splitProjectPropelSchemaDirectoryPattern) ?: [],
+        );
+
+        if ($schemaDirectories === []) {
+            return new ArrayIterator([]);
+        }
 
         $finder = $this->createFinder();
 
-        $finder->in([
-            $corePropelSchemaDirectoryPattern,
-            $projectPropelSchemaDirectoryPattern,
-        ])->name('*.schema.xml')->contains($pattern);
+        $finder->in($schemaDirectories)->name('*.schema.xml')->contains($pattern);
 
         return $finder->files();
     }
@@ -384,7 +399,7 @@ class PropelSchemaTableFinder implements PropelSchemaTableFinderInterface
         }
 
         $tableTransferPhpName = $tableTransfer->getPhpName();
-        $phpName = $relationTable['phpName'];
+        $phpName = $relationTable['phpName'] ?? null;
 
         if ($tableTransferPhpName === null && $phpName !== null) {
             $tableTransfer->setPhpName($phpName);

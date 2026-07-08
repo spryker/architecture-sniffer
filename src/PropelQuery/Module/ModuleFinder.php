@@ -10,6 +10,8 @@ namespace ArchitectureSniffer\PropelQuery\Module;
 use ArchitectureSniffer\Module\ModuleFinderInterface as ArchitectureSnifferModuleFinderInterface;
 use ArchitectureSniffer\Path\PathBuilderInterface;
 use ArchitectureSniffer\PropelQuery\ClassNode\Transfer\ClassNodeTransfer;
+use PHPStan\BetterReflection\Reflection\ReflectionMethod;
+use PHPStan\BetterReflection\Reflection\ReflectionNamedType;
 use PHPStan\BetterReflection\Reflector\DefaultReflector;
 
 class ModuleFinder implements ModuleFinderInterface
@@ -151,21 +153,52 @@ class ModuleFinder implements ModuleFinderInterface
     protected function getModuleNamesByQueryNames(array $queryNames, ClassNodeTransfer $classNodeTransfer): array
     {
         $persistenceFactoryClassName = $this->getPersistenceFactoryClassName($classNodeTransfer);
-        $reflectionPersistenceFactoryClass = $this->classReflector->reflect($persistenceFactoryClassName);
+        $reflectionPersistenceFactoryClass = $this->classReflector->reflectClass($persistenceFactoryClassName);
 
         $queryModuleNames = [];
         foreach ($queryNames as $queryName) {
-            $returnTypes = $reflectionPersistenceFactoryClass->getMethod($queryName)->getDocBlockReturnTypes();
+            $reflectionMethod = $reflectionPersistenceFactoryClass->getMethod($queryName);
 
-            $returnType = array_shift($returnTypes);
-            $returnType = $returnType->__toString();
+            if ($reflectionMethod === null) {
+                continue;
+            }
 
-            $queryModuleName = str_replace('\\Orm\\Zed\\', '', $returnType);
+            $returnType = $this->getReturnTypeName($reflectionMethod);
+
+            if ($returnType === null) {
+                continue;
+            }
+
+            $queryModuleName = str_replace('Orm\\Zed\\', '', ltrim($returnType, '\\'));
             $queryModuleName = explode('\\', $queryModuleName);
             $queryModuleNames[] = array_shift($queryModuleName);
         }
 
         return array_unique($queryModuleNames);
+    }
+
+    /**
+     * The BetterReflection bundled with PHPStan 2.x removed `getDocBlockReturnTypes()`,
+     * so the `@return` tag is read from the raw doc comment, falling back to the
+     * declared native return type.
+     *
+     * @return string|null
+     */
+    protected function getReturnTypeName(ReflectionMethod $reflectionMethod): ?string
+    {
+        $docComment = (string)$reflectionMethod->getDocComment();
+
+        if ($docComment !== '' && preg_match('/@return\s+([^\s|]+)/', $docComment, $matches)) {
+            return $matches[1];
+        }
+
+        $returnType = $reflectionMethod->getReturnType();
+
+        if ($returnType instanceof ReflectionNamedType) {
+            return $returnType->getName();
+        }
+
+        return null;
     }
 
     /**

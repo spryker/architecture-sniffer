@@ -12,6 +12,12 @@ coverage:
   whitelist: { include: ['../../src/*'] }
 
 suites:
+  Path:
+    path: Path
+    class_name: CommonTester
+    modules:
+      enabled:
+        - Asserts
   Plugin:
     path: Plugin
     class_name: CommonTester

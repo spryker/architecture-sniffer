@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<ruleset name="Spryker Project PHPMD stantarts"
+         xmlns="http://pmd.sf.net/ruleset/1.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://pmd.sf.net/ruleset/1.0.0
+                     http://pmd.sf.net/ruleset_xml_schema.xsd"
+         xsi:noNamespaceSchemaLocation="
+                     http://pmd.sf.net/ruleset_xml_schema.xsd">
+    <description>
+        Asserting clean code architecture with Spryker project.
+    </description>
+
+    <exclude-pattern>Persistence/Propel</exclude-pattern>
+    <exclude-pattern>Presentation</exclude-pattern>
+    <exclude-pattern>tests/_data</exclude-pattern>
+    <exclude-pattern>tests/_output</exclude-pattern>
+    <exclude-pattern>tests/_support</exclude-pattern>
+
+    <exclude-pattern>*/Orm/*</exclude-pattern>
+    <exclude-pattern>*/Generated/*</exclude-pattern>
+
+    <rule ref="vendor/spryker/architecture-sniffer/src/Project/PhpMd/cleancode.xml" />
+    <rule ref="vendor/spryker/architecture-sniffer/src/Project/PhpMd/codesize.xml" />
+    <rule ref="vendor/spryker/architecture-sniffer/src/Project/PhpMd/controversial.xml" />
+    <rule ref="vendor/spryker/architecture-sniffer/src/Project/PhpMd/design.xml" />
+    <rule ref="vendor/spryker/architecture-sniffer/src/Project/PhpMd/naming.xml" />
+    <rule ref="vendor/spryker/architecture-sniffer/src/Project/PhpMd/unusedcode.xml" />
+
+</ruleset>

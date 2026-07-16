@@ -1,0 +1,133 @@
+<?xml version="1.0"?>
+<ruleset name="Spryker Project Zed"
+         xmlns="http://pmd.sf.net/ruleset/1.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://pmd.sf.net/ruleset/1.0.0
+                     http://pmd.sf.net/ruleset_xml_schema.xsd"
+         xsi:noNamespaceSchemaLocation="
+                     http://pmd.sf.net/ruleset_xml_schema.xsd">
+    <description>
+        Asserting clean code architecture with Spryker project.
+    </description>
+
+    <!-- BUSINESS FACADE RULES -->
+    <rule
+            name="AllMethodsPublicInFacadeRule"
+            message="Zed Business Layer - Facade: {0}"
+            class="ArchitectureSniffer\Zed\Business\Facade\AllMethodsPublicInFacadeRule">
+
+        <priority>2</priority>
+    </rule>
+
+    <rule
+            name="FacadeArgumentsNotAllowedUseEntityTransferRule"
+            message="Zed Business Layer - Facade: {0}"
+            class="ArchitectureSniffer\Zed\Business\Facade\FacadeArgumentsNotAllowedUseEntityTransferRule">
+
+        <priority>2</priority>
+    </rule>
+
+    <rule
+            name="FacadeNoLogicRule"
+            message="Zed Business Layer - Facade: {0}"
+            class="ArchitectureSniffer\Zed\Business\Facade\FacadeNoLogicRule">
+
+        <priority>2</priority>
+    </rule>
+
+    <rule
+            name="FacadeRule"
+            message="Zed Business Layer - Facade: {0}"
+            class="ArchitectureSniffer\Zed\Business\Facade\FacadeRule">
+
+        <priority>2</priority>
+    </rule>
+
+
+    <rule
+        name="FacadeInterfaceRule"
+        message="Zed Business Layer - Facade: {0}"
+        class="ArchitectureSniffer\Zed\Business\Facade\FacadeInterfaceRule">
+
+        <priority>2</priority>
+    </rule>
+
+    <rule
+            name="FacadeSingleFactoryCallRule"
+            message="Zed Business Layer - Facade: {0}"
+            class="ArchitectureSniffer\Zed\Business\Facade\FacadeSingleFactoryCallRule">
+
+        <priority>2</priority>
+    </rule>
+
+    <rule
+        name="ZedDependencyProviderMethodNameRule"
+        message="Zed DependencyProvider - DependencyProvider: {0}"
+        class="ArchitectureSniffer\Zed\DependencyProvider\DependencyProviderMethodNameRule">
+
+        <priority>3</priority>
+    </rule>
+
+
+    <!-- COMMUNICATION PLUGIN RULES -->
+    <rule
+        name="PluginArgumentsNotAllowedUseEntityTransferRule"
+        message="Zed Communication Layer - Plugin: {0}"
+        class="ArchitectureSniffer\Zed\Communication\Plugin\PluginArgumentsNotAllowedUseEntityTransferRule">
+
+        <priority>2</priority>
+    </rule>
+
+    <!-- Zed DependencyProvider - RFC Propel Query -->
+    <rule
+        name="ZedDependencyProviderPropelQueryConstantNameRule"
+        message="Zed DependencyProvider - DependencyProvider: {0}"
+        class="ArchitectureSniffer\Zed\DependencyProvider\DependencyProviderPropelQueryConstantNameRule">
+
+        <priority>4</priority>
+    </rule>
+
+    <rule
+        name="ZedDependencyProviderPropelQueryMethodNameRule"
+        message="Zed DependencyProvider - DependencyProvider: {0}"
+        class="ArchitectureSniffer\Zed\DependencyProvider\DependencyProviderPropelQueryMethodNameRule">
+
+        <priority>4</priority>
+    </rule>
+
+
+    <!-- CUSTOM PROJECT ARCHITECTURE RULES -->
+
+    <rule
+        name="OrmNewEntityNotInCommunicationRule"
+        message="Access: {0}"
+        class="ArchitectureSniffer\Project\Zed\OrmNewEntityNotInCommunicationRule">
+
+        <priority>2</priority>
+    </rule>
+
+    <rule
+        name="RepositoryReadOnlyRule"
+        message="Repository: {0}"
+        class="ArchitectureSniffer\Project\Zed\RepositoryReadOnlyRule">
+
+        <priority>2</priority>
+    </rule>
+
+    <rule
+        name="OrmAccessRule"
+        message="Access: {0}"
+        class="ArchitectureSniffer\Project\Zed\OrmAccessRule">
+
+        <priority>2</priority>
+    </rule>
+
+    <rule
+        name="RestrictedOrmQueryAccessInZedPersistenceRule"
+        message="Access: {0}"
+        class="ArchitectureSniffer\Project\Zed\RestrictedOrmQueryAccessInZedPersistenceRule">
+
+        <priority>2</priority>
+    </rule>
+
+</ruleset>

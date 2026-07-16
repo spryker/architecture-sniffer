@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<ruleset name="Spryker Project Code Size"
+         xmlns="http://pmd.sf.net/ruleset/1.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://pmd.sf.net/ruleset/1.0.0
+                     http://pmd.sf.net/ruleset_xml_schema.xsd"
+         xsi:noNamespaceSchemaLocation="
+                     http://pmd.sf.net/ruleset_xml_schema.xsd">
+    <description>
+        The Code Size Ruleset contains a collection of rules that find code size related problems.
+    </description>
+
+    <rule ref="vendor/phpmd/phpmd/src/main/resources/rulesets/codesize.xml/CyclomaticComplexity">
+        <priority>3</priority>
+    </rule>
+
+    <rule ref="vendor/phpmd/phpmd/src/main/resources/rulesets/codesize.xml/NPathComplexity">
+        <priority>3</priority>
+    </rule>
+
+    <rule ref="vendor/phpmd/phpmd/src/main/resources/rulesets/codesize.xml/ExcessiveClassComplexity">
+        <priority>3</priority>
+        <properties>
+            <property name="maximum" description="The maximum WMC tolerable for a class." value="100"/>
+        </properties>
+    </rule>
+
+    <rule ref="vendor/phpmd/phpmd/src/main/resources/rulesets/codesize.xml/ExcessiveParameterList">
+        <priority>3</priority>
+        <properties>
+            <property name="minimum" description="The parameter count reporting threshold" value="15"/>
+        </properties>
+    </rule>
+
+</ruleset>

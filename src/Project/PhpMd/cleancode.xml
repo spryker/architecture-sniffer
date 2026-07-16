@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<ruleset name="Spryker Project Clean Code"
+         xmlns="http://pmd.sf.net/ruleset/1.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://pmd.sf.net/ruleset/1.0.0
+                     http://pmd.sf.net/ruleset_xml_schema.xsd"
+         xsi:noNamespaceSchemaLocation="
+                     http://pmd.sf.net/ruleset_xml_schema.xsd">
+    <description>
+        The Clean Code ruleset contains rules that enforce a clean code base. This includes rules from SOLID and object calisthenics.
+    </description>
+
+    <rule ref="vendor/phpmd/phpmd/src/main/resources/rulesets/cleancode.xml/UndefinedVariable" >
+        <priority>1</priority>
+    </rule>
+
+    <rule ref="vendor/phpmd/phpmd/src/main/resources/rulesets/cleancode.xml/ElseExpression" >
+        <priority>3</priority>
+    </rule>
+
+    <rule ref="vendor/phpmd/phpmd/src/main/resources/rulesets/cleancode.xml/IfStatementAssignment" >
+        <priority>3</priority>
+    </rule>
+
+    <rule ref="vendor/phpmd/phpmd/src/main/resources/rulesets/cleancode.xml/DuplicatedArrayKey" >
+        <priority>3</priority>
+    </rule>
+
+    <rule ref="vendor/phpmd/phpmd/src/main/resources/rulesets/cleancode.xml/ErrorControlOperator" >
+        <priority>3</priority>
+    </rule>
+
+    <rule ref="vendor/phpmd/phpmd/src/main/resources/rulesets/cleancode.xml/MissingImport" >
+        <priority>3</priority>
+    </rule>
+
+    <rule ref="vendor/phpmd/phpmd/src/main/resources/rulesets/cleancode.xml/BooleanArgumentFlag" >
+        <priority>4</priority>
+    </rule>
+
+</ruleset>

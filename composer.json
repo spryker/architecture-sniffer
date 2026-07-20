@@ -52,6 +52,9 @@
             "ArchitectureSnifferTest\\": "tests/"
         }
     },
+    "bin": [
+        "bin/spryker-architecture"
+    ],
     "scripts": {
         "cs-check": "phpcs src/ tests/",
         "cs-fix": "phpcbf src/ tests/",

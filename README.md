@@ -70,7 +70,7 @@ Recommended minimum priority per project maturity:
 
 ### Usage
 ```
-vendor/bin/phpmd src/Pyz/ (json|text|html) vendor/spryker/architecture-sniffer/src/Project/ruleset.xml --minimumpriority=4
+vendor/bin/phpmd src/ (json|text|html) vendor/spryker/architecture-sniffer/src/Project/ruleset.xml --minimumpriority=4
 ```
 
 ### Setup for the project & customizing rules
@@ -80,7 +80,7 @@ vendor/bin/spryker-architecture setup-project [<destination>]
 ```
 `<destination>` defaults to `architecture-sniffer`. After setup, run phpmd against the copied ruleset instead of the vendor one, and change it freely for project needs:
 ```
-vendor/bin/phpmd src/Pyz/ (json|text|html) architecture-sniffer/ruleset.xml --minimumpriority=3
+vendor/bin/phpmd src/ (json|text|html) architecture-sniffer/ruleset.xml --minimumpriority=4
 ```
 The commands below use this project-level path.
 
@@ -91,10 +91,20 @@ The commands below use this project-level path.
 - `Client/ruleset.xml`, `Glue/ruleset.xml`, `Service/ruleset.xml`, `Shared/ruleset.xml`, `Yves/ruleset.xml`, `Zed/ruleset.xml` — layer-specific rules
 - `SprykerProject/ruleset.xml`
 
-### Readable project results
-`json` output is compact but hard to read. Convert a phpmd JSON report into a grouped, human-readable summary:
+### Local Code Review Usage
+For a local review, save the report to JSON and format it into a grouped, human-readable summary.
+
+Save the report (scan all priorities for an AI-assisted review):
 ```
-vendor/bin/phpmd src/Pyz/ json architecture-sniffer/ruleset.xml > architecture-results.json
+vendor/bin/phpmd src/ json vendor/spryker/architecture-sniffer/src/Project/ruleset.xml --minimumpriority 4 --reportfile architecture-results.json
+```
+or
+```
+vendor/bin/phpmd src/ json architecture-sniffer/ruleset.xml --minimumpriority 4 --reportfile architecture-results.json
+```
+
+Format it:
+```
 vendor/bin/spryker-architecture format-project-results architecture-results.json [<output.txt>]
 ```
 Without `<output.txt>` the formatted report is printed to stdout.
@@ -103,10 +113,10 @@ Without `<output.txt>` the formatted report is printed to stdout.
 Adopt the ruleset on an existing project without refactoring legacy code first: generate a baseline of the current violations and only fail on new ones.
 ```
 # generate phpmd.baseline.xml next to the ruleset
-vendor/bin/phpmd src/Pyz/ text architecture-sniffer/ruleset.xml --generate-baseline
+vendor/bin/phpmd src/ text architecture-sniffer/ruleset.xml --generate-baseline
 
 # subsequent runs ignore baselined violations
-vendor/bin/phpmd src/Pyz/ text architecture-sniffer/ruleset.xml --baseline-file phpmd.baseline.xml
+vendor/bin/phpmd src/ text architecture-sniffer/ruleset.xml --baseline-file phpmd.baseline.xml
 ```
 Use `--update-baseline` to drop violations that no longer exist. Store the baseline in version control and shrink it over time.
 

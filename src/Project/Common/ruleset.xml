@@ -150,7 +150,7 @@
         <properties>
             <property name="moduleexcludelist"
                       description="Comma-separated list of module names excluded from the weird-module-name check."
-                      value="ExampleProductSalePage,WaterTreatmentConfiguratorPageExample,TestifyBackendApi,ClickAndCollectPageExample,DummyMarketplacePayment,DummyPayment,ExampleChart,ClickAndCollectExample,ExampleStateMachine"/>
+                      value="Testify,TestifyBackendApi,DummyMarketplacePayment,DummyPayment"/>
             <!-- Optional: override the weird-word list (default: "test,dummy,example,antelope").
                  <property name="weirdwords" description="Comma-separated list of weird words" value="test,dummy,example,antelope"/> -->
         </properties>

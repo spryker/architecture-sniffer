@@ -76,6 +76,10 @@ class OrmAccessRule extends AbstractRule implements ClassAware
      */
     protected function applyPatterns(AbstractNode $node, array $patterns)
     {
+        if ($node->hasSuppressWarningsAnnotationFor($this)) {
+            return;
+        }
+
         foreach ($node->getDependencies() as $dependency) {
             $targetQName = sprintf('%s\\%s', $dependency->getNamespaceName(), $dependency->getName());
 

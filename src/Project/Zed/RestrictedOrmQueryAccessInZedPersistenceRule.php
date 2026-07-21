@@ -76,6 +76,10 @@ class RestrictedOrmQueryAccessInZedPersistenceRule extends AbstractRule implemen
      */
     protected function applyRule(AbstractNode $node): void
     {
+        if ($node->hasSuppressWarningsAnnotationFor($this)) {
+            return;
+        }
+
         foreach ($node->getDependencies() as $dependency) {
             $targetQName = sprintf('%s\\%s', $dependency->getNamespaceName(), $dependency->getName());
 

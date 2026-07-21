@@ -55,6 +55,10 @@ class ProjectNoBridgeRule extends AbstractRule implements ClassAware
         }
 
         foreach ($node->getMethods() as $method) {
+            if ($method->hasSuppressWarningsAnnotationFor($this)) {
+                continue;
+            }
+
             foreach ($method->getDependencies() as $dependency) {
                 $targetQName = sprintf('%s\\%s', $dependency->getNamespaceName(), $dependency->getName());
 

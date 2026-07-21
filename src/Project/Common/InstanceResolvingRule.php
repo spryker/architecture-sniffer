@@ -53,6 +53,10 @@ class InstanceResolvingRule extends AbstractRule implements ClassAware
         }
 
         foreach ($node->getMethods() as $methodNode) {
+            if ($methodNode->hasSuppressWarningsAnnotationFor($this)) {
+                continue;
+            }
+
             $methodName = $methodNode->getImage();
             $allocatedExpressions = $methodNode->findChildrenOfType('AllocationExpression');
 

@@ -54,6 +54,10 @@ class OrmNewEntityNotInCommunicationRule extends AbstractRule implements ClassAw
         }
 
         foreach ($node->getMethods() as $methodNode) {
+            if ($methodNode->hasSuppressWarningsAnnotationFor($this)) {
+                continue;
+            }
+
             $methodName = $methodNode->getImage();
             $allocatedExpressions = $methodNode->findChildrenOfType('AllocationExpression');
 

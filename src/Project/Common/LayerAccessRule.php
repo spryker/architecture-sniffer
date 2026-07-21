@@ -161,6 +161,10 @@ class LayerAccessRule extends AbstractRule implements ClassAware
      */
     protected function applyPatterns(AbstractNode $node, array $patterns)
     {
+        if ($node->hasSuppressWarningsAnnotationFor($this)) {
+            return;
+        }
+
         $ignoreDependencyPattern = $this->getStringProperty('ignoredependencypattern', '');
 
         foreach ($node->getDependencies() as $dependency) {

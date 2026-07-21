@@ -19,6 +19,11 @@ class ProjectNoBridgeRule extends AbstractRule implements ClassAware
     public const RULE = 'Project should not use and depend on Bridge pattern.';
 
     /**
+     * @var string
+     */
+    protected const REGEX_BRIDGE = '/\w+Bridge$/';
+
+    /**
      * @return string
      */
     public function getDescription(): string
@@ -40,7 +45,7 @@ class ProjectNoBridgeRule extends AbstractRule implements ClassAware
 
         $isClassIgnored = $ignoreClassPattern !== '' && preg_match($ignoreClassPattern, $fullClassName) === 1;
 
-        if (!$isClassIgnored && preg_match('([\w]+Bridge$)', $fullClassName) === 1) {
+        if (!$isClassIgnored && preg_match(static::REGEX_BRIDGE, $fullClassName) === 1) {
             $this->addViolation(
                 $node,
                 [
@@ -57,7 +62,7 @@ class ProjectNoBridgeRule extends AbstractRule implements ClassAware
                     continue;
                 }
 
-                if (preg_match('([\w]+Bridge$)', $targetQName) === 1) {
+                if (preg_match(static::REGEX_BRIDGE, $targetQName) === 1) {
                     $this->addViolation(
                         $method,
                         [

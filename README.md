@@ -8,137 +8,120 @@
 
 Architecture Sniffer for Spryker core, eco-system and applications.
 
-This package ships **two rulesets**:
+The package ships two independent rulesets. Use the one that matches what you are working on:
 
-- The **core ruleset** (`src/ruleset.xml`) — for developers of Spryker core, eco-system and
-  standalone modules. Unchanged.
-- The **project ruleset** (`src/Project/ruleset.xml`) — for project teams validating their own
-  `src/Pyz/` application code. It merges the [project architecture sniffer rules](documentations/PROJECTrules.md),
-  the [adapted core-Spryker rules](documentations/SPRYKERrules.md), and a curated set of
-  [adapted PHPMD rules](documentations/PHPMDrules.md).
+| Ruleset | For | Path |
+|---|---|---|
+| Core | Spryker core, eco-system and module development | `vendor/spryker/architecture-sniffer/src/ruleset.xml` |
+| Project | Application (project) development | `vendor/spryker/architecture-sniffer/src/Project/ruleset.xml` |
 
-## Priority Levels
-
-- `1`: API and critical
-- `2`: Non critical (nice to have)
-- `3`: Experimental (inspected code needs further fixing)
-- `4`: Minor
-
-We use and recommend minimum priority `2` by default for the **core** ruleset.
-For the **project** ruleset we recommend minimum priority `3` by default for local and CI checks.
-
-Note: Lower priorities (higher numbers) always include the higher priorities (lower numbers).
-
-## Content
-
-The project ruleset aggregates:
-
-- `35` adapted [PHPMD rules](documentations/PHPMDrules.md)
-- `30` adapted [Spryker Architecture sniffer rules](documentations/SPRYKERrules.md)
-- `13` new [Project Architecture sniffer rules](documentations/PROJECTrules.md)
-
-## Usage
-
-Make sure you include the sniffer as `require-dev` dependency:
+Make sure the sniffer is installed as a `require-dev` dependency:
 ```
 composer require --dev spryker/architecture-sniffer
 ```
 
-### Spryker Usage
-When using Spryker you can use the Spryker CLI console command for it:
+Common to both: lower priorities (higher numbers) always include the higher priorities (lower numbers) — a run at priority `3` also reports `1` and `2`.
+
+
+## Spryker Core Development
+
+Use the core ruleset `src/ruleset.xml`.
+
+### Priority Levels
+- `1`: API and critical
+- `2`: Non critical (nice to have)
+- `3`: Experimental (inspected code needs further fixing)
+
+We use and recommend minimum priority `2` by default for local and CI checks.
+
+### Usage
+When using Spryker you can use the Spryker CLI console command:
 ```
 console code:sniff:architecture [-m ModuleName] [optional-sub-path] -v [-p priority]
 ```
 Verbose output is recommended here.
 
-### Running the core ruleset (core / eco-system / module developers)
-Validate core-style code against the unchanged core ruleset:
+Or run it manually:
 ```
-vendor/bin/phpmd src/Spryker/ text vendor/spryker/architecture-sniffer/src/ruleset.xml --minimumpriority 2
-```
-
-### Running the project ruleset (project teams)
-Validate your project application code (`src/Pyz/`) against the project ruleset:
-```
-PHPMD_ALLOW_XDEBUG=true vendor/bin/phpmd src/Pyz/ text vendor/spryker/architecture-sniffer/src/Project/ruleset.xml --minimumpriority 3
-```
-
-Note: Lower priorities always include the higher priorities in the validation process.
-
-### Rulesets
-
-| Ruleset | Path | Contains |
-|---|---|---|
-| Core | `vendor/spryker/architecture-sniffer/src/ruleset.xml` | Core Spryker architecture rules (unchanged). |
-| Project — all | `vendor/spryker/architecture-sniffer/src/Project/ruleset.xml` | Everything: PHPMD + adapted Spryker + new project rules. |
-| Project — Spryker + project only | `vendor/spryker/architecture-sniffer/src/Project/SprykerProject/ruleset.xml` | Adapted Spryker rules + new project rules, no PHPMD. |
-| Project — PHPMD only | `vendor/spryker/architecture-sniffer/src/Project/PhpMd/ruleset.xml` | The 35 adapted PHPMD rules only. |
-
-Note: the Glue project rules are referenced via `vendor/spryker/architecture-sniffer/src/Project/Glue/ruleset.xml`.
-It is wired in through the aggregating rulesets and does not need to be invoked directly.
-
-### Baseline
-
-Existing projects and demo-shops may already contain rule violations.
-The decision to refactor existing violations is at the discretion of each project.
-To integrate the project ruleset immediately without failing on pre-existing debt, generate a
-[baseline](https://phpmd.org/documentation/#baseline), commit it, and have CI run against it so
-only **new** violations fail the build.
-
-Generate the baseline:
-```
-vendor/bin/phpmd src/Pyz/ baseline vendor/spryker/architecture-sniffer/src/Project/ruleset.xml --baseline-file phpmd.project.baseline.xml
-```
-
-Commit the generated `phpmd.project.baseline.xml`. Then run CI with the baseline so only new
-violations fail:
-```
-PHPMD_ALLOW_XDEBUG=true vendor/bin/phpmd src/Pyz/ text vendor/spryker/architecture-sniffer/src/Project/ruleset.xml --minimumpriority 3 --baseline-file phpmd.project.baseline.xml
-```
-
-It is also permissible to [suppress rules](https://phpmd.org/documentation/suppress-warnings.html)
-on a case-by-case basis.
-
-### Local Code Review Usage
-
-Produce a JSON report, then render it into a readable summary with the bundled formatter:
-```
-vendor/bin/phpmd src/Pyz/ json vendor/spryker/architecture-sniffer/src/Project/ruleset.xml --minimumpriority 4 --reportfile results.json
-
-php vendor/spryker/architecture-sniffer/tools/formatProjectResults.php results.json
-```
-
-### Debugging
-
-PHPMD disables Xdebug by default. To run with Xdebug attached (for example when stepping through a
-rule), allow it explicitly:
-```
-PHPMD_ALLOW_XDEBUG=true vendor/bin/phpmd src/Pyz/ text vendor/spryker/architecture-sniffer/src/Project/ruleset.xml --minimumpriority 3
-```
-
-Inside the dockerized Spryker SDK, start the CLI container with Xdebug enabled:
-```
-docker/sdk cli -x
+vendor/bin/phpmd src/Pyz/ (xml|text|html) vendor/spryker/architecture-sniffer/src/ruleset.xml --minimumpriority=2
 ```
 
 ### Including the sniffer in PHPStorm
-Add a new custom ruleset under `Editor -> Inspections -> PHP -> PHP Mess Detector validation`.
-Name it `Architecture Sniffer` for example.
+Add a new custom ruleset under `Editor -> Inspections -> PHP -> PHP Mess Detector validation` and name it `Architecture Sniffer`.
+The ruleset is defined in `vendor/spryker/architecture-sniffer/src/ruleset.xml`.
 
-The custom ruleset is defined in `vendor/spryker/architecture-sniffer/src/ruleset.xml` (core) or
-`vendor/spryker/architecture-sniffer/src/Project/ruleset.xml` (project).
+Under `Framework & Languages -> PHP -> Mess Detector` set the path to your phpmd (`vendor/bin/phpmd`), then run `Validate` to confirm it works.
 
-### Check Mess Detector Settings
-Under `Framework & Languages -> PHP -> Mess Detector` you need to define the configuration and set the path to your phpmd (vendor/bin/phpmd). Use local and run `Validate` to see if it works.
 
+## Spryker Project Development
+
+Use the project ruleset `src/Project/ruleset.xml`. It bundles adapted PHPMD, Spryker architecture, and project-only rules.
+
+### Priority Levels
+- `1`: Critical
+- `2`: Major
+- `3`: Medium
+- `4`: Minor
+
+Recommended minimum priority per project maturity:
+- `1` and `2`: recommended for **all** projects, including those with legacy code.
+- `3`: recommended for all **new** projects.
+- `4`: recommended for a **modern AI-assisted development** flow.
+
+### Usage
+```
+vendor/bin/phpmd src/Pyz/ (json|text|html) vendor/spryker/architecture-sniffer/src/Project/ruleset.xml --minimumpriority=4
+```
+
+### Setup for the project & customizing rules
+The project ruleset is meant to be tuned per project. Copy it (and the rulesets it references) to the project level so it can be edited — exclude modules, change priorities, or adjust rule properties without touching the vendor package:
+```
+vendor/bin/spryker-architecture setup-project [<destination>]
+```
+`<destination>` defaults to `architecture-sniffer`. After setup, run phpmd against the copied ruleset instead of the vendor one, and change it freely for project needs:
+```
+vendor/bin/phpmd src/Pyz/ (json|text|html) architecture-sniffer/ruleset.xml --minimumpriority=3
+```
+The commands below use this project-level path.
+
+`setup-project` copies these files into `<destination>/`:
+- `ruleset.xml` — entry ruleset that references all of the below
+- `PhpMd/ruleset.xml` — adapted PHPMD rules (Clean Code, Code Size, Controversial, Design, Naming, Unused Code)
+- `Common/ruleset.xml` — cross-layer Spryker and project rules
+- `Client/ruleset.xml`, `Glue/ruleset.xml`, `Service/ruleset.xml`, `Shared/ruleset.xml`, `Yves/ruleset.xml`, `Zed/ruleset.xml` — layer-specific rules
+- `SprykerProject/ruleset.xml`
+
+### Readable project results
+`json` output is compact but hard to read. Convert a phpmd JSON report into a grouped, human-readable summary:
+```
+vendor/bin/phpmd src/Pyz/ json architecture-sniffer/ruleset.xml > architecture-results.json
+vendor/bin/spryker-architecture format-project-results architecture-results.json [<output.txt>]
+```
+Without `<output.txt>` the formatted report is printed to stdout.
+
+### Baseline
+Adopt the ruleset on an existing project without refactoring legacy code first: generate a baseline of the current violations and only fail on new ones.
+```
+# generate phpmd.baseline.xml next to the ruleset
+vendor/bin/phpmd src/Pyz/ text architecture-sniffer/ruleset.xml --generate-baseline
+
+# subsequent runs ignore baselined violations
+vendor/bin/phpmd src/Pyz/ text architecture-sniffer/ruleset.xml --baseline-file phpmd.baseline.xml
+```
+Use `--update-baseline` to drop violations that no longer exist. Store the baseline in version control and shrink it over time.
+
+### Debugging
+Enable Xdebug for phpmd to step through rule code:
+```
+docker/sdk cli -x
+```
+```
+PHPMD_ALLOW_XDEBUG=true vendor/bin/phpmd src/Pyz/ text architecture-sniffer/ruleset.xml
+```
 
 ## Writing new sniffs
-Add them inside the `src` folder and add tests in `tests` with the same folder structure.
-Most project-specific rules live under `src/Project/<Layer>/` in the `ArchitectureSniffer\Project\` namespace.
-The exception is a rule that belongs to an existing core per-layer family (e.g. the Glue
-`DependencyProviderMethodNameRule` lives at `src/Glue/DependencyProvider/` in the
-`ArchitectureSniffer\Glue\DependencyProvider` namespace) — extend the core family rather than duplicating it.
-Don't forget to update the relevant `ruleset.xml`.
+Add them to inside src folder and add tests in `tests` with the same folder structure.
+Don't forget to update `ruleset.xml`.
 
 Every sniff needs a description as full sentence:
 ```php

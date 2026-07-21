@@ -10,11 +10,4 @@
         Asserting clean code architecture with Spryker project.
     </description>
 
-    <rule
-            name="YvesDependencyProviderMethodNameRule"
-            message="DependencyProvider: {0}"
-            class="ArchitectureSniffer\Yves\DependencyProvider\DependencyProviderMethodNameRule">
-
-        <priority>3</priority>
-    </rule>
 </ruleset>

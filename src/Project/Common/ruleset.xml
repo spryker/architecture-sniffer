@@ -68,14 +68,6 @@
     </rule>
 
     <rule
-            name="FactoryOnlyPublicMethodsRule"
-            message="Factories: {0}"
-            class="ArchitectureSniffer\Common\Factory\FactoryOnlyPublicMethodsRule">
-
-        <priority>4</priority>
-    </rule>
-
-    <rule
         name="FactoryPropelQueryMethodNameRule"
         message="Factories: {0}"
         class="ArchitectureSniffer\Common\Factory\FactoryPropelQueryMethodNameRule">
@@ -122,12 +114,16 @@
           message="DependencyProvider: {0}"
           class="ArchitectureSniffer\Project\Common\LocatorInDependencyProviderOnlyRule">
         <priority>2</priority>
+        <!-- Optional: exclude classes whose FQCN matches this regex (default: disabled).
+             <properties><property name="ignoreclasspattern" description="Ignore classes matching this regex" value="#\\Foo\\Bootstrap#"/></properties> -->
     </rule>
 
     <rule name="SingletonInstanceInDependencyProviderOnlyRule"
           message="DependencyProvider: {0}"
           class="ArchitectureSniffer\Project\Common\SingletonInstanceInDependencyProviderOnlyRule">
         <priority>2</priority>
+        <!-- Optional: exclude classes whose FQCN matches this regex (default: disabled).
+             <properties><property name="ignoreclasspattern" description="Ignore classes matching this regex" value="#CodeBucketConfig$#"/></properties> -->
     </rule>
 
     <rule
@@ -136,6 +132,13 @@
         class="ArchitectureSniffer\Project\Common\LayerAccessRule">
 
         <priority>2</priority>
+        <!-- Optional exclusions (both default to disabled):
+             ignoreclasspattern       - skip analyzed classes whose FQCN matches this regex (e.g. test helpers)
+             ignoredependencypattern  - skip dependencies whose FQCN matches this regex (e.g. generated Zed transfers, approved vendor namespaces)
+             <properties>
+                 <property name="ignoreclasspattern" description="Ignore analyzed classes matching this regex" value=""/>
+                 <property name="ignoredependencypattern" description="Ignore dependency targets matching this regex" value=""/>
+             </properties> -->
     </rule>
 
     <rule
@@ -144,6 +147,13 @@
         class="ArchitectureSniffer\Project\Common\WeirdModuleNameRule">
 
         <priority>2</priority>
+        <properties>
+            <property name="moduleexcludelist"
+                      description="Comma-separated list of module names excluded from the weird-module-name check."
+                      value="ExampleProductSalePage,WaterTreatmentConfiguratorPageExample,TestifyBackendApi,ClickAndCollectPageExample,DummyMarketplacePayment,DummyPayment,ExampleChart,ClickAndCollectExample,ExampleStateMachine"/>
+            <!-- Optional: override the weird-word list (default: "test,dummy,example,antelope").
+                 <property name="weirdwords" description="Comma-separated list of weird words" value="test,dummy,example,antelope"/> -->
+        </properties>
     </rule>
 
     <rule
@@ -152,6 +162,13 @@
         class="ArchitectureSniffer\Project\Common\ProjectNoBridgeRule">
 
         <priority>3</priority>
+        <!-- Optional exclusions (both default to disabled):
+             ignoreclasspattern       - skip analyzed *Bridge classes whose FQCN matches this regex (grandfather legacy bridges / test doubles)
+             ignoredependencypattern  - skip *Bridge dependency targets whose FQCN matches this regex (e.g. legitimate core "Spryker\\" bridges)
+             <properties>
+                 <property name="ignoreclasspattern" description="Ignore analyzed classes matching this regex" value=""/>
+                 <property name="ignoredependencypattern" description="Ignore dependency targets matching this regex" value=""/>
+             </properties> -->
     </rule>
 
     <rule
@@ -160,6 +177,8 @@
         class="ArchitectureSniffer\Project\Common\InstanceResolvingRule">
 
         <priority>1</priority>
+        <!-- Optional: exclude classes whose FQCN matches this regex (default: disabled), e.g. test namespaces.
+             <properties><property name="ignoreclasspattern" description="Ignore classes matching this regex" value="#\\Tests?\\#"/></properties> -->
     </rule>
 
     <rule name="TooManyPublicMethodsRule"

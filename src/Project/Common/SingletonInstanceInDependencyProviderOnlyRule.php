@@ -42,6 +42,15 @@ class SingletonInstanceInDependencyProviderOnlyRule extends AbstractRule impleme
             return;
         }
 
+        $parent = $node->getNode()->getParent();
+        $className = $parent->getNamespaceName() . '\\' . $parent->getName();
+
+        $ignoreClassPattern = $this->getStringProperty('ignoreclasspattern', '');
+
+        if ($ignoreClassPattern !== '' && preg_match($ignoreClassPattern, $className) === 1) {
+            return;
+        }
+
         foreach ($node->findChildrenOfType('MethodPostfix') as $classUsage) {
             $methodName = $classUsage->getNode()->getImage();
 
@@ -49,16 +58,13 @@ class SingletonInstanceInDependencyProviderOnlyRule extends AbstractRule impleme
                 continue;
             }
 
-            if ($this->isStaticCall($classUsage->getNode()->getParent()->getImage()) === false) {
-                continue;
-            }
-
             $this->addViolation(
                 $node,
                 [
                     sprintf(
-                        'The method %s uses ::getInstance. It can not be used outside of DependencyProvider',
+                        'The method %s in %s uses ::getInstance. It can not be used outside of DependencyProvider',
                         $node->getName(),
+                        $className,
                     ),
                 ],
             );
@@ -90,20 +96,6 @@ class SingletonInstanceInDependencyProviderOnlyRule extends AbstractRule impleme
     protected function isGetInstance(string $methodName): bool
     {
         if (preg_match(static::GET_INSTANCE_METHOD_NAME, $methodName)) {
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * @param string $callSymbol
-     *
-     * @return bool
-     */
-    protected function isStaticCall(string $callSymbol): bool
-    {
-        if (preg_match('::', $callSymbol)) {
             return true;
         }
 

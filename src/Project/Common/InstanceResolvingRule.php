@@ -46,6 +46,12 @@ class InstanceResolvingRule extends AbstractRule implements ClassAware
      */
     public function apply(AbstractNode $node): void
     {
+        $ignoreClassRegexp = $this->getStringProperty('ignoreclasspattern', '');
+
+        if ($ignoreClassRegexp !== '' && preg_match($ignoreClassRegexp, $node->getFullQualifiedName()) === 1) {
+            return;
+        }
+
         foreach ($node->getMethods() as $methodNode) {
             $methodName = $methodNode->getImage();
             $allocatedExpressions = $methodNode->findChildrenOfType('AllocationExpression');
@@ -66,12 +72,14 @@ class InstanceResolvingRule extends AbstractRule implements ClassAware
                 foreach (static::INSTANCE_PATTERNS as $pattern) {
                     if (preg_match($pattern, $referenceName)) {
                         $message = sprintf(
-                            'Entity `%s` is initialized in method `%s`. %s',
+                            'Instance `%s` is initialized in method `%s`. %s',
                             $referenceName,
                             $methodName,
                             static::RULE,
                         );
                         $this->addViolation($methodNode, [$message]);
+
+                        break;
                     }
                 }
             }

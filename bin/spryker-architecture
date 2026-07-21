@@ -4,157 +4,77 @@
 /**
  * Spryker Architecture CLI.
  *
+ * Thin entrypoint: bootstraps the autoloader, wires the commands and delegates to
+ * the CommandRunner. All logic lives in ArchitectureSniffer\Console\*.
+ *
  * Usage:
- *   vendor/bin/spryker-architecture format-project-results <input.json> [<output.txt>]
+ *   vendor/bin/spryker-architecture <command> [arguments]
  *
  * Commands:
- *   format-project-results  Formats a phpmd JSON report into a grouped, human-readable summary.
- *                           Reads <input.json>; prints to stdout, or writes to <output.txt> when given.
+ *   format-project-results <input.json> [<output.txt>]
+ *       Formats a phpmd JSON report into a grouped, human-readable summary.
  *
- * Generate the JSON report with, e.g.:
- *   vendor/bin/phpmd src/Pyz json vendor/spryker/architecture-sniffer/src/Project/ruleset.xml \
+ *   setup-project [<destination>]
+ *       Copies the project ruleset (src/Project) to a project-level destination
+ *       folder (default: "architecture-sniffer"), rewriting package refs and using
+ *       an upsert strategy so vendor updates apply while local edits are kept as .bak.
+ *
+ * Generate the JSON report for format-project-results with, e.g.:
+ *   vendor/bin/phpmd src/Pyz json architecture-sniffer/ruleset.xml \
  *       --minimumpriority 3 --baseline-file phpmd.project.baseline.xml > results.json
  */
 
-const PRIORITY_MAP = [
-    1 => 'CRITICAL',
-    2 => 'MAJOR',
-    3 => 'MEDIUM',
-    4 => 'MINOR',
-    5 => 'CORE',
-];
+use ArchitectureSniffer\Console\Command\FormatProjectResultsCommand;
+use ArchitectureSniffer\Console\Command\SetupProjectCommand;
+use ArchitectureSniffer\Console\CommandRunner;
+use ArchitectureSniffer\Console\Formatter\ProjectResultsFormatter;
+use ArchitectureSniffer\Console\Setup\FileUpserter;
+use ArchitectureSniffer\Console\Setup\RulesetFileCollector;
+use ArchitectureSniffer\Console\Setup\RulesetReferenceRewriter;
 
-$command = $argv[1] ?? null;
+// This file lives at <package-root>/bin/spryker-architecture; resolve the package root
+// through the real path so it works when invoked via the vendor/bin symlink.
+$scriptRealPath = realpath(__FILE__) ?: __FILE__;
+$packageRootPath = dirname($scriptRealPath, 2);
 
-if ($command === null) {
-    fwrite(STDERR, 'No command given.' . PHP_EOL);
-    printUsage();
+require_once resolveAutoloadPath($packageRootPath);
 
-    exit(1);
-}
+$runner = new CommandRunner([
+    new FormatProjectResultsCommand(new ProjectResultsFormatter()),
+    new SetupProjectCommand(
+        new RulesetFileCollector(),
+        new RulesetReferenceRewriter(),
+        new FileUpserter(),
+        $packageRootPath,
+    ),
+]);
 
-if ($command !== 'format-project-results') {
-    fwrite(STDERR, sprintf('Unknown command: %s%s', $command, PHP_EOL));
-    printUsage();
-
-    exit(1);
-}
-
-$inputFile = $argv[2] ?? null;
-$outputFile = $argv[3] ?? null;
-
-if ($inputFile === null) {
-    fwrite(STDERR, 'Missing <input.json> argument.' . PHP_EOL);
-    printUsage();
-
-    exit(1);
-}
-
-if (!is_file($inputFile)) {
-    fwrite(STDERR, sprintf('Report file not found: %s%s', $inputFile, PHP_EOL));
-
-    exit(1);
-}
-
-$results = json_decode((string)file_get_contents($inputFile), true);
-
-if (!is_array($results) || !isset($results['files'])) {
-    fwrite(STDERR, sprintf('Invalid or empty phpmd JSON report: %s%s', $inputFile, PHP_EOL));
-
-    exit(1);
-}
-
-$fileOutput = formatResults($results);
-
-if ($outputFile !== null) {
-    if (file_put_contents($outputFile, $fileOutput) === false) {
-        fwrite(STDERR, sprintf('Unable to write output file: %s%s', $outputFile, PHP_EOL));
-
-        exit(1);
-    }
-
-    fwrite(STDOUT, sprintf('Formatted report written to: %s%s', $outputFile, PHP_EOL));
-
-    exit(0);
-}
-
-echo $fileOutput;
-
-exit(0);
+exit($runner->run($argv));
 
 /**
- * @param array<string, mixed> $results
+ * Locates the Composer autoloader whether the package is installed inside a project's
+ * vendor/ directory or used standalone as the repository root.
+ *
+ * @param string $packageRootPath
+ *
+ * @return string
  */
-function formatResults(array $results): string
+function resolveAutoloadPath(string $packageRootPath): string
 {
-    $convertedResults = [];
+    $candidates = [
+        // Installed as a dependency: <project>/vendor/spryker/architecture-sniffer -> <project>/vendor/autoload.php
+        $packageRootPath . '/../../autoload.php',
+        // Standalone checkout of the package itself.
+        $packageRootPath . '/vendor/autoload.php',
+    ];
 
-    foreach ($results['files'] as $fileResults) {
-        foreach ($fileResults['violations'] as $violation) {
-            $priorityKey = $violation['priority'];
-            $ruleSetKey = $violation['ruleSet'];
-
-            $group = str_contains($ruleSetKey, 'Spryker') ? 'SPRYKER ARCHITECTURE RULES' : 'GENERAL RULES';
-
-            $ruleKey = $violation['rule'];
-
-            $convertedResults[$group][$priorityKey][$ruleSetKey][$ruleKey][] = [
-                'file' => $fileResults['file'],
-                'violation' => $violation,
-            ];
+    foreach ($candidates as $candidate) {
+        if (is_file($candidate)) {
+            return $candidate;
         }
     }
 
-    $fileOutput = '';
-    foreach ($convertedResults as $group => $convertedResult) {
-        $fileOutput .= '=================================== ' . $group . ' ===================================' . PHP_EOL . PHP_EOL;
+    fwrite(STDERR, 'Unable to locate the Composer autoloader. Run "composer install" first.' . PHP_EOL);
 
-        ksort($convertedResult);
-
-        $totalInGroup = 0;
-
-        foreach ($convertedResult as $priorityIndex => $rulesetGroup) {
-            $priorityValue = PRIORITY_MAP[$priorityIndex];
-
-            $totalInPriority = 0;
-
-            $fileOutput .= '========== ' . $priorityValue . ':' . PHP_EOL . PHP_EOL;
-
-            foreach ($rulesetGroup as $ruleSetName => $ruleGroup) {
-                $totalInRuleSet = 0;
-
-                $fileOutput .= '===== ' . $ruleSetName . ':' . PHP_EOL . PHP_EOL;
-
-                foreach ($ruleGroup as $ruleName => $violations) {
-                    $totalInRuleName = 0;
-
-                    $fileOutput .= '= ' . $ruleName . ':' . PHP_EOL;
-
-                    foreach ($violations as $violation) {
-                        $fileOutput .= '- ' . $violation['file'] . ':' . $violation['violation']['beginLine'] . ' - ' . $violation['violation']['description'] . PHP_EOL;
-                        $totalInGroup++;
-                        $totalInPriority++;
-                        $totalInRuleSet++;
-                        $totalInRuleName++;
-                    }
-                    $fileOutput .= 'TOTAL violations for ' . $ruleName . ' ' . $totalInRuleName . PHP_EOL . PHP_EOL;
-                }
-
-                $fileOutput .= 'TOTAL violations for ' . $ruleSetName . ' ' . $totalInRuleSet . PHP_EOL . PHP_EOL;
-            }
-
-            $fileOutput .= 'TOTAL violations for ' . $priorityValue . ' ' . $totalInPriority . PHP_EOL . PHP_EOL;
-        }
-
-        $fileOutput .= 'TOTAL violations for ' . $group . ' ' . $totalInGroup . PHP_EOL . PHP_EOL;
-    }
-
-    return $fileOutput;
-}
-
-function printUsage(): void
-{
-    fwrite(STDERR, PHP_EOL);
-    fwrite(STDERR, 'Usage:' . PHP_EOL);
-    fwrite(STDERR, '  vendor/bin/spryker-architecture format-project-results <input.json> [<output.txt>]' . PHP_EOL);
+    exit(1);
 }

@@ -33,11 +33,18 @@ class ProjectNoBridgeRule extends AbstractRule implements ClassAware
      */
     public function apply(AbstractNode $node): void
     {
-        if (preg_match('([\w]+Bridge$)', $node->getFullQualifiedName()) !== 0) {
+        $ignoreClassPattern = $this->getStringProperty('ignoreclasspattern', '');
+        $ignoreDependencyPattern = $this->getStringProperty('ignoredependencypattern', '');
+
+        $fullClassName = $node->getFullQualifiedName();
+
+        $isClassIgnored = $ignoreClassPattern !== '' && preg_match($ignoreClassPattern, $fullClassName) === 1;
+
+        if (!$isClassIgnored && preg_match('([\w]+Bridge$)', $fullClassName) === 1) {
             $this->addViolation(
                 $node,
                 [
-                    sprintf('Project should not use bridges: %s.', $node->getFullQualifiedName()),
+                    sprintf('Project should not use bridges: %s.', $fullClassName),
                 ],
             );
         }
@@ -46,7 +53,11 @@ class ProjectNoBridgeRule extends AbstractRule implements ClassAware
             foreach ($method->getDependencies() as $dependency) {
                 $targetQName = sprintf('%s\\%s', $dependency->getNamespaceName(), $dependency->getName());
 
-                if (preg_match('([\w]+Bridge$)', $targetQName) !== 0) {
+                if ($ignoreDependencyPattern !== '' && preg_match($ignoreDependencyPattern, $targetQName) === 1) {
+                    continue;
+                }
+
+                if (preg_match('([\w]+Bridge$)', $targetQName) === 1) {
                     $this->addViolation(
                         $method,
                         [

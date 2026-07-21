@@ -17,7 +17,7 @@ class OrmAccessRule extends AbstractRule implements ClassAware
     /**
      * @var string
      */
-    protected const RULE = 'Defines rules of calls: No call from Orm Query to Zed Business, No call from Orm Entity to Zed Business, No call from Orm Query to Zed Communication.';
+    protected const RULE = 'Defines rules of calls: No call from Orm Query to Zed Business, No call from Orm Entity to Zed Business.';
 
     /**
      * @return string
@@ -41,11 +41,6 @@ class OrmAccessRule extends AbstractRule implements ClassAware
             '(^Orm\\\\Zed\\\\[\w]+\\\\Persistence\\\\(?!.*(?:(Query|TableMap))))',
             '{type} {source} accesses {target} which violates rule "No call from Orm Entity to Zed Business"',
         ],
-        [
-            '(^[\w]+\\\\Zed\\\\[\w]+\\\\Communication\\\\.+)',
-            '(^Orm\\\\Zed\\\\[\w]+\\\\Persistence\\\\[\w]+Query)',
-            '{type} {source} accesses {target} which violates rule "No call from Orm Query to Zed Communication"',
-        ],
     ];
 
     /**
@@ -55,6 +50,12 @@ class OrmAccessRule extends AbstractRule implements ClassAware
      */
     public function apply(AbstractNode $node)
     {
+        $ignoreClassPattern = $this->getStringProperty('ignoreclasspattern', '');
+
+        if ($ignoreClassPattern !== '' && preg_match($ignoreClassPattern, $node->getFullQualifiedName()) === 1) {
+            return;
+        }
+
         $patterns = $this->collectPatterns($node);
 
         $this->applyPatterns($node, $patterns);

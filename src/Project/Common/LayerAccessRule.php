@@ -23,19 +23,19 @@ class LayerAccessRule extends AbstractRule implements ClassAware
     public function getDescription()
     {
         return 'Some layers must not call other layers:'
-            . ' No call from Zed|Glue to Yves'
-            . ', No call from Glue|Yves|Zed to Client'
-            . ', No call from Yves to Glue'
-            . ', No call from Zed Persistence|Presentation to Glue'
-            . ', No call from Zed Persistence|Presentation to Glue'
-            . ', No call from Zed|Client|Yves|Glue|Service to Shared'
-            . ', No call from Zed|Client|Yves|Glue to Service'
-            . ', No call from Yves|Glue to Zed'
-            . ', No call from Zed Presentation to Zed Business'
-            . ', No call from Zed Presentation to Zed Communication'
-            . ', No call from Zed Business|Communication|Presentation to Zed Persistence'
-            . ', No call from Client to Zed Persistence'
-            . ', No call from Zed|Client|Yves|Glue|Service|Shared to Zed Presentation.';
+            . ' No call from Yves to Zed|Glue'
+            . ', No call from Client to Zed|Glue|Yves'
+            . ', No call from Glue to Yves'
+            . ', No call from Glue to Zed Persistence|Presentation'
+            . ', No call from Glue to Orm\Zed'
+            . ', No call from Shared to Zed|Client|Yves|Glue|Service'
+            . ', No call from Service to Zed|Client|Yves|Glue'
+            . ', No call from Zed to Yves|Glue'
+            . ', No call from Zed Business to Zed Presentation'
+            . ', No call from Zed Communication to Zed Presentation'
+            . ', No call from Zed Persistence to Zed Business|Communication|Presentation'
+            . ', No call from Zed Persistence to Client'
+            . ', No call from Zed Presentation to Zed|Client|Yves|Glue|Service|Shared.';
     }
 
     /**
@@ -47,85 +47,85 @@ class LayerAccessRule extends AbstractRule implements ClassAware
         [
             '(^[\w]+\\\\Yves\\\\.+)',
             '(^[\w]+\\\\(Zed|Glue)\\\\.+)',
-            '{type} {source} accesses {target} which violates rule "No call from Zed|Glue to Yves"',
+            '{type} {source} accesses {target} which violates rule "No call from Yves to Zed|Glue"',
         ],
 
         // Client
         [
             '(^[\w]+\\\\Client\\\\.+)',
             '(^[\w]+\\\\(Zed|Glue|Yves)\\\\.+)',
-            '{type} {source} accesses {target} which violates rule "No call from Glue|Yves|Zed to Client"',
+            '{type} {source} accesses {target} which violates rule "No call from Client to Zed|Glue|Yves"',
         ],
 
         // Glue
         [
             '(^[\w]+\\\\Glue\\\\.+)',
             '(^[\w]+\\\\Yves\\\\.+)',
-            '{type} {source} accesses {target} which violates rule "No call from Yves to Glue"',
+            '{type} {source} accesses {target} which violates rule "No call from Glue to Yves"',
         ],
         [
             '(^[\w]+\\\\Glue\\\\.+)',
             '(^[\w]+\\\\Zed\\\\[\w]+\\\\(Persistence|Presentation)\\\\.+)',
-            '{type} {source} accesses {target} which violates rule "No call from Zed Persistence|Presentation to Glue"',
+            '{type} {source} accesses {target} which violates rule "No call from Glue to Zed Persistence|Presentation"',
         ],
         [
             '(^[\w]+\\\\Glue\\\\.+)',
             '(^Orm\\\\Zed\\\\.+)',
-            '{type} {source} accesses {target} which violates rule "No call from Zed Persistence|Presentation to Glue"',
+            '{type} {source} accesses {target} which violates rule "No call from Glue to Orm\Zed"',
         ],
 
         // Shared
         [
             '(^[\w]+\\\\Shared\\\\.+)',
             '(^[\w]+\\\\(Zed|Client|Yves|Glue|Service)\\\\.+)',
-            '{type} {source} accesses {target} which violates rule "No call from Zed|Client|Yves|Glue|Service to Shared"',
+            '{type} {source} accesses {target} which violates rule "No call from Shared to Zed|Client|Yves|Glue|Service"',
         ],
 
         // Service
         [
             '(^[\w]+\\\\Service\\\\.+)',
             '(^[\w]+\\\\(Zed|Client|Yves|Glue)\\\\.+)',
-            '{type} {source} accesses {target} which violates rule "No call from Zed|Client|Yves|Glue to Service"',
+            '{type} {source} accesses {target} which violates rule "No call from Service to Zed|Client|Yves|Glue"',
         ],
 
         // Zed
         [
             '(^[\w]+\\\\Zed\\\\.+)',
             '(^[\w]+\\\\(Yves|Glue)\\\\.+)',
-            '{type} {source} accesses {target} which violates rule "No call from Yves|Glue to Zed"',
+            '{type} {source} accesses {target} which violates rule "No call from Zed to Yves|Glue"',
         ],
 
         // Zed Business
         [
             '(^[\w]+\\\\Zed\\\\[\w]+\\\\Business\\\\.+)',
             '(^[\w]+\\\\Zed\\\\[\w]+\\\\Presentation\\\\.+)',
-            '{type} {source} accesses {target} which violates rule "No call from Zed Presentation to Zed Business"',
+            '{type} {source} accesses {target} which violates rule "No call from Zed Business to Zed Presentation"',
         ],
 
         // Zed Communication
         [
             '(^[\w]+\\\\Zed\\\\[\w]+\\\\Communication\\\\.+)',
             '(^[\w]+\\\\Zed\\\\[\w]+\\\\Presentation\\\\.+)',
-            '{type} {source} accesses {target} which violates rule "No call from Zed Presentation to Zed Communication"',
+            '{type} {source} accesses {target} which violates rule "No call from Zed Communication to Zed Presentation"',
         ],
 
         // Zed Persistence
         [
             '(^[\w]+\\\\Zed\\\\[\w]+\\\\Persistence\\\\.+)',
             '(.+\\\\Zed\\\\[\w]+\\\\(Business|Communication|Presentation)\\\\.+)',
-            '{type} {source} accesses {target} which violates rule "No call from Zed Business|Communication|Presentation to Zed Persistence"',
+            '{type} {source} accesses {target} which violates rule "No call from Zed Persistence to Zed Business|Communication|Presentation"',
         ],
         [
             '(^[\w]+\\\\Zed\\\\[\w]+\\\\Persistence\\\\.+)',
             '(^[\w]+\\\\Client\\\\.+)',
-            '{type} {source} accesses {target} which violates rule "No call from Client to Zed Persistence"',
+            '{type} {source} accesses {target} which violates rule "No call from Zed Persistence to Client"',
         ],
 
         // Zed Presentation
         [
             '(^[\w]+\\\\Zed\\\\[\w]+\\\\Presentation\\\\.+)',
             '(^[\w]+\\\\(Zed|Client|Yves|Glue|Service|Shared)\\\\.+)',
-            '{type} {source} accesses {target} which violates rule "No call from Zed|Client|Yves|Glue|Service|Shared to Zed Presentation"',
+            '{type} {source} accesses {target} which violates rule "No call from Zed Presentation to Zed|Client|Yves|Glue|Service|Shared"',
         ],
     ];
 
@@ -136,6 +136,11 @@ class LayerAccessRule extends AbstractRule implements ClassAware
      */
     public function apply(AbstractNode $node): void
     {
+        $ignoreClassPattern = $this->getStringProperty('ignoreclasspattern', '');
+        if ($ignoreClassPattern !== '' && preg_match($ignoreClassPattern, $node->getFullQualifiedName()) === 1) {
+            return;
+        }
+
         $patterns = $this->collectPatterns($node);
 
         $this->applyPatterns($node, $patterns);
@@ -156,8 +161,14 @@ class LayerAccessRule extends AbstractRule implements ClassAware
      */
     protected function applyPatterns(AbstractNode $node, array $patterns)
     {
+        $ignoreDependencyPattern = $this->getStringProperty('ignoredependencypattern', '');
+
         foreach ($node->getDependencies() as $dependency) {
             $targetQName = sprintf('%s\\%s', $dependency->getNamespaceName(), $dependency->getName());
+
+            if ($ignoreDependencyPattern !== '' && preg_match($ignoreDependencyPattern, $targetQName) === 1) {
+                continue;
+            }
 
             foreach ($patterns as [$srcPattern, $targetPattern, $message]) {
                 if (preg_match($srcPattern, $node->getFullQualifiedName()) === 0) {

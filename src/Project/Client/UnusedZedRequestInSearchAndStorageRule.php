@@ -58,6 +58,8 @@ class UnusedZedRequestInSearchAndStorageRule extends AbstractRule implements Met
                     ),
                 ],
             );
+
+            break;
         }
     }
 
@@ -70,6 +72,12 @@ class UnusedZedRequestInSearchAndStorageRule extends AbstractRule implements Met
     {
         $parent = $node->getNode()->getParent();
         $className = $parent->getNamespaceName() . '\\' . $parent->getName();
+
+        $ignoreClassPattern = $this->getStringProperty('ignoreclasspattern', '');
+
+        if ($ignoreClassPattern !== '' && preg_match($ignoreClassPattern, $className) === 1) {
+            return false;
+        }
 
         if (preg_match('/\\\\' . 'Client' . '\\\\.*\\\\\w+(?:Search|Storage)DependencyProvider$/', $className)) {
             return true;

@@ -49,7 +49,7 @@
         message="Zed Business Layer - Facade: {0}"
         class="ArchitectureSniffer\Zed\Business\Facade\FacadeInterfaceRule">
 
-        <priority>2</priority>
+        <priority>4</priority>
     </rule>
 
     <rule
@@ -59,15 +59,6 @@
 
         <priority>2</priority>
     </rule>
-
-    <rule
-        name="ZedDependencyProviderMethodNameRule"
-        message="Zed DependencyProvider - DependencyProvider: {0}"
-        class="ArchitectureSniffer\Zed\DependencyProvider\DependencyProviderMethodNameRule">
-
-        <priority>3</priority>
-    </rule>
-
 
     <!-- COMMUNICATION PLUGIN RULES -->
     <rule
@@ -97,6 +88,9 @@
 
 
     <!-- CUSTOM PROJECT ARCHITECTURE RULES -->
+    <!-- Each custom rule below accepts an optional "ignoreclasspattern" property (regex, default: disabled)
+         to skip analyzed classes whose FQCN matches, e.g.:
+             <properties><property name="ignoreclasspattern" description="Ignore classes matching this regex" value="#\\Foo\\#"/></properties> -->
 
     <rule
         name="OrmNewEntityNotInCommunicationRule"
@@ -112,6 +106,8 @@
         class="ArchitectureSniffer\Project\Zed\RepositoryReadOnlyRule">
 
         <priority>2</priority>
+        <!-- Also accepts "restrictedmethods" (comma-separated, default: "save,update,delete") to configure
+             the forbidden repository method names, e.g. value="save,update,delete,doSave". -->
     </rule>
 
     <rule
@@ -127,7 +123,7 @@
         message="Access: {0}"
         class="ArchitectureSniffer\Project\Zed\RestrictedOrmQueryAccessInZedPersistenceRule">
 
-        <priority>2</priority>
+        <priority>4</priority>
     </rule>
 
 </ruleset>

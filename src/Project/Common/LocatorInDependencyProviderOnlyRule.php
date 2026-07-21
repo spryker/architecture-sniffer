@@ -43,6 +43,12 @@ class LocatorInDependencyProviderOnlyRule extends AbstractRule implements Method
      */
     public function apply(AbstractNode $node): void
     {
+        $ignoreClassRegexp = $this->getStringProperty('ignoreclasspattern', '');
+
+        if ($ignoreClassRegexp !== '' && preg_match($ignoreClassRegexp, $node->getParentName()) === 1) {
+            return;
+        }
+
         if ($this->isClassAllowedToUseLocator($node) === true) {
             return;
         }
@@ -63,6 +69,8 @@ class LocatorInDependencyProviderOnlyRule extends AbstractRule implements Method
                     ),
                 ],
             );
+
+            break;
         }
     }
 

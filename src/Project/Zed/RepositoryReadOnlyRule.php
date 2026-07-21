@@ -51,10 +51,12 @@ class RepositoryReadOnlyRule extends AbstractRule implements MethodAware
             return;
         }
 
+        $restrictedMethods = $this->getRestrictedMethods();
+
         foreach ($node->findChildrenOfType('MethodPostfix') as $classUsage) {
             $methodName = $classUsage->getNode()->getImage();
 
-            if (!in_array($methodName, static::RESTRICTED_METHOD_POSTFIX)) {
+            if (!in_array($methodName, $restrictedMethods)) {
                 continue;
             }
 
@@ -81,6 +83,24 @@ class RepositoryReadOnlyRule extends AbstractRule implements MethodAware
         $parent = $node->getNode()->getParent();
         $className = $parent->getNamespaceName() . '\\' . $parent->getName();
 
+        $ignoreClassPattern = $this->getStringProperty('ignoreclasspattern', '');
+
+        if ($ignoreClassPattern !== '' && preg_match($ignoreClassPattern, $className) === 1) {
+            return false;
+        }
+
         return preg_match(static::REPOSITORY_PATTERN, $className) !== 0;
+    }
+
+    /**
+     * @return array<string>
+     */
+    protected function getRestrictedMethods(): array
+    {
+        $restrictedMethods = $this->getStringProperty('restrictedmethods', 'save,update,delete');
+
+        return array_filter(array_map('trim', explode(',', $restrictedMethods)), static function (string $methodName): bool {
+            return $methodName !== '';
+        });
     }
 }

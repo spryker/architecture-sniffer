@@ -18,13 +18,21 @@
 
     <exclude-pattern>*/Orm/*</exclude-pattern>
     <exclude-pattern>*/Generated/*</exclude-pattern>
+    <exclude-pattern>*/SprykerConfig/*</exclude-pattern>
 
-    <rule ref="vendor/spryker/architecture-sniffer/src/Project/PhpMd/cleancode.xml" />
-    <rule ref="vendor/spryker/architecture-sniffer/src/Project/PhpMd/codesize.xml" />
-    <rule ref="vendor/spryker/architecture-sniffer/src/Project/PhpMd/controversial.xml" />
-    <rule ref="vendor/spryker/architecture-sniffer/src/Project/PhpMd/design.xml" />
-    <rule ref="vendor/spryker/architecture-sniffer/src/Project/PhpMd/naming.xml" />
-    <rule ref="vendor/spryker/architecture-sniffer/src/Project/PhpMd/unusedcode.xml" />
+    <!-- Exclude DataImport and all *DataImport* modules (current and future) -->
+    <exclude-pattern>*DataImport*</exclude-pattern>
+
+    <!-- Exclude specific Example modules -->
+    <exclude-pattern>*/ClickAndCollectExample/*</exclude-pattern>
+    <exclude-pattern>*/ClickAndCollectPageExample/*</exclude-pattern>
+    <exclude-pattern>*/ExampleChart/*</exclude-pattern>
+    <exclude-pattern>*/ExampleProductSalePage/*</exclude-pattern>
+    <exclude-pattern>*/ExampleStateMachine/*</exclude-pattern>
+    <exclude-pattern>*/WaterTreatmentConfiguratorPageExample/*</exclude-pattern>
+
+    <!-- Consolidated PHPMD rules (Clean Code, Code Size, Controversial, Design, Naming, Unused Code) -->
+    <rule ref="vendor/spryker/architecture-sniffer/src/Project/PhpMd/ruleset.xml" />
 
     <rule ref="vendor/spryker/architecture-sniffer/src/Project/Client/ruleset.xml" />
     <rule ref="vendor/spryker/architecture-sniffer/src/Project/Service/ruleset.xml" />

@@ -39,7 +39,7 @@ class TooManyPublicMethodsRule extends AbstractRule implements ClassAware
      */
     public function apply(AbstractNode $node): void
     {
-        $ignoreClassRegexp = $this->getStringProperty('ignoreclasspattern');
+        $ignoreClassRegexp = $this->getStringProperty('ignoreclasspattern', '#^$#');
 
         $fullClassName = $node->getFullQualifiedName();
 
@@ -47,9 +47,9 @@ class TooManyPublicMethodsRule extends AbstractRule implements ClassAware
             return;
         }
 
-        $this->ignoreMethodRegexp = $this->getStringProperty('ignoremethodpattern');
+        $this->ignoreMethodRegexp = $this->getStringProperty('ignoremethodpattern', '');
 
-        $threshold = $this->getIntProperty('maxmethods');
+        $threshold = $this->getIntProperty('maxmethods', 10);
 
         $nom = $this->countMethods($node);
 

@@ -47,6 +47,12 @@ class OrmNewEntityNotInCommunicationRule extends AbstractRule implements ClassAw
             return;
         }
 
+        $ignoreClassPattern = $this->getStringProperty('ignoreclasspattern', '');
+
+        if ($ignoreClassPattern !== '' && preg_match($ignoreClassPattern, $node->getFullQualifiedName()) === 1) {
+            return;
+        }
+
         foreach ($node->getMethods() as $methodNode) {
             $methodName = $methodNode->getImage();
             $allocatedExpressions = $methodNode->findChildrenOfType('AllocationExpression');
@@ -57,6 +63,10 @@ class OrmNewEntityNotInCommunicationRule extends AbstractRule implements ClassAw
                 }
 
                 $reference = $expression->getFirstChildOfType('ClassReference');
+
+                if ($reference === null) {
+                    continue;
+                }
 
                 $referenceName = trim($reference->getName(), '\\');
 

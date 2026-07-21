@@ -18,15 +18,6 @@
         <priority>3</priority>
     </rule>
 
-    <rule
-        name="ClientDependencyProviderMethodNameRule"
-        message="DependencyProvider: {0}"
-        class="ArchitectureSniffer\Client\DependencyProvider\DependencyProviderMethodNameRule">
-
-        <priority>3</priority>
-    </rule>
-
-
     <!-- CUSTOM PROJECT ARCHITECTURE RULES -->
 
     <rule
@@ -35,6 +26,8 @@
         class="ArchitectureSniffer\Project\Client\UnusedZedRequestInSearchAndStorageRule">
 
         <priority>1</priority>
+        <!-- Optional: exclude classes whose FQCN matches this regex (default: disabled).
+             <properties><property name="ignoreclasspattern" description="Ignore classes matching this regex" value=""/></properties> -->
     </rule>
 
 </ruleset>

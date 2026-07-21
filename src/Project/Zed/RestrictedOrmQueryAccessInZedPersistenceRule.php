@@ -48,6 +48,12 @@ class RestrictedOrmQueryAccessInZedPersistenceRule extends AbstractRule implemen
      */
     public function apply(AbstractNode $node): void
     {
+        $ignoreClassPattern = $this->getStringProperty('ignoreclasspattern', '');
+
+        if ($ignoreClassPattern !== '' && preg_match($ignoreClassPattern, $node->getFullQualifiedName()) === 1) {
+            return;
+        }
+
         if (!preg_match(static::PERSISTENCE_PATTERN, $node->getFullQualifiedName())) {
             return;
         }
@@ -80,7 +86,7 @@ class RestrictedOrmQueryAccessInZedPersistenceRule extends AbstractRule implemen
             $this->addViolation(
                 $node,
                 [
-                    static::RULE,
+                    sprintf('%s Offending dependency: %s.', static::RULE, $targetQName),
                 ],
             );
         }

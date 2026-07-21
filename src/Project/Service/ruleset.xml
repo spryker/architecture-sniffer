@@ -16,12 +16,4 @@
         <priority>3</priority>
     </rule>
 
-    <rule
-        name="ServiceDependencyProviderMethodNameRule"
-        message="DependencyProvider: {0}"
-        class="ArchitectureSniffer\Service\DependencyProvider\DependencyProviderMethodNameRule">
-
-        <priority>3</priority>
-    </rule>
-
 </ruleset>

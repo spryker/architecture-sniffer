@@ -74,7 +74,7 @@ vendor/bin/phpmd src/ (json|text|html) vendor/spryker/architecture-sniffer/src/P
 ```
 
 ### Setup for the project & customizing rules
-The project ruleset is meant to be tuned per project. Create a thin project-level `architecture-sniffer/ruleset.xml` that references the vendor project ruleset, then layer your customizations on top of it — exclude modules, change priorities, or adjust rule properties without touching the vendor package:
+The project ruleset is meant to be tuned per project. Create a thin project-level `phpmd.xml` in the project root (PHPMD's conventional default filename) that references the vendor project ruleset, then layer your customizations on top of it — exclude modules, change priorities, or adjust rule properties without touching the vendor package:
 ```xml
 <?xml version="1.0"?>
 <ruleset name="Spryker Project"
@@ -122,7 +122,7 @@ The project ruleset is meant to be tuned per project. Create a thin project-leve
 ```
 After that, run phpmd against your project-level ruleset instead of the vendor one, and change it freely for project needs:
 ```
-vendor/bin/phpmd src/ (json|text|html) architecture-sniffer/ruleset.xml --minimumpriority=4
+vendor/bin/phpmd src/ (json|text|html) phpmd.xml --minimumpriority=4
 ```
 The commands below use this project-level path.
 
@@ -135,7 +135,7 @@ vendor/bin/phpmd src/ json vendor/spryker/architecture-sniffer/src/Project/rules
 ```
 or
 ```
-vendor/bin/phpmd src/ json architecture-sniffer/ruleset.xml --minimumpriority 4 --reportfile architecture-results.json
+vendor/bin/phpmd src/ json phpmd.xml --minimumpriority 4 --reportfile architecture-results.json
 ```
 
 Format it:
@@ -147,11 +147,11 @@ Without `<output.txt>` the formatted report is printed to stdout.
 ### Baseline
 Adopt the ruleset on an existing project without refactoring legacy code first: generate a baseline of the current violations and only fail on new ones.
 ```
-# generate phpmd.baseline.xml next to the ruleset
-vendor/bin/phpmd src/ text architecture-sniffer/ruleset.xml --generate-baseline
+# generate phpmd.baseline.xml in the project root
+vendor/bin/phpmd src/ text phpmd.xml --generate-baseline
 
 # subsequent runs ignore baselined violations
-vendor/bin/phpmd src/ text architecture-sniffer/ruleset.xml --baseline-file phpmd.baseline.xml
+vendor/bin/phpmd src/ text phpmd.xml --baseline-file phpmd.baseline.xml
 ```
 Use `--update-baseline` to drop violations that no longer exist. Store the baseline in version control and shrink it over time.
 
@@ -161,7 +161,7 @@ Enable Xdebug for phpmd to step through rule code:
 docker/sdk cli -x
 ```
 ```
-PHPMD_ALLOW_XDEBUG=true vendor/bin/phpmd src/Pyz/ text architecture-sniffer/ruleset.xml
+PHPMD_ALLOW_XDEBUG=true vendor/bin/phpmd src/Pyz/ text phpmd.xml
 ```
 
 ## Writing new sniffs

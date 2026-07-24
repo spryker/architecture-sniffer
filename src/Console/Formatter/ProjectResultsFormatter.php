@@ -20,15 +20,9 @@ class ProjectResultsFormatter
         5 => 'CORE',
     ];
 
-    /**
-     * @var string
-     */
-    protected const GROUP_SPRYKER = 'SPRYKER ARCHITECTURE RULES';
+    protected const string GROUP_SPRYKER = 'SPRYKER ARCHITECTURE RULES';
 
-    /**
-     * @var string
-     */
-    protected const GROUP_GENERAL = 'GENERAL RULES';
+    protected const string GROUP_GENERAL = 'GENERAL RULES';
 
     /**
      * Formats a decoded phpmd JSON report into a grouped, human-readable summary.
@@ -39,53 +33,111 @@ class ProjectResultsFormatter
      */
     public function format(array $results): string
     {
-        $convertedResults = $this->groupViolations($results);
-
         $fileOutput = '';
-        foreach ($convertedResults as $group => $convertedResult) {
-            $fileOutput .= '=================================== ' . $group . ' ===================================' . PHP_EOL . PHP_EOL;
 
-            ksort($convertedResult);
-
-            $totalInGroup = 0;
-
-            foreach ($convertedResult as $priorityIndex => $rulesetGroup) {
-                $priorityValue = static::PRIORITY_MAP[$priorityIndex];
-
-                $totalInPriority = 0;
-
-                $fileOutput .= '========== ' . $priorityValue . ':' . PHP_EOL . PHP_EOL;
-
-                foreach ($rulesetGroup as $ruleSetName => $ruleGroup) {
-                    $totalInRuleSet = 0;
-
-                    $fileOutput .= '===== ' . $ruleSetName . ':' . PHP_EOL . PHP_EOL;
-
-                    foreach ($ruleGroup as $ruleName => $violations) {
-                        $totalInRuleName = 0;
-
-                        $fileOutput .= '= ' . $ruleName . ':' . PHP_EOL;
-
-                        foreach ($violations as $violation) {
-                            $fileOutput .= '- ' . $violation['file'] . ':' . $violation['violation']['beginLine'] . ' - ' . $violation['violation']['description'] . PHP_EOL;
-                            $totalInGroup++;
-                            $totalInPriority++;
-                            $totalInRuleSet++;
-                            $totalInRuleName++;
-                        }
-                        $fileOutput .= 'TOTAL violations for ' . $ruleName . ' ' . $totalInRuleName . PHP_EOL . PHP_EOL;
-                    }
-
-                    $fileOutput .= 'TOTAL violations for ' . $ruleSetName . ' ' . $totalInRuleSet . PHP_EOL . PHP_EOL;
-                }
-
-                $fileOutput .= 'TOTAL violations for ' . $priorityValue . ' ' . $totalInPriority . PHP_EOL . PHP_EOL;
-            }
-
-            $fileOutput .= 'TOTAL violations for ' . $group . ' ' . $totalInGroup . PHP_EOL . PHP_EOL;
+        foreach ($this->groupViolations($results) as $group => $convertedResult) {
+            $fileOutput .= $this->formatGroup($group, $convertedResult);
         }
 
         return $fileOutput;
+    }
+
+    /**
+     * @param string $group
+     * @param array<int, array<string, array<string, array<int, array<string, mixed>>>>> $convertedResult
+     *
+     * @return string
+     */
+    protected function formatGroup(string $group, array $convertedResult): string
+    {
+        ksort($convertedResult);
+
+        $output = sprintf('=================================== %s ===================================%s%s', $group, PHP_EOL, PHP_EOL);
+        $totalInGroup = 0;
+
+        foreach ($convertedResult as $priorityIndex => $rulesetGroup) {
+            [$priorityOutput, $totalInPriority] = $this->formatPriority($priorityIndex, $rulesetGroup);
+            $output .= $priorityOutput;
+            $totalInGroup += $totalInPriority;
+        }
+
+        return $output . $this->formatTotal($group, $totalInGroup);
+    }
+
+    /**
+     * @param int $priorityIndex
+     * @param array<string, array<string, array<int, array<string, mixed>>>> $rulesetGroup
+     *
+     * @return array{0: string, 1: int}
+     */
+    protected function formatPriority(int $priorityIndex, array $rulesetGroup): array
+    {
+        $priorityValue = static::PRIORITY_MAP[$priorityIndex];
+
+        $output = sprintf('========== %s:%s%s', $priorityValue, PHP_EOL, PHP_EOL);
+        $totalInPriority = 0;
+
+        foreach ($rulesetGroup as $ruleSetName => $ruleGroup) {
+            [$ruleSetOutput, $totalInRuleSet] = $this->formatRuleSet($ruleSetName, $ruleGroup);
+            $output .= $ruleSetOutput;
+            $totalInPriority += $totalInRuleSet;
+        }
+
+        return [$output . $this->formatTotal($priorityValue, $totalInPriority), $totalInPriority];
+    }
+
+    /**
+     * @param string $ruleSetName
+     * @param array<string, array<int, array<string, mixed>>> $ruleGroup
+     *
+     * @return array{0: string, 1: int}
+     */
+    protected function formatRuleSet(string $ruleSetName, array $ruleGroup): array
+    {
+        $output = sprintf('===== %s:%s%s', $ruleSetName, PHP_EOL, PHP_EOL);
+        $totalInRuleSet = 0;
+
+        foreach ($ruleGroup as $ruleName => $violations) {
+            [$ruleOutput, $totalInRuleName] = $this->formatRule($ruleName, $violations);
+            $output .= $ruleOutput;
+            $totalInRuleSet += $totalInRuleName;
+        }
+
+        return [$output . $this->formatTotal($ruleSetName, $totalInRuleSet), $totalInRuleSet];
+    }
+
+    /**
+     * @param string $ruleName
+     * @param array<int, array<string, mixed>> $violations
+     *
+     * @return array{0: string, 1: int}
+     */
+    protected function formatRule(string $ruleName, array $violations): array
+    {
+        $output = sprintf('= %s:%s', $ruleName, PHP_EOL);
+
+        foreach ($violations as $violation) {
+            $output .= sprintf(
+                '- %s:%s - %s%s',
+                $violation['file'],
+                $violation['violation']['beginLine'],
+                $violation['violation']['description'],
+                PHP_EOL,
+            );
+        }
+
+        return [$output . $this->formatTotal($ruleName, count($violations)), count($violations)];
+    }
+
+    /**
+     * @param string $label
+     * @param int $total
+     *
+     * @return string
+     */
+    protected function formatTotal(string $label, int $total): string
+    {
+        return sprintf('TOTAL violations for %s %d%s%s', $label, $total, PHP_EOL, PHP_EOL);
     }
 
     /**

@@ -7,17 +7,17 @@
 
 namespace ArchitectureSnifferTest\Project\Common;
 
-use ArchitectureSniffer\Project\Common\WeirdModuleNameRule;
+use ArchitectureSniffer\Project\Common\DisallowedModuleNameRule;
 use ArchitectureSnifferTest\AbstractArchitectureSnifferRuleTest;
 
-class WeirdModuleNameRuleTest extends AbstractArchitectureSnifferRuleTest
+class DisallowedModuleNameRuleTest extends AbstractArchitectureSnifferRuleTest
 {
     /**
      * @return void
      */
-    public function testRuleAppliesWhenModuleNameContainsWeirdWord(): void
+    public function testRuleAppliesWhenModuleNameContainsDisallowedWord(): void
     {
-        $rule = new WeirdModuleNameRule();
+        $rule = new DisallowedModuleNameRule();
         $rule->setReport($this->getReportMock(1));
         $rule->apply($this->getClassNode());
     }
@@ -27,7 +27,7 @@ class WeirdModuleNameRuleTest extends AbstractArchitectureSnifferRuleTest
      */
     public function testRuleDoesNotApplyWhenModuleNameIsNormal(): void
     {
-        $rule = new WeirdModuleNameRule();
+        $rule = new DisallowedModuleNameRule();
         $rule->setReport($this->getReportMock(0));
         $rule->apply($this->getClassNode());
     }
@@ -37,6 +37,6 @@ class WeirdModuleNameRuleTest extends AbstractArchitectureSnifferRuleTest
      */
     public function testGetDescription(): void
     {
-        $this->assertIsString((new WeirdModuleNameRule())->getDescription());
+        $this->assertIsString((new DisallowedModuleNameRule())->getDescription());
     }
 }

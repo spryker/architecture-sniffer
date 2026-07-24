@@ -11,9 +11,9 @@ use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
 use PHPMD\Rule\ClassAware;
 
-class WeirdModuleNameRule extends AbstractRule implements ClassAware
+class DisallowedModuleNameRule extends AbstractRule implements ClassAware
 {
-    public const string RULE = 'Module name should not contain any configured weird words.';
+    public const string RULE = 'Module name should not contain any configured disallowed words.';
 
     /**
      * Name of the configurable property holding a comma-separated list of module names
@@ -22,14 +22,14 @@ class WeirdModuleNameRule extends AbstractRule implements ClassAware
     protected const string PROPERTY_MODULE_EXCLUDE_LIST = 'moduleexcludelist';
 
     /**
-     * Name of the configurable property holding a comma-separated list of weird words.
+     * Name of the configurable property holding a comma-separated list of disallowed words.
      */
-    protected const string PROPERTY_WEIRD_WORDS = 'weirdwords';
+    protected const string PROPERTY_DISALLOWED_WORDS = 'disallowedwords';
 
     /**
-     * Default comma-separated list of weird words.
+     * Default comma-separated list of disallowed words.
      */
-    protected const string DEFAULT_WEIRD_WORDS = 'test,dummy,example,antelope';
+    protected const string DEFAULT_DISALLOWED_WORDS = 'test,dummy,example,antelope';
 
     public function getDescription(): string
     {
@@ -40,13 +40,13 @@ class WeirdModuleNameRule extends AbstractRule implements ClassAware
     {
         $classFullName = $node->getFullQualifiedName();
 
-        $weirdWords = $this->getWeirdWords();
+        $disallowedWords = $this->getDisallowedWords();
 
-        if ($weirdWords === []) {
+        if ($disallowedWords === []) {
             return;
         }
 
-        if (preg_match($this->buildWeirdModuleNamePattern($weirdWords), $classFullName, $matches) === 0) {
+        if (preg_match($this->buildDisallowedModuleNamePattern($disallowedWords), $classFullName, $matches) === 0) {
             return;
         }
 
@@ -60,22 +60,22 @@ class WeirdModuleNameRule extends AbstractRule implements ClassAware
             $node,
             [
                 sprintf(
-                    'Module name %s should not contain weird words: %s.',
+                    'Module name %s should not contain disallowed words: %s.',
                     $moduleName,
-                    implode('|', $weirdWords),
+                    implode('|', $disallowedWords),
                 ),
             ],
         );
     }
 
     /**
-     * @param array<int, string> $weirdWords
+     * @param array<int, string> $disallowedWords
      *
      * @return string
      */
-    protected function buildWeirdModuleNamePattern(array $weirdWords): string
+    protected function buildDisallowedModuleNamePattern(array $disallowedWords): string
     {
-        $alternation = implode('|', array_map('preg_quote', $weirdWords));
+        $alternation = implode('|', array_map('preg_quote', $disallowedWords));
 
         return sprintf('#^[\w]+\\\\(?:Zed|Client|Yves|Glue|Service|Shared)\\\\([\w]*(?i:%s)[\w]*)\\\\.+#', $alternation);
     }
@@ -83,17 +83,17 @@ class WeirdModuleNameRule extends AbstractRule implements ClassAware
     /**
      * @return array<int, string>
      */
-    protected function getWeirdWords(): array
+    protected function getDisallowedWords(): array
     {
-        $rawWeirdWords = trim((string)$this->getStringProperty(static::PROPERTY_WEIRD_WORDS, static::DEFAULT_WEIRD_WORDS));
+        $rawDisallowedWords = trim((string)$this->getStringProperty(static::PROPERTY_DISALLOWED_WORDS, static::DEFAULT_DISALLOWED_WORDS));
 
-        if ($rawWeirdWords === '') {
+        if ($rawDisallowedWords === '') {
             return [];
         }
 
-        $weirdWords = array_map('trim', explode(',', $rawWeirdWords));
+        $disallowedWords = array_map('trim', explode(',', $rawDisallowedWords));
 
-        return array_values(array_filter($weirdWords, static fn (string $weirdWord): bool => $weirdWord !== ''));
+        return array_values(array_filter($disallowedWords, static fn (string $disallowedWord): bool => $disallowedWord !== ''));
     }
 
     protected function isModuleExcluded(string $moduleName): bool

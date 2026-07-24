@@ -12,19 +12,10 @@ use ArchitectureSniffer\Console\Formatter\ProjectResultsFormatter;
 
 class FormatProjectResultsCommand implements CommandInterface
 {
-    /**
-     * @var string
-     */
-    protected const NAME = 'format-project-results';
+    protected const string NAME = 'format-project-results';
 
-    protected ProjectResultsFormatter $formatter;
-
-    /**
-     * @param \ArchitectureSniffer\Console\Formatter\ProjectResultsFormatter $formatter
-     */
-    public function __construct(ProjectResultsFormatter $formatter)
+    public function __construct(protected ProjectResultsFormatter $formatter)
     {
-        $this->formatter = $formatter;
     }
 
     /**

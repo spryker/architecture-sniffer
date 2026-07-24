@@ -14,23 +14,14 @@
  *   format-project-results <input.json> [<output.txt>]
  *       Formats a phpmd JSON report into a grouped, human-readable summary.
  *
- *   setup-project [<destination>]
- *       Copies the project ruleset (src/Project) to a project-level destination
- *       folder (default: "architecture-sniffer"), rewriting package refs and using
- *       an upsert strategy so vendor updates apply while local edits are kept as .bak.
- *
  * Generate the JSON report for format-project-results with, e.g.:
  *   vendor/bin/phpmd src/Pyz json architecture-sniffer/ruleset.xml \
  *       --minimumpriority 3 --baseline-file phpmd.project.baseline.xml > results.json
  */
 
 use ArchitectureSniffer\Console\Command\FormatProjectResultsCommand;
-use ArchitectureSniffer\Console\Command\SetupProjectCommand;
 use ArchitectureSniffer\Console\CommandRunner;
 use ArchitectureSniffer\Console\Formatter\ProjectResultsFormatter;
-use ArchitectureSniffer\Console\Setup\FileUpserter;
-use ArchitectureSniffer\Console\Setup\RulesetFileCollector;
-use ArchitectureSniffer\Console\Setup\RulesetReferenceRewriter;
 
 // This file lives at <package-root>/bin/spryker-architecture; resolve the package root
 // through the real path so it works when invoked via the vendor/bin symlink.
@@ -41,12 +32,6 @@ require_once resolveAutoloadPath($packageRootPath);
 
 $runner = new CommandRunner([
     new FormatProjectResultsCommand(new ProjectResultsFormatter()),
-    new SetupProjectCommand(
-        new RulesetFileCollector(),
-        new RulesetReferenceRewriter(),
-        new FileUpserter(),
-        $packageRootPath,
-    ),
 ]);
 
 exit($runner->run($argv));

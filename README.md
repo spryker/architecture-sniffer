@@ -74,22 +74,50 @@ vendor/bin/phpmd src/ (json|text|html) vendor/spryker/architecture-sniffer/src/P
 ```
 
 ### Setup for the project & customizing rules
-The project ruleset is meant to be tuned per project. Copy it (and the rulesets it references) to the project level so it can be edited — exclude modules, change priorities, or adjust rule properties without touching the vendor package:
+The project ruleset is meant to be tuned per project. Create a thin project-level `architecture-sniffer/ruleset.xml` that references the vendor project ruleset, then layer your customizations on top of it — exclude modules, change priorities, or adjust rule properties without touching the vendor package:
+```xml
+<?xml version="1.0"?>
+<ruleset name="Spryker Project"
+         xmlns="http://pmd.sf.net/ruleset/1.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <description>Project architecture ruleset.</description>
+
+    <!-- File / path exclusions (filters WHICH files are analyzed) -->
+    <exclude-pattern>*/Generated/*</exclude-pattern>
+    <exclude-pattern>*/Orm/*</exclude-pattern>
+
+    <!-- Import the vendor project ruleset (single aggregate reference) -->
+    <rule ref="vendor/spryker/architecture-sniffer/src/Project/ruleset.xml" />
+
+    <!-- Customizations MUST come AFTER the import above, otherwise the
+         import re-adds the original definition and clobbers your override. -->
+
+    <!-- Exclude a rule from the imported set:
+    <rule ref="vendor/spryker/architecture-sniffer/src/Project/Zed/ruleset.xml">
+        <exclude name="FacadeSingleFactoryCallRule" />
+    </rule>
+    -->
+
+    <!-- Change a single rule's priority (lower number = more severe):
+    <rule ref="vendor/spryker/architecture-sniffer/src/Project/Zed/ruleset.xml/FacadeRule">
+        <priority>3</priority>
+    </rule>
+    -->
+
+    <!-- Pass a property to a rule:
+    <rule ref="vendor/spryker/architecture-sniffer/src/Project/Zed/ruleset.xml/OrmNewEntityNotInCommunicationRule">
+        <properties>
+            <property name="ignoreclasspattern" value="#\\SomeModule\\#" />
+        </properties>
+    </rule>
+    -->
+</ruleset>
 ```
-vendor/bin/spryker-architecture setup-project [<destination>]
-```
-`<destination>` defaults to `architecture-sniffer`. After setup, run phpmd against the copied ruleset instead of the vendor one, and change it freely for project needs:
+After that, run phpmd against your project-level ruleset instead of the vendor one, and change it freely for project needs:
 ```
 vendor/bin/phpmd src/ (json|text|html) architecture-sniffer/ruleset.xml --minimumpriority=4
 ```
 The commands below use this project-level path.
-
-`setup-project` copies these files into `<destination>/`:
-- `ruleset.xml` — entry ruleset that references all of the below
-- `PhpMd/ruleset.xml` — adapted PHPMD rules (Clean Code, Code Size, Controversial, Design, Naming, Unused Code)
-- `Common/ruleset.xml` — cross-layer Spryker and project rules
-- `Client/ruleset.xml`, `Glue/ruleset.xml`, `Service/ruleset.xml`, `Shared/ruleset.xml`, `Yves/ruleset.xml`, `Zed/ruleset.xml` — layer-specific rules
-- `SprykerProject/ruleset.xml`
 
 ### Local Code Review Usage
 For a local review, save the report to JSON and format it into a grouped, human-readable summary.

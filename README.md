@@ -86,25 +86,32 @@ The project ruleset is meant to be tuned per project. Create a thin project-leve
     <exclude-pattern>*/Generated/*</exclude-pattern>
     <exclude-pattern>*/Orm/*</exclude-pattern>
 
-    <!-- Import the vendor project ruleset (single aggregate reference) -->
-    <rule ref="vendor/spryker/architecture-sniffer/src/Project/ruleset.xml" />
+    <!-- Import the vendor project ruleset (single aggregate reference).
+         To EXCLUDE or OVERRIDE a rule, do it INSIDE this block via
+         <exclude name="..."/>. PHPMD keeps the FIRST copy of a rule it
+         imports by name, so a separate <rule ref> placed after this
+         block is silently ignored — the exclude must live here. -->
+    <rule ref="vendor/spryker/architecture-sniffer/src/Project/ruleset.xml">
+        <!-- Drop a rule entirely: -->
+        <!-- <exclude name="FacadeSingleFactoryCallRule" /> -->
 
-    <!-- Customizations MUST come AFTER the import above, otherwise the
-         import re-adds the original definition and clobbers your override. -->
-
-    <!-- Exclude a rule from the imported set:
-    <rule ref="vendor/spryker/architecture-sniffer/src/Project/Zed/ruleset.xml">
-        <exclude name="FacadeSingleFactoryCallRule" />
+        <!-- To OVERRIDE a rule's priority/properties, exclude it here too,
+             then re-add the single rule below: -->
+        <!-- <exclude name="FacadeRule" /> -->
+        <!-- <exclude name="OrmNewEntityNotInCommunicationRule" /> -->
     </rule>
-    -->
 
-    <!-- Change a single rule's priority (lower number = more severe):
+    <!-- Change a single rule's priority (lower number = more severe).
+         Requires <exclude name="FacadeRule"/> in the block above. -->
+    <!--
     <rule ref="vendor/spryker/architecture-sniffer/src/Project/Zed/ruleset.xml/FacadeRule">
         <priority>3</priority>
     </rule>
     -->
 
-    <!-- Pass a property to a rule:
+    <!-- Pass a property to a rule.
+         Requires <exclude name="OrmNewEntityNotInCommunicationRule"/> above. -->
+    <!--
     <rule ref="vendor/spryker/architecture-sniffer/src/Project/Zed/ruleset.xml/OrmNewEntityNotInCommunicationRule">
         <properties>
             <property name="ignoreclasspattern" value="#\\SomeModule\\#" />

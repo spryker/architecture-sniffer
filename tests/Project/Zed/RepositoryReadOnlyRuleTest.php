@@ -35,6 +35,32 @@ class RepositoryReadOnlyRuleTest extends AbstractArchitectureSnifferRuleTest
     /**
      * @return void
      */
+    public function testRuleDoesNotApplyWhenWriteOperationIsNotInRestrictedMethods(): void
+    {
+        $this->setTestFile('testRuleAppliesWhenRepositoryUsesWriteOperation.php');
+
+        $rule = new RepositoryReadOnlyRule();
+        $rule->addProperty('restrictedMethods', 'update,delete');
+        $rule->setReport($this->getReportMock(0));
+        $rule->apply($this->getMethodNode());
+    }
+
+    /**
+     * @return void
+     */
+    public function testRuleDoesNotApplyWhenRepositoryIsInIgnoreClassPattern(): void
+    {
+        $this->setTestFile('testRuleAppliesWhenRepositoryUsesWriteOperation.php');
+
+        $rule = new RepositoryReadOnlyRule();
+        $rule->addProperty('ignoreClassPattern', '(FooRepository$)');
+        $rule->setReport($this->getReportMock(0));
+        $rule->apply($this->getMethodNode());
+    }
+
+    /**
+     * @return void
+     */
     public function testGetDescription(): void
     {
         $this->assertIsString((new RepositoryReadOnlyRule())->getDescription());

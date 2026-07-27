@@ -114,7 +114,7 @@ The project ruleset is meant to be tuned per project. Create a thin project-leve
     <!--
     <rule ref="vendor/spryker/architecture-sniffer/src/Project/Zed/ruleset.xml/OrmNewEntityNotInCommunicationRule">
         <properties>
-            <property name="ignoreclasspattern" value="#\\SomeModule\\#" />
+            <property name="ignoreClassPattern" value="#\\SomeModule\\#" />
         </properties>
     </rule>
     -->

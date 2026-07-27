@@ -15,9 +15,6 @@ class InstanceResolvingRule extends AbstractRule implements ClassAware
 {
     public const string RULE = 'Automatically resolved instances must not be initialized directly with "new". Use Dependency Provider and Resolvers.';
 
-    /**
-     * @return string
-     */
     public function getDescription(): string
     {
         return static::RULE;
@@ -36,11 +33,6 @@ class InstanceResolvingRule extends AbstractRule implements ClassAware
         '/^(\w+)\\\\Glue\\\\\w+\\\\\w+(Factory|Config|DependencyProvider)$/',
     ];
 
-    /**
-     * @param \PHPMD\AbstractNode $node
-     *
-     * @return void
-     */
     public function apply(AbstractNode $node): void
     {
         $ignoreClassRegexp = $this->getStringProperty('ignoreClassPattern', '');
@@ -54,11 +46,6 @@ class InstanceResolvingRule extends AbstractRule implements ClassAware
         }
     }
 
-    /**
-     * @param \PHPMD\AbstractNode $methodNode
-     *
-     * @return void
-     */
     protected function applyToMethod(AbstractNode $methodNode): void
     {
         if ($methodNode->hasSuppressWarningsAnnotationFor($this)) {
@@ -76,11 +63,6 @@ class InstanceResolvingRule extends AbstractRule implements ClassAware
         }
     }
 
-    /**
-     * @param \PHPMD\AbstractNode $expression
-     *
-     * @return string|null
-     */
     protected function resolveResolvableInstanceName(AbstractNode $expression): ?string
     {
         if ($expression->getImage() !== 'new') {
@@ -98,11 +80,6 @@ class InstanceResolvingRule extends AbstractRule implements ClassAware
         return $this->matchesResolvablePattern($referenceName) ? $referenceName : null;
     }
 
-    /**
-     * @param string $referenceName
-     *
-     * @return bool
-     */
     protected function matchesResolvablePattern(string $referenceName): bool
     {
         foreach (static::INSTANCE_PATTERNS as $pattern) {
@@ -114,12 +91,6 @@ class InstanceResolvingRule extends AbstractRule implements ClassAware
         return false;
     }
 
-    /**
-     * @param string $referenceName
-     * @param string $methodName
-     *
-     * @return string
-     */
     protected function buildMessage(string $referenceName, string $methodName): string
     {
         return sprintf(

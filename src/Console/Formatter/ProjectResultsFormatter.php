@@ -129,12 +129,6 @@ class ProjectResultsFormatter
         return [$output . $this->formatTotal($ruleName, count($violations)), count($violations)];
     }
 
-    /**
-     * @param string $label
-     * @param int $total
-     *
-     * @return string
-     */
     protected function formatTotal(string $label, int $total): string
     {
         return sprintf('TOTAL violations for %s %d%s%s', $label, $total, PHP_EOL, PHP_EOL);

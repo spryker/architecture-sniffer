@@ -35,6 +35,32 @@ class LayerAccessRuleTest extends AbstractArchitectureSnifferRuleTest
     /**
      * @return void
      */
+    public function testRuleDoesNotApplyWhenAnalyzedClassIsInIgnoreClassPattern(): void
+    {
+        $this->setTestFile('testRuleAppliesWhenYvesAccessesZed.php');
+
+        $rule = new LayerAccessRule();
+        $rule->addProperty('ignoreClassPattern', '(FooYvesController$)');
+        $rule->setReport($this->getReportMock(0));
+        $rule->apply($this->getClassNode());
+    }
+
+    /**
+     * @return void
+     */
+    public function testRuleDoesNotApplyWhenDependencyIsInIgnoreDependencyPattern(): void
+    {
+        $this->setTestFile('testRuleAppliesWhenYvesAccessesZed.php');
+
+        $rule = new LayerAccessRule();
+        $rule->addProperty('ignoreDependencyPattern', '(FooFacade$)');
+        $rule->setReport($this->getReportMock(0));
+        $rule->apply($this->getClassNode());
+    }
+
+    /**
+     * @return void
+     */
     public function testGetDescription(): void
     {
         $this->assertIsString((new LayerAccessRule())->getDescription());

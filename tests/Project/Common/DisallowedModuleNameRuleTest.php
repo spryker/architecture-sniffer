@@ -35,6 +35,32 @@ class DisallowedModuleNameRuleTest extends AbstractArchitectureSnifferRuleTest
     /**
      * @return void
      */
+    public function testRuleDoesNotApplyWhenModuleIsInModuleExcludeList(): void
+    {
+        $this->setTestFile('testRuleAppliesWhenModuleNameContainsDisallowedWord.php');
+
+        $rule = new DisallowedModuleNameRule();
+        $rule->addProperty('moduleExcludeList', 'DummyModule');
+        $rule->setReport($this->getReportMock(0));
+        $rule->apply($this->getClassNode());
+    }
+
+    /**
+     * @return void
+     */
+    public function testRuleDoesNotApplyWhenDisallowedWordsDoNotMatchModuleName(): void
+    {
+        $this->setTestFile('testRuleAppliesWhenModuleNameContainsDisallowedWord.php');
+
+        $rule = new DisallowedModuleNameRule();
+        $rule->addProperty('disallowedWords', 'antelope');
+        $rule->setReport($this->getReportMock(0));
+        $rule->apply($this->getClassNode());
+    }
+
+    /**
+     * @return void
+     */
     public function testGetDescription(): void
     {
         $this->assertIsString((new DisallowedModuleNameRule())->getDescription());

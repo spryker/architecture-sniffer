@@ -61,10 +61,6 @@ class CommandRunner
 
     /**
      * Writes the collected messages to STDOUT/STDERR and returns the process exit code.
-     *
-     * @param \ArchitectureSniffer\Console\CommandResponse $response
-     *
-     * @return int Process exit code.
      */
     protected function render(CommandResponse $response): int
     {

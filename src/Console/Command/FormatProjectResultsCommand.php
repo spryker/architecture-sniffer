@@ -65,12 +65,6 @@ class FormatProjectResultsCommand implements CommandInterface
         return CommandResponse::success([$fileOutput]);
     }
 
-    /**
-     * @param string $outputFile
-     * @param string $contents
-     *
-     * @return \ArchitectureSniffer\Console\CommandResponse
-     */
     protected function writeToFile(string $outputFile, string $contents): CommandResponse
     {
         if (file_put_contents($outputFile, $contents) === false) {

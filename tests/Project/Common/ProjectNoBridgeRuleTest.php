@@ -35,6 +35,19 @@ class ProjectNoBridgeRuleTest extends AbstractArchitectureSnifferRuleTest
     /**
      * @return void
      */
+    public function testRuleDoesNotApplyWhenBridgeIsInIgnoreClassPattern(): void
+    {
+        $this->setTestFile('testRuleAppliesWhenClassIsABridge.php');
+
+        $rule = new ProjectNoBridgeRule();
+        $rule->addProperty('ignoreClassPattern', '(Bridge$)');
+        $rule->setReport($this->getReportMock(0));
+        $rule->apply($this->getClassNode());
+    }
+
+    /**
+     * @return void
+     */
     public function testGetDescription(): void
     {
         $this->assertIsString((new ProjectNoBridgeRule())->getDescription());

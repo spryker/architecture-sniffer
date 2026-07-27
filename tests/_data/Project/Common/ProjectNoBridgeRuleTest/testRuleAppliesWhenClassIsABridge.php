@@ -9,9 +9,6 @@ namespace Pyz\Zed\Foo\Dependency\Facade;
 
 class FooToBarFacadeBridge
 {
-    /**
-     * @return void
-     */
     public function doSomething(): void
     {
     }

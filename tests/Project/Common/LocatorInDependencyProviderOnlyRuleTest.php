@@ -12,9 +12,6 @@ use ArchitectureSnifferTest\AbstractArchitectureSnifferRuleTest;
 
 class LocatorInDependencyProviderOnlyRuleTest extends AbstractArchitectureSnifferRuleTest
 {
-    /**
-     * @return void
-     */
     public function testRuleAppliesWhenLocatorIsUsedOutsideDependencyProvider(): void
     {
         $rule = new LocatorInDependencyProviderOnlyRule();
@@ -22,9 +19,6 @@ class LocatorInDependencyProviderOnlyRuleTest extends AbstractArchitectureSniffe
         $rule->apply($this->getMethodNode());
     }
 
-    /**
-     * @return void
-     */
     public function testRuleDoesNotApplyWhenLocatorIsUsedInDependencyProvider(): void
     {
         $rule = new LocatorInDependencyProviderOnlyRule();
@@ -32,9 +26,6 @@ class LocatorInDependencyProviderOnlyRuleTest extends AbstractArchitectureSniffe
         $rule->apply($this->getMethodNode());
     }
 
-    /**
-     * @return void
-     */
     public function testGetDescription(): void
     {
         $this->assertIsString((new LocatorInDependencyProviderOnlyRule())->getDescription());

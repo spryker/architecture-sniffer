@@ -9,9 +9,6 @@ namespace Pyz\Zed\Foo\Business;
 
 class FooBusinessFactory
 {
-    /**
-     * @return void
-     */
     public function createFooModel(): void
     {
         $this->getLocator()->bar()->facade();

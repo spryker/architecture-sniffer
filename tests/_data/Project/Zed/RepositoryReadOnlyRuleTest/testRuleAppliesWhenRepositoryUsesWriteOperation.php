@@ -9,9 +9,6 @@ namespace Pyz\Zed\Foo\Persistence;
 
 class FooRepository
 {
-    /**
-     * @return void
-     */
     public function findAndPersistFoo(): void
     {
         $this->getEntityManager()->save();

@@ -11,11 +11,6 @@ use Orm\Zed\Foo\Persistence\PyzFooQuery;
 
 class FooMapper
 {
-    /**
-     * @param \Orm\Zed\Foo\Persistence\PyzFooQuery $fooQuery
-     *
-     * @return void
-     */
     public function mapQuery(PyzFooQuery $fooQuery): void
     {
         $fooQuery->find();

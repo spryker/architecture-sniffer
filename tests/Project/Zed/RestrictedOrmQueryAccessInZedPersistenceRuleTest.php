@@ -12,9 +12,6 @@ use ArchitectureSnifferTest\AbstractArchitectureSnifferRuleTest;
 
 class RestrictedOrmQueryAccessInZedPersistenceRuleTest extends AbstractArchitectureSnifferRuleTest
 {
-    /**
-     * @return void
-     */
     public function testRuleAppliesWhenNonAllowedPersistenceClassAccessesOrmQuery(): void
     {
         $rule = new RestrictedOrmQueryAccessInZedPersistenceRule();
@@ -22,9 +19,6 @@ class RestrictedOrmQueryAccessInZedPersistenceRuleTest extends AbstractArchitect
         $rule->apply($this->getClassNode());
     }
 
-    /**
-     * @return void
-     */
     public function testRuleDoesNotApplyWhenRepositoryAccessesOrmQuery(): void
     {
         $rule = new RestrictedOrmQueryAccessInZedPersistenceRule();
@@ -32,9 +26,6 @@ class RestrictedOrmQueryAccessInZedPersistenceRuleTest extends AbstractArchitect
         $rule->apply($this->getClassNode());
     }
 
-    /**
-     * @return void
-     */
     public function testGetDescription(): void
     {
         $this->assertIsString((new RestrictedOrmQueryAccessInZedPersistenceRule())->getDescription());

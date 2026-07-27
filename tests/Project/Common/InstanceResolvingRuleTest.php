@@ -15,10 +15,6 @@ class InstanceResolvingRuleTest extends AbstractArchitectureSnifferRuleTest
 {
     /**
      * @dataProvider resolvableFullyQualifiedClassNameProvider
-     *
-     * @param string $fullyQualifiedClassName
-     *
-     * @return void
      */
     public function testInstancePatternsMatchResolvableClassNames(string $fullyQualifiedClassName): void
     {
@@ -30,10 +26,6 @@ class InstanceResolvingRuleTest extends AbstractArchitectureSnifferRuleTest
 
     /**
      * @dataProvider nonResolvableFullyQualifiedClassNameProvider
-     *
-     * @param string $fullyQualifiedClassName
-     *
-     * @return void
      */
     public function testInstancePatternsDoNotMatchNonResolvableClassNames(string $fullyQualifiedClassName): void
     {
@@ -73,11 +65,6 @@ class InstanceResolvingRuleTest extends AbstractArchitectureSnifferRuleTest
         ];
     }
 
-    /**
-     * @param string $fullyQualifiedClassName
-     *
-     * @return bool
-     */
     protected function matchesAnyInstancePattern(string $fullyQualifiedClassName): bool
     {
         $patterns = (new ReflectionClass(InstanceResolvingRule::class))->getConstant('INSTANCE_PATTERNS');
@@ -91,9 +78,6 @@ class InstanceResolvingRuleTest extends AbstractArchitectureSnifferRuleTest
         return false;
     }
 
-    /**
-     * @return void
-     */
     public function testRuleAppliesWhenResolvableInstanceIsInitializedWithNew(): void
     {
         $rule = new InstanceResolvingRule();
@@ -101,9 +85,6 @@ class InstanceResolvingRuleTest extends AbstractArchitectureSnifferRuleTest
         $rule->apply($this->getClassNode());
     }
 
-    /**
-     * @return void
-     */
     public function testRuleDoesNotApplyWhenNoResolvableInstanceIsInitialized(): void
     {
         $rule = new InstanceResolvingRule();
@@ -111,9 +92,6 @@ class InstanceResolvingRuleTest extends AbstractArchitectureSnifferRuleTest
         $rule->apply($this->getClassNode());
     }
 
-    /**
-     * @return void
-     */
     public function testGetDescription(): void
     {
         $this->assertIsString((new InstanceResolvingRule())->getDescription());

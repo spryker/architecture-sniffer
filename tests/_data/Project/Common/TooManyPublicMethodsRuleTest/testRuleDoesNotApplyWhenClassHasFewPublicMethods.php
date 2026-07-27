@@ -9,23 +9,14 @@ namespace Pyz\Zed\Foo\Business\Model;
 
 class FooManager
 {
-    /**
-     * @return void
-     */
     public function methodOne(): void
     {
     }
 
-    /**
-     * @return void
-     */
     public function methodTwo(): void
     {
     }
 
-    /**
-     * @return void
-     */
     protected function methodThree(): void
     {
     }

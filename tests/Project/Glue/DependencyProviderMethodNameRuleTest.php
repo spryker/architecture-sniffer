@@ -12,9 +12,6 @@ use ArchitectureSnifferTest\AbstractArchitectureSnifferRuleTest;
 
 class DependencyProviderMethodNameRuleTest extends AbstractArchitectureSnifferRuleTest
 {
-    /**
-     * @return void
-     */
     public function testRuleAppliesWhenGlueDependencyProviderHasDisallowedMethodName(): void
     {
         $rule = new DependencyProviderMethodNameRule();
@@ -22,9 +19,6 @@ class DependencyProviderMethodNameRuleTest extends AbstractArchitectureSnifferRu
         $rule->apply($this->getMethodNode());
     }
 
-    /**
-     * @return void
-     */
     public function testRuleDoesNotApplyWhenGlueDependencyProviderHasGetterMethodName(): void
     {
         $rule = new DependencyProviderMethodNameRule();
@@ -32,9 +26,6 @@ class DependencyProviderMethodNameRuleTest extends AbstractArchitectureSnifferRu
         $rule->apply($this->getMethodNode());
     }
 
-    /**
-     * @return void
-     */
     public function testGetDescription(): void
     {
         $this->assertIsString((new DependencyProviderMethodNameRule())->getDescription());

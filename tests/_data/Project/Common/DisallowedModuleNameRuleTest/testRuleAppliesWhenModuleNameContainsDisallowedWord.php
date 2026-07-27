@@ -9,9 +9,6 @@ namespace Pyz\Zed\DummyModule\Business;
 
 class DummyModuleFacade
 {
-    /**
-     * @return void
-     */
     public function doSomething(): void
     {
     }

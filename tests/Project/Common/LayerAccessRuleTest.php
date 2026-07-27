@@ -12,9 +12,6 @@ use ArchitectureSnifferTest\AbstractArchitectureSnifferRuleTest;
 
 class LayerAccessRuleTest extends AbstractArchitectureSnifferRuleTest
 {
-    /**
-     * @return void
-     */
     public function testRuleAppliesWhenYvesAccessesZed(): void
     {
         $rule = new LayerAccessRule();
@@ -22,9 +19,6 @@ class LayerAccessRuleTest extends AbstractArchitectureSnifferRuleTest
         $rule->apply($this->getClassNode());
     }
 
-    /**
-     * @return void
-     */
     public function testRuleDoesNotApplyWhenYvesAccessesYves(): void
     {
         $rule = new LayerAccessRule();
@@ -32,9 +26,6 @@ class LayerAccessRuleTest extends AbstractArchitectureSnifferRuleTest
         $rule->apply($this->getClassNode());
     }
 
-    /**
-     * @return void
-     */
     public function testRuleDoesNotApplyWhenAnalyzedClassIsInIgnoreClassPattern(): void
     {
         $this->setTestFile('testRuleAppliesWhenYvesAccessesZed.php');
@@ -45,9 +36,6 @@ class LayerAccessRuleTest extends AbstractArchitectureSnifferRuleTest
         $rule->apply($this->getClassNode());
     }
 
-    /**
-     * @return void
-     */
     public function testRuleDoesNotApplyWhenDependencyIsInIgnoreDependencyPattern(): void
     {
         $this->setTestFile('testRuleAppliesWhenYvesAccessesZed.php');
@@ -58,9 +46,6 @@ class LayerAccessRuleTest extends AbstractArchitectureSnifferRuleTest
         $rule->apply($this->getClassNode());
     }
 
-    /**
-     * @return void
-     */
     public function testGetDescription(): void
     {
         $this->assertIsString((new LayerAccessRule())->getDescription());

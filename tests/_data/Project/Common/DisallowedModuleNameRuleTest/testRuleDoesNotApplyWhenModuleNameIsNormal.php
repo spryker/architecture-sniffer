@@ -9,9 +9,6 @@ namespace Pyz\Zed\Product\Business;
 
 class ProductFacade
 {
-    /**
-     * @return void
-     */
     public function doSomething(): void
     {
     }

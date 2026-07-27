@@ -12,9 +12,6 @@ use ArchitectureSnifferTest\AbstractArchitectureSnifferRuleTest;
 
 class SingletonInstanceInDependencyProviderOnlyRuleTest extends AbstractArchitectureSnifferRuleTest
 {
-    /**
-     * @return void
-     */
     public function testRuleAppliesWhenGetInstanceIsUsedOutsideDependencyProvider(): void
     {
         $rule = new SingletonInstanceInDependencyProviderOnlyRule();
@@ -22,9 +19,6 @@ class SingletonInstanceInDependencyProviderOnlyRuleTest extends AbstractArchitec
         $rule->apply($this->getMethodNode());
     }
 
-    /**
-     * @return void
-     */
     public function testRuleDoesNotApplyWhenGetInstanceIsUsedInDependencyProvider(): void
     {
         $rule = new SingletonInstanceInDependencyProviderOnlyRule();
@@ -32,9 +26,6 @@ class SingletonInstanceInDependencyProviderOnlyRuleTest extends AbstractArchitec
         $rule->apply($this->getMethodNode());
     }
 
-    /**
-     * @return void
-     */
     public function testGetDescription(): void
     {
         $this->assertIsString((new SingletonInstanceInDependencyProviderOnlyRule())->getDescription());

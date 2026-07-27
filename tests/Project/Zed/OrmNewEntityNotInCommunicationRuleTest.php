@@ -12,9 +12,6 @@ use ArchitectureSnifferTest\AbstractArchitectureSnifferRuleTest;
 
 class OrmNewEntityNotInCommunicationRuleTest extends AbstractArchitectureSnifferRuleTest
 {
-    /**
-     * @return void
-     */
     public function testRuleAppliesWhenOrmEntityIsInitializedInCommunication(): void
     {
         $rule = new OrmNewEntityNotInCommunicationRule();
@@ -22,9 +19,6 @@ class OrmNewEntityNotInCommunicationRuleTest extends AbstractArchitectureSniffer
         $rule->apply($this->getClassNode());
     }
 
-    /**
-     * @return void
-     */
     public function testRuleDoesNotApplyWhenOrmEntityIsInitializedOutsideCommunication(): void
     {
         $rule = new OrmNewEntityNotInCommunicationRule();
@@ -32,9 +26,6 @@ class OrmNewEntityNotInCommunicationRuleTest extends AbstractArchitectureSniffer
         $rule->apply($this->getClassNode());
     }
 
-    /**
-     * @return void
-     */
     public function testGetDescription(): void
     {
         $this->assertIsString((new OrmNewEntityNotInCommunicationRule())->getDescription());

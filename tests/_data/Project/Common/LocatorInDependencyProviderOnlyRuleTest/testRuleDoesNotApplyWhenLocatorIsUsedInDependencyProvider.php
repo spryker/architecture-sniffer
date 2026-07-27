@@ -9,9 +9,6 @@ namespace Pyz\Zed\Foo;
 
 class FooDependencyProvider
 {
-    /**
-     * @return void
-     */
     public function provideBusinessLayerDependencies(): void
     {
         $this->getLocator()->bar()->facade();

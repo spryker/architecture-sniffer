@@ -9,9 +9,6 @@ namespace Pyz\Zed\Foo\Persistence;
 
 class FooRepository
 {
-    /**
-     * @return array
-     */
     public function findFoo(): array
     {
         return $this->getFactory()->createQuery()->find();
@@ -33,9 +30,6 @@ class FooRepository
         return $this;
     }
 
-    /**
-     * @return array
-     */
     protected function find(): array
     {
         return [];

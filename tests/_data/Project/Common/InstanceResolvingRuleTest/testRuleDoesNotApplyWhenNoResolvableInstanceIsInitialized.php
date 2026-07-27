@@ -11,9 +11,6 @@ use Pyz\Zed\Foo\Business\Model\PlainValue;
 
 class FooBusinessConsumer
 {
-    /**
-     * @return void
-     */
     public function doSomething(): void
     {
         $value = new PlainValue();

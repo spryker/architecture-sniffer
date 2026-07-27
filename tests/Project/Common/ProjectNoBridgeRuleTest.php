@@ -12,9 +12,6 @@ use ArchitectureSnifferTest\AbstractArchitectureSnifferRuleTest;
 
 class ProjectNoBridgeRuleTest extends AbstractArchitectureSnifferRuleTest
 {
-    /**
-     * @return void
-     */
     public function testRuleAppliesWhenClassIsABridge(): void
     {
         $rule = new ProjectNoBridgeRule();
@@ -22,9 +19,6 @@ class ProjectNoBridgeRuleTest extends AbstractArchitectureSnifferRuleTest
         $rule->apply($this->getClassNode());
     }
 
-    /**
-     * @return void
-     */
     public function testRuleDoesNotApplyWhenClassIsNotABridge(): void
     {
         $rule = new ProjectNoBridgeRule();
@@ -32,9 +26,6 @@ class ProjectNoBridgeRuleTest extends AbstractArchitectureSnifferRuleTest
         $rule->apply($this->getClassNode());
     }
 
-    /**
-     * @return void
-     */
     public function testRuleDoesNotApplyWhenBridgeIsInIgnoreClassPattern(): void
     {
         $this->setTestFile('testRuleAppliesWhenClassIsABridge.php');
@@ -45,9 +36,6 @@ class ProjectNoBridgeRuleTest extends AbstractArchitectureSnifferRuleTest
         $rule->apply($this->getClassNode());
     }
 
-    /**
-     * @return void
-     */
     public function testGetDescription(): void
     {
         $this->assertIsString((new ProjectNoBridgeRule())->getDescription());

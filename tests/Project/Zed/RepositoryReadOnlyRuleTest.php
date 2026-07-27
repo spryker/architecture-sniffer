@@ -12,9 +12,6 @@ use ArchitectureSnifferTest\AbstractArchitectureSnifferRuleTest;
 
 class RepositoryReadOnlyRuleTest extends AbstractArchitectureSnifferRuleTest
 {
-    /**
-     * @return void
-     */
     public function testRuleAppliesWhenRepositoryUsesWriteOperation(): void
     {
         $rule = new RepositoryReadOnlyRule();
@@ -22,9 +19,6 @@ class RepositoryReadOnlyRuleTest extends AbstractArchitectureSnifferRuleTest
         $rule->apply($this->getMethodNode());
     }
 
-    /**
-     * @return void
-     */
     public function testRuleDoesNotApplyWhenRepositoryOnlyReads(): void
     {
         $rule = new RepositoryReadOnlyRule();
@@ -32,9 +26,6 @@ class RepositoryReadOnlyRuleTest extends AbstractArchitectureSnifferRuleTest
         $rule->apply($this->getMethodNode());
     }
 
-    /**
-     * @return void
-     */
     public function testRuleDoesNotApplyWhenWriteOperationIsNotInRestrictedMethods(): void
     {
         $this->setTestFile('testRuleAppliesWhenRepositoryUsesWriteOperation.php');
@@ -45,9 +36,6 @@ class RepositoryReadOnlyRuleTest extends AbstractArchitectureSnifferRuleTest
         $rule->apply($this->getMethodNode());
     }
 
-    /**
-     * @return void
-     */
     public function testRuleDoesNotApplyWhenRepositoryIsInIgnoreClassPattern(): void
     {
         $this->setTestFile('testRuleAppliesWhenRepositoryUsesWriteOperation.php');
@@ -58,9 +46,6 @@ class RepositoryReadOnlyRuleTest extends AbstractArchitectureSnifferRuleTest
         $rule->apply($this->getMethodNode());
     }
 
-    /**
-     * @return void
-     */
     public function testGetDescription(): void
     {
         $this->assertIsString((new RepositoryReadOnlyRule())->getDescription());

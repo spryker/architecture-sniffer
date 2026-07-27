@@ -9,9 +9,6 @@ namespace Pyz\Client\FooStorage;
 
 class FooStorageDependencyProvider
 {
-    /**
-     * @return void
-     */
     public function provideServiceLayerDependencies(): void
     {
         $this->getProvidedDependency()->zedRequest();

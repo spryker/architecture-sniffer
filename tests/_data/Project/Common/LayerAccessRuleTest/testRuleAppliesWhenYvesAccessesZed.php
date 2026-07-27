@@ -11,11 +11,6 @@ use Pyz\Zed\Foo\Business\FooFacade;
 
 class FooYvesController
 {
-    /**
-     * @param \Pyz\Zed\Foo\Business\FooFacade $fooFacade
-     *
-     * @return void
-     */
     public function indexAction(FooFacade $fooFacade): void
     {
         $fooFacade->doSomething();
@@ -26,9 +21,6 @@ namespace Pyz\Zed\Foo\Business;
 
 class FooFacade
 {
-    /**
-     * @return void
-     */
     public function doSomething(): void
     {
     }

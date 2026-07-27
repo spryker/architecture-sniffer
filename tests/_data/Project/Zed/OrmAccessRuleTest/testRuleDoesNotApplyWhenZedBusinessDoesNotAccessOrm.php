@@ -11,11 +11,6 @@ use Pyz\Zed\Foo\Persistence\FooRepositoryInterface;
 
 class FooReader
 {
-    /**
-     * @param \Pyz\Zed\Foo\Persistence\FooRepositoryInterface $fooRepository
-     *
-     * @return void
-     */
     public function read(FooRepositoryInterface $fooRepository): void
     {
         $fooRepository->find();

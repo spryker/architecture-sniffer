@@ -11,11 +11,6 @@ use Orm\Zed\Foo\Persistence\PyzFooQuery;
 
 class FooRepository
 {
-    /**
-     * @param \Orm\Zed\Foo\Persistence\PyzFooQuery $fooQuery
-     *
-     * @return void
-     */
     public function findWithQuery(PyzFooQuery $fooQuery): void
     {
         $fooQuery->find();

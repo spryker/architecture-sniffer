@@ -11,11 +11,6 @@ use Orm\Zed\Foo\Persistence\PyzFooQuery;
 
 class FooReader
 {
-    /**
-     * @param \Orm\Zed\Foo\Persistence\PyzFooQuery $fooQuery
-     *
-     * @return void
-     */
     public function read(PyzFooQuery $fooQuery): void
     {
         $fooQuery->find();

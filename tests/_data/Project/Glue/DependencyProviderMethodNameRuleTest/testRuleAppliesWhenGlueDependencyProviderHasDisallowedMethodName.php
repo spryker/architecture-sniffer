@@ -9,9 +9,6 @@ namespace Pyz\Glue\Foo;
 
 class FooDependencyProvider
 {
-    /**
-     * @return void
-     */
     public function configureFoo(): void
     {
     }

@@ -12,9 +12,6 @@ use ArchitectureSnifferTest\AbstractArchitectureSnifferRuleTest;
 
 class OrmAccessRuleTest extends AbstractArchitectureSnifferRuleTest
 {
-    /**
-     * @return void
-     */
     public function testRuleAppliesWhenZedBusinessAccessesOrmQuery(): void
     {
         $rule = new OrmAccessRule();
@@ -22,9 +19,6 @@ class OrmAccessRuleTest extends AbstractArchitectureSnifferRuleTest
         $rule->apply($this->getClassNode());
     }
 
-    /**
-     * @return void
-     */
     public function testRuleDoesNotApplyWhenZedBusinessDoesNotAccessOrm(): void
     {
         $rule = new OrmAccessRule();
@@ -32,9 +26,6 @@ class OrmAccessRuleTest extends AbstractArchitectureSnifferRuleTest
         $rule->apply($this->getClassNode());
     }
 
-    /**
-     * @return void
-     */
     public function testGetDescription(): void
     {
         $this->assertIsString((new OrmAccessRule())->getDescription());

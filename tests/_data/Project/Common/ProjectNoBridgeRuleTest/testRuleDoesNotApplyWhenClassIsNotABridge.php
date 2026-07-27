@@ -9,9 +9,6 @@ namespace Pyz\Zed\Foo\Business\Model;
 
 class FooReader
 {
-    /**
-     * @return void
-     */
     public function read(): void
     {
     }

@@ -11,9 +11,6 @@ use Pyz\Client\Foo\FooClient;
 
 class FooBusinessConsumer
 {
-    /**
-     * @return void
-     */
     public function doSomething(): void
     {
         $client = new FooClient();

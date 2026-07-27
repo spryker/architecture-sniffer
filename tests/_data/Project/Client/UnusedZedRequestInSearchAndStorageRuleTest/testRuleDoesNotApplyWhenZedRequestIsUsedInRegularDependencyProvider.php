@@ -9,9 +9,6 @@ namespace Pyz\Client\Foo;
 
 class FooDependencyProvider
 {
-    /**
-     * @return void
-     */
     public function provideServiceLayerDependencies(): void
     {
         $this->getProvidedDependency()->zedRequest();

@@ -12,9 +12,6 @@ use ArchitectureSnifferTest\AbstractArchitectureSnifferRuleTest;
 
 class TooManyPublicMethodsRuleTest extends AbstractArchitectureSnifferRuleTest
 {
-    /**
-     * @return void
-     */
     public function testRuleAppliesWhenClassHasTooManyPublicMethods(): void
     {
         $rule = $this->createRule();
@@ -22,9 +19,6 @@ class TooManyPublicMethodsRuleTest extends AbstractArchitectureSnifferRuleTest
         $rule->apply($this->getClassNode());
     }
 
-    /**
-     * @return void
-     */
     public function testRuleDoesNotApplyWhenClassHasFewPublicMethods(): void
     {
         $rule = $this->createRule();
@@ -32,17 +26,11 @@ class TooManyPublicMethodsRuleTest extends AbstractArchitectureSnifferRuleTest
         $rule->apply($this->getClassNode());
     }
 
-    /**
-     * @return void
-     */
     public function testGetDescription(): void
     {
         $this->assertIsString($this->createRule()->getDescription());
     }
 
-    /**
-     * @return \ArchitectureSniffer\Project\Common\TooManyPublicMethodsRule
-     */
     protected function createRule(): TooManyPublicMethodsRule
     {
         $rule = new TooManyPublicMethodsRule();

@@ -12,9 +12,6 @@ use ArchitectureSnifferTest\AbstractArchitectureSnifferRuleTest;
 
 class UnusedZedRequestInSearchAndStorageRuleTest extends AbstractArchitectureSnifferRuleTest
 {
-    /**
-     * @return void
-     */
     public function testRuleAppliesWhenZedRequestIsUsedInStorageDependencyProvider(): void
     {
         $rule = new UnusedZedRequestInSearchAndStorageRule();
@@ -22,9 +19,6 @@ class UnusedZedRequestInSearchAndStorageRuleTest extends AbstractArchitectureSni
         $rule->apply($this->getMethodNode());
     }
 
-    /**
-     * @return void
-     */
     public function testRuleDoesNotApplyWhenZedRequestIsUsedInRegularDependencyProvider(): void
     {
         $rule = new UnusedZedRequestInSearchAndStorageRule();
@@ -32,9 +26,6 @@ class UnusedZedRequestInSearchAndStorageRuleTest extends AbstractArchitectureSni
         $rule->apply($this->getMethodNode());
     }
 
-    /**
-     * @return void
-     */
     public function testGetDescription(): void
     {
         $this->assertIsString((new UnusedZedRequestInSearchAndStorageRule())->getDescription());

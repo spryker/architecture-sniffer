@@ -38,8 +38,6 @@ class OrmAccessRule extends AbstractRule implements ClassAware
     ];
 
     /**
-     * @param \PHPMD\AbstractNode $node
-     *
      * @return void
      */
     public function apply(AbstractNode $node)
@@ -63,7 +61,6 @@ class OrmAccessRule extends AbstractRule implements ClassAware
     }
 
     /**
-     * @param \PHPMD\AbstractNode $node
      * @param array<string> $patterns
      *
      * @return void
@@ -100,8 +97,6 @@ class OrmAccessRule extends AbstractRule implements ClassAware
     }
 
     /**
-     * @param \PHPMD\Node\ClassNode $class
-     *
      * @return array<string>
      */
     protected function collectPatterns(ClassNode $class): array

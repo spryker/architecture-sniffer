@@ -25,8 +25,6 @@ class TooManyPublicMethodsRule extends AbstractRule implements ClassAware
 
     /**
      * @param \PHPMD\AbstractNode|\PHPMD\Node\AbstractTypeNode $node
-     *
-     * @return void
      */
     public function apply(AbstractNode $node): void
     {

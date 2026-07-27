@@ -25,11 +25,7 @@ class ProjectResultsFormatter
     protected const string GROUP_GENERAL = 'GENERAL RULES';
 
     /**
-     * Formats a decoded phpmd JSON report into a grouped, human-readable summary.
-     *
      * @param array<string, mixed> $results
-     *
-     * @return string
      */
     public function format(array $results): string
     {
@@ -43,10 +39,7 @@ class ProjectResultsFormatter
     }
 
     /**
-     * @param string $group
      * @param array<int, array<string, array<string, array<int, array<string, mixed>>>>> $convertedResult
-     *
-     * @return string
      */
     protected function formatGroup(string $group, array $convertedResult): string
     {
@@ -65,7 +58,6 @@ class ProjectResultsFormatter
     }
 
     /**
-     * @param int $priorityIndex
      * @param array<string, array<string, array<int, array<string, mixed>>>> $rulesetGroup
      *
      * @return array{0: string, 1: int}
@@ -87,7 +79,6 @@ class ProjectResultsFormatter
     }
 
     /**
-     * @param string $ruleSetName
      * @param array<string, array<int, array<string, mixed>>> $ruleGroup
      *
      * @return array{0: string, 1: int}
@@ -107,7 +98,6 @@ class ProjectResultsFormatter
     }
 
     /**
-     * @param string $ruleName
      * @param array<int, array<string, mixed>> $violations
      *
      * @return array{0: string, 1: int}
@@ -135,8 +125,6 @@ class ProjectResultsFormatter
     }
 
     /**
-     * Groups violations by group => priority => ruleSet => rule.
-     *
      * @param array<string, mixed> $results
      *
      * @return array<string, array<int, array<string, array<string, array<int, array<string, mixed>>>>>

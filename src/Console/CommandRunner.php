@@ -25,9 +25,7 @@ class CommandRunner
     }
 
     /**
-     * @param array<int, string> $argv Raw process argv (including the script name at index 0).
-     *
-     * @return int Process exit code.
+     * @param array<int, string> $argv
      */
     public function run(array $argv): int
     {
@@ -37,9 +35,7 @@ class CommandRunner
     }
 
     /**
-     * @param array<int, string> $argv Raw process argv (including the script name at index 0).
-     *
-     * @return \ArchitectureSniffer\Console\CommandResponse
+     * @param array<int, string> $argv
      */
     protected function resolveResponse(array $argv): CommandResponse
     {
@@ -59,9 +55,6 @@ class CommandRunner
         return $this->commands[$commandName]->run(array_slice($argv, 2));
     }
 
-    /**
-     * Writes the collected messages to STDOUT/STDERR and returns the process exit code.
-     */
     protected function render(CommandResponse $response): int
     {
         foreach ($response->getOutputMessages() as $outputMessage) {
@@ -77,9 +70,6 @@ class CommandRunner
 
     /**
      * @param resource $stream
-     * @param string $message
-     *
-     * @return void
      */
     protected function writeln($stream, string $message): void
     {
@@ -88,9 +78,6 @@ class CommandRunner
 
     /**
      * @param resource $stream
-     * @param string $message
-     *
-     * @return void
      */
     protected function write($stream, string $message): void
     {

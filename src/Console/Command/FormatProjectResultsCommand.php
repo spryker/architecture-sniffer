@@ -31,8 +31,6 @@ class FormatProjectResultsCommand implements CommandInterface
 
     /**
      * @param array<int, string> $arguments
-     *
-     * @return \ArchitectureSniffer\Console\CommandResponse
      */
     public function run(array $arguments): CommandResponse
     {

@@ -15,20 +15,10 @@ class DisallowedModuleNameRule extends AbstractRule implements ClassAware
 {
     public const string RULE = 'Module name should not contain any configured disallowed words.';
 
-    /**
-     * Name of the configurable property holding a comma-separated list of module names
-     * to exclude from this rule (e.g. legacy example modules that cannot be renamed).
-     */
     protected const string PROPERTY_MODULE_EXCLUDE_LIST = 'moduleExcludeList';
 
-    /**
-     * Name of the configurable property holding a comma-separated list of disallowed words.
-     */
     protected const string PROPERTY_DISALLOWED_WORDS = 'disallowedWords';
 
-    /**
-     * Default comma-separated list of disallowed words.
-     */
     protected const string DEFAULT_DISALLOWED_WORDS = 'test,dummy,example,antelope';
 
     public function getDescription(): string
@@ -70,8 +60,6 @@ class DisallowedModuleNameRule extends AbstractRule implements ClassAware
 
     /**
      * @param array<int, string> $disallowedWords
-     *
-     * @return string
      */
     protected function buildDisallowedModuleNamePattern(array $disallowedWords): string
     {

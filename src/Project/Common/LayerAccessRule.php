@@ -12,9 +12,6 @@ use PHPMD\AbstractRule;
 use PHPMD\Node\ClassNode;
 use PHPMD\Rule\ClassAware;
 
-/**
- * Project-strict variant of the layer-access rule; intentionally kept distinct from ArchitectureSniffer\Common\LayerAccessRule (NFR-3 documented exception).
- */
 class LayerAccessRule extends AbstractRule implements ClassAware
 {
     /**
@@ -42,22 +39,16 @@ class LayerAccessRule extends AbstractRule implements ClassAware
      * @var array
      */
     protected $patterns = [
-
-        // Yves
         [
             '(^[\w]+\\\\Yves\\\\.+)',
             '(^[\w]+\\\\(Zed|Glue)\\\\.+)',
             '{type} {source} accesses {target} which violates rule "No call from Yves to Zed|Glue"',
         ],
-
-        // Client
         [
             '(^[\w]+\\\\Client\\\\.+)',
             '(^[\w]+\\\\(Zed|Glue|Yves)\\\\.+)',
             '{type} {source} accesses {target} which violates rule "No call from Client to Zed|Glue|Yves"',
         ],
-
-        // Glue
         [
             '(^[\w]+\\\\Glue\\\\.+)',
             '(^[\w]+\\\\Yves\\\\.+)',
@@ -73,43 +64,31 @@ class LayerAccessRule extends AbstractRule implements ClassAware
             '(^Orm\\\\Zed\\\\.+)',
             '{type} {source} accesses {target} which violates rule "No call from Glue to Orm\Zed"',
         ],
-
-        // Shared
         [
             '(^[\w]+\\\\Shared\\\\.+)',
             '(^[\w]+\\\\(Zed|Client|Yves|Glue|Service)\\\\.+)',
             '{type} {source} accesses {target} which violates rule "No call from Shared to Zed|Client|Yves|Glue|Service"',
         ],
-
-        // Service
         [
             '(^[\w]+\\\\Service\\\\.+)',
             '(^[\w]+\\\\(Zed|Client|Yves|Glue)\\\\.+)',
             '{type} {source} accesses {target} which violates rule "No call from Service to Zed|Client|Yves|Glue"',
         ],
-
-        // Zed
         [
             '(^[\w]+\\\\Zed\\\\.+)',
             '(^[\w]+\\\\(Yves|Glue)\\\\.+)',
             '{type} {source} accesses {target} which violates rule "No call from Zed to Yves|Glue"',
         ],
-
-        // Zed Business
         [
             '(^[\w]+\\\\Zed\\\\[\w]+\\\\Business\\\\.+)',
             '(^[\w]+\\\\Zed\\\\[\w]+\\\\Presentation\\\\.+)',
             '{type} {source} accesses {target} which violates rule "No call from Zed Business to Zed Presentation"',
         ],
-
-        // Zed Communication
         [
             '(^[\w]+\\\\Zed\\\\[\w]+\\\\Communication\\\\.+)',
             '(^[\w]+\\\\Zed\\\\[\w]+\\\\Presentation\\\\.+)',
             '{type} {source} accesses {target} which violates rule "No call from Zed Communication to Zed Presentation"',
         ],
-
-        // Zed Persistence
         [
             '(^[\w]+\\\\Zed\\\\[\w]+\\\\Persistence\\\\.+)',
             '(.+\\\\Zed\\\\[\w]+\\\\(Business|Communication|Presentation)\\\\.+)',
@@ -120,8 +99,6 @@ class LayerAccessRule extends AbstractRule implements ClassAware
             '(^[\w]+\\\\Client\\\\.+)',
             '{type} {source} accesses {target} which violates rule "No call from Zed Persistence to Client"',
         ],
-
-        // Zed Presentation
         [
             '(^[\w]+\\\\Zed\\\\[\w]+\\\\Presentation\\\\.+)',
             '(^[\w]+\\\\(Zed|Client|Yves|Glue|Service|Shared)\\\\.+)',
@@ -149,7 +126,6 @@ class LayerAccessRule extends AbstractRule implements ClassAware
     }
 
     /**
-     * @param \PHPMD\AbstractNode $node
      * @param array<string> $patterns
      *
      * @return void
@@ -192,8 +168,6 @@ class LayerAccessRule extends AbstractRule implements ClassAware
     }
 
     /**
-     * @param \PHPMD\Node\ClassNode $class
-     *
      * @return array<string>
      */
     protected function collectPatterns(ClassNode $class): array

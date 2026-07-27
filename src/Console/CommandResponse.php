@@ -7,11 +7,6 @@
 
 namespace ArchitectureSniffer\Console;
 
-/**
- * Immutable result of a command execution. A command builds and returns this object
- * without performing any I/O itself; the CommandRunner renders the collected messages
- * to STDOUT/STDERR and uses the exit code as the process exit code.
- */
 class CommandResponse
 {
     protected const int EXIT_CODE_SUCCESS = 0;
@@ -19,9 +14,8 @@ class CommandResponse
     protected const int EXIT_CODE_ERROR = 1;
 
     /**
-     * @param int $exitCode
-     * @param array<int, string> $outputMessages Messages to render to STDOUT.
-     * @param array<int, string> $errorMessages Messages to render to STDERR.
+     * @param array<int, string> $outputMessages
+     * @param array<int, string> $errorMessages
      */
     public function __construct(
         protected int $exitCode = self::EXIT_CODE_SUCCESS,
@@ -31,9 +25,7 @@ class CommandResponse
     }
 
     /**
-     * @param array<int, string> $outputMessages Messages to render to STDOUT.
-     *
-     * @return self
+     * @param array<int, string> $outputMessages
      */
     public static function success(array $outputMessages = []): self
     {
@@ -41,9 +33,7 @@ class CommandResponse
     }
 
     /**
-     * @param array<int, string> $errorMessages Messages to render to STDERR.
-     *
-     * @return self
+     * @param array<int, string> $errorMessages
      */
     public static function error(array $errorMessages = []): self
     {

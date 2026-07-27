@@ -29,8 +29,6 @@ class DependencyProviderMethodNameRule extends AbstractDependencyProviderRule im
     }
 
     /**
-     * @param \PHPMD\AbstractNode $node
-     *
      * @return void
      */
     public function apply(AbstractNode $node)

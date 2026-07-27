@@ -37,7 +37,6 @@
     <rule ref="vendor/spryker/architecture-sniffer/src/Project/Client/ruleset.xml" />
     <rule ref="vendor/spryker/architecture-sniffer/src/Project/Service/ruleset.xml" />
     <rule ref="vendor/spryker/architecture-sniffer/src/Project/Shared/ruleset.xml" />
-    <rule ref="vendor/spryker/architecture-sniffer/src/Project/Yves/ruleset.xml" />
     <rule ref="vendor/spryker/architecture-sniffer/src/Project/Zed/ruleset.xml" />
     <rule ref="vendor/spryker/architecture-sniffer/src/Project/Common/ruleset.xml" />
 

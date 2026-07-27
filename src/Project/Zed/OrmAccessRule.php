@@ -22,9 +22,9 @@ class OrmAccessRule extends AbstractRule implements ClassAware
     }
 
     /**
-     * @var array
+     * @var array<array<string>>
      */
-    protected $patterns = [
+    protected array $patterns = [
         [
             '(^[\w]+\\\\Zed\\\\(?!.*(?:DataImport|Storage|Search))[\w]+\\\\Business\\\\.+)',
             '(^Orm\\\\Zed\\\\[\w]+\\\\Persistence\\\\[\w]+Query)',
@@ -37,10 +37,7 @@ class OrmAccessRule extends AbstractRule implements ClassAware
         ],
     ];
 
-    /**
-     * @return void
-     */
-    public function apply(AbstractNode $node)
+    public function apply(AbstractNode $node): void
     {
         $ignoreClassPattern = $this->getStringProperty('ignoreClassPattern', '');
 
@@ -61,11 +58,9 @@ class OrmAccessRule extends AbstractRule implements ClassAware
     }
 
     /**
-     * @param array<string> $patterns
-     *
-     * @return void
+     * @param array<array<string>> $patterns
      */
-    protected function applyPatterns(AbstractNode $node, array $patterns)
+    protected function applyPatterns(AbstractNode $node, array $patterns): void
     {
         if ($node->hasSuppressWarningsAnnotationFor($this)) {
             return;
@@ -97,7 +92,7 @@ class OrmAccessRule extends AbstractRule implements ClassAware
     }
 
     /**
-     * @return array<string>
+     * @return array<array<string>>
      */
     protected function collectPatterns(ClassNode $class): array
     {

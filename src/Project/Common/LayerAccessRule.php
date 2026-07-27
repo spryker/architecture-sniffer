@@ -14,10 +14,7 @@ use PHPMD\Rule\ClassAware;
 
 class LayerAccessRule extends AbstractRule implements ClassAware
 {
-    /**
-     * @return string
-     */
-    public function getDescription()
+    public function getDescription(): string
     {
         return 'Some layers must not call other layers:'
             . ' No call from Yves to Zed|Glue'
@@ -36,9 +33,9 @@ class LayerAccessRule extends AbstractRule implements ClassAware
     }
 
     /**
-     * @var array
+     * @var array<array<string>>
      */
-    protected $patterns = [
+    protected array $patterns = [
         [
             '(^[\w]+\\\\Yves\\\\.+)',
             '(^[\w]+\\\\(Zed|Glue)\\\\.+)',
@@ -126,11 +123,9 @@ class LayerAccessRule extends AbstractRule implements ClassAware
     }
 
     /**
-     * @param array<string> $patterns
-     *
-     * @return void
+     * @param array<array<string>> $patterns
      */
-    protected function applyPatterns(AbstractNode $node, array $patterns)
+    protected function applyPatterns(AbstractNode $node, array $patterns): void
     {
         if ($node->hasSuppressWarningsAnnotationFor($this)) {
             return;
@@ -168,7 +163,7 @@ class LayerAccessRule extends AbstractRule implements ClassAware
     }
 
     /**
-     * @return array<string>
+     * @return array<array<string>>
      */
     protected function collectPatterns(ClassNode $class): array
     {

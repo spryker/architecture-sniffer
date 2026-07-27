@@ -14,24 +14,18 @@ use PHPMD\Rule\MethodAware;
 class DependencyProviderMethodNameRule extends AbstractDependencyProviderRule implements MethodAware
 {
     /**
-     * @var array
+     * @var array<string>
      */
-    protected $allowedProvideMethodNames = [
+    protected array $allowedProvideMethodNames = [
         'provideDependencies',
     ];
 
-    /**
-     * @return string
-     */
-    public function getDescription()
+    public function getDescription(): string
     {
         return static::RULE;
     }
 
-    /**
-     * @return void
-     */
-    public function apply(AbstractNode $node)
+    public function apply(AbstractNode $node): void
     {
         if (!$this->isDependencyProvider($node, 'Glue')) {
             return;

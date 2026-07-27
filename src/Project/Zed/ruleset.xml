@@ -88,9 +88,9 @@
 
 
     <!-- CUSTOM PROJECT ARCHITECTURE RULES -->
-    <!-- Each custom rule below accepts an optional "ignoreclasspattern" property (regex, default: disabled)
+    <!-- Each custom rule below accepts an optional "ignoreClassPattern" property (regex, default: disabled)
          to skip analyzed classes whose FQCN matches, e.g.:
-             <properties><property name="ignoreclasspattern" description="Ignore classes matching this regex" value="#\\Foo\\#"/></properties> -->
+             <properties><property name="ignoreClassPattern" description="Ignore classes matching this regex" value="#\\Foo\\#"/></properties> -->
 
     <rule
         name="OrmNewEntityNotInCommunicationRule"
@@ -106,7 +106,7 @@
         class="ArchitectureSniffer\Project\Zed\RepositoryReadOnlyRule">
 
         <priority>2</priority>
-        <!-- Also accepts "restrictedmethods" (comma-separated, default: "save,update,delete") to configure
+        <!-- Also accepts "restrictedMethods" (comma-separated, default: "save,update,delete") to configure
              the forbidden repository method names, e.g. value="save,update,delete,doSave". -->
     </rule>
 

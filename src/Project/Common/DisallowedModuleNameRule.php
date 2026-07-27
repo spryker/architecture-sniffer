@@ -19,12 +19,12 @@ class DisallowedModuleNameRule extends AbstractRule implements ClassAware
      * Name of the configurable property holding a comma-separated list of module names
      * to exclude from this rule (e.g. legacy example modules that cannot be renamed).
      */
-    protected const string PROPERTY_MODULE_EXCLUDE_LIST = 'moduleexcludelist';
+    protected const string PROPERTY_MODULE_EXCLUDE_LIST = 'moduleExcludeList';
 
     /**
      * Name of the configurable property holding a comma-separated list of disallowed words.
      */
-    protected const string PROPERTY_DISALLOWED_WORDS = 'disallowedwords';
+    protected const string PROPERTY_DISALLOWED_WORDS = 'disallowedWords';
 
     /**
      * Default comma-separated list of disallowed words.

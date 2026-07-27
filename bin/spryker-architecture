@@ -15,8 +15,8 @@
  *       Formats a phpmd JSON report into a grouped, human-readable summary.
  *
  * Generate the JSON report for format-project-results with, e.g.:
- *   vendor/bin/phpmd src/Pyz json architecture-sniffer/ruleset.xml \
- *       --minimumpriority 3 --baseline-file phpmd.project.baseline.xml > results.json
+ *   vendor/bin/phpmd src/ json phpmd.xml \
+ *       --minimumpriority 4 --baseline-file phpmd.baseline.xml > results.json
  */
 
 use ArchitectureSniffer\Console\Command\FormatProjectResultsCommand;

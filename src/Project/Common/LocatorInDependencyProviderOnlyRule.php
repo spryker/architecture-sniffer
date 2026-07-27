@@ -13,37 +13,20 @@ use PHPMD\Rule\MethodAware;
 
 class LocatorInDependencyProviderOnlyRule extends AbstractRule implements MethodAware
 {
-    /**
-     * @var string
-     */
-    public const RULE = 'Locator should be used in Dependency Provider only';
+    public const string RULE = 'Locator should be used in Dependency Provider only';
 
-    /**
-     * @return string
-     */
+    protected const string LOCATOR_METHOD_NAMES = '/^(getLocator|locator)$/';
+
+    protected const string CLASSES_ALLOWED_TO_USE_LOCATOR = '/DependencyProvider$/';
+
     public function getDescription(): string
     {
         return static::RULE;
     }
 
-    /**
-     * @var string
-     */
-    protected const LOCATOR_METHOD_NAMES = '/^(getLocator|locator)$/';
-
-    /**
-     * @var string
-     */
-    protected const CLASSES_ALLOWED_TO_USE_LOCATOR = '/DependencyProvider$/';
-
-    /**
-     * @param \PHPMD\AbstractNode $node
-     *
-     * @return void
-     */
     public function apply(AbstractNode $node): void
     {
-        $ignoreClassRegexp = $this->getStringProperty('ignoreclasspattern', '');
+        $ignoreClassRegexp = $this->getStringProperty('ignoreClassPattern', '');
 
         if ($ignoreClassRegexp !== '' && preg_match($ignoreClassRegexp, $node->getParentName()) === 1) {
             return;
@@ -74,11 +57,6 @@ class LocatorInDependencyProviderOnlyRule extends AbstractRule implements Method
         }
     }
 
-    /**
-     * @param string $methodName
-     *
-     * @return bool
-     */
     protected function isLocator(string $methodName): bool
     {
         if (preg_match(static::LOCATOR_METHOD_NAMES, $methodName)) {
@@ -88,11 +66,6 @@ class LocatorInDependencyProviderOnlyRule extends AbstractRule implements Method
         return false;
     }
 
-    /**
-     * @param \PHPMD\AbstractNode $node
-     *
-     * @return bool
-     */
     protected function isClassAllowedToUseLocator(AbstractNode $node): bool
     {
         if (preg_match(static::CLASSES_ALLOWED_TO_USE_LOCATOR, $node->getParentName())) {

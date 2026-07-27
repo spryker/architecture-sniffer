@@ -10,25 +10,21 @@ namespace ArchitectureSniffer\Console;
 interface CommandInterface
 {
     /**
-     * The command name as typed on the CLI, e.g. "setup-project".
-     *
-     * @return string
+     * The command name as typed on the CLI, e.g. "format-project-results".
      */
     public function getName(): string;
 
     /**
      * One-line usage summary shown in the global usage output.
-     *
-     * @return string
      */
     public function getUsage(): string;
 
     /**
-     * Executes the command.
+     * Executes the command and returns its result without performing any I/O.
      *
      * @param array<int, string> $arguments Arguments following the command name.
      *
-     * @return int Process exit code.
+     * @return \ArchitectureSniffer\Console\CommandResponse
      */
-    public function run(array $arguments): int;
+    public function run(array $arguments): CommandResponse;
 }

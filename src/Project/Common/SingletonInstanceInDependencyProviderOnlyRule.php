@@ -13,29 +13,15 @@ use PHPMD\Rule\MethodAware;
 
 class SingletonInstanceInDependencyProviderOnlyRule extends AbstractRule implements MethodAware
 {
-    /**
-     * @var string
-     */
-    public const RULE = 'Singleton getInstance() initialisation should be in Dependency Provider only.';
+    public const string RULE = 'Singleton getInstance() initialisation should be in Dependency Provider only.';
 
-    /**
-     * @return string
-     */
+    protected const string GET_INSTANCE_METHOD_NAME = '/^(getInstance)$/';
+
     public function getDescription(): string
     {
         return static::RULE;
     }
 
-    /**
-     * @var string
-     */
-    protected const GET_INSTANCE_METHOD_NAME = '/^(getInstance)$/';
-
-    /**
-     * @param \PHPMD\AbstractNode $node
-     *
-     * @return void
-     */
     public function apply(AbstractNode $node): void
     {
         if ($this->isDependencyProvider($node)) {
@@ -45,7 +31,7 @@ class SingletonInstanceInDependencyProviderOnlyRule extends AbstractRule impleme
         $parent = $node->getNode()->getParent();
         $className = $parent->getNamespaceName() . '\\' . $parent->getName();
 
-        $ignoreClassPattern = $this->getStringProperty('ignoreclasspattern', '');
+        $ignoreClassPattern = $this->getStringProperty('ignoreClassPattern', '');
 
         if ($ignoreClassPattern !== '' && preg_match($ignoreClassPattern, $className) === 1) {
             return;
@@ -71,11 +57,6 @@ class SingletonInstanceInDependencyProviderOnlyRule extends AbstractRule impleme
         }
     }
 
-    /**
-     * @param \PHPMD\AbstractNode $node
-     *
-     * @return bool
-     */
     protected function isDependencyProvider(AbstractNode $node): bool
     {
         $parent = $node->getNode()->getParent();
@@ -88,11 +69,6 @@ class SingletonInstanceInDependencyProviderOnlyRule extends AbstractRule impleme
         return false;
     }
 
-    /**
-     * @param string $methodName
-     *
-     * @return bool
-     */
     protected function isGetInstance(string $methodName): bool
     {
         if (preg_match(static::GET_INSTANCE_METHOD_NAME, $methodName)) {

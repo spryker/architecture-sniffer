@@ -115,7 +115,7 @@
           class="ArchitectureSniffer\Project\Common\LocatorInDependencyProviderOnlyRule">
         <priority>2</priority>
         <!-- Optional: exclude classes whose FQCN matches this regex (default: disabled).
-             <properties><property name="ignoreclasspattern" description="Ignore classes matching this regex" value="#\\Foo\\Bootstrap#"/></properties> -->
+             <properties><property name="ignoreClassPattern" description="Ignore classes matching this regex" value="#\\Foo\\Bootstrap#"/></properties> -->
     </rule>
 
     <rule name="SingletonInstanceInDependencyProviderOnlyRule"
@@ -123,7 +123,7 @@
           class="ArchitectureSniffer\Project\Common\SingletonInstanceInDependencyProviderOnlyRule">
         <priority>2</priority>
         <!-- Optional: exclude classes whose FQCN matches this regex (default: disabled).
-             <properties><property name="ignoreclasspattern" description="Ignore classes matching this regex" value="#CodeBucketConfig$#"/></properties> -->
+             <properties><property name="ignoreClassPattern" description="Ignore classes matching this regex" value="#CodeBucketConfig$#"/></properties> -->
     </rule>
 
     <rule
@@ -133,11 +133,11 @@
 
         <priority>2</priority>
         <!-- Optional exclusions (both default to disabled):
-             ignoreclasspattern       - skip analyzed classes whose FQCN matches this regex (e.g. test helpers)
-             ignoredependencypattern  - skip dependencies whose FQCN matches this regex (e.g. generated Zed transfers, approved vendor namespaces)
+             ignoreClassPattern       - skip analyzed classes whose FQCN matches this regex (e.g. test helpers)
+             ignoreDependencyPattern  - skip dependencies whose FQCN matches this regex (e.g. generated Zed transfers, approved vendor namespaces)
              <properties>
-                 <property name="ignoreclasspattern" description="Ignore analyzed classes matching this regex" value=""/>
-                 <property name="ignoredependencypattern" description="Ignore dependency targets matching this regex" value=""/>
+                 <property name="ignoreClassPattern" description="Ignore analyzed classes matching this regex" value=""/>
+                 <property name="ignoreDependencyPattern" description="Ignore dependency targets matching this regex" value=""/>
              </properties> -->
     </rule>
 
@@ -148,11 +148,11 @@
 
         <priority>2</priority>
         <properties>
-            <property name="moduleexcludelist"
+            <property name="moduleExcludeList"
                       description="Comma-separated list of module names excluded from the disallowed-module-name check."
                       value="Testify,TestifyBackendApi,DummyMarketplacePayment,DummyPayment"/>
             <!-- Optional: override the disallowed-word list (default: "test,dummy,example,antelope").
-                 <property name="disallowedwords" description="Comma-separated list of disallowed words" value="test,dummy,example,antelope"/> -->
+                 <property name="disallowedWords" description="Comma-separated list of disallowed words" value="test,dummy,example,antelope"/> -->
         </properties>
     </rule>
 
@@ -163,11 +163,11 @@
 
         <priority>3</priority>
         <!-- Optional exclusions (both default to disabled):
-             ignoreclasspattern       - skip analyzed *Bridge classes whose FQCN matches this regex (grandfather legacy bridges / test doubles)
-             ignoredependencypattern  - skip *Bridge dependency targets whose FQCN matches this regex (e.g. legitimate core "Spryker\\" bridges)
+             ignoreClassPattern       - skip analyzed *Bridge classes whose FQCN matches this regex (grandfather legacy bridges / test doubles)
+             ignoreDependencyPattern  - skip *Bridge dependency targets whose FQCN matches this regex (e.g. legitimate core "Spryker\\" bridges)
              <properties>
-                 <property name="ignoreclasspattern" description="Ignore analyzed classes matching this regex" value=""/>
-                 <property name="ignoredependencypattern" description="Ignore dependency targets matching this regex" value=""/>
+                 <property name="ignoreClassPattern" description="Ignore analyzed classes matching this regex" value=""/>
+                 <property name="ignoreDependencyPattern" description="Ignore dependency targets matching this regex" value=""/>
              </properties> -->
     </rule>
 
@@ -178,7 +178,7 @@
 
         <priority>1</priority>
         <!-- Optional: exclude classes whose FQCN matches this regex (default: disabled), e.g. test namespaces.
-             <properties><property name="ignoreclasspattern" description="Ignore classes matching this regex" value="#\\Tests?\\#"/></properties> -->
+             <properties><property name="ignoreClassPattern" description="Ignore classes matching this regex" value="#\\Tests?\\#"/></properties> -->
     </rule>
 
     <rule name="TooManyPublicMethodsRule"
@@ -186,9 +186,9 @@
           class="ArchitectureSniffer\Project\Common\TooManyPublicMethodsRule">
         <priority>2</priority>
         <properties>
-            <property name="maxmethods" description="The method count reporting threshold" value="8"/>
-            <property name="ignoremethodpattern" description="Ignore methods matching this regex" value="((^(set|get|add|create|provide|is|has))|[\w]+Action$)"/>
-            <property name="ignoreclasspattern" description="Ignore class matching this regex" value="((^[\w]+\\Zed\\[\w]+\\Business\\[\w]+Facade)|(^[\w]+\\Zed\\[\w]+\\Persistence\\.+)|(^[\w]+\\Service\\[\w]+\\[\w]+Service)|(^[\w]+\\Client\\[\w]+\\[\w]+Client)|(^[\w]+\\Client\\[\w]+\\.+Stub$))"/>
+            <property name="maxMethods" description="The method count reporting threshold" value="8"/>
+            <property name="ignoreMethodPattern" description="Ignore methods matching this regex" value="((^(set|get|add|create|provide|is|has))|[\w]+Action$)"/>
+            <property name="ignoreClassPattern" description="Ignore class matching this regex" value="((^[\w]+\\Zed\\[\w]+\\Business\\[\w]+Facade)|(^[\w]+\\Zed\\[\w]+\\Persistence\\.+)|(^[\w]+\\Service\\[\w]+\\[\w]+Service)|(^[\w]+\\Client\\[\w]+\\[\w]+Client)|(^[\w]+\\Client\\[\w]+\\.+Stub$))"/>
         </properties>
     </rule>
 

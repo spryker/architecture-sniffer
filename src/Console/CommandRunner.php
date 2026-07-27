@@ -31,38 +31,93 @@ class CommandRunner
      */
     public function run(array $argv): int
     {
+        $response = $this->resolveResponse($argv);
+
+        return $this->render($response);
+    }
+
+    /**
+     * @param array<int, string> $argv Raw process argv (including the script name at index 0).
+     *
+     * @return \ArchitectureSniffer\Console\CommandResponse
+     */
+    protected function resolveResponse(array $argv): CommandResponse
+    {
         $commandName = $argv[1] ?? null;
 
         if ($commandName === null) {
-            fwrite(STDERR, 'No command given.' . PHP_EOL);
-            $this->printUsage();
-
-            return 1;
+            return CommandResponse::error(array_merge(['No command given.'], $this->getUsageLines()));
         }
 
         if (!isset($this->commands[$commandName])) {
-            fwrite(STDERR, sprintf('Unknown command: %s%s', $commandName, PHP_EOL));
-            $this->printUsage();
-
-            return 1;
+            return CommandResponse::error(array_merge(
+                [sprintf('Unknown command: %s', $commandName)],
+                $this->getUsageLines(),
+            ));
         }
 
         return $this->commands[$commandName]->run(array_slice($argv, 2));
     }
 
     /**
+     * Writes the collected messages to STDOUT/STDERR and returns the process exit code.
+     *
+     * @param \ArchitectureSniffer\Console\CommandResponse $response
+     *
+     * @return int Process exit code.
+     */
+    protected function render(CommandResponse $response): int
+    {
+        foreach ($response->getOutputMessages() as $outputMessage) {
+            $this->writeln(STDOUT, $outputMessage);
+        }
+
+        foreach ($response->getErrorMessages() as $errorMessage) {
+            $this->writeln(STDERR, $errorMessage);
+        }
+
+        return $response->getExitCode();
+    }
+
+    /**
+     * @param resource $stream
+     * @param string $message
+     *
      * @return void
      */
-    protected function printUsage(): void
+    protected function writeln($stream, string $message): void
     {
-        fwrite(STDERR, PHP_EOL);
-        fwrite(STDERR, 'Usage:' . PHP_EOL);
-        fwrite(STDERR, '  vendor/bin/spryker-architecture <command> [arguments]' . PHP_EOL);
-        fwrite(STDERR, PHP_EOL);
-        fwrite(STDERR, 'Commands:' . PHP_EOL);
+        $this->write($stream, $message . PHP_EOL);
+    }
+
+    /**
+     * @param resource $stream
+     * @param string $message
+     *
+     * @return void
+     */
+    protected function write($stream, string $message): void
+    {
+        fwrite($stream, $message);
+    }
+
+    /**
+     * @return array<int, string>
+     */
+    protected function getUsageLines(): array
+    {
+        $usageLines = [
+            '',
+            'Usage:',
+            '  vendor/bin/spryker-architecture <command> [arguments]',
+            '',
+            'Commands:',
+        ];
 
         foreach ($this->commands as $command) {
-            fwrite(STDERR, '  ' . $command->getUsage() . PHP_EOL);
+            $usageLines[] = '  ' . $command->getUsage();
         }
+
+        return $usageLines;
     }
 }

@@ -14,23 +14,14 @@ use PHPMD\Rule\ClassAware;
 
 class TooManyPublicMethodsRule extends AbstractRule implements ClassAware
 {
-    /**
-     * @var string
-     */
-    public const RULE = 'Too many public methods.';
+    public const string RULE = 'Too many public methods.';
 
-    /**
-     * @return string
-     */
+    protected string $ignoreMethodRegexp;
+
     public function getDescription(): string
     {
         return static::RULE;
     }
-
-    /**
-     * @var string
-     */
-    protected string $ignoreMethodRegexp;
 
     /**
      * @param \PHPMD\AbstractNode|\PHPMD\Node\AbstractTypeNode $node
@@ -39,7 +30,7 @@ class TooManyPublicMethodsRule extends AbstractRule implements ClassAware
      */
     public function apply(AbstractNode $node): void
     {
-        $ignoreClassRegexp = $this->getStringProperty('ignoreclasspattern', '#^$#');
+        $ignoreClassRegexp = $this->getStringProperty('ignoreClassPattern', '#^$#');
 
         $fullClassName = $node->getFullQualifiedName();
 
@@ -47,9 +38,9 @@ class TooManyPublicMethodsRule extends AbstractRule implements ClassAware
             return;
         }
 
-        $this->ignoreMethodRegexp = $this->getStringProperty('ignoremethodpattern', '');
+        $this->ignoreMethodRegexp = $this->getStringProperty('ignoreMethodPattern', '');
 
-        $threshold = $this->getIntProperty('maxmethods', 10);
+        $threshold = $this->getIntProperty('maxMethods', 10);
 
         $nom = $this->countMethods($node);
 
@@ -71,11 +62,6 @@ class TooManyPublicMethodsRule extends AbstractRule implements ClassAware
         );
     }
 
-    /**
-     * @param \PHPMD\Node\AbstractTypeNode $node
-     *
-     * @return int
-     */
     protected function countMethods(AbstractTypeNode $node): int
     {
         $count = 0;
@@ -88,11 +74,6 @@ class TooManyPublicMethodsRule extends AbstractRule implements ClassAware
         return $count;
     }
 
-    /**
-     * @param string $methodName
-     *
-     * @return bool
-     */
     private function isIgnoredMethodName(string $methodName): bool
     {
         return (bool)$this->ignoreMethodRegexp &&

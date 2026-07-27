@@ -8,6 +8,7 @@
 namespace ArchitectureSniffer\Console\Command;
 
 use ArchitectureSniffer\Console\CommandInterface;
+use ArchitectureSniffer\Console\CommandResponse;
 use ArchitectureSniffer\Console\Formatter\ProjectResultsFormatter;
 
 class FormatProjectResultsCommand implements CommandInterface
@@ -18,17 +19,11 @@ class FormatProjectResultsCommand implements CommandInterface
     {
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return static::NAME;
     }
 
-    /**
-     * @return string
-     */
     public function getUsage(): string
     {
         return static::NAME . ' <input.json> [<output.txt>]';
@@ -37,32 +32,28 @@ class FormatProjectResultsCommand implements CommandInterface
     /**
      * @param array<int, string> $arguments
      *
-     * @return int
+     * @return \ArchitectureSniffer\Console\CommandResponse
      */
-    public function run(array $arguments): int
+    public function run(array $arguments): CommandResponse
     {
         $inputFile = $arguments[0] ?? null;
         $outputFile = $arguments[1] ?? null;
 
         if ($inputFile === null) {
-            fwrite(STDERR, 'Missing <input.json> argument.' . PHP_EOL);
-            fwrite(STDERR, 'Usage: vendor/bin/spryker-architecture ' . $this->getUsage() . PHP_EOL);
-
-            return 1;
+            return CommandResponse::error([
+                'Missing <input.json> argument.',
+                'Usage: vendor/bin/spryker-architecture ' . $this->getUsage(),
+            ]);
         }
 
         if (!is_file($inputFile)) {
-            fwrite(STDERR, sprintf('Report file not found: %s%s', $inputFile, PHP_EOL));
-
-            return 1;
+            return CommandResponse::error([sprintf('Report file not found: %s', $inputFile)]);
         }
 
         $results = json_decode((string)file_get_contents($inputFile), true);
 
         if (!is_array($results) || !isset($results['files'])) {
-            fwrite(STDERR, sprintf('Invalid or empty phpmd JSON report: %s%s', $inputFile, PHP_EOL));
-
-            return 1;
+            return CommandResponse::error([sprintf('Invalid or empty phpmd JSON report: %s', $inputFile)]);
         }
 
         $fileOutput = $this->formatter->format($results);
@@ -71,27 +62,21 @@ class FormatProjectResultsCommand implements CommandInterface
             return $this->writeToFile($outputFile, $fileOutput);
         }
 
-        echo $fileOutput;
-
-        return 0;
+        return CommandResponse::success([$fileOutput]);
     }
 
     /**
      * @param string $outputFile
      * @param string $contents
      *
-     * @return int
+     * @return \ArchitectureSniffer\Console\CommandResponse
      */
-    protected function writeToFile(string $outputFile, string $contents): int
+    protected function writeToFile(string $outputFile, string $contents): CommandResponse
     {
         if (file_put_contents($outputFile, $contents) === false) {
-            fwrite(STDERR, sprintf('Unable to write output file: %s%s', $outputFile, PHP_EOL));
-
-            return 1;
+            return CommandResponse::error([sprintf('Unable to write output file: %s', $outputFile)]);
         }
 
-        fwrite(STDOUT, sprintf('Formatted report written to: %s%s', $outputFile, PHP_EOL));
-
-        return 0;
+        return CommandResponse::success([sprintf('Formatted report written to: %s', $outputFile)]);
     }
 }

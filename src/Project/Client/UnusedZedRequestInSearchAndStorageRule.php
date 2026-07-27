@@ -13,29 +13,15 @@ use PHPMD\Rule\MethodAware;
 
 class UnusedZedRequestInSearchAndStorageRule extends AbstractRule implements MethodAware
 {
-    /**
-     * @var string
-     */
-    protected const RULE = 'There should be no Zed Request in Search And Storage Client.';
+    protected const string RULE = 'There should be no Zed Request in Search And Storage Client.';
 
-    /**
-     * @return string
-     */
+    protected const string ZED_REQUEST_METHOD_NAME = '/^(zedRequest)$/';
+
     public function getDescription(): string
     {
         return static::RULE;
     }
 
-    /**
-     * @var string
-     */
-    protected const ZED_REQUEST_METHOD_NAME = '/^(zedRequest)$/';
-
-    /**
-     * @param \PHPMD\AbstractNode $node
-     *
-     * @return void
-     */
     public function apply(AbstractNode $node): void
     {
         if (!$this->isSearchOrStorageClientDependencyProvider($node)) {
@@ -63,17 +49,12 @@ class UnusedZedRequestInSearchAndStorageRule extends AbstractRule implements Met
         }
     }
 
-    /**
-     * @param \PHPMD\AbstractNode $node
-     *
-     * @return bool
-     */
     protected function isSearchOrStorageClientDependencyProvider(AbstractNode $node): bool
     {
         $parent = $node->getNode()->getParent();
         $className = $parent->getNamespaceName() . '\\' . $parent->getName();
 
-        $ignoreClassPattern = $this->getStringProperty('ignoreclasspattern', '');
+        $ignoreClassPattern = $this->getStringProperty('ignoreClassPattern', '');
 
         if ($ignoreClassPattern !== '' && preg_match($ignoreClassPattern, $className) === 1) {
             return false;
@@ -86,11 +67,6 @@ class UnusedZedRequestInSearchAndStorageRule extends AbstractRule implements Met
         return false;
     }
 
-    /**
-     * @param string $methodName
-     *
-     * @return bool
-     */
     protected function isZedRequest(string $methodName): bool
     {
         if (preg_match(static::ZED_REQUEST_METHOD_NAME, $methodName)) {

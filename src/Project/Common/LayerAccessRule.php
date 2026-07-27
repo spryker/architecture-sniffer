@@ -136,7 +136,7 @@ class LayerAccessRule extends AbstractRule implements ClassAware
      */
     public function apply(AbstractNode $node): void
     {
-        $ignoreClassPattern = $this->getStringProperty('ignoreclasspattern', '');
+        $ignoreClassPattern = $this->getStringProperty('ignoreClassPattern', '');
         if ($ignoreClassPattern !== '' && preg_match($ignoreClassPattern, $node->getFullQualifiedName()) === 1) {
             return;
         }
@@ -165,7 +165,7 @@ class LayerAccessRule extends AbstractRule implements ClassAware
             return;
         }
 
-        $ignoreDependencyPattern = $this->getStringProperty('ignoredependencypattern', '');
+        $ignoreDependencyPattern = $this->getStringProperty('ignoreDependencyPattern', '');
 
         foreach ($node->getDependencies() as $dependency) {
             $targetQName = sprintf('%s\\%s', $dependency->getNamespaceName(), $dependency->getName());

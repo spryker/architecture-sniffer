@@ -12,7 +12,7 @@ class ProjectResultsFormatter
     /**
      * @var array<int, string>
      */
-    protected const PRIORITY_MAP = [
+    protected const array PRIORITY_MAP = [
         1 => 'CRITICAL',
         2 => 'MAJOR',
         3 => 'MEDIUM',

@@ -26,7 +26,7 @@ class InstanceResolvingRule extends AbstractRule implements ClassAware
     /**
      * @var array<string>
      */
-    protected const INSTANCE_PATTERNS = [
+    protected const array INSTANCE_PATTERNS = [
         '/^(\w+)\\\\Zed\\\\\w+\\\\Persistence\\\\\w+(Repository|EntityManager|QueryContainer|PersistenceFactory)$/',
         '/^(\w+)\\\\Zed\\\\\w+\\\\Business\\\\\w+(Facade|BusinessFactory)$/',
         '/^(\w+)\\\\Zed\\\\\w+\\\\Communication\\\\\w+(CommunicationFactory)$/',
@@ -43,7 +43,7 @@ class InstanceResolvingRule extends AbstractRule implements ClassAware
      */
     public function apply(AbstractNode $node): void
     {
-        $ignoreClassRegexp = $this->getStringProperty('ignoreclasspattern', '');
+        $ignoreClassRegexp = $this->getStringProperty('ignoreClassPattern', '');
 
         if ($ignoreClassRegexp !== '' && preg_match($ignoreClassRegexp, $node->getFullQualifiedName()) === 1) {
             return;

@@ -46,8 +46,8 @@ class TooManyPublicMethodsRuleTest extends AbstractArchitectureSnifferRuleTest
     protected function createRule(): TooManyPublicMethodsRule
     {
         $rule = new TooManyPublicMethodsRule();
-        $rule->addProperty('maxmethods', '2');
-        $rule->addProperty('ignoreclasspattern', '(^$)');
+        $rule->addProperty('maxMethods', '2');
+        $rule->addProperty('ignoreClassPattern', '(^$)');
         $rule->addProperty('ignoremethodpattern', '(^(__.*)$)');
 
         return $rule;

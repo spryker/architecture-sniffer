@@ -13,33 +13,19 @@ use PHPMD\Rule\ClassAware;
 
 class ProjectNoBridgeRule extends AbstractRule implements ClassAware
 {
-    /**
-     * @var string
-     */
-    public const RULE = 'Project should not use and depend on Bridge pattern.';
+    public const string RULE = 'Project should not use and depend on Bridge pattern.';
 
-    /**
-     * @var string
-     */
-    protected const REGEX_BRIDGE = '/\w+Bridge$/';
+    protected const string REGEX_BRIDGE = '/\w+Bridge$/';
 
-    /**
-     * @return string
-     */
     public function getDescription(): string
     {
         return static::RULE;
     }
 
-    /**
-     * @param \PHPMD\AbstractNode $node
-     *
-     * @return void
-     */
     public function apply(AbstractNode $node): void
     {
-        $ignoreClassPattern = $this->getStringProperty('ignoreclasspattern', '');
-        $ignoreDependencyPattern = $this->getStringProperty('ignoredependencypattern', '');
+        $ignoreClassPattern = $this->getStringProperty('ignoreClassPattern', '');
+        $ignoreDependencyPattern = $this->getStringProperty('ignoreDependencyPattern', '');
 
         $fullClassName = $node->getFullQualifiedName();
 

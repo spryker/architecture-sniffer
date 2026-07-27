@@ -27,7 +27,7 @@
 
         <priority>1</priority>
         <!-- Optional: exclude classes whose FQCN matches this regex (default: disabled).
-             <properties><property name="ignoreclasspattern" description="Ignore classes matching this regex" value=""/></properties> -->
+             <properties><property name="ignoreClassPattern" description="Ignore classes matching this regex" value=""/></properties> -->
     </rule>
 
 </ruleset>

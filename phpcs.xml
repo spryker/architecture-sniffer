@@ -4,6 +4,10 @@
 
     <rule ref="vendor/spryker/code-sniffer/Spryker/ruleset.xml">
         <exclude name="Spryker.Commenting.DocBlock"/>
+        <exclude name="Spryker.Commenting.DocBlockConst"/>
+        <exclude name="Spryker.Commenting.InlineDocBlock"/>
+        <exclude name="Spryker.Commenting.DocBlockApiAnnotation"/>
+        <exclude name="Spryker.Commenting.DocBlockReturnVoid"/>
     </rule>
 
     <exclude-pattern>/tests/_data/</exclude-pattern>

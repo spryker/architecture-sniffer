@@ -1,0 +1,211 @@
+<?xml version="1.0"?>
+<ruleset name="Spryker Project PHPMD standards"
+         xmlns="http://pmd.sf.net/ruleset/1.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://pmd.sf.net/ruleset/1.0.0
+                     http://pmd.sf.net/ruleset_xml_schema.xsd"
+         xsi:noNamespaceSchemaLocation="
+                     http://pmd.sf.net/ruleset_xml_schema.xsd">
+    <description>
+        Asserting clean code architecture with Spryker project.
+        Consolidated PHPMD ruleset: Clean Code, Code Size, Controversial, Design, Naming and Unused Code
+        rules are grouped in this single file, separated by the section banners below.
+        Rule reference: https://phpmd.org/rules/index.html
+    </description>
+
+    <exclude-pattern>Persistence/Propel</exclude-pattern>
+    <exclude-pattern>Presentation</exclude-pattern>
+    <exclude-pattern>tests/_data</exclude-pattern>
+    <exclude-pattern>tests/_output</exclude-pattern>
+    <exclude-pattern>tests/_support</exclude-pattern>
+
+    <exclude-pattern>*/Orm/*</exclude-pattern>
+    <exclude-pattern>*/Generated/*</exclude-pattern>
+
+    <!-- ============================================================================ -->
+    <!-- CLEAN CODE                                                                    -->
+    <!-- Rules that enforce a clean code base. This includes rules from SOLID and      -->
+    <!-- object calisthenics.                                                          -->
+    <!-- Reference: https://phpmd.org/rules/cleancode.html                             -->
+    <!-- ============================================================================ -->
+
+    <rule ref="vendor/phpmd/phpmd/src/main/resources/rulesets/cleancode.xml/UndefinedVariable" >
+        <priority>1</priority>
+    </rule>
+
+    <rule ref="vendor/phpmd/phpmd/src/main/resources/rulesets/cleancode.xml/IfStatementAssignment" >
+        <priority>3</priority>
+    </rule>
+
+    <rule ref="vendor/phpmd/phpmd/src/main/resources/rulesets/cleancode.xml/DuplicatedArrayKey" >
+        <priority>3</priority>
+    </rule>
+
+    <rule ref="vendor/phpmd/phpmd/src/main/resources/rulesets/cleancode.xml/ErrorControlOperator" >
+        <priority>3</priority>
+    </rule>
+
+    <rule ref="vendor/phpmd/phpmd/src/main/resources/rulesets/cleancode.xml/MissingImport" >
+        <priority>3</priority>
+    </rule>
+
+    <!-- ============================================================================ -->
+    <!-- CODE SIZE                                                                     -->
+    <!-- Rules that find code size related problems.                                   -->
+    <!-- Reference: https://phpmd.org/rules/codesize.html                              -->
+    <!-- ============================================================================ -->
+
+    <rule ref="vendor/phpmd/phpmd/src/main/resources/rulesets/codesize.xml/CyclomaticComplexity">
+        <priority>3</priority>
+        <properties>
+            <property name="reportLevel" description="The Cyclomatic Complexity reporting threshold" value="15"/>
+        </properties>
+    </rule>
+
+    <rule ref="vendor/phpmd/phpmd/src/main/resources/rulesets/codesize.xml/NPathComplexity">
+        <priority>3</priority>
+        <properties>
+            <property name="minimum" description="The NPath complexity reporting threshold" value="256"/>
+        </properties>
+    </rule>
+
+    <rule ref="vendor/phpmd/phpmd/src/main/resources/rulesets/codesize.xml/ExcessiveClassComplexity">
+        <priority>3</priority>
+        <properties>
+            <property name="maximum" description="The maximum WMC tolerable for a class." value="100"/>
+        </properties>
+    </rule>
+
+    <rule ref="vendor/phpmd/phpmd/src/main/resources/rulesets/codesize.xml/ExcessiveParameterList">
+        <priority>3</priority>
+        <properties>
+            <property name="minimum" description="The parameter count reporting threshold" value="15"/>
+        </properties>
+    </rule>
+
+    <!-- ============================================================================ -->
+    <!-- CONTROVERSIAL                                                                 -->
+    <!-- A collection of controversial rules.                                          -->
+    <!-- Reference: https://phpmd.org/rules/controversial.html                         -->
+    <!-- ============================================================================ -->
+
+    <rule ref="vendor/phpmd/phpmd/src/main/resources/rulesets/controversial.xml/Superglobals">
+        <priority>2</priority>
+    </rule>
+
+    <rule ref="vendor/phpmd/phpmd/src/main/resources/rulesets/controversial.xml/CamelCaseClassName">
+        <priority>3</priority>
+    </rule>
+
+    <rule ref="vendor/phpmd/phpmd/src/main/resources/rulesets/controversial.xml/CamelCasePropertyName">
+        <priority>3</priority>
+    </rule>
+
+    <rule ref="vendor/phpmd/phpmd/src/main/resources/rulesets/controversial.xml/CamelCaseMethodName">
+        <priority>3</priority>
+    </rule>
+
+    <rule ref="vendor/phpmd/phpmd/src/main/resources/rulesets/controversial.xml/CamelCaseParameterName">
+        <priority>3</priority>
+    </rule>
+
+    <rule ref="vendor/phpmd/phpmd/src/main/resources/rulesets/controversial.xml/CamelCaseVariableName">
+        <priority>3</priority>
+    </rule>
+
+    <!-- ============================================================================ -->
+    <!-- DESIGN                                                                        -->
+    <!-- Rules that find software design related problems.                             -->
+    <!-- Reference: https://phpmd.org/rules/design.html                                -->
+    <!-- ============================================================================ -->
+
+    <rule ref="vendor/phpmd/phpmd/src/main/resources/rulesets/design.xml/DepthOfInheritance">
+        <priority>3</priority>
+    </rule>
+
+    <rule ref="vendor/phpmd/phpmd/src/main/resources/rulesets/design.xml/ExitExpression">
+        <priority>4</priority>
+    </rule>
+
+    <rule ref="vendor/phpmd/phpmd/src/main/resources/rulesets/design.xml/EvalExpression">
+        <priority>2</priority>
+    </rule>
+
+    <rule ref="vendor/phpmd/phpmd/src/main/resources/rulesets/design.xml/GotoStatement">
+        <priority>4</priority>
+    </rule>
+
+    <rule ref="vendor/phpmd/phpmd/src/main/resources/rulesets/design.xml/DevelopmentCodeFragment">
+        <priority>2</priority>
+    </rule>
+
+    <rule ref="vendor/phpmd/phpmd/src/main/resources/rulesets/design.xml/EmptyCatchBlock">
+        <priority>3</priority>
+    </rule>
+
+    <!-- ============================================================================ -->
+    <!-- NAMING                                                                        -->
+    <!-- Rules about names - too long, too short, and so forth.                        -->
+    <!-- Reference: https://phpmd.org/rules/naming.html                                -->
+    <!-- ============================================================================ -->
+
+    <rule ref="vendor/phpmd/phpmd/src/main/resources/rulesets/naming.xml/LongClassName">
+        <priority>3</priority>
+        <properties>
+            <property name="maximum" value="80"/>
+        </properties>
+    </rule>
+
+    <rule ref="vendor/phpmd/phpmd/src/main/resources/rulesets/naming.xml/ShortClassName">
+        <priority>3</priority>
+    </rule>
+
+    <rule ref="vendor/phpmd/phpmd/src/main/resources/rulesets/naming.xml/ShortVariable">
+        <priority>3</priority>
+        <properties>
+            <property name="minimum" description="Minimum length for a variable, property or parameter name" value="2"/>
+        </properties>
+    </rule>
+
+    <rule ref="vendor/phpmd/phpmd/src/main/resources/rulesets/naming.xml/LongVariable">
+        <priority>3</priority>
+        <properties>
+            <property name="maximum" description="The variable length reporting threshold" value="60"/>
+        </properties>
+    </rule>
+
+    <rule ref="vendor/phpmd/phpmd/src/main/resources/rulesets/naming.xml/ShortMethodName">
+        <priority>3</priority>
+    </rule>
+
+    <rule ref="vendor/phpmd/phpmd/src/main/resources/rulesets/naming.xml/ConstructorWithNameAsEnclosingClass">
+        <priority>3</priority>
+    </rule>
+
+    <rule ref="vendor/phpmd/phpmd/src/main/resources/rulesets/naming.xml/ConstantNamingConventions">
+        <priority>3</priority>
+    </rule>
+
+    <rule ref="vendor/phpmd/phpmd/src/main/resources/rulesets/naming.xml/BooleanGetMethodName">
+        <priority>4</priority>
+    </rule>
+
+    <!-- ============================================================================ -->
+    <!-- UNUSED CODE                                                                   -->
+    <!-- Rules that find unused code.                                                  -->
+    <!-- Reference: https://phpmd.org/rules/unusedcode.html                            -->
+    <!-- ============================================================================ -->
+
+    <rule ref="vendor/phpmd/phpmd/src/main/resources/rulesets/unusedcode.xml/UnusedPrivateField">
+        <priority>4</priority>
+    </rule>
+
+    <rule ref="vendor/phpmd/phpmd/src/main/resources/rulesets/unusedcode.xml/UnusedPrivateMethod">
+        <priority>4</priority>
+    </rule>
+
+    <rule ref="vendor/phpmd/phpmd/src/main/resources/rulesets/unusedcode.xml/UnusedLocalVariable">
+        <priority>4</priority>
+    </rule>
+
+</ruleset>

@@ -1,0 +1,65 @@
+#!/usr/bin/env php
+<?php
+
+/**
+ * Spryker Architecture CLI.
+ *
+ * Thin entrypoint: bootstraps the autoloader, wires the commands and delegates to
+ * the CommandRunner. All logic lives in ArchitectureSniffer\Console\*.
+ *
+ * Usage:
+ *   vendor/bin/spryker-architecture <command> [arguments]
+ *
+ * Commands:
+ *   format-project-results <input.json> [<output.txt>]
+ *       Formats a phpmd JSON report into a grouped, human-readable summary.
+ *
+ * Generate the JSON report for format-project-results with, e.g.:
+ *   vendor/bin/phpmd src/ json phpmd.xml \
+ *       --minimumpriority 4 --baseline-file phpmd.baseline.xml > results.json
+ */
+
+use ArchitectureSniffer\Console\Command\FormatProjectResultsCommand;
+use ArchitectureSniffer\Console\CommandRunner;
+use ArchitectureSniffer\Console\Formatter\ProjectResultsFormatter;
+
+// This file lives at <package-root>/bin/spryker-architecture; resolve the package root
+// through the real path so it works when invoked via the vendor/bin symlink.
+$scriptRealPath = realpath(__FILE__) ?: __FILE__;
+$packageRootPath = dirname($scriptRealPath, 2);
+
+require_once resolveAutoloadPath($packageRootPath);
+
+$runner = new CommandRunner([
+    new FormatProjectResultsCommand(new ProjectResultsFormatter()),
+]);
+
+exit($runner->run($argv));
+
+/**
+ * Locates the Composer autoloader whether the package is installed inside a project's
+ * vendor/ directory or used standalone as the repository root.
+ *
+ * @param string $packageRootPath
+ *
+ * @return string
+ */
+function resolveAutoloadPath(string $packageRootPath): string
+{
+    $candidates = [
+        // Installed as a dependency: <project>/vendor/spryker/architecture-sniffer -> <project>/vendor/autoload.php
+        $packageRootPath . '/../../autoload.php',
+        // Standalone checkout of the package itself.
+        $packageRootPath . '/vendor/autoload.php',
+    ];
+
+    foreach ($candidates as $candidate) {
+        if (is_file($candidate)) {
+            return $candidate;
+        }
+    }
+
+    fwrite(STDERR, 'Unable to locate the Composer autoloader. Run "composer install" first.' . PHP_EOL);
+
+    exit(1);
+}

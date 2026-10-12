@@ -12,17 +12,17 @@ use ArchitectureSniffer\Path\PathBuilderInterface;
 use ArchitectureSniffer\Path\Transfer\PathTransfer;
 use ArchitectureSniffer\PropelQuery\ClassNode\Transfer\ClassNodeTransfer;
 use ArchitectureSniffer\PropelQuery\Module\ModuleFinderInterface;
+use ArchitectureSniffer\PropelQuery\Schema\Reader\PropelSchemaXmlReaderInterface;
 use ArchitectureSniffer\PropelQuery\Schema\Transfer\PropelSchemaTableRelationTransfer;
 use ArchitectureSniffer\PropelQuery\Schema\Transfer\PropelSchemaTableTransfer;
 use ArrayIterator;
 use Countable;
-use Laminas\Config\Reader\ReaderInterface;
 use Symfony\Component\Finder\Finder;
 
 class PropelSchemaTableFinder implements PropelSchemaTableFinderInterface
 {
     /**
-     * @var \Laminas\Config\Reader\ReaderInterface
+     * @var \ArchitectureSniffer\PropelQuery\Schema\Reader\PropelSchemaXmlReaderInterface
      */
     protected $reader;
 
@@ -37,12 +37,12 @@ class PropelSchemaTableFinder implements PropelSchemaTableFinderInterface
     protected $pathBuilder;
 
     /**
-     * @param \Laminas\Config\Reader\ReaderInterface $reader
+     * @param \ArchitectureSniffer\PropelQuery\Schema\Reader\PropelSchemaXmlReaderInterface $reader
      * @param \ArchitectureSniffer\Path\PathBuilderInterface $pathBuilder
      * @param \ArchitectureSniffer\PropelQuery\Module\ModuleFinderInterface $moduleFinder
      */
     public function __construct(
-        ReaderInterface $reader,
+        PropelSchemaXmlReaderInterface $reader,
         PathBuilderInterface $pathBuilder,
         ModuleFinderInterface $moduleFinder
     ) {

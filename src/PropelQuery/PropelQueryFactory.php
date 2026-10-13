@@ -27,8 +27,8 @@ use ArchitectureSniffer\PropelQuery\Relation\RelationFinder;
 use ArchitectureSniffer\PropelQuery\Relation\RelationFinderInterface;
 use ArchitectureSniffer\PropelQuery\Schema\PropelSchemaTableFinder;
 use ArchitectureSniffer\PropelQuery\Schema\PropelSchemaTableFinderInterface;
-use Laminas\Config\Reader\ReaderInterface;
-use Laminas\Config\Reader\Xml;
+use ArchitectureSniffer\PropelQuery\Schema\Reader\PropelSchemaXmlReader;
+use ArchitectureSniffer\PropelQuery\Schema\Reader\PropelSchemaXmlReaderInterface;
 use phpDocumentor\Reflection\DocBlockFactory;
 use phpDocumentor\Reflection\DocBlockFactoryInterface;
 use PHPStan\BetterReflection\BetterReflection;
@@ -88,7 +88,7 @@ class PropelQueryFactory
     public function createPropelSchemaTableFinder(): PropelSchemaTableFinderInterface
     {
         return new PropelSchemaTableFinder(
-            $this->createConfigReader(),
+            $this->createPropelSchemaXmlReader(),
             $this->createPathBuilder(),
             $this->createModuleFinder(),
         );
@@ -143,11 +143,11 @@ class PropelQueryFactory
     }
 
     /**
-     * @return \Laminas\Config\Reader\ReaderInterface
+     * @return \ArchitectureSniffer\PropelQuery\Schema\Reader\PropelSchemaXmlReaderInterface
      */
-    protected function createConfigReader(): ReaderInterface
+    protected function createPropelSchemaXmlReader(): PropelSchemaXmlReaderInterface
     {
-        return new Xml();
+        return new PropelSchemaXmlReader();
     }
 
     /**

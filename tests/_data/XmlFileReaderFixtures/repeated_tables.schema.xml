@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<database name="zed" defaultIdMethod="native" namespace="Orm\Zed\Comment\Persistence" package="src.Orm.Zed.Comment.Persistence">
+    <table name="spy_comment" phpName="SpyComment" idMethod="native">
+        <column name="id_comment" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <foreign-key foreignTable="spy_customer" phpName="SpyCustomer" refPhpName="SpyComment">
+            <reference local="fk_customer" foreign="id_customer"/>
+        </foreign-key>
+        <foreign-key foreignTable="spy_comment_tag" phpName="SpyCommentTag" refPhpName="SpyComment">
+            <reference local="fk_comment_tag" foreign="id_comment_tag"/>
+        </foreign-key>
+    </table>
+    <table name="spy_comment_tag" idMethod="native">
+        <column name="id_comment_tag" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+    </table>
+</database>

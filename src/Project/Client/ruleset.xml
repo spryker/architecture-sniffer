@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<ruleset name="Spryker Project Client"
+         xmlns="http://pmd.sf.net/ruleset/1.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://pmd.sf.net/ruleset/1.0.0
+                     http://pmd.sf.net/ruleset_xml_schema.xsd"
+         xsi:noNamespaceSchemaLocation="
+                     http://pmd.sf.net/ruleset_xml_schema.xsd">
+    <description>
+        Asserting clean code architecture with Spryker project.
+    </description>
+
+    <rule
+        name="ClientRule"
+        message="Client: {0}"
+        class="ArchitectureSniffer\Client\ClientRule">
+
+        <priority>3</priority>
+    </rule>
+
+    <!-- CUSTOM PROJECT ARCHITECTURE RULES -->
+
+    <rule
+        name="UnusedZedRequestInSearchAndStorageRule"
+        message="Client: {0}"
+        class="ArchitectureSniffer\Project\Client\UnusedZedRequestInSearchAndStorageRule">
+
+        <priority>1</priority>
+        <!-- Optional: exclude classes whose FQCN matches this regex (default: disabled).
+             <properties><property name="ignoreClassPattern" description="Ignore classes matching this regex" value=""/></properties> -->
+    </rule>
+
+</ruleset>

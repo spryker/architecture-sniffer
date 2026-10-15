@@ -1,0 +1,38 @@
+namespace: ArchitectureSnifferTest\Project
+
+paths:
+  tests: .
+  data: ../_data
+  support: _support
+  output: ../_output
+
+coverage:
+  enabled: true
+  remote: false
+  whitelist: { include: ['../../src/*'] }
+
+suites:
+  Common:
+    path: Common
+    class_name: CommonTester
+    modules:
+      enabled:
+        - Asserts
+  Zed:
+    path: Zed
+    class_name: CommonTester
+    modules:
+      enabled:
+        - Asserts
+  Client:
+    path: Client
+    class_name: CommonTester
+    modules:
+      enabled:
+        - Asserts
+  Glue:
+    path: Glue
+    class_name: CommonTester
+    modules:
+      enabled:
+        - Asserts

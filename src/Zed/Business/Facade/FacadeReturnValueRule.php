@@ -32,7 +32,7 @@ class FacadeReturnValueRule extends AbstractFacadeRule implements MethodAware
     /**
      * @var string
      */
-    protected const ALLOWED_RETURN_TYPES_PATTERN = '/@return\s(?!void|int|integer|bool|boolean|float|string|array|\[\]|.*\[\]|((.+)Transfer))(.*)/';
+    protected const ALLOWED_RETURN_TYPES_PATTERN = '/@return\s(?!void|int|integer|bool|boolean|float|string|list|array|\[\]|.*\[\]|((.+)Transfer))(.*)/';
 
     /**
      * @var int

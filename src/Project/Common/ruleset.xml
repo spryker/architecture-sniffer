@@ -1,0 +1,195 @@
+<?xml version="1.0"?>
+<ruleset name="Spryker Project Common"
+         xmlns="http://pmd.sf.net/ruleset/1.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://pmd.sf.net/ruleset/1.0.0
+                     http://pmd.sf.net/ruleset_xml_schema.xsd"
+         xsi:noNamespaceSchemaLocation="
+                     http://pmd.sf.net/ruleset_xml_schema.xsd">
+    <description>
+        This ruleset asserts common architecture conventions for Spryker project.
+    </description>
+
+    <rule
+            name="ExistsPostfixRule"
+            message="{0}"
+            class="ArchitectureSniffer\Common\Method\ExistsPostfixRule">
+
+        <priority>4</priority>
+    </rule>
+
+    <rule
+            name="ExternalMethodExtensionReturnTypeRule"
+            message="{0}"
+            class="ArchitectureSniffer\Common\Method\ExternalMethodExtensionReturnTypeRule">
+
+        <priority>3</priority>
+    </rule>
+
+    <!-- COMMON FACTORY RULES -->
+    <rule
+            name="FactoryGetContainNoNewRule"
+            message="Factories: {0}"
+            class="ArchitectureSniffer\Common\Factory\FactoryGetContainNoNewRule">
+
+        <priority>3</priority>
+    </rule>
+
+    <rule
+            name="FactoryCreateContainOneNewRule"
+            message="{0}"
+            class="ArchitectureSniffer\Common\Factory\FactoryCreateContainOneNewRule">
+
+        <priority>3</priority>
+    </rule>
+
+    <rule
+            name="FactoryNoLoopsRule"
+            message="Factories: {0}"
+            class="ArchitectureSniffer\Common\Factory\FactoryNoLoopsRule">
+
+        <priority>3</priority>
+    </rule>
+
+    <rule
+            name="FactoryOnlyGetAndCreateRule"
+            message="Factories: {0}"
+            class="ArchitectureSniffer\Common\Factory\FactoryOnlyGetAndCreateRule">
+
+        <priority>3</priority>
+    </rule>
+
+    <rule
+            name="FactoryNoLogicRule"
+            message="Factories: {0}"
+            class="ArchitectureSniffer\Common\Factory\FactoryNoLogicRule">
+
+        <priority>4</priority>
+    </rule>
+
+    <rule
+        name="FactoryPropelQueryMethodNameRule"
+        message="Factories: {0}"
+        class="ArchitectureSniffer\Common\Factory\FactoryPropelQueryMethodNameRule">
+
+        <priority>4</priority>
+    </rule>
+
+    <!-- COMMON COMMUNICATION RULES -->
+    <rule
+        name="CommunicationControllerRule"
+        message="Controller: {0}"
+        class="ArchitectureSniffer\Common\Communication\Controller\CommunicationControllerRule">
+
+        <priority>3</priority>
+    </rule>
+
+
+    <!-- COMMON COMMUNICATION PLUGIN RULES -->
+    <rule
+            name="PluginSuffixRule"
+            message="Plugin - Plugins must be suffixed with &quot;Plugin&quot; and PluginTests with &quot;PluginTest&quot;! Please check: &quot;{0}&quot;"
+            class="ArchitectureSniffer\Common\Plugin\PluginSuffixRule">
+
+        <priority>3</priority>
+    </rule>
+
+    <rule
+            name="PluginInterfaceSuffixRule"
+            message="Plugin - Plugin interfaces must be suffixed with &quot;PluginInterface&quot;! Please check: &quot;{0}&quot;"
+            class="ArchitectureSniffer\Common\Plugin\PluginInterfaceSuffixRule">
+
+        <priority>3</priority>
+    </rule>
+
+    <!-- EOF COMMON COMMUNICATION PLUGIN RULES -->
+
+    <!-- EOF COMMON COMMUNICATION RULES -->
+
+
+
+    <!-- CUSTOM PROJECT ARCHITECTURE RULES -->
+
+    <rule name="LocatorInDependencyProviderOnlyRule"
+          message="DependencyProvider: {0}"
+          class="ArchitectureSniffer\Project\Common\LocatorInDependencyProviderOnlyRule">
+        <priority>2</priority>
+        <!-- Optional: exclude classes whose FQCN matches this regex (default: disabled).
+             <properties><property name="ignoreClassPattern" description="Ignore classes matching this regex" value="#\\Foo\\Bootstrap#"/></properties> -->
+    </rule>
+
+    <rule name="SingletonInstanceInDependencyProviderOnlyRule"
+          message="DependencyProvider: {0}"
+          class="ArchitectureSniffer\Project\Common\SingletonInstanceInDependencyProviderOnlyRule">
+        <priority>2</priority>
+        <!-- Optional: exclude classes whose FQCN matches this regex (default: disabled).
+             <properties><property name="ignoreClassPattern" description="Ignore classes matching this regex" value="#CodeBucketConfig$#"/></properties> -->
+    </rule>
+
+    <rule
+        name="LayerAccessRule"
+        message="Access: {0}"
+        class="ArchitectureSniffer\Project\Common\LayerAccessRule">
+
+        <priority>2</priority>
+        <!-- Optional exclusions (both default to disabled):
+             ignoreClassPattern       - skip analyzed classes whose FQCN matches this regex (e.g. test helpers)
+             ignoreDependencyPattern  - skip dependencies whose FQCN matches this regex (e.g. generated Zed transfers, approved vendor namespaces)
+             <properties>
+                 <property name="ignoreClassPattern" description="Ignore analyzed classes matching this regex" value=""/>
+                 <property name="ignoreDependencyPattern" description="Ignore dependency targets matching this regex" value=""/>
+             </properties> -->
+    </rule>
+
+    <rule
+        name="DisallowedModuleNameRule"
+        message="Name: {0}"
+        class="ArchitectureSniffer\Project\Common\DisallowedModuleNameRule">
+
+        <priority>2</priority>
+        <properties>
+            <property name="moduleExcludeList"
+                      description="Comma-separated list of module names excluded from the disallowed-module-name check."
+                      value="Testify,TestifyBackendApi,DummyMarketplacePayment,DummyPayment"/>
+            <!-- Optional: override the disallowed-word list (default: "test,dummy,example,antelope").
+                 <property name="disallowedWords" description="Comma-separated list of disallowed words" value="test,dummy,example,antelope"/> -->
+        </properties>
+    </rule>
+
+    <rule
+        name="ProjectNoBridgeRule"
+        message="Bridge: {0}"
+        class="ArchitectureSniffer\Project\Common\ProjectNoBridgeRule">
+
+        <priority>3</priority>
+        <!-- Optional exclusions (both default to disabled):
+             ignoreClassPattern       - skip analyzed *Bridge classes whose FQCN matches this regex (grandfather legacy bridges / test doubles)
+             ignoreDependencyPattern  - skip *Bridge dependency targets whose FQCN matches this regex (e.g. legitimate core "Spryker\\" bridges)
+             <properties>
+                 <property name="ignoreClassPattern" description="Ignore analyzed classes matching this regex" value=""/>
+                 <property name="ignoreDependencyPattern" description="Ignore dependency targets matching this regex" value=""/>
+             </properties> -->
+    </rule>
+
+    <rule
+        name="InstanceResolvingRule"
+        message="{0}"
+        class="ArchitectureSniffer\Project\Common\InstanceResolvingRule">
+
+        <priority>1</priority>
+        <!-- Optional: exclude classes whose FQCN matches this regex (default: disabled), e.g. test namespaces.
+             <properties><property name="ignoreClassPattern" description="Ignore classes matching this regex" value="#\\Tests?\\#"/></properties> -->
+    </rule>
+
+    <rule name="TooManyPublicMethodsRule"
+          message="{0}"
+          class="ArchitectureSniffer\Project\Common\TooManyPublicMethodsRule">
+        <priority>2</priority>
+        <properties>
+            <property name="maxMethods" description="The method count reporting threshold" value="8"/>
+            <property name="ignoreMethodPattern" description="Ignore methods matching this regex" value="((^(set|get|add|create|provide|is|has))|[\w]+Action$)"/>
+            <property name="ignoreClassPattern" description="Ignore class matching this regex" value="((^[\w]+\\Zed\\[\w]+\\Business\\[\w]+Facade)|(^[\w]+\\Zed\\[\w]+\\Persistence\\.+)|(^[\w]+\\Service\\[\w]+\\[\w]+Service)|(^[\w]+\\Client\\[\w]+\\[\w]+Client)|(^[\w]+\\Client\\[\w]+\\.+Stub$))"/>
+        </properties>
+    </rule>
+
+</ruleset>

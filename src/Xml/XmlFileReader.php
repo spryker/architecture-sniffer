@@ -12,28 +12,6 @@ use DOMDocument;
 use LibXMLError;
 use XMLReader;
 
-/**
- * Reads an XML file into the nested array shape that `Laminas\Config\Reader\Xml` produced, so that
- * callers keep the exact structure they were written against after `laminas/laminas-config` (which
- * is abandoned) was dropped.
- *
- * The shape rules this reproduces, all of them relied on by the Propel schema parsing:
- *
- * - attributes become plain string keys alongside the element's children;
- * - an element carrying attributes AND text stores the text under `_`;
- * - a repeated element name becomes a numerically indexed list, a single one stays associative
- *   (`PropelSchemaTableFinder` branches on `isset($tables['name'])` to tell the two apart);
- * - values are NEVER coerced - `primaryKey="false"` stays the string `'false'`;
- * - `<foo/>` yields `[]` while `<foo></foo>` yields `''`.
- *
- * That last rule is why the walk uses XMLReader rather than a DOM tree: DOM cannot distinguish a
- * self-closing element from an empty pair. The document is loaded through DOMDocument first only
- * to turn libxml's warnings into a typed exception - XMLReader alone walks a broken file and
- * silently returns less.
- *
- * Kept dependency-free on purpose: this package is a standalone PHPMD plugin and must not pull in
- * the Spryker framework (`spryker/util-encoding` ships the same reader for application code).
- */
 class XmlFileReader implements XmlFileReaderInterface
 {
     /**

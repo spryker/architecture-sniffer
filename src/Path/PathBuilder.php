@@ -8,7 +8,7 @@
 namespace ArchitectureSniffer\Path;
 
 use ArchitectureSniffer\Path\Transfer\PathTransfer;
-use Laminas\Filter\Word\CamelCaseToSeparator;
+use Laminas\Filter\Word\CamelCaseToDash;
 
 class PathBuilder implements PathBuilderInterface
 {
@@ -228,6 +228,6 @@ class PathBuilder implements PathBuilderInterface
      */
     protected function formatCamelCaseToSnakeCase(string $string)
     {
-        return strtolower((new CamelCaseToSeparator('-'))->filter($string));
+        return strtolower((new CamelCaseToDash())->filter($string));
     }
 }

@@ -14,17 +14,17 @@ use ArchitectureSniffer\PropelQuery\ClassNode\Transfer\ClassNodeTransfer;
 use ArchitectureSniffer\PropelQuery\Module\ModuleFinderInterface;
 use ArchitectureSniffer\PropelQuery\Schema\Transfer\PropelSchemaTableRelationTransfer;
 use ArchitectureSniffer\PropelQuery\Schema\Transfer\PropelSchemaTableTransfer;
+use ArchitectureSniffer\Xml\XmlFileReaderInterface;
 use ArrayIterator;
 use Countable;
-use Laminas\Config\Reader\ReaderInterface;
 use Symfony\Component\Finder\Finder;
 
 class PropelSchemaTableFinder implements PropelSchemaTableFinderInterface
 {
     /**
-     * @var \Laminas\Config\Reader\ReaderInterface
+     * @var \ArchitectureSniffer\Xml\XmlFileReaderInterface
      */
-    protected $reader;
+    protected $xmlFileReader;
 
     /**
      * @var \ArchitectureSniffer\PropelQuery\Module\ModuleFinderInterface
@@ -37,16 +37,16 @@ class PropelSchemaTableFinder implements PropelSchemaTableFinderInterface
     protected $pathBuilder;
 
     /**
-     * @param \Laminas\Config\Reader\ReaderInterface $reader
+     * @param \ArchitectureSniffer\Xml\XmlFileReaderInterface $xmlFileReader
      * @param \ArchitectureSniffer\Path\PathBuilderInterface $pathBuilder
      * @param \ArchitectureSniffer\PropelQuery\Module\ModuleFinderInterface $moduleFinder
      */
     public function __construct(
-        ReaderInterface $reader,
+        XmlFileReaderInterface $xmlFileReader,
         PathBuilderInterface $pathBuilder,
         ModuleFinderInterface $moduleFinder
     ) {
-        $this->reader = $reader;
+        $this->xmlFileReader = $xmlFileReader;
         $this->pathBuilder = $pathBuilder; //todo: don't use
         $this->moduleFinder = $moduleFinder;
     }
@@ -95,7 +95,7 @@ class PropelSchemaTableFinder implements PropelSchemaTableFinderInterface
             $schemaFilePath = $file->getRealPath();
 
             $moduleName = $this->moduleFinder->getModuleNameByFilePath($schemaFilePath);
-            $schema = $this->reader->fromFile($schemaFilePath);
+            $schema = $this->xmlFileReader->readFile($schemaFilePath);
             $tableTransfers = $this->getTables(
                 $schema,
                 $moduleName,
@@ -322,7 +322,7 @@ class PropelSchemaTableFinder implements PropelSchemaTableFinderInterface
 
         foreach ($schemaPaths as $schemaPath) {
             $moduleName = $moduleTransfer->getModuleName();
-            $schema = $this->reader->fromFile($schemaPath);
+            $schema = $this->xmlFileReader->readFile($schemaPath);
 
             $tableTransfers = $this->getTables(
                 $schema,

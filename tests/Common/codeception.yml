@@ -49,3 +49,9 @@ suites:
     modules:
       enabled:
         - Asserts
+  Xml:
+    path: Xml
+    class_name: CommonTester
+    modules:
+      enabled:
+        - Asserts

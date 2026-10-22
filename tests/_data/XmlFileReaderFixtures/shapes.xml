@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<root>
+    <selfClosing/>
+    <emptyWithWhitespace>
+    </emptyWithWhitespace>
+    <zero>0</zero>
+    <padded>007</padded>
+    <boolish>false</boolish>
+    <attributed rule="R">  text body  </attributed>
+    <cdata rule="C"><![CDATA[cdata body]]></cdata>
+    <collision name="fromAttribute"><name>fromChild</name></collision>
+</root>

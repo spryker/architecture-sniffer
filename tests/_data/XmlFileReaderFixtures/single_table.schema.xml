@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<database name="zed" defaultIdMethod="native" namespace="Orm\Zed\Comment\Persistence" package="src.Orm.Zed.Comment.Persistence">
+    <table name="spy_comment" phpName="SpyComment" idMethod="native">
+        <column name="id_comment" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="message" type="LONGVARCHAR" required="true"/>
+        <foreign-key foreignTable="spy_customer" phpName="SpyCustomer" refPhpName="SpyComment">
+            <reference local="fk_customer" foreign="id_customer"/>
+        </foreign-key>
+    </table>
+</database>
